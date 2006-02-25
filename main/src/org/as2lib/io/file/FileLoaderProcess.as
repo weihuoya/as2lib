@@ -45,11 +45,8 @@ import org.as2lib.app.exec.Executable;
  * @version 1.0
  */
 class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
-	implements LoadStartListener,
-		LoadCompleteListener,
-		LoadProgressListener,
-		LoadErrorListener {
-			
+		implements LoadStartListener, LoadCompleteListener, LoadProgressListener, LoadErrorListener {
+	
 	/** Resource loader to be mediated. */
 	private var resourceLoader:FileLoader;
 	
@@ -64,25 +61,29 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
 	
 	/** {@code Executable} to be called on finish of the process. */
 	private var callBack:Executable;
+	
+	/** Are errors ignored? */
+	private var ignoreErrors:Boolean;
 			
 	/**
 	 * Constructs a new {@code FileLoaderProcess}.
 	 * 
 	 * @param resourceLoader {@code FileLoader} to be mediated
 	 */
-	public function FileLoaderProcess(resourceLoader:FileLoader) {
+	public function FileLoaderProcess(resourceLoader:FileLoader, ignoreErrors:Boolean) {
 		this.resourceLoader = resourceLoader;
+		this.ignoreErrors = ignoreErrors ? true : false;
 		resourceLoader.addListener(this);
 	}
 	
 	/**
 	 * Prepares the instance for loading events.
 	 * 
-	 * <p>All passed-in parameters will be used to {@code .load} the certain
-	 * resource.
+	 * <p>All passed-in parameters will be used to {@code .load} the given
+	 * file.
 	 * 
-	 * @param uri location of the resource to load
-	 * @param parameters (optional) parameters for loading the resource
+	 * @param uri location of the file to load
+	 * @param parameters (optional) parameters for loading the file
 	 * @param method (optional) POST/GET as method for submitting the parameters,
 	 *        default method used if {@code method} was not passed-in is POST.
 	 * @param callBack (optional) {@link Executable} to be executed after the
@@ -119,47 +120,54 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
 	
 	/**
 	 * Forwards {@code getPercentage} to the mediated {@code FileLoader.getPercentage}.
-	 *
+	 * 
 	 * @return percentage of the resource
 	 */
 	public function getPercentage(Void):Number {
 		return resourceLoader.getPercentage();
 	}
-
+	
 	/**
-	 * Handles the {@code FileLoader}s start event.
+	 * Handles the inner file loader's start event.
 	 * 
-	 * @param resourceLoader {@code FileLoader} that sent the event
+	 * @param fileLoader the file loader that distributes the event
 	 */
-	public function onLoadStart(resourceLoader:FileLoader):Void {
+	public function onLoadStart(fileLoader:FileLoader):Void {
 		sendStartEvent();
 	}
-
+	
 	/**
-	 * Handles the {@code FileLoader}s complete event.
+	 * Handles the inner file loader's complete event.
 	 * 
-	 * @param resourceLoader {@code FileLoader} that sent the event
+	 * @param fileLoader the file loader that distributes the event
 	 */
-	public function onLoadComplete(resourceLoader:FileLoader):Void {
+	public function onLoadComplete(fileLoader:FileLoader):Void {
 		finish();
 	}
-
+	
 	/**
-	 * Handles the {@code FileLoader}s progress event.
+	 * Handles the inner file loader's progress event.
 	 * 
-	 * @param resourceLoader {@code FileLoader} that sent the event
+	 * @param fileLoader the file loader that distributes the event
 	 */
-	public function onLoadProgress(resourceLoader:FileLoader):Void {
+	public function onLoadProgress(fileLoader:FileLoader):Void {
 		sendUpdateEvent();
 	}
-
+	
 	/**
-	 * Handles the {@code FileLoader}s error event.
+	 * Handles the inner file loader's error event.
 	 * 
-	 * @param resourceLoader {@code FileLoader} that sent the event
+	 * @param fileLoader the file loader that distributes the event
 	 */
-	public function onLoadError(resourceLoader:FileLoader, errorCode:String, error):Boolean {
-		interrupt(error);
+	public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean {
+		if (!ignoreErrors) {
+			interrupt(error);
+		}
+		else {
+			finish();
+		}
+		// TODO: Why does this event listener consume the error?
 		return true;
 	}
+	
 }
