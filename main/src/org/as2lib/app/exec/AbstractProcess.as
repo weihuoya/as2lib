@@ -200,6 +200,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	public function resume(Void):Void {
 		paused = false;
 		sendResumeEvent();
+		finish();
 	}
 	
 	/**
