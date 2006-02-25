@@ -133,9 +133,6 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var PROP_ELEMENT:String = "prop";
 	public static var MERGE_ATTRIBUTE:String = "merge";
 	
-	public static var GET_ELEMENT:String = "get";
-	public static var PROPERTY_ATTRIBUTE:String = "property";
-	
 	/**
 	 * Separator for generated bean names. If a class name or parent name is not
 	 * unique, "#1", "#2" etc will be appended, until the name becomes unique.
@@ -641,34 +638,6 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			// It's a distinguished null value.
 			return null;
 		}
-		if (element.nodeName == GET_ELEMENT) {
-			// It's a property access.
-			var propertyPath:String = element.attributes[PROPERTY_ATTRIBUTE];
-			if (propertyPath == null || propertyPath == "") {
-				throw new BeanDefinitionStoreException(beanName, "Attribute 'property' is required for <get> element.", this, arguments);
-			}
-			var dotIndex:Number = propertyPath.indexOf(".");
-			var targetBeanName:String;
-			var targetPropertyPath:String;
-			if (dotIndex == -1) {
-				targetBeanName = beanName;
-				targetPropertyPath = propertyPath;
-			}
-			else {
-				targetBeanName = propertyPath.substring(0, dotIndex);
-				targetPropertyPath = propertyPath.substring(dotIndex + 1);
-			}
-			var beanDefinition:RootBeanDefinition = new RootBeanDefinition();
-			beanDefinition.setBeanClass(PropertyPathFactoryBean);
-			beanDefinition.setBeanClassName("org.as2lib.bean.factory.config.PropertyPathFactoryBean");
-			var propertyValues:PropertyValues = new PropertyValues();
-			propertyValues.addPropertyValueByNameAndValueAndType("targetBeanName", targetBeanName);
-			propertyValues.addPropertyValueByNameAndValueAndType("propertyPath", targetPropertyPath);
-			beanDefinition.setPropertyValues(propertyValues);
-			var refName:String = generateBeanName(beanDefinition);
-			registry.registerBeanDefinition(refName, beanDefinition);
-			return new RuntimeBeanReference(refName);
-		}
 		if (element.nodeName == ARRAY_ELEMENT) {
 			return parseArrayElement(element, beanName);
 		}
@@ -1010,23 +979,13 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		}
 		// Top-level bean: use plain class name. If not already unique,
 		// add counter - increasing the counter until the name is unique.
-		return appendCounterIfNecessary(generatedId);
-	}
-	
-	/**
-	 * Adds a counter to the given id if it is not already unique.
-	 * 
-	 * @param id the id to add a counter to if it is not unique
-	 * @return a unique bean name
-	 */
-	private function appendCounterIfNecessary(id:String):String {
-		var result:String = id;
 		var counter:Number = 0;
-		while (registry.containsBeanDefinition(result)) {
+		var id:String = generatedId;
+		while (registry.containsBeanDefinition(id)) {
 			counter++;
-			result = id + GENERATED_BEAN_NAME_SEPARATOR + counter;
+			id = generatedId + GENERATED_BEAN_NAME_SEPARATOR + counter;
 		}
-		return result;
+		return id;
 	}
 	
 	/**
