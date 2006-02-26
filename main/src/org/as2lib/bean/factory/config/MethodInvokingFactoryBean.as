@@ -216,7 +216,7 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	}
 	
 	/**
-	 * Sets the bean name of this bean. It will be interpreted as "staticMethod"
+	 * Sets the bean name of this bean. It will be interpreted as "className.staticMethod"
 	 * pattern, if neither "targetClass" nor "targetBean" nor "targetVariable" have
 	 * been specified. This allows for concise bean definitions with just an id/name.
 	 * 
