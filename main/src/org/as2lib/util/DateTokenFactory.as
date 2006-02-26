@@ -6,7 +6,7 @@ import org.as2lib.util.Token;
 /**
  * @author MartinHeidegger
  */
-class org.as2lib.util.DateTokenFactory extends TokenFactory {
+class org.as2lib.util.DateTokenFactory implements TokenFactory {
 	
 	public static var ERA_FIELD:String = "g";
 	public static var YEAR_FIELD:String = "y";
