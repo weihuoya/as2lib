@@ -25,12 +25,12 @@ import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.MethodUtil;
 
 /**
- * MethodInvokingFactoryBean returns a value which is the result of a static or instance
- * method invocation. For most use cases it is better to just use the container's 
- * built-in factory-method support for the same purpose, since that is smarter at
- * converting arguments. This factory bean is still useful though when you need to
- * call a method which does not return any value (for example, a static class method
- * to force some sort of initialization to happen). This use case is not supported
+ * {@code MethodInvokingFactoryBean} returns a value which is the result of a static
+ * or instance method invocation. For most use cases it is better to just use the
+ * container's built-in factory-method support for the same purpose, since that is
+ * smarter at converting arguments. This factory bean is still useful though when you
+ * need to call a method which does not return any value (for example, a static class
+ * method to force some sort of initialization to happen). This use case is not supported
  * by factory-methods, since a return value is needed to become the bean.
  * 
  * <p>Note that as it is expected to be used mostly for accessing factory methods,
@@ -197,6 +197,19 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	}
 	
 	/**
+	 * Adds the argument at the given index for the method invocation.
+	 * 
+	 * @param index the index of the argument to add
+	 * @param argument the argument to add
+	 */
+	public function addArgument(index:Number, argument):Void {
+		if (args == null) {
+			args = new Array();
+		}
+		args[index] = argument;
+	}
+	
+	/**
 	 * Sets arguments for the method invocation. If this property is not set,
 	 * or the given array is of length 0, a method with no arguments is assumed.
 	 * 
@@ -212,7 +225,7 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	 * @return the arguments for the method invocation
 	 */
 	public function getArguments(Void):Array {
-		return arguments;
+		return args;
 	}
 	
 	/**
