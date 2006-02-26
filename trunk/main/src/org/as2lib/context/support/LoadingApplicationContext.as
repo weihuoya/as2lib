@@ -34,6 +34,7 @@ import org.as2lib.io.file.TextFileLoader;
  * it.
  * 
  * @author Simon Wacker
+ * TODO: Enable multiple refreshes for this context!
  */
 class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplicationContext {
 	
