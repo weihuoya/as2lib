@@ -797,6 +797,8 @@ public class Mtasc extends Task {
     /**
      * Sets whether to split source files, this means compile them one-by-one.
      * 
+     * <p>Compilation continues even when a source file has compile errors.
+     * 
      * @param split determines whether to split source files
      */
     public void setSplit(boolean split) {
@@ -842,12 +844,12 @@ public class Mtasc extends Task {
      * This would result in {@code -rb_assert MyClass.myFunction} being added to the
      * command.
      * <code>
-     *   &lt;argument name="rb_assert" value="MyClass.myFunction"/&gt;
+     *   &lt;argument name="-rb_assert" value="MyClass.myFunction"/&gt;
      * </code>
      * 
      * <p>You can also add flags by not specifying a value.
      * <code>
-     *   &lt;argument name="rb_check_void_parameter"/&gt;
+     *   &lt;argument name="-rb_check_void_parameter"/&gt;
      * </code>
      * 
      * @return the new argument
@@ -1125,6 +1127,11 @@ public class Mtasc extends Task {
                         return;
                     }
                 }
+                String bd = getProject().getBaseDir().getAbsolutePath();
+                if (p.startsWith(bd)) {
+                    this.compileFiles.add(new File(p.substring(bd.length() + 1)));
+                    return;
+                }
             }
             this.compileFiles.add(sourceFile);
         }
@@ -1139,9 +1146,18 @@ public class Mtasc extends Task {
                 + (this.compileFiles.size() == 1 ? "" : "s")
 				+ ".");
             if (this.split) {
+                boolean hasCompileErrors = false;
                 for (int i = 0; i < this.compileFiles.size(); i++) {
                     Commandline cmd = setupCommand((File) this.compileFiles.get(i));
-                    executeCommand(cmd);
+                    try {
+                        executeCommand(cmd);
+                    }
+                    catch (BuildException e) {
+                        hasCompileErrors = true;
+                    }
+                }
+                if (hasCompileErrors) {
+                    throw new BuildException("Compile error(s)!", getLocation());
                 }
                 return;
             }
@@ -1237,7 +1253,7 @@ public class Mtasc extends Task {
         for (int i = 0; i < arguments.size(); i++) {
             Argument ar = (Argument) arguments.get(i);
             if (ar.getName() != null) {
-                command.createArgument().setValue("-" + ar.getName());
+                command.createArgument().setValue(ar.getName());
             }
             if (ar.getValue() != null) {
                 command.createArgument().setValue(ar.getValue());
@@ -1292,9 +1308,32 @@ public class Mtasc extends Task {
             for (int i = 0; i < a.length; i++) {
                 String p = a[i];
                 command.createArgument().setValue(PACKAGE);
-                command.createArgument().setValue(p);
+                addPackage(command, p);
             }
         }
+    }
+    
+    /**
+     * Adds the given package to the given command. If the package is absolute
+     * it will be made relative and then added.
+     * 
+     * @param command the command to add the package to
+     * @param pack the package to add
+     */
+    private void addPackage(Commandline command, String pack) {
+        String[] classpaths = this.classpath.list();
+        for (int i = 0; i < classpaths.length; i++) {
+            String cp = classpaths[i];
+            if (pack.startsWith(cp)) {
+                pack = pack.substring(cp.length() + 1);
+                break;
+            }
+        }
+        String bd = getProject().getBaseDir().getAbsolutePath();
+        if (pack.startsWith(bd)) {
+            pack = pack.substring(bd.length() + 1);
+        }
+        command.createArgument().setValue(pack);
     }
     
     /**
@@ -1324,10 +1363,10 @@ public class Mtasc extends Task {
             log(command.toString());
             int r = exe.execute();
             if (r != 0) {
-            	throw new BuildException("compile error");
+            	throw new BuildException("Compile error!", getLocation());
             }
         } catch (IOException e) {
-            throw new BuildException("error running " + command.getCommandline()[0] + " compiler", e, getLocation());
+            throw new BuildException("Error running " + command.getCommandline()[0] + " compiler.", e, getLocation());
         }
     }
     
