@@ -40,6 +40,8 @@ import org.as2lib.data.type.Time;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogManager;
 import org.as2lib.env.reflect.ReflectUtil;
 
 /**
@@ -72,6 +74,8 @@ import org.as2lib.env.reflect.ReflectUtil;
  */
 class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory
 		implements ConfigurableApplicationContext, ApplicationEventPublisher, Process, BatchFinishListener {
+	
+	private static var logger:Logger = LogManager.getLogger("org.as2lib.context.support.AbstractApplicationContext");
 	
 	/**
 	 * Name of the {@link MessageSource} bean in this factory.
@@ -643,7 +647,14 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * @param batch the internal batch that finished its run
 	 */
 	public function onBatchFinish(batch:Batch):Void {
-		postRefresh();
+		try {
+			postRefresh();
+		}
+		catch (exception) {
+			if (logger.isFatalEnabled()) {
+				logger.fatal(exception);
+			}
+		}
 	}
 	
 	public function hasStarted(Void):Boolean {
