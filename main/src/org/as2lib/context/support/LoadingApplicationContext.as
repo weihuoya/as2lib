@@ -74,13 +74,7 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 		// TODO: Find a solution for the following ugly workaround.
 		var owner:LoadingApplicationContext = this;
 		fileLoaderProcess.onLoadComplete = function(fl:FileLoader):Void {
-			// TODO: Throwable.toString is as it seems not anymore automatically invoked when exception is not catched
-			try {
-				owner["onLoadComplete"](fl);
-			}
-			catch (exception) {
-				LoadingApplicationContext["logger"].error(exception);
-			}
+			owner["onLoadComplete"](fl);
 			// finish the loading process after possible process beans have been added
 			// otherwise the batch process distributes a finish event before possible
 			// processes in the bean factory have been run
@@ -100,7 +94,15 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 	 */
 	private function onLoadComplete(fileLoader:FileLoader):Void {
 		var textFile:TextFile = TextFileLoader(fileLoader).getTextFile();
-		beanDefinitionParser.parse(textFile.getContent(), beanFactory);
+		// TODO: Throwable.toString is as it seems not anymore automatically invoked when exception is not catched
+		try {
+			beanDefinitionParser.parse(textFile.getContent(), beanFactory);
+		}
+		catch (exception:org.as2lib.bean.factory.BeanDefinitionStoreException) {
+			if (logger.isFatalEnabled()) {
+				logger.fatal(exception);
+			}
+		}
 		super.start();
 	}
 	
