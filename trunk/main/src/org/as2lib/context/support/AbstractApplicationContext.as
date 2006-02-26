@@ -15,6 +15,9 @@
  */
 
 import org.as2lib.aop.Weaver;
+import org.as2lib.app.exec.Batch;
+import org.as2lib.app.exec.BatchFinishListener;
+import org.as2lib.app.exec.Process;
 import org.as2lib.bean.converter.ClassConverter;
 import org.as2lib.bean.factory.BeanFactory;
 import org.as2lib.bean.factory.config.BeanFactoryPostProcessor;
@@ -29,11 +32,11 @@ import org.as2lib.context.ConfigurableApplicationContext;
 import org.as2lib.context.event.ContextClosedEvent;
 import org.as2lib.context.event.ContextRefreshedEvent;
 import org.as2lib.context.HierarchicalMessageSource;
-import org.as2lib.context.Lifecycle;
 import org.as2lib.context.MessageSource;
 import org.as2lib.context.support.ApplicationContextAwareProcessor;
 import org.as2lib.context.support.DelegatingMessageSource;
 import org.as2lib.data.holder.Map;
+import org.as2lib.data.type.Time;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalStateException;
@@ -54,28 +57,42 @@ import org.as2lib.env.reflect.ReflectUtil;
  * 
  * <p>A {@link MessageSource} implementation may also be supplied as a bean in the context,
  * with the name "messageSource"; else, message resolution is delegated to the parent context.
- * Furthermore, a distributor control for application events can be supplied as "eventDistributorControl"
- * bean in the context; else, publishing application events is not possible, and will
- * raise errors if it is nevertheless tried.
- *  
+ * 
+ * <p>Furthermore, a {@link EventDistributorControl} for application events can be supplied
+ * as "eventDistributorControl" bean in the context; else, publishing application events is
+ * not possible, and will raise errors if it is nevertheless tried.
+ * 
+ * <p>You may also supply a {@link Weaver} implementation as "weaver" whose {@code weave}
+ * method will be invoked automatically when this context gets refreshed.
+ * 
+ * <p>If you want {@link Process} beans to be executed by a batch process, you may supply
+ * a {@link Batch} implementation as "batchProcess".
+ * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory implements ApplicationEventPublisher {
+class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory
+		implements ConfigurableApplicationContext, ApplicationEventPublisher, Process, BatchFinishListener {
 	
 	/**
-	 * Name of the {@link MessageSource} bean in the factory.
+	 * Name of the {@link MessageSource} bean in this factory.
 	 * If none is supplied, message resolution is delegated to the parent.
 	 */
 	public static var MESSAGE_SOURCE_BEAN_NAME:String = "messageSource";
 	
 	/**
-	 * Name of the {@link EventDistributorControl} bean in the factory.
+	 * Name of the {@link EventDistributorControl} bean in this factory.
 	 * If none is supplied, publishing application events is not possible and will raise errors.
 	 */
 	public static var EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME:String = "eventDistributorControl";
 	
 	/**
-	 * Names of the {@link Weaver} bean in this factory.
+	 * Name of the {@link Batch} bean in this factory.
+	 * If none is supplied, 
+	 */
+	public static var BATCH_PROCESS_BEAN_NAME:String = "batchProcess";
+	
+	/**
+	 * Name of the {@link Weaver} bean in this factory.
 	 */
 	public static var WEAVER_BEAN_NAME:String = "weaver";
 	
@@ -99,6 +116,9 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	/** Event distributor control to distribute events. */
 	private var eventDistributorControl:EventDistributorControl;
+	
+	/** The batch process used internally to delegate to. */
+	private var batchProcess:Batch;
 	
 	/** Weaver to weave-in cross-cutting concerns code. */
 	private var weaver:Weaver;
@@ -242,9 +262,14 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	public function refresh(Void):Void {
+		preRefresh();
+		postRefresh();
+	}
+	
+	private function preRefresh(Void):Void {
 		this.startupTime = (new Date()).getTime();
-		// tells subclass to refresh the internal bean factory
 		refreshBeanFactory();
+		// tells subclass to refresh the internal bean factory
 		var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
 		// populates the bean factory with context-specific resource editors
 		beanFactory.registerPropertyValueConverter(Function, new ClassConverter());
@@ -268,8 +293,21 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			initMessageSource();
 			// initializes event distributor control for this context
 			initEventDistributorControl();
+			// initializes batch process for this context
+			initBatchProcess();
 			// initializes other special beans in specific context subclasses
 			onRefresh();
+		}
+		catch (exception:org.as2lib.bean.BeanException) {
+			// destroys already created singletons to avoid dangling resources
+			beanFactory.destroySingletons();
+			throw exception;
+		}
+	}
+	
+	private function postRefresh(Void):Void {
+		var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
+		try {
 			// checks for listener beans and registers them
 			registerListeners();
 			// instantiates singletons this late to allow them to access the message source
@@ -327,6 +365,15 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		var beanProcessors:Array = getBeansOfType(BeanPostProcessor, true, false).getValues();
 		for (var i:Number = 0; i < beanProcessors.length; i++) {
 			getBeanFactory().addBeanPostProcessor(beanProcessors[i]);
+		}
+	}
+	
+	/**
+	 * Initializes the batch process if it exists.
+	 */
+	private function initBatchProcess(Void):Void {
+		if (containsLocalBean(BATCH_PROCESS_BEAN_NAME)) {
+			setBatchProcess(getBean(BATCH_PROCESS_BEAN_NAME, Batch));
 		}
 	}
 	
@@ -411,7 +458,9 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		// uninitialized to let post-processors apply to them!
 		var listeners:Array = getBeansOfType(ApplicationListener, true, false).getValues();
 		for (var i:Number = 0; i < listeners.length; i++) {
-			addListener(listeners[i]);
+			getEventDistributorControl().addListener(listeners[i]);
+			// TODO: There is a coalition between this context's addListener and the one of the Process interface, rename Process.addListener to Process.addProcessListener?
+			//addListener(listeners[i]);
 		}
 	}
 	
@@ -421,9 +470,9 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * 
 	 * @param listener the listener to register
 	 */
-	private function addListener(listener:ApplicationListener):Void {
+	/*private function addListener(listener:ApplicationListener):Void {
 		getEventDistributorControl().addListener(listener);
-	}
+	}*/
 	
 	/**
 	 * Destroys this instance by invoking the {@link close} method.
@@ -534,49 +583,170 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	//---------------------------------------------------------------------
-	// Implementation of Lifecycle interface
-	// TODO: Use org.as2lib.app.exec.Process instead (but it is still too heavy-weight)
+	// Implementation of Process interface
+	// TODO: Make Process interface more light-weight
 	//---------------------------------------------------------------------
 	
-	public function start(Void):Void {
-		var lifecycles:Array = getLifecycleBeans();
-		for (var i:Number = 0; i < lifecycles.length; i++) {
-			var lifecycle:Lifecycle = lifecycles[i];
-			if (!lifecycle.isRunning()) {
-				lifecycle.start();
-			}
+	/**
+	 * Starts this application context asynchronously.
+	 * 
+	 * <p>Pre-refreshes this application context, then processes all beans implementing
+	 * the {@link Process} interface and post-refreshes this context after processing
+	 * the bean processes has finished.
+	 * 
+	 * <p>Note that the bean processes are processed asynchronously. That means in
+	 * order to know when this application is fully refreshed you need to add a batch
+	 * listener.
+	 * 
+	 * @see #refresh
+	 * @see BatchStartListener
+	 * @see BatchErrorListener
+	 * @see BatchFinishListener
+	 */
+	public function start() {
+		// TODO: Finishing process (internal batch process) is not application context that gets registered to using batch process -> Unexpected onFinishProcess
+		preRefresh();
+		var batchProcess:Batch = getBatchProcess();
+		registerProcessBeans();
+		if (!batchProcess.hasStarted()) {
+			batchProcess.start();
 		}
-	}
-	
-	public function stop(Void):Void {
-		var lifecycles:Array = getLifecycleBeans();
-		for (var i:Number = 0; i < lifecycles.length; i++) {
-			var lifecycle:Lifecycle = lifecycles[i];
-			if (lifecycle.isRunning()) {
-				lifecycle.stop();
-			}
-		}
-	}
-	
-	public function isRunning(Void):Boolean {
-		var lifecycles:Array = getLifecycleBeans();
-		for (var i:Number = 0; i < lifecycles.length; i++) {
-			var lifecycle:Lifecycle = lifecycles[i];
-			if (!lifecycle.isRunning()) {
-				return false;
-			}
-		}
-		return true;
 	}
 	
 	/**
-	 * Returns a collection of all singleton beans that implement the {@link Lifecycle}
+	 * Registers all singleton beans that implement the {@code Process} interface with
+	 * the batch process of this context.
+	 */
+	private function registerProcessBeans(Void):Void {
+		var batchProcess:Batch = getBatchProcess();
+		var processes:Array = getProcessBeans();
+		for (var i:Number = 0; i < processes.length; i++) {
+			var process:Process = processes[i];
+			batchProcess.addProcess(process);
+		}
+	}
+	
+	/**
+	 * Returns a collection of all singleton beans that implement the {@link Process}
 	 * interface in this context.
 	 * 
 	 * @return all singleton lifecycle beans
 	 */
-	private function getLifecycleBeans(Void):Array {
-		return getBeanFactory().getBeansOfType(Lifecycle, false, false).getValues();
+	private function getProcessBeans(Void):Array {
+		return getBeanFactory().getBeansOfType(Process, false, false).getValues();
+	}
+	
+	/**
+	 * Post-refreshes this application context after the internal batch process has
+	 * finished its run.
+	 * 
+	 * @param batch the internal batch that finished its run
+	 */
+	public function onBatchFinish(batch:Batch):Void {
+		postRefresh();
+	}
+	
+	public function hasStarted(Void):Boolean {
+		return getBatchProcess().hasStarted();
+	}
+	
+	public function hasFinished(Void):Boolean {
+		return getBatchProcess().hasFinished();
+	}
+	
+	public function isPaused(Void):Boolean {
+		return getBatchProcess().isPaused();
+	}
+	
+	public function isRunning(Void):Boolean {
+		return getBatchProcess().isPaused();
+	}
+	
+	public function getPercentage(Void):Number {
+		return getBatchProcess().getPercentage();
+	}
+	
+	public function setParentProcess(process:Process):Void {
+		getBatchProcess().setParentProcess(process);
+	}
+	
+	public function getParentProcess(Void):Process {
+		return getBatchProcess().getParentProcess();
+	}
+	
+	public function getErrors(Void):Array {
+		return getBatchProcess().getErrors();
+	}
+	
+	public function hasError(Void):Boolean {
+		return getBatchProcess().hasError();
+	}
+	
+	public function getDuration(Void):Time {
+		return getBatchProcess().getDuration();
+	}
+	
+	public function getEstimatedTotalTime(Void):Time {
+		return getBatchProcess().getEstimatedTotalTime();
+	}
+	
+	public function getEstimatedRestTime(Void):Time {
+		return getBatchProcess().getEstimatedRestTime();
+	}
+	
+	public function addListener(listener):Void {
+		getBatchProcess().addListener(listener);
+	}
+	
+	public function addAllListeners(listeners:Array):Void {
+		getBatchProcess().addAllListeners(listeners);
+	}
+	
+	public function removeListener(listener):Void {
+		getBatchProcess().removeListener(listener);
+	}
+	
+	public function removeAllListeners(Void):Void {
+		getBatchProcess().removeAllListeners();
+	}
+	
+	public function getAllListeners(Void):Array {
+		return getBatchProcess().getAllListeners();
+	}
+	
+	public function hasListener(listener):Boolean {
+		return getBatchProcess().hasListener(listener);
+	}
+	
+	/**
+	 * Returns the batch process to add asynchronous processes to.
+	 * 
+	 * <p>Note that there is no default batch process.
+	 * 
+	 * @return the batch process
+	 * @throws IllegalStateException if either there is no batch process or it has not
+	 * been initialized yet
+	 */
+	public function getBatchProcess(Void):Batch {
+		if (batchProcess == null) {
+			throw new IllegalStateException("Batch process not initialized: " +
+					"Declare a batch process or call 'refresh' before starting processes with this context [" + this + "].", this, arguments);
+		}
+		return batchProcess;
+	}
+	
+	/**
+	 * Sets the batch process to add asynchronous processes to.
+	 * 
+	 * <p>Do not set the batch process instance variable directly, but use this method
+	 * to set it, because this context must be registered as listener at the batch
+	 * process; this method takes care of this.
+	 * 
+	 * @param batchProcess the new batch process
+	 */
+	private function setBatchProcess(batchProcess:Batch):Void {
+		this.batchProcess = batchProcess;
+		batchProcess.addListener(this);
 	}
 	
 	//---------------------------------------------------------------------
@@ -619,5 +789,5 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		throw new AbstractOperationException("This method is marked as abstract and must be overridden by sub-classes.", this, arguments);
 		return null;
 	}
-	
+
 }
