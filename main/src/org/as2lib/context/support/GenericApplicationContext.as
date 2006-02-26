@@ -17,30 +17,20 @@
 import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.bean.factory.DisposableBean;
-import org.as2lib.bean.factory.HierarchicalBeanFactory;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.factory.support.DefaultBeanFactory;
 import org.as2lib.context.ApplicationContext;
-import org.as2lib.context.ConfigurableApplicationContext;
-import org.as2lib.context.Lifecycle;
-import org.as2lib.context.support.AbstractApplicationContext;
+import org.as2lib.context.support.DefaultApplicationContext;
 import org.as2lib.env.except.IllegalStateException;
 
 /**
  * {@code GenericApplicationContext} is the application context of choice if refreshing
  * the application context more than once (which is required to initialize everything)
- * is not necessary.
+ * is not necessary and bean definitions are registered externally.
  * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.GenericApplicationContext extends AbstractApplicationContext implements
-		ConfigurableApplicationContext, Lifecycle, HierarchicalBeanFactory, DisposableBean, BeanDefinitionRegistry {
-	
-	/** The wrapped bean factory to delegate bean managing tasks to. */
-	private var beanFactory:DefaultBeanFactory;
-	
-	/** Indicates whether this application context has already been refreshed. */
-	private var refreshed:Boolean;
+class org.as2lib.context.support.GenericApplicationContext extends DefaultApplicationContext implements DisposableBean, BeanDefinitionRegistry {
 	
 	/**
 	 * Constructs a new {@code GenericApplicationContext} instance.
@@ -48,46 +38,7 @@ class org.as2lib.context.support.GenericApplicationContext extends AbstractAppli
 	 * @param parent the parent of this application context
 	 */
 	public function GenericApplicationContext(parent:ApplicationContext) {
-		beanFactory = new DefaultBeanFactory();
-		refreshed = false;
-		setParent(parent);
-	}
-	
-	/**
-	 * Sets the parent of this application context, also setting the parent of the
-	 * internal bean factory accordingly.
-	 * 
-	 * @param parent the parent of this application context
-	 */
-	public function setParent(parent:ApplicationContext):Void {
-		super.setParent(parent);
-		beanFactory.setParentBeanFactory(getInternalParentBeanFactory());
-	}
-	
-	//---------------------------------------------------------------------
-	// Implementations of AbstractApplicationContext's template methods
-	//---------------------------------------------------------------------
-	
-	/**
-	 * Does nothing: We hold a single internal bean factory and rely on callers to
-	 * register beans through our public methods.
-	 * 
-	 * @see #registerBeanDefinition
-	 */
-	private function refreshBeanFactory(Void):Void {
-		if (refreshed) {
-			throw new IllegalStateException("Multiple refreshs not supported: just call 'refresh' once", this, arguments);
-		}
-		refreshed = true;
-	}
-	
-	/**
-	 * Returns the single internal bean factory held by this context.
-	 * 
-	 * @return the single internal bean factory of this context
-	 */
-	public function getBeanFactory(Void):ConfigurableListableBeanFactory {
-		return beanFactory;
+		super(parent);
 	}
 	
 	//---------------------------------------------------------------------
