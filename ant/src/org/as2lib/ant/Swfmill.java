@@ -476,10 +476,10 @@ public class Swfmill extends Task {
             log(command.toString());
             int r = exe.execute();
             if (r != 0) {
-            	throw new BuildException("processing error");
+            	throw new BuildException("Processing error!", getLocation());
             }
         } catch (IOException e) {
-            throw new BuildException("error running " + command.getCommandline()[0] + " compiler", e, getLocation());
+            throw new BuildException("Error running " + command.getCommandline()[0] + " compiler.", e, getLocation());
         }
     }
     
