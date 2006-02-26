@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN" "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en">
+	<head>
+		<title>Asual &raquo; EnFlash Demos</title>
+		<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+		<style type="text/css" media="screen">
+		<!--
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			html, body {
+				height: 100%;
+				overflow: hidden;
+			}
+			body {
+				font: 70%/180% 'Lucida Sans Unicode', 'Lucida Grande', 'Bitstream Vera Sans', 'Trebuchet MS', Geneva, Arial, sans-serif;
+				background: #000000;
+				color: #FFFFFF;
+				text-align: center;
+			}		
+			h1 {
+				width: 300px;
+				height: 36px;			
+				margin: 60px auto 30px;
+			}
+			h1 a {
+				width: 100%;
+				height: 100%;
+				background: url(assets/enflash.png) no-repeat;
+				display: block;
+				text-indent: -9999px;
+				text-decoration: none;
+			}
+			ul {
+				margin: 0 auto;
+				width: 40em;
+			}
+			li {
+				list-style: none;
+				display: inline;
+			}
+			li a {
+				color: #FFFFFF;
+				text-decoration: none;
+				padding: 1px 0;
+			}
+			li a span {
+				height: 100%;
+				margin: -1px 1px;
+				padding: 0 2px;
+			}
+			li a:hover {
+				color: #000000;
+				background: #FFFFFF;
+				padding: 0;
+				border-top: 1px solid #666666;
+				border-bottom: 1px solid #666666;
+			}
+			li a:hover span {
+				border-top: 1px solid #FFFFFF;
+				border-bottom: 1px solid #FFFFFF;
+			}			
+		-->
+		</style>
+		<script type="text/javascript">
+		//<![CDATA[
+			var	w = 960;
+			var	h = 560;
+			function popup(url){
+				var l = Math.round((window.screen.width - w)/2);
+				var t = Math.round((window.screen.height - h)/2);
+				var demo = window.open(url, "", "toolbar=0,location=0,status=1,menubar=0,scrollbars=0,resizable=1,width=" + w + ",height=" + h + ",left=" + l + ",top=" + t + "");
+				demo.focus();
+			}
+		//]]>
+		</script>
+	</head>
+	<body>
+		<h1><a href="http://www.asual.com/enflash/" title="EnFlash Homepage">EnFlash</a></h1>
+		<ul>
+			<li><a href="#" onclick="popup('demos/amfdemo.html'); return false;"><span>Open AMFDemo</span></a></li>
+			<li><a href="#" onclick="popup('demos/apidemo.html'); return false;"><span>Open APIDemo</span></a></li>
+			<li><a href="#" onclick="popup('demos/windemo.html'); return false;"><span>Open WinDemo</span></a></li>
+			<li><a href="#" onclick="popup('demos/xmldemo.html'); return false;"><span>Open XMLDemo</span></a></li>
+		</ul>
+	</body>
+</html>

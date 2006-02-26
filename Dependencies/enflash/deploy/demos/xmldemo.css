@@ -1,0 +1,13 @@
+a {
+	color: #285090;
+	text-decoration: underline;
+}
+a:hover {
+	color: #A30000;
+}
+.text {
+	color: #000000;
+}
+.enflash {
+	font-weight: bold;
+}

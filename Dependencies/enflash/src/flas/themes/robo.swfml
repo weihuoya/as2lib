@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<movie width="200" height="200" framerate="21">
+	<background color="#000000" />
+	<frame>
+		<library>
+			<clip id="robo.swf" import="deploy/themes/robo.swf"/>
+			<clip id="robo.swf.bar.swf" import="deploy/themes/robo/bar.swf"/>
+			<clip id="robo.swf.bg.swf" import="deploy/themes/robo/bg.swf"/>
+			<clip id="robo.swf.button.swf" import="deploy/themes/robo/button.swf"/>
+			<clip id="robo.swf.checkbox.swf" import="deploy/themes/robo/checkbox.swf"/>
+			<clip id="robo.swf.combobox.swf" import="deploy/themes/robo/combobox.swf"/>
+			<clip id="robo.swf.cursor.swf" import="deploy/themes/robo/cursor.swf"/>
+			<clip id="robo.swf.label.swf" import="deploy/themes/robo/label.swf"/>
+			<clip id="robo.swf.listitem.swf" import="deploy/themes/robo/listitem.swf"/>
+			<clip id="robo.swf.menu.swf" import="deploy/themes/robo/menu.swf"/>
+			<clip id="robo.swf.menubaritem.swf" import="deploy/themes/robo/menubaritem.swf"/>
+			<clip id="robo.swf.menuitem.swf" import="deploy/themes/robo/menuitem.swf"/>
+			<clip id="robo.swf.menuseparator.swf" import="deploy/themes/robo/menuseparator.swf"/>
+			<clip id="robo.swf.pane.swf" import="deploy/themes/robo/pane.swf"/>
+			<clip id="robo.swf.panesplit.swf" import="deploy/themes/robo/panesplit.swf"/>
+			<clip id="robo.swf.panetoggle.swf" import="deploy/themes/robo/panetoggle.swf"/>
+			<clip id="robo.swf.progressbar.swf" import="deploy/themes/robo/progressbar.swf"/>
+			<clip id="robo.swf.radiobutton.swf" import="deploy/themes/robo/radiobutton.swf"/>
+			<clip id="robo.swf.rating.swf" import="deploy/themes/robo/rating.swf"/>
+			<clip id="robo.swf.scrollbutton.swf" import="deploy/themes/robo/scrollbutton.swf"/>
+			<clip id="robo.swf.scrollpane.swf" import="deploy/themes/robo/scrollpane.swf"/>
+			<clip id="robo.swf.scrollpaneopaque.swf" import="deploy/themes/robo/scrollpaneopaque.swf"/>
+			<clip id="robo.swf.scrollthumb.swf" import="deploy/themes/robo/scrollthumb.swf"/>
+			<clip id="robo.swf.scrolltrack.swf" import="deploy/themes/robo/scrolltrack.swf"/>
+			<clip id="robo.swf.text.swf" import="deploy/themes/robo/text.swf"/>
+			<clip id="robo.swf.titlebarbutton.swf" import="deploy/themes/robo/titlebarbutton.swf"/>
+			<clip id="robo.swf.treeitem.swf" import="deploy/themes/robo/treeitem.swf"/>
+                        <clip id="robo_lib">
+                                <frame>
+                                        <place id="robo.swf" />
+                			<place id="robo.swf.bar.swf" />
+                			<place id="robo.swf.bg.swf" />
+                			<place id="robo.swf.button.swf" />
+                			<place id="robo.swf.checkbox.swf" />
+                			<place id="robo.swf.combobox.swf" />
+                			<place id="robo.swf.cursor.swf" />
+                			<place id="robo.swf.label.swf" />
+                			<place id="robo.swf.listitem.swf" />
+                			<place id="robo.swf.menu.swf" />
+                			<place id="robo.swf.menubaritem.swf" />
+                			<place id="robo.swf.menuitem.swf" />
+                			<place id="robo.swf.menuseparator.swf" />
+                			<place id="robo.swf.pane.swf" />
+                			<place id="robo.swf.panesplit.swf" />
+                			<place id="robo.swf.panetoggle.swf" />
+                			<place id="robo.swf.progressbar.swf" />
+                			<place id="robo.swf.radiobutton.swf" />
+                			<place id="robo.swf.rating.swf" />
+                			<place id="robo.swf.scrollbutton.swf" />
+                			<place id="robo.swf.scrollpane.swf" />
+                			<place id="robo.swf.scrollpaneopaque.swf" />
+                			<place id="robo.swf.scrollthumb.swf" />
+                			<place id="robo.swf.scrolltrack.swf" />
+                			<place id="robo.swf.text.swf" />
+                			<place id="robo.swf.titlebarbutton.swf" />
+                			<place id="robo.swf.treeitem.swf" />
+                                </frame>
+                        </clip>
+		</library>
+                <place id="robo_lib" />
+	</frame>
+</movie>

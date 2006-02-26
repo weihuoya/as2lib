@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WinDemo>
+
+	<winMenu value="DWindows" />
+	<prjMenuItem value="DProjects" />
+	<optMenuItem value="DOptions" />
+	<descMenuItem value="DDescription" />
+
+	<langMenu value="DLanguage" />
+
+	<helpMenu value="DHelp" />
+	<aboutMenuItem value="DAbout" />
+	<homepageMenuItem value="DHomepage" />
+	
+	<prjWin title="DProjects" />
+	<optWin title="DOptions" />
+	<descWin title="DDescription" />
+	
+	<zoomLabel value="DZoom:" />
+	
+	<themeLabel value="DTheme:" />
+	<defaultTheme value="DDefault" />
+	<oasisTheme value="DOasis" />
+	<officeTheme value="DOffice" />
+	
+	<aboutDialog title="DAbout" />
+
+	<homepageLabel value="DHomepage:" />
+
+</WinDemo>

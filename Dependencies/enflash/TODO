@@ -1,0 +1,42 @@
+COMPONENTS
+-------------------------------------------------------------------------
+Multiple selection in ListBox component
+TitleBar with Collapse/Expand and Maximize/Restore buttons
+Resizable Window
+ToolTip
+ToolBar
+Universal Box component for hosting multiple components
+TabPane
+DataGrid
+Horizontal ScrollBar in TextArea
+
+
+MANAGERS
+-------------------------------------------------------------------------
+Load Manager
+Improved Shortcut manager
+
+
+THEMES
+-------------------------------------------------------------------------
+SWF per component mapping
+Embedded themes
+Color configurable pure ActionScript theme
+Theme attributes in XML file
+Theme login in a separate MTASC compatible file
+
+
+KEYS NAVIGATION
+-------------------------------------------------------------------------
+Tree
+Radio group
+Rating
+ListBox
+
+
+OTHER
+-------------------------------------------------------------------------
+Global drag'n'drop support
+Custom CSS parsing 
+XML Schema
+Custom ContextMenu per component

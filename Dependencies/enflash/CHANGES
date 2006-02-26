@@ -1,0 +1,52 @@
+06/15/05  EnFlash 0.4
+-------------------------------------------------------------------------
+
+- Documentation added.
+
+- Support for SWF creation using MTASC and swfmill.
+
+- Unlimited number of panes can be added to the Container object, the 
+collapsing behaviour is moved to a new SplitPane class.
+
+- Some Container properties are removed or replaced with new ones.
+
+- Boolean "border" property for the Container class.
+
+- Swappable windows.
+
+- Logging can be enabled with "_enflash.logger = true" or via XML.
+
+- Debug method is now known as log().
+
+- Autosizable Dialogs with 16:10 ratio that can be switched with a 
+'ratio' property.
+
+- Fixed issue with the validation of the XHTML template.
+
+- Reorganization of "main", "remove" and "focus" methods.
+
+- toString() method is replaced by a private "_class" variable.
+
+- The private "_dispatchEvent" method is separated in 2 public methods - 
+"dispatchEvent" and "dispatchEventOnce".
+
+- Version detection for Flash Player 8.
+
+- Added x and y mappings to the "getXML" and "setXML" methods of
+the UIObject. Currently useful only for Windows and Dialogs.
+
+- Added onopen and onclose events to the "getXML" and "setXML" methods of
+the Window component.
+
+- Fixed loadXML method of the Composition class.
+
+- The wordWrap property of the Label component changes accordingly to the 
+display mode. When display is "block" the wordWrap is "true" and when
+display is "inline", then wordWrap is false. This behaviour can be 
+overwritten by setting wordWrap property explicitly. Labels are changed 
+to inline behaviour by default. 
+
+
+05/05/05  EnFlash 0.3
+-------------------------------------------------------------------------
+First official release.

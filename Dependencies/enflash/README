@@ -1,0 +1,81 @@
+ENFLASH 0.4 README
+09/08/2005
+
+
+DESCRIPTION
+-------------------------------------------------------------------------
+EnFlash is an open source ActionScript Application Framework that 
+consists of visual components, utility classes and data structures that 
+enhance user experience and ease the development of sophistecated 
+applications.
+
+
+REQUIREMENTS
+-------------------------------------------------------------------------
+Macromedia Flash MX2004 or MTASC 1.6+/sfwmill 2.8+/Ant 1.6+
+
+
+USAGE
+-------------------------------------------------------------------------
+The EnFlash package has the following structure:
+/ - Contains info files, licence and a build file.
+/deploy - Contains the files that are typically uploaded on a webserver.
+/deploy/assets - Contains common shared assets.
+/deploy/demos - Contains the current set of demos and related files.
+/deploy/remoting - Contains sample AMFPHP and OpenAMF WebServices. 
+/deploy/themes - Contains the graphic themes of EnFlash.
+/docs - Contains javadoc like reference for EnFlash development.
+/src - Contains all the source files like AS,FLA and SWFML.
+/src/classes - Contains the ActionScript code of EnFlash core and demos. 
+/src/flas - Contains the sources used with Macromedia Flash or swfmill.
+/src/flas/assets - Contains the common assets sources. 
+/src/flas/demos - Contains demos sources.
+/src/flas/themes - Contains graphic themes sources.
+/src/remoting - Contains remoting related sources.
+
+In case you're using Macromedia Flash you can open and compile the demos 
+using one of the FLA files provided in /src/flas/demos.
+
+If you want to utilize the open source tools you will need to download
+all of them and add them to your systems's PATH variable that will make
+them accessible from everywhere. You can them compile the demos simply
+by typing 'ant' in the root folder of your EnFlash package.
+
+In order to compile the AMFDemo you will need:
+
+Macromedia Flash Remoting Components ActionScript2 freely available at:
+http://download.macromedia.com/pub/flashremoting/mx2004/components/
+actionscript_2.0/flashremoting_comp_sourcecode.zip 
+
+Update the Remoting components in order to make them compatible with
+MTASC by following these steps:
+http://www.swapdepths.nl/2005/06/20/get-amfphp-going-with-fame
+
+
+
+SUPPORT
+-------------------------------------------------------------------------
+Use one of the EnFlash mailing lists for problems, questions and 
+suggestions.
+http://lists.sourceforge.net/lists/listinfo/enflash-developers
+http://lists.sourceforge.net/lists/listinfo/enflash-users
+
+
+LINKS
+-------------------------------------------------------------------------
+http://www.asual.com/enflash/
+http://www.enflash.org/
+http://www.osflash.org/enflash/
+http://www.mtasc.org/
+http://www.iterative.org/swfmill/
+http://ant.apache.org/
+http://www.amfphp.org/
+http://www.openamf.org/
+http://www.macromedia.com/software/flash/
+http://www.macromedia.com/software/flashremoting/downloads/components/
+
+
+ABOUT
+-------------------------------------------------------------------------
+EnFlash is originally developed by Rostislav Hristov of Asual DZZD - 
+Sofia, Bulgaria.

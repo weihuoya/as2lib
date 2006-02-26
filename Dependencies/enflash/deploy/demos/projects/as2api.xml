@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Label value="as2api" fontSize="8" display="block" />
+	<Label id="homepageLabel" clear="true" />
+	<A href="http://www.badgers-in-foil.co.uk/projects/as2api/" target="_blank">http://www.badgers-in-foil.co.uk/projects/as2api/</A>
+</Project>

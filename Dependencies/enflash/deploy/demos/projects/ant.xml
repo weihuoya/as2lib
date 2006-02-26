@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Label value="apache ant" fontSize="8" display="block" />
+	<Label id="homepageLabel" clear="true" />
+	<A href="http://ant.apache.org/" target="_blank">http://ant.apache.org</A>
+</Project>
