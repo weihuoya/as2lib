@@ -1,0 +1,39 @@
+<project name="ANS-Remoting" basedir=".">
+	<property name="mtasc" value="hmtasc.exe"/>
+	<property name="actionstep" location="../../"/>
+
+	<property name="target" value="dist/remoting/Main.swf"/>
+
+	<target name="init">
+		<tstamp>
+			<format property="TSTAMP" pattern="hh:mm:ss"/>
+		</tstamp>
+		<echo>${TSTAMP} ${TODAY}</echo>
+	</target>
+
+	<target name="remoting" description="Compiles the ActionStep library" depends="init">
+		<exec executable="hamtasc.exe" dir=".">
+			<arg line="
+	-cp '${actionstep}/src'
+	-swf ANSRemotingLib.swf
+	-pack org/actionstep/remoting
+	-header 1:1:1
+	-exclude remoting.exclude
+	-version 8"/>
+		</exec>
+	</target>
+
+	<target name="remoting-dist" description="Compiles the ActionStep library">
+		<exec executable="hamtasc.exe" dir=".">
+			<arg line="
+	-cp '${actionstep}/src'
+	-swf Main.swf
+	-main ASTestRemotingDist.as
+	-header 550:400:10
+	-version 8
+	-exclude main.exclude
+	-trace org.actionstep.ASDebugger.trace
+	"/>
+		</exec>
+	</target>
+</project>
