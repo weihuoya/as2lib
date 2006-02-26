@@ -1,0 +1,63 @@
+<project name="EnFlash" default="demos" basedir=".">
+
+	<description>EnFlash Demos</description>
+	
+	<property name="deploy" value="deploy"/>
+	<property name="src" value="src"/>
+	
+	<property name="swfmill" value="swfmill"/>
+	<property name="mtasc" value="mtasc"/>
+
+	<target name="demos">
+		<antcall target="amfdemo" />
+		<antcall target="apidemo" />
+		<antcall target="windemo" />
+		<antcall target="xmldemo" />
+	</target>
+	
+	<target name="amfdemo">
+		<exec executable="${mtasc}">
+			<arg line="-cp ${src}/classes -cp ${deploy}/demos -swf ${deploy}/demos/amfdemo.swf -main AMFDemo.as -frame 2 -header 960:620:21:000000" />
+		</exec>
+	</target>
+
+	<target name="apidemo">
+		<exec executable="${mtasc}">
+			<arg line="-cp ${src}/classes -cp ${deploy}/demos -swf ${deploy}/demos/apidemo.swf -main APIDemo.as -frame 2 -header 960:620:21:000000" />			
+		</exec>
+	</target>
+
+	<target name="windemo">
+		<exec executable="${swfmill}">
+			<arg line="simple ${src}/flas/demos/windemo.swfml ${deploy}/demos/windemo.swf" />
+		</exec>
+		<exec executable="${mtasc}">
+			<arg line="-cp ${src}/classes -cp ${deploy}/demos -swf ${deploy}/demos/windemo.swf -main WinDemo.as -frame 2" />
+		</exec>
+	</target>
+
+	<target name="xmldemo">
+		<exec executable="${swfmill}">
+			<arg line="simple ${src}/flas/demos/xmldemo.swfml ${deploy}/demos/xmldemo.swf" />
+		</exec>
+		<exec executable="${mtasc}">
+			<arg line="-cp ${src}/classes -cp ${deploy}/demos -swf ${deploy}/demos/xmldemo.swf -main XMLDemo.as -frame 2" />
+		</exec>
+	</target>
+
+    <target name="themes">
+		<exec executable="${swfmill}">
+			<arg line="simple ${src}/flas/themes/default.swfml ${deploy}/themes/default_lib.swf" />
+		</exec>
+		<exec executable="${swfmill}">
+			<arg line="simple ${src}/flas/themes/oasis.swfml ${deploy}/themes/oasis_lib.swf" />
+		</exec>
+		<exec executable="${swfmill}">
+			<arg line="simple ${src}/flas/themes/office.swfml ${deploy}/themes/office_lib.swf" />
+		</exec>
+		<exec executable="${swfmill}">
+			<arg line="simple ${src}/flas/themes/robo.swfml ${deploy}/themes/robo_lib.swf" />
+		</exec>
+    </target>
+
+</project>

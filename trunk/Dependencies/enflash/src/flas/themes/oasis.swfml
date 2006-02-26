@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<movie width="200" height="200" framerate="21">
+	<background color="#000000" />
+	<frame>
+		<library>
+			<clip id="oasis.swf" import="deploy/themes/oasis.swf"/>
+			<clip id="oasis.swf.bar.swf" import="deploy/themes/oasis/bar.swf"/>
+			<clip id="oasis.swf.bg.swf" import="deploy/themes/oasis/bg.swf"/>
+			<clip id="oasis.swf.button.swf" import="deploy/themes/oasis/button.swf"/>
+			<clip id="oasis.swf.checkbox.swf" import="deploy/themes/oasis/checkbox.swf"/>
+			<clip id="oasis.swf.combobox.swf" import="deploy/themes/oasis/combobox.swf"/>
+			<clip id="oasis.swf.cursor.swf" import="deploy/themes/oasis/cursor.swf"/>
+			<clip id="oasis.swf.label.swf" import="deploy/themes/oasis/label.swf"/>
+			<clip id="oasis.swf.listitem.swf" import="deploy/themes/oasis/listitem.swf"/>
+			<clip id="oasis.swf.menu.swf" import="deploy/themes/oasis/menu.swf"/>
+			<clip id="oasis.swf.menubaritem.swf" import="deploy/themes/oasis/menubaritem.swf"/>
+			<clip id="oasis.swf.menuitem.swf" import="deploy/themes/oasis/menuitem.swf"/>
+			<clip id="oasis.swf.menuseparator.swf" import="deploy/themes/oasis/menuseparator.swf"/>
+			<clip id="oasis.swf.pane.swf" import="deploy/themes/oasis/pane.swf"/>
+			<clip id="oasis.swf.panesplit.swf" import="deploy/themes/oasis/panesplit.swf"/>
+			<clip id="oasis.swf.panetoggle.swf" import="deploy/themes/oasis/panetoggle.swf"/>
+			<clip id="oasis.swf.progressbar.swf" import="deploy/themes/oasis/progressbar.swf"/>
+			<clip id="oasis.swf.radiobutton.swf" import="deploy/themes/oasis/radiobutton.swf"/>
+			<clip id="oasis.swf.rating.swf" import="deploy/themes/oasis/rating.swf"/>
+			<clip id="oasis.swf.scrollbutton.swf" import="deploy/themes/oasis/scrollbutton.swf"/>
+			<clip id="oasis.swf.scrollpane.swf" import="deploy/themes/oasis/scrollpane.swf"/>
+			<clip id="oasis.swf.scrollpaneopaque.swf" import="deploy/themes/oasis/scrollpaneopaque.swf"/>
+			<clip id="oasis.swf.scrollthumb.swf" import="deploy/themes/oasis/scrollthumb.swf"/>
+			<clip id="oasis.swf.scrolltrack.swf" import="deploy/themes/oasis/scrolltrack.swf"/>
+			<clip id="oasis.swf.text.swf" import="deploy/themes/oasis/text.swf"/>
+			<clip id="oasis.swf.titlebarbutton.swf" import="deploy/themes/oasis/titlebarbutton.swf"/>
+			<clip id="oasis.swf.treeitem.swf" import="deploy/themes/oasis/treeitem.swf"/>
+                        <clip id="oasis_lib">
+                                <frame>
+                                        <place id="oasis.swf" />
+                			<place id="oasis.swf.bar.swf" />
+                			<place id="oasis.swf.bg.swf" />
+                			<place id="oasis.swf.button.swf" />
+                			<place id="oasis.swf.checkbox.swf" />
+                			<place id="oasis.swf.combobox.swf" />
+                			<place id="oasis.swf.cursor.swf" />
+                			<place id="oasis.swf.label.swf" />
+                			<place id="oasis.swf.listitem.swf" />
+                			<place id="oasis.swf.menu.swf" />
+                			<place id="oasis.swf.menubaritem.swf" />
+                			<place id="oasis.swf.menuitem.swf" />
+                			<place id="oasis.swf.menuseparator.swf" />
+                			<place id="oasis.swf.pane.swf" />
+                			<place id="oasis.swf.panesplit.swf" />
+                			<place id="oasis.swf.panetoggle.swf" />
+                			<place id="oasis.swf.progressbar.swf" />
+                			<place id="oasis.swf.radiobutton.swf" />
+                			<place id="oasis.swf.rating.swf" />
+                			<place id="oasis.swf.scrollbutton.swf" />
+                			<place id="oasis.swf.scrollpane.swf" />
+                			<place id="oasis.swf.scrollpaneopaque.swf" />
+                			<place id="oasis.swf.scrollthumb.swf" />
+                			<place id="oasis.swf.scrolltrack.swf" />
+                			<place id="oasis.swf.text.swf" />
+                			<place id="oasis.swf.titlebarbutton.swf" />
+                			<place id="oasis.swf.treeitem.swf" />
+                                </frame>
+                        </clip>
+		</library>
+                <place id="oasis_lib" />
+	</frame>
+</movie>

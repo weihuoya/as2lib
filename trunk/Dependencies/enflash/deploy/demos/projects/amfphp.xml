@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Label value="amfphp" fontSize="8" display="block" />
+	<Label id="homepageLabel" clear="true" />
+	<A href="http://www.amfphp.org/" target="_blank">http://www.amfphp.org</A>
+</Project>

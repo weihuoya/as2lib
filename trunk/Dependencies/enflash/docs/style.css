@@ -1,0 +1,147 @@
+* {
+	margin: 0;
+	padding: 0;
+}
+body {
+	font: 76%/162% 'Lucida Sans Unicode', 'Lucida Grande', 'Bitstream Vera Sans', 'Trebuchet MS', Geneva, Arial, sans-serif;
+	color: #000000;
+	margin: 1em;
+	overflow: auto;
+}
+a {
+	color: #285090;
+	white-space: nowrap;
+}
+a:hover {
+	color: #A30000;
+}
+h1 {
+	color: #000000;
+	font-size: 180%;
+	font-weight: bold;
+	padding: 0;
+	margin: 1em 0;
+}
+h2 {
+	background-color: #285090;
+	color: #FFFFFF;
+	font-size: 130%;
+	font-weight: normal;
+	padding: 2px 4px 4px;
+	margin: 1em 0;
+}
+h3 {
+	font-size: 120%;
+	font-weight: normal;
+	margin: .4em 0;
+}
+dl {
+	margin: 1em 0 0 2em;
+}
+dt {
+	font-weight: bold;
+}
+dd {
+	margin: 0 0 0 1em;
+}
+li {
+	margin: 0 0 .4em 0;
+	list-style: none;
+}
+hr {
+	color: #285090;
+	background: #285090;
+	height: 1px;
+	border: 0;
+	margin: 1em 0 0 0;
+}
+code, pre {
+	font-size: 120%;
+}
+* html code, * html pre {
+	font-size: 100%;
+}
+table {
+	border-collapse:collapse;
+	width: 100%;
+	margin: 0 0 1em 0;
+}
+th {
+	background-color: #D5DEED;
+	font-weight: normal;
+	font-size: 130%;
+}
+th, td {
+	padding: 4px;
+	border: 1px solid #285090;
+}
+* html th {
+	font-size: 100%;
+}
+* html td {
+	font-size: 76%;
+}
+.unresolved_type_name {
+	color: #336600;
+}
+.method_synopsis {
+	color: #285090;
+}
+.constructor {
+	margin: 0 0 1em 0;
+}
+.package_index {
+	margin: 0 0 1em 0;
+	font-weight: bold;
+}
+.nav {
+	background-color: #D5DEED;
+	padding: 4px 2px;
+	margin: 0 0 1em 0;
+	font-weight: bold;
+}
+.nav span {
+	margin: 4px 2px;
+}
+.nav a {
+	color: #285090;
+	text-decoration: none;
+	padding: 1px 0;
+	margin: 4px 2px;
+}
+.nav a span {
+	margin: -2px 1px;
+	padding: 1px 4px;
+}
+.nav a:hover {
+	color: #FFFFFF;
+	background: #A30000;
+	padding: 1px 0;
+	border-top: 1px solid #C28A94;
+	border-bottom: 1px solid #C28A94;
+}
+.nav a:hover span {
+	border-top: 1px solid #A30000;
+	border-bottom: 1px solid #A30000;
+}
+.nav .current {
+	color: #FFFFFF;
+	background: #285090;
+	padding: 1px 0;
+	margin: 4px 2px;
+	border-top: 1px solid #B9C7DE;
+	border-bottom: 1px solid #B9C7DE;
+}
+.nav .current span {
+	margin: -2px 1px;
+	padding: 1px 4px;
+	border-top: 1px solid #285090;
+	border-bottom: 1px solid #285090;
+}
+.footer {
+	margin-top: 1.6em;
+	line-height: 140%;
+}
+.footer span {
+	font-size: 92%;
+}

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Label value="eclipse" fontSize="8" display="block" />
+	<Label id="homepageLabel" clear="true" />
+	<A href="http://www.eclipse.org/" target="_blank">http://www.eclipse.org</A>
+</Project>

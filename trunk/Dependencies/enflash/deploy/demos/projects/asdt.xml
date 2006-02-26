@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Label value="asdt" fontSize="8" display="block" />
+	<Label id="homepageLabel" clear="true" />
+	<A href="http://www.asdt.org/" target="_blank">http://www.asdt.org</A>
+</Project>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WinDemo>
+
+	<winMenu value="Fenêtres" />
+	<prjMenuItem value="Projets" />
+	<optMenuItem value="Options" />
+	<descMenuItem value="Description" />
+
+	<langMenu value="Langue" />
+
+	<helpMenu value="Aide" />
+	<aboutMenuItem value="A propos" />
+	<homepageMenuItem value="Page d'accueil" />
+	
+	<prjWin title="Projets" />
+	<optWin title="Options" />
+	<descWin title="Description" />
+	
+	<zoomLabel value="Zoom:" />
+	
+	<themeLabel value="Theme:" />
+	<defaultTheme value="Defaut" />
+	<oasisTheme value="Oasis" />
+	<officeTheme value="Office" />
+	
+	<aboutDialog title="A propos" />
+
+	<homepageLabel value="Accueil:" />
+
+</WinDemo>

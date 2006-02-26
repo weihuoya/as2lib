@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aswing xmlns="http://www.aswing.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.aswing.org ../awml.xsd ">
+	<frame owner="_root" enabled="true" width="500" height="300" closable="false" title="Test Title" resizable="true">
+		<font/>
+		<empty-border/>
+		<label text="Enter Your Text Here:" vertical-align="top"/>
+		<label/>
+		<flow-layout/>
+		<text-area text="Text Area" columns="10" rows="3" />
+		<button text="Hit me!">
+			<titled-border/>
+			<foreground/>
+			<background/>
+			<margins left="30" right="30"/>
+		</button>
+		<toggle-button text="Toggle" selected="true"></toggle-button>
+		<check-box text="Check Me!" selected="true"></check-box>
+		<radio-button text="Radio 1" group-id="1"></radio-button>
+		<radio-button text="Radio 2" group-id="1" selected="true"></radio-button>
+	</frame>
+</aswing>

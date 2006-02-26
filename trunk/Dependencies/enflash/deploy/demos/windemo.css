@@ -1,0 +1,8 @@
+a {
+	color: #000099;
+	font-weight: bold;
+	text-decoration: none;
+}
+a:hover {
+	text-decoration: underline;
+}

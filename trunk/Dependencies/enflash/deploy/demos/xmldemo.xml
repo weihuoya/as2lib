@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<XMLDemo logger="true">
+	<UI cols="18, *" border="false" onload="XMLDemo.uiLoad" onthemeset="XMLDemo.themeSet" onresize="XMLDemo.paneResize" onzoom="XMLDemo.uiZoom" css="xmldemo.css">
+		<MenuBar>
+			<Menu value="File" shortcut="Alt+F" onchange="XMLDemo.fileChange">
+				<MenuItem value="Create" onchange="XMLDemo.createChange">
+					<MenuItem value="Label" shortcut="Shift+L" icon="label" />
+					<MenuItem value="Button" shortcut="Shift+B" icon="button" />
+					<MenuItem value="TextInput" shortcut="Shift+I" icon="textinput" />
+					<MenuItem value="TextArea" shortcut="Shift+A" icon="textarea" />
+					<Separator />
+					<MenuItem value="Random Item" onchange="XMLDemo.randomChange">
+						<MenuItem value="At index 0" shortcut="Ins+0" />
+						<MenuItem value="At index 1" shortcut="Ins+1" />
+						<MenuItem value="At index 2" shortcut="Ins+2" />
+						<MenuItem value="At index 3" shortcut="Ins+3" />
+						<MenuItem value="At index 4" shortcut="Ins+4" />
+						<MenuItem value="At index 5" shortcut="Ins+5" />
+					</MenuItem>
+				</MenuItem>
+				<MenuItem value="Remove" onchange="XMLDemo.removeChange">
+					<MenuItem value="All" shortcut="Del+A" />
+					<Separator />
+					<MenuItem value="Item at index 0" shortcut="Del+0" />
+					<MenuItem value="Item at index 1" shortcut="Del+1" />
+					<MenuItem value="Item at index 2" shortcut="Del+2" />
+					<MenuItem value="Item at index 3" shortcut="Del+3" />
+					<MenuItem value="Item at index 4" shortcut="Del+4" />
+					<MenuItem value="Item at index 5" shortcut="Del+5" />
+				</MenuItem>
+				<Separator />
+				<MenuItem value="Open" enabled="false" />
+				<MenuItem value="Save" enabled="false" />
+				<MenuItem value="View XML" />
+				<Separator />
+				<MenuItem value="Exit" shortcut="Shift+F4" />
+			</Menu>
+			<Menu value="Themes" shortcut="Alt+T" onload="XMLDemo.themeLoad" onchange="XMLDemo.themeChange">
+				<MenuItem value="Default theme" type="radio" group="themes" />
+				<MenuItem value="Oasis theme" type="radio" group="themes" />
+				<MenuItem value="Office theme" type="radio" group="themes" />
+				<MenuItem value="Robo theme" type="radio" group="themes" />
+			</Menu>
+			<Menu value="Zoom" shortcut="Alt+Z" onload="XMLDemo.zoomLoad"  onchange="XMLDemo.zoomChange">
+				<MenuItem value="80%" shortcut="Shift+~" type="radio" group="zoom" />
+				<MenuItem value="100%" shortcut="Shift+1" type="radio" group="zoom" />
+				<MenuItem value="120%" shortcut="Shift+2" type="radio" group="zoom" />
+				<MenuItem value="150%" shortcut="Shift+3" type="radio" group="zoom" />
+				<MenuItem value="200%" shortcut="Shift+4" type="radio" group="zoom" />
+			</Menu>
+			<Menu value="Help" shortcut="Alt+H" onchange="XMLDemo.helpChange">
+				<MenuItem value="About" />
+				<Separator />
+				<MenuItem value="Homepage" />
+			</Menu>
+		</MenuBar>
+		<ScrollPane id="leftPane" minWidth="18" opaque="true">
+			<Button value="Expand All" w="7.5" onrelease="XMLDemo.expandTree" />
+			<Button value="Collapse All" w="7.5" onrelease="XMLDemo.collapseTree" margin="left: .49, right: 0" />	
+			<Tree id="projectTree" w="16" expandedIcon="treeexpanded" collapsedIcon="treecollapsed" leafIcon="treeleaf" onchange="XMLDemo.selectedUpdate" clear="true">
+				<TreeItem value="Folder 1">
+					<TreeItem value="SubFolder 1.1">
+						<TreeItem value="File 1" />
+					</TreeItem>
+					<TreeItem value="SubFolder 1.2">
+						<TreeItem value="File 1" />
+					</TreeItem>
+					<TreeItem value="SubFolder 1.3">
+						<TreeItem value="File 1" />
+					</TreeItem>	
+				</TreeItem>
+				<TreeItem value="Folder 2">
+					<TreeItem value="SubFolder 2.1">
+						<TreeItem value="SubFolder 2.1.1">
+							<TreeItem value="SubFolder 2.1.1.1">
+								<TreeItem value="SubFolder 2.1.1.1.1">
+									<TreeItem value="File 1" />
+								</TreeItem>
+							</TreeItem>
+						</TreeItem>
+					</TreeItem>				
+				</TreeItem>
+				<TreeItem value="Folder 3" expanded="true">
+					<TreeItem value="File 1" />
+					<TreeItem value="File 2" />
+					<TreeItem value="File 3" />
+				</TreeItem>
+			</Tree>
+			<Label id="selectedLabel" value="Selected Item:" multiline="true" selectable="true" clear="true" />
+		</ScrollPane>
+		<SplitPane rows="*,40%" collapsible="1">
+			<ScrollPane id="mainPane">
+				<Label value="About EnFlash" fontSize="8" />
+				<Label display="block" clear="true" wordWrap="true" multiline="true">
+					<Value>
+						<p class="text"><span class="enflash">EnFlash</span> is an open source Application Framework that brings new possibilities to the <a href="http://www.macromedia.com/software/flashplayer/" class="link" target="_blank">Flash Player</a> Platform. It provides a set of visual components, utility classes and data structures that ease the development of sophisticated cross platform applications. <span class="enflash">EnFlash</span> is based on pure object oriented ActionScript 2 and takes advantage of XML and CSS.</p>
+					</Value>
+				</Label>
+				<LabeledTextInput id="userInput" label="Username:" value="tester" w="12" clear="true" />
+				<LabeledTextInput id="passInput" label="Password:" value="password" w="12" password="true" />
+				<LabeledTextArea id="textArea" label="Message:" w="25" clear="true" size="4" />
+				<Label value="Selection:" clear="true" margin="bottom: 0" />
+				<ComboBox id="comboBox" w="25" clear="true" margin="top: 0">
+					<ComboItem value="Normal Option" />
+					<ComboItem value="Very very very very very very very very Long Option" />
+					<ComboItem value="Short Option" />
+					<ComboItem value="Normal Option" selected="true" />
+					<ComboItem value="Another Option" />
+				</ComboBox>
+				<Label value="Selection:" clear="true" margin="bottom: 0" />
+				<ListBox id="listBox" w="25" clear="true" size="4" margin="top: 0">
+					<ListItem value="Normal Option" />
+					<ListItem value="Very very very very very very very very Long Option" />
+					<ListItem value="Short Option" selected="true" />
+					<ListItem value="Normal Option" />
+					<ListItem value="Another Option" />
+					<ListItem value="One more Option" />
+				</ListBox>
+				<Button value="OK" w="8" onrelease="XMLDemo.okButton" clear="true" />
+				<Button value="Cancel" w="8" onrelease="XMLDemo.cancelButton" />
+				<Label id="subHeading" value="SubHeading Title" fontSize="4" margin="top: 2" clear="true" />
+				<Button id="toggleButton" value="Toggle SubHeading" toggle="true" selected="true" onrelease="XMLDemo.toggleButton" clear="true" />
+				<Button value="Icon Button" icon="label" />
+				<RadioButton label="RadioButton 1" group="radioGroup" clear="true" selected="true" />
+				<RadioButton label="RadioButton 2" group="radioGroup" clear="true" />
+				<RadioButton label="RadioButton 3" group="radioGroup" clear="true" />
+				<CheckBox label="CheckBox 1" w="10" clear="true" selected="true" />
+				<CheckBox label="CheckBox 2" w="10" />
+				<CheckBox label="CheckBox 3" w="10" />
+				<Label value="&lt;b&gt;Rate this demo:&lt;/b&gt;" clear="true" margin="top: 1, bottom: 0" />
+				<Rating value="60" clear="true" size="10" />
+				<Label value="&lt;b&gt;Project Status:&lt;/b&gt;" clear="true" margin="top: 1, bottom: 0" />
+				<ProgressBar value="30" clear="true" />
+			</ScrollPane>
+			<ScrollPane>
+				<Container>
+					<MenuBar>
+						<Menu value="Edit" shortcut="Alt+E" onchange="XMLDemo.editChange">
+							<MenuItem value="Clear" shortcut="Ctrl+Del" />
+							<Separator />
+							<MenuItem value="Copy" shortcut="Ctrl+C" />
+							<MenuItem value="Cut" shortcut="Ctrl+X" />
+						</Menu>
+						<Menu value="Options" shortcut="Alt+O" onchange="XMLDemo.optionsChange">
+							<MenuItem value="Enable" type="check" checked="true" />
+							<Separator />
+							<MenuItem value="Increase Font" shortcut="Ctrl++" />	
+							<MenuItem value="Decrease Font" shortcut="Ctrl+-" />	
+						</Menu>
+					</MenuBar>
+					<ScrollPane id="infoPane">
+						<Label id="infoLabel" multiline="true" selectable="true" />
+					</ScrollPane>
+				</Container>
+			</ScrollPane>
+		</SplitPane>
+		<Window id="xmlWindow" title="View XML" visible="false">
+			<ScrollPane padding="right: 1.5">
+				<Label id="xmlLabel" multiline="true" />
+			</ScrollPane>
+		</Window>
+		<Dialog id="aboutDialog" title="About" ratio="false">
+			<ScrollPane padding="0">
+				<Component w="360" h="130" swf="about.swf" margin="0" zoom="false" />
+				<Label value="© 2004-2005 Asual DZZD" margin="top: 0, right: 2, bottom: 4, left: 2" />
+			</ScrollPane>
+		</Dialog>
+	</UI>
+</XMLDemo>

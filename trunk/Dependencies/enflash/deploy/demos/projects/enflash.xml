@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Label value="EnFlash" fontSize="8" display="block" />
+	<Label id="homepageLabel" clear="true" />
+	<A href="http://www.asual.com/enflash/" target="_blank">http://www.asual.com/enflash/</A>
+</Project>

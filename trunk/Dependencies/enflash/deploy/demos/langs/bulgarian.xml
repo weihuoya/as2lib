@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WinDemo>
+
+	<winMenu value="Прозорци" />
+	<prjMenuItem value="Проекти" />
+	<optMenuItem value="Опции" />
+	<descMenuItem value="Описание" />
+
+	<langMenu value="Език" />
+
+	<helpMenu value="Помощ" />
+	<aboutMenuItem value="Информация" />
+	<homepageMenuItem value="Уебсайт" />
+
+	<prjWin title="Проекти" />
+	<optWin title="Опции" />
+	<descWin title="Описание" />
+	
+	<zoomLabel value="Увеличениe:" />
+
+	<themeLabel value="Tема:" />
+	<defaultTheme value="Основна" />
+	<oasisTheme value="Оазис" />
+	<officeTheme value="Офис" />
+	
+	<aboutDialog title="Информация" />
+	
+	<homepageLabel value="Уебсайт:" />
+	
+</WinDemo>

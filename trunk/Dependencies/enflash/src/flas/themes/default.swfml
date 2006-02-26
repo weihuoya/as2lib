@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<movie width="200" height="200" framerate="21">
+	<background color="#000000" />
+	<frame>
+		<library>
+			<clip id="default.swf" import="deploy/themes/default.swf"/>
+			<clip id="default.swf.bar.swf" import="deploy/themes/default/bar.swf"/>
+			<clip id="default.swf.bg.swf" import="deploy/themes/default/bg.swf"/>
+			<clip id="default.swf.button.swf" import="deploy/themes/default/button.swf"/>
+			<clip id="default.swf.checkbox.swf" import="deploy/themes/default/checkbox.swf"/>
+			<clip id="default.swf.combobox.swf" import="deploy/themes/default/combobox.swf"/>
+			<clip id="default.swf.cursor.swf" import="deploy/themes/default/cursor.swf"/>
+			<clip id="default.swf.label.swf" import="deploy/themes/default/label.swf"/>
+			<clip id="default.swf.listitem.swf" import="deploy/themes/default/listitem.swf"/>
+			<clip id="default.swf.menu.swf" import="deploy/themes/default/menu.swf"/>
+			<clip id="default.swf.menubaritem.swf" import="deploy/themes/default/menubaritem.swf"/>
+			<clip id="default.swf.menuitem.swf" import="deploy/themes/default/menuitem.swf"/>
+			<clip id="default.swf.menuseparator.swf" import="deploy/themes/default/menuseparator.swf"/>
+			<clip id="default.swf.pane.swf" import="deploy/themes/default/pane.swf"/>
+			<clip id="default.swf.panesplit.swf" import="deploy/themes/default/panesplit.swf"/>
+			<clip id="default.swf.panetoggle.swf" import="deploy/themes/default/panetoggle.swf"/>
+			<clip id="default.swf.progressbar.swf" import="deploy/themes/default/progressbar.swf"/>
+			<clip id="default.swf.radiobutton.swf" import="deploy/themes/default/radiobutton.swf"/>
+			<clip id="default.swf.rating.swf" import="deploy/themes/default/rating.swf"/>
+			<clip id="default.swf.scrollbutton.swf" import="deploy/themes/default/scrollbutton.swf"/>
+			<clip id="default.swf.scrollpane.swf" import="deploy/themes/default/scrollpane.swf"/>
+			<clip id="default.swf.scrollpaneopaque.swf" import="deploy/themes/default/scrollpaneopaque.swf"/>
+			<clip id="default.swf.scrollthumb.swf" import="deploy/themes/default/scrollthumb.swf"/>
+			<clip id="default.swf.scrolltrack.swf" import="deploy/themes/default/scrolltrack.swf"/>
+			<clip id="default.swf.text.swf" import="deploy/themes/default/text.swf"/>
+			<clip id="default.swf.titlebarbutton.swf" import="deploy/themes/default/titlebarbutton.swf"/>
+			<clip id="default.swf.treeitem.swf" import="deploy/themes/default/treeitem.swf"/>
+                        <clip id="default_lib">
+                                <frame>
+                                        <place id="default.swf" />
+                			<place id="default.swf.bar.swf" />
+                			<place id="default.swf.bg.swf" />
+                			<place id="default.swf.button.swf" />
+                			<place id="default.swf.checkbox.swf" />
+                			<place id="default.swf.combobox.swf" />
+                			<place id="default.swf.cursor.swf" />
+                			<place id="default.swf.label.swf" />
+                			<place id="default.swf.listitem.swf" />
+                			<place id="default.swf.menu.swf" />
+                			<place id="default.swf.menubaritem.swf" />
+                			<place id="default.swf.menuitem.swf" />
+                			<place id="default.swf.menuseparator.swf" />
+                			<place id="default.swf.pane.swf" />
+                			<place id="default.swf.panesplit.swf" />
+                			<place id="default.swf.panetoggle.swf" />
+                			<place id="default.swf.progressbar.swf" />
+                			<place id="default.swf.radiobutton.swf" />
+                			<place id="default.swf.rating.swf" />
+                			<place id="default.swf.scrollbutton.swf" />
+                			<place id="default.swf.scrollpane.swf" />
+                			<place id="default.swf.scrollpaneopaque.swf" />
+                			<place id="default.swf.scrollthumb.swf" />
+                			<place id="default.swf.scrolltrack.swf" />
+                			<place id="default.swf.text.swf" />
+                			<place id="default.swf.titlebarbutton.swf" />
+                			<place id="default.swf.treeitem.swf" />
+                                </frame>
+                        </clip>
+		</library>
+                <place id="default_lib" />
+	</frame>
+</movie>

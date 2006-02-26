@@ -1,0 +1,67 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<movie width="200" height="200" framerate="21">
+	<background color="#000000" />
+	<frame>
+		<library>
+			<clip id="office.swf" import="deploy/themes/office.swf"/>
+			<clip id="office.swf.bar.swf" import="deploy/themes/office/bar.swf"/>
+			<clip id="office.swf.bg.swf" import="deploy/themes/office/bg.swf"/>
+			<clip id="office.swf.button.swf" import="deploy/themes/office/button.swf"/>
+			<clip id="office.swf.checkbox.swf" import="deploy/themes/office/checkbox.swf"/>
+			<clip id="office.swf.combobox.swf" import="deploy/themes/office/combobox.swf"/>
+			<clip id="office.swf.cursor.swf" import="deploy/themes/office/cursor.swf"/>
+			<clip id="office.swf.label.swf" import="deploy/themes/office/label.swf"/>
+			<clip id="office.swf.listitem.swf" import="deploy/themes/office/listitem.swf"/>
+			<clip id="office.swf.menu.swf" import="deploy/themes/office/menu.swf"/>
+			<clip id="office.swf.menubaritem.swf" import="deploy/themes/office/menubaritem.swf"/>
+			<clip id="office.swf.menuitem.swf" import="deploy/themes/office/menuitem.swf"/>
+			<clip id="office.swf.menuseparator.swf" import="deploy/themes/office/menuseparator.swf"/>
+			<clip id="office.swf.pane.swf" import="deploy/themes/office/pane.swf"/>
+			<clip id="office.swf.panesplit.swf" import="deploy/themes/office/panesplit.swf"/>
+			<clip id="office.swf.panetoggle.swf" import="deploy/themes/office/panetoggle.swf"/>
+			<clip id="office.swf.progressbar.swf" import="deploy/themes/office/progressbar.swf"/>
+			<clip id="office.swf.radiobutton.swf" import="deploy/themes/office/radiobutton.swf"/>
+			<clip id="office.swf.rating.swf" import="deploy/themes/office/rating.swf"/>
+			<clip id="office.swf.scrollbutton.swf" import="deploy/themes/office/scrollbutton.swf"/>
+			<clip id="office.swf.scrollpane.swf" import="deploy/themes/office/scrollpane.swf"/>
+			<clip id="office.swf.scrollpaneopaque.swf" import="deploy/themes/office/scrollpaneopaque.swf"/>
+			<clip id="office.swf.scrollthumb.swf" import="deploy/themes/office/scrollthumb.swf"/>
+			<clip id="office.swf.scrolltrack.swf" import="deploy/themes/office/scrolltrack.swf"/>
+			<clip id="office.swf.text.swf" import="deploy/themes/office/text.swf"/>
+			<clip id="office.swf.titlebarbutton.swf" import="deploy/themes/office/titlebarbutton.swf"/>
+			<clip id="office.swf.treeitem.swf" import="deploy/themes/office/treeitem.swf"/>
+                        <clip id="office_lib">
+                                <frame>
+                                        <place id="office.swf" />
+                			<place id="office.swf.bar.swf" />
+                			<place id="office.swf.bg.swf" />
+                			<place id="office.swf.button.swf" />
+                			<place id="office.swf.checkbox.swf" />
+                			<place id="office.swf.combobox.swf" />
+                			<place id="office.swf.cursor.swf" />
+                			<place id="office.swf.label.swf" />
+                			<place id="office.swf.listitem.swf" />
+                			<place id="office.swf.menu.swf" />
+                			<place id="office.swf.menubaritem.swf" />
+                			<place id="office.swf.menuitem.swf" />
+                			<place id="office.swf.menuseparator.swf" />
+                			<place id="office.swf.pane.swf" />
+                			<place id="office.swf.panesplit.swf" />
+                			<place id="office.swf.panetoggle.swf" />
+                			<place id="office.swf.progressbar.swf" />
+                			<place id="office.swf.radiobutton.swf" />
+                			<place id="office.swf.rating.swf" />
+                			<place id="office.swf.scrollbutton.swf" />
+                			<place id="office.swf.scrollpane.swf" />
+                			<place id="office.swf.scrollpaneopaque.swf" />
+                			<place id="office.swf.scrollthumb.swf" />
+                			<place id="office.swf.scrolltrack.swf" />
+                			<place id="office.swf.text.swf" />
+                			<place id="office.swf.titlebarbutton.swf" />
+                			<place id="office.swf.treeitem.swf" />
+                                </frame>
+                        </clip>
+		</library>
+                <place id="office_lib" />
+	</frame>
+</movie>

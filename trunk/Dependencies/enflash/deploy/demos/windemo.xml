@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<WinDemo logger="true">
+	<UI onload="WinDemo.uiLoad" onthemeset="WinDemo.winSize" onzoom="WinDemo.winSize" onresize="WinDemo.winSize" css="windemo.css">
+		<MenuBar>
+			<Menu id="winMenu" shortcut="Alt+W" onchange="WinDemo.winChange">
+				<MenuItem id="prjMenuItem" shortcut="Shift+P" type="check" checked="true" />
+				<MenuItem id="optMenuItem" shortcut="Shift+O" type="check" checked="true" />
+				<MenuItem id="descMenuItem" shortcut="Shift+D" type="check" checked="true" />
+			</Menu>
+			<Menu id="langMenu" shortcut="Alt+L" onchange="WinDemo.langChange">
+				<MenuItem id="bulgarian" value="Български" type="radio" />
+				<MenuItem id="deutsch" value="Deutsch" type="radio" />
+				<MenuItem id="english" value="English" type="radio" checked="true" />
+				<MenuItem id="francais" value="Français" type="radio" />
+			</Menu>
+			<Menu id="helpMenu" shortcut="Alt+H" onchange="WinDemo.helpChange">
+				<MenuItem id="aboutMenuItem" />
+				<Separator />
+				<MenuItem id="homepageMenuItem" />
+			</Menu>
+		</MenuBar>
+		<Window id="prjWin" draggable="false" onclose="WinDemo.winClose">
+			<ScrollPane opaque="true">
+				<ListBox id="prjList" margin="0" display="block" onchange="WinDemo.showProject">
+					<ListItem value="AMFPHP" />
+					<ListItem value="Ant" />
+					<ListItem value="as2api" />
+					<ListItem value="ASDT" />
+					<ListItem value="eclipse" />
+					<ListItem value="EnFlash" selected="true" />
+					<ListItem value="MTASC" />
+					<ListItem value="OpenAMF" />
+					<ListItem value="swfmill" />
+				</ListBox>
+			</ScrollPane>
+		</Window>
+		<Window id="optWin" draggable="false" onclose="WinDemo.winClose">
+			<ScrollPane opaque="true">
+				<Label id="zoomLabel" display="block" />
+				<ComboBox id="zoomBox" margin="top: -.5" clear="true" display="block" onchange="WinDemo.zoomChange">
+					<ComboItem value="80%" />
+					<ComboItem value="100%" selected="true" />
+					<ComboItem value="120%" />
+					<ComboItem value="150%" />
+				</ComboBox>
+				<Label id="themeLabel" display="block" />
+				<ComboBox id="themeBox" margin="top: -.5" clear="true" display="block" onchange="WinDemo.themeChange">
+					<ComboItem id="defaultTheme" />
+					<ComboItem id="oasisTheme" />
+					<ComboItem id="officeTheme" />
+				</ComboBox>
+			</ScrollPane>
+		</Window>
+		<Window id="descWin" draggable="false" onclose="WinDemo.winClose">
+			<ScrollPane />
+		</Window>
+		<Dialog id="aboutDialog" ratio="false">
+			<ScrollPane padding="0">
+				<Component w="360" h="130" swf="about.swf" margin="0" zoom="false" />
+				<Label value="© 2004-2005 Asual DZZD" margin="top: 0, right: 2, bottom: 4, left: 2" />
+			</ScrollPane>
+		</Dialog>
+	</UI>
+</WinDemo>

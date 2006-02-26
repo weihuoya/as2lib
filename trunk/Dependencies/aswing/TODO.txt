@@ -1,0 +1,4 @@
+1. Add Focus Function.(main function finished now, need support more components)
+2. Other usual components ...
+
+More information can be found at : http://www.aswing.org

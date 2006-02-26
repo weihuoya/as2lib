@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Project>
+	<Label value="swfmill" fontSize="8" display="block" />
+	<Label id="homepageLabel" clear="true" />
+	<A href="http://www.iterative.org/swfmill/" target="_blank">http://www.iterative.org/swfmill/</A>
+</Project>
