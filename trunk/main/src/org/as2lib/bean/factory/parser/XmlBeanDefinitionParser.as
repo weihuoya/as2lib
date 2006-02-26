@@ -255,6 +255,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			var name:String = element.attributes[NAME_ATTRIBUTE];
 			var alias:String = element.attributes[ALIAS_ATTRIBUTE];
 			registry.registerAlias(name, alias);
+			return;
 		}
 		if (BEAN_ELEMENT == element.nodeName) {
 			var holder:BeanDefinitionHolder = parseBeanDefinitionElement(element);
@@ -263,7 +264,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			for (var i:Number = 0; i < aliases.length; i++) {
 				registry.registerAlias(holder.getBeanName(), aliases[i]);
 			}
+			return;
 		}
+		throw new BeanDefinitionStoreException(null, "Element [" + element + "] has an unknown name.", this, arguments);
 	}
 	
 	/**
@@ -587,26 +590,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			return parseBeanDefinitionElement(element);
 		}
 		if (element.nodeName == REF_ELEMENT) {
-			// A generic reference to any name of any bean.
-			var refName:String = element.attributes[BEAN_REF_ATTRIBUTE];
-			var toParent:Boolean = false;
-			if (refName == null || refName == "") {
-				// A reference to the id of another bean in the same XML file.
-				refName = element.attributes[LOCAL_REF_ATTRIBUTE];
-				if (refName == null || refName == "") {
-					// A reference to the id of another bean in a parent context.
-					refName = element.attributes[PARENT_REF_ATTRIBUTE];
-					toParent = true;
-					if (refName == null || refName == "") {
-						throw new BeanDefinitionStoreException(beanName, "'bean', 'local' or 'parent' is required for a reference.", this, arguments);
-					}
-					return new RuntimeBeanReference(refName, true);
-				}
-			}
-			if (refName == null || refName == "") {
-				throw new BeanDefinitionStoreException(beanName, "<ref> element contains empty target attribute", this, arguments);
-			}
-			return new RuntimeBeanReference(refName);
+			return parseBeanReferenceElement(element, beanName);
 		}
 		if (element.nodeName == IDREF_ELEMENT) {
 			// A generic reference to any name of any bean.
@@ -653,6 +637,29 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			}
 		}
 		throw new BeanDefinitionStoreException(beanName, "Unknown property sub-element: <" + element.nodeName + ">.", this, arguments);
+	}
+	
+	private function parseBeanReferenceElement(element:XMLNode, beanName:String):RuntimeBeanReference {
+		// A generic reference to any name of any bean.
+		var refName:String = element.attributes[BEAN_REF_ATTRIBUTE];
+		var toParent:Boolean = false;
+		if (refName == null || refName == "") {
+			// A reference to the id of another bean in the same XML file.
+			refName = element.attributes[LOCAL_REF_ATTRIBUTE];
+			if (refName == null || refName == "") {
+				// A reference to the id of another bean in a parent context.
+				refName = element.attributes[PARENT_REF_ATTRIBUTE];
+				toParent = true;
+				if (refName == null || refName == "") {
+					throw new BeanDefinitionStoreException(beanName, "'bean', 'local' or 'parent' is required for a reference.", this, arguments);
+				}
+				return new RuntimeBeanReference(refName, true);
+			}
+		}
+		if (refName == null || refName == "") {
+			throw new BeanDefinitionStoreException(beanName, "<ref> element contains empty target attribute", this, arguments);
+		}
+		return new RuntimeBeanReference(refName);
 	}
 	
 	/**
