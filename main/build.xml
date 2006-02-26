@@ -1,12 +1,14 @@
-<project name="As2lib - Open Source ActionScript 2.0 Library" default="usage" basedir=".">
+<project name="As2lib - Open Source ActionScript 2.0 Library" default="dist" basedir=".">
   
   <property name="src.dir" location="src"/>
   <property name="dist.dir" location="../dist"/>
   <property name="docs.dir" location="../docs"/>
   <property name="test.dir" location="../test"/>
   <property name="lib.dir" location="../lib"/>
+  <property name="remoting.dir" location="C:/Programme/Macromedia/Flash 8/en/First Run/Classes"/>
   
   <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../ant/src"/>
+  <taskdef name="as2api" classname="org.as2lib.ant.As2api" classpath="../ant/src"/>
   
   <target name="usage">
     <echo message=""/>
@@ -14,19 +16,19 @@
     <echo message="Among the available targets are:"/>
     <echo message=""/>
     <echo message="compile"/>
+    <echo message="doc"/>
     <echo message="dist"/>
-    <echo message="clear"/>
+    <echo message="clean"/>
     <echo message="------------------------------------------------------"/>
     <echo message=""/>
   </target>
   
   <target name="compile" description="compile all source files">
-    <mtasc split="no">
+    <mtasc version="8">
       <srcset dir="${src.dir}">
         <include name="**/*.as"/>
         <exclude name="main/Flex.as"/>
         <exclude name="org/as2lib/app/conf/FlexApplication.as"/>
-        <exclude name="org/as2lib/env/bean/**/*.as"/>
         <exclude name="org/as2lib/data/math/**/*.as"/>
         <exclude name="org/as2lib/data/holder/**/*Priority*.as"/>
         <exclude name="org/as2lib/env/log/handler/AscbHandler.as"/>
@@ -45,52 +47,58 @@
       </srcset>
       <classpath>
         <pathelement path="${src.dir}"/>
+        <pathelement path="${remoting.dir}"/>
         <pathelement path="${lib.dir}/actionstep/src"/>
         <pathelement path="${lib.dir}/alcon/classes"/>
         <pathelement path="${lib.dir}/as2logger/Classes"/>
-        <pathelement path="${lib.dir}/as2logger/Classes"/>
         <pathelement path="${lib.dir}/ascb logging/classes"/>
-        <pathelement path="${lib.dir}/debug panel"/>
+        <pathelement path="${lib.dir}/asdt logger/flash_classes"/>
+        <pathelement path="${lib.dir}/aswing/src"/>
         <pathelement path="${lib.dir}/debugit"/>
+        <pathelement path="${lib.dir}/debug panel"/>
+        <pathelement path="${lib.dir}/enflash/src/classes"/>
         <pathelement path="${lib.dir}/flash debug tool/Flash"/>
         <pathelement path="${lib.dir}/flashout"/>
         <pathelement path="${lib.dir}/flex panel/src"/>
         <pathelement path="${lib.dir}/fludge"/>
-        <pathelement path="${lib.dir}/lb.log/source"/>
+        <pathelement path="${lib.dir}/lb log/source"/>
         <pathelement path="${lib.dir}/log4f/content"/>
         <pathelement path="${lib.dir}/ztor log4f"/>
       </classpath>
     </mtasc>
   </target>
   
-  <target name="dist" depends="clear, compile" description="generate the distribution">
+  <target name="dist" depends="clean, compile" description="generate the distribution">
     <mkdir dir="${dist.dir}/src"/>
     <mkdir dir="${dist.dir}/docs/api"/>
     <!--<mkdir dir="${dist.dir}/test"/>-->
     <mkdir dir="${dist.dir}/lib"/>
     
-    <copy tofile="${dist.dir}/license.txt" file="license.txt" preservelastmodified="true"/>
-    <copy tofile="${dist.dir}/readme.txt" file="readme.txt" preservelastmodified="true"/>
-    <copy tofile="${dist.dir}/changelog.xml" file="changelog.xml" preservelastmodified="true"/>
-    <copy tofile="${dist.dir}/changelog.txt" file="changelog.txt" preservelastmodified="true"/>
-    <copy tofile="${dist.dir}/changelog.swf" file="changelog.swf" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/license.txt" file="license.txt"/>
+    <copy tofile="${dist.dir}/readme.txt" file="readme.txt"/>
+    <copy tofile="${dist.dir}/changelog.xml" file="changelog.xml"/>
+    <copy tofile="${dist.dir}/changelog.txt" file="changelog.txt"/>
+    <copy tofile="${dist.dir}/changelog.swf" file="changelog.swf"/>
     
-    <copy todir="${dist.dir}/src" preservelastmodified="true">
+    <copy todir="${dist.dir}/src">
       <fileset dir="${src.dir}">
         <include name="**/*.as"/>
         <exclude name="org/as2lib/data/holder/**/*Priority*.as"/>
         <exclude name="org/as2lib/data/math/**/*.*"/>
-        <exclude name="org/as2lib/env/bean/**/*.*"/>
       </fileset>
     </copy>
     
-    <copy todir="${dist.dir}/docs/api" preservelastmodified="true">
+    <delete dir="${docs.dir}/api"/>
+    <as2api package="org.as2lib.*" classpath="${dist.dir}/src" outputDir="${docs.dir}/api"
+            dotExe="dot.exe" drawDiagrams="yes" progress="yes"
+            title="As2lib - Open Source ActionScript 2.0 Library" sources="yes"/>
+    <copy todir="${dist.dir}/docs/api">
       <fileset dir="${docs.dir}/api">
         <include name="**/*.*"/>
       </fileset>
     </copy>
     
-    <!--<copy todir="${dist.dir}/test" preservelastmodified="true">
+    <!--<copy todir="${dist.dir}/test">
       <fileset dir="${test.dir}">
         <include name="**/*.as"/>
         <include name="**/*.fla"/>
@@ -98,7 +106,7 @@
       </fileset>
     </copy>-->
     
-    <copy todir="${dist.dir}/lib" preservelastmodified="true">
+    <copy todir="${dist.dir}/lib">
       <fileset dir="${lib.dir}">
         <include name="**/*.*"/>
       </fileset>
@@ -107,7 +115,7 @@
     <zip destfile="${dist.dir}/as2lib.zip" basedir="${dist.dir}"/>
   </target>
   
-  <target name="clear" description="clean up">
+  <target name="clean" description="clean up">
     <delete dir="${dist.dir}"/>
   </target>
   
