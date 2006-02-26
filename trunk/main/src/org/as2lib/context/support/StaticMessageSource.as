@@ -27,7 +27,7 @@ import org.as2lib.lang.MessageFormat;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.StaticMessageSource extends AbstractMessageSource implements MessageSource {
+class org.as2lib.context.support.StaticMessageSource extends AbstractMessageSource {
 	
 	/** Associative array storing messages in {@link Properties} files by locale string. */
 	private var messages:Array;
