@@ -95,6 +95,7 @@ class org.as2lib.bean.factory.config.AbstractFactoryBean extends BasicClass impl
 	 */
 	private function createInstance(Void) {
 		throw new AbstractOperationException("This method is marked as abstract and must be overridden by sub-classes.", this, arguments);
+		return null;
 	}
 	
 	/**
