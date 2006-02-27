@@ -1,6 +1,6 @@
-------------------------------------------
-As2ant - SWF Ant Tasks - Version 1.0 Alpha
-------------------------------------------
+------------------------------------
+As2ant - SWF Ant Tasks - Version 1.0
+------------------------------------
 
 
 These tasks are programmed by Simon Wacker (http://www.simonwacker.com) and distributed
@@ -34,3 +34,11 @@ ActionScript 2.0 Library (http://www.as2lib.org).
    library symbols can be directly specified as attributes in the swf ant task.
    For more information take a look at the API documentation of the org.as2lib.ant.Swf class
    or the swf samples.
+
+
+4. As2api Ant Task
+
+   The as2api ant task uses as2api to generate HTML API documentation from ActionScript 2.0
+   source files.
+   For more information take a look at the API documentation of the org.as2lib.ant.As2api
+   class.
