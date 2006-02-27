@@ -6,6 +6,11 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="2">
+				<day value="27">
+					<entry type="add" package="org.as2lib.context.support" class="AsWingApplicationContext">Added support for aswing contexts.</entry>
+					<entry type="add" package="org.as2lib.bean.factory.parser" class="AsWingBeanDefinitionParser">Added support for aswing bean definitions.</entry>
+					<entry type="add" package="org.as2lib.bean.factory.parser" class="UiBeanDefinitionParser">Added generic support for UI bean definitions.</entry>
+				</day>
 				<day value="25">
 					<entry type="add" package="org.as2lib.context.support" class="ResourceBundleMessageSource">Loads messages from properties files for a given base-name.</entry>
 					<entry type="add" package="org.as2lib.bean.factory.config" class="VariableRetrievingFactoryBean">Gets a variable from a bean; mostly used to get constants.</entry>
