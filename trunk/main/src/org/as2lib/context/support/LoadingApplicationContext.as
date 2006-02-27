@@ -97,13 +97,13 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 		// TODO: Throwable.toString is as it seems not anymore automatically invoked when exception is not catched
 		try {
 			beanDefinitionParser.parse(textFile.getContent(), beanFactory);
+			super.start();
 		}
-		catch (exception:org.as2lib.bean.factory.BeanDefinitionStoreException) {
+		catch (exception) {
 			if (logger.isFatalEnabled()) {
 				logger.fatal(exception);
 			}
 		}
-		super.start();
 	}
 	
 	public function start() {
