@@ -54,10 +54,19 @@ class org.as2lib.lang.ConcreteLocale extends BasicClass implements Locale {
 	}
 	
 	public function getSymbols(Void):Properties {
+		if (symbols == null) {
+			symbols = createSymbols();
+		}
 		return symbols;
 	}
 	
+	private function createSymbols(Void):Properties {
+		return null;
+	}
+	
 	public function getMessage(key:String, defaultKey:String, args:Array):String {
+		// do not use symbols instance variable directly to let sub-classes initialize symbols lazily
+		var symbols:Properties = getSymbols();
 		var message:String = symbols.getProp(key, null);
 		if (message === null) {
 			message = symbols.getProp(defaultKey, null);

@@ -24,7 +24,7 @@ import org.as2lib.lang.ConcreteLocale;
 class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 	
 	public function GermanLocale(Void) {
-		super("de", "DE", createSymbols());
+		super("de", "DE", null);
 	}
 	
 	private function createSymbols(Void):Properties {
