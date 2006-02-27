@@ -194,7 +194,7 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	 * @return all added property values
 	 */
 	public function getPropertyValues(Void):Array {
-		return propertyValues.concat();
+		return propertyValues;
 	}
 	
 	/**

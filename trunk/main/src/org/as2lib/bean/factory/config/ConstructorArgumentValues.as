@@ -145,7 +145,7 @@ class org.as2lib.bean.factory.config.ConstructorArgumentValues extends BasicClas
 	 * @return all added constructor argument values
 	 */
 	public function getArgumentValues(Void):Array {
-		return argumentValues.concat();
+		return argumentValues;
 	}
 	
 	/**

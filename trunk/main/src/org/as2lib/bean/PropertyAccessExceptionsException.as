@@ -66,7 +66,7 @@ class org.as2lib.bean.PropertyAccessExceptionsException extends BeanException {
 	 * @return the bound property access exceptions
 	 */
 	public function getPropertyAccessExceptions(Void):Array {
-		return propertyAccessExceptions.concat();
+		return propertyAccessExceptions;
 	}
 	
 	/**
