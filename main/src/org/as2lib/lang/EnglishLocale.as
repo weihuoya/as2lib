@@ -24,7 +24,7 @@ import org.as2lib.lang.ConcreteLocale;
 class org.as2lib.lang.EnglishLocale extends ConcreteLocale {
 	
 	public function EnglishLocale(countryCode:String) {
-		super("en", countryCode, createSymbols());
+		super("en", countryCode, null);
 	}
 	
 	private function createSymbols(Void):Properties {
