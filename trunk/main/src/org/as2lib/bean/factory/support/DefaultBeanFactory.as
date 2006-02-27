@@ -538,7 +538,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			if (!propertyValues.contains(propertyName)) {
 				if (beanWrapper.isWritableProperty(propertyName)) {
 					var propertyValue = getBean(propertyName);
-					propertyValues.addPropertyValue(propertyName, propertyValue);
+					propertyValues.addPropertyValueByNameAndValueAndType(propertyName, propertyValue);
 					if (mergedBeanDefinition.isSingleton()) {
 						registerDependentBean(propertyName, beanName);
 					}
@@ -569,7 +569,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		for (var i:Number = 0; i < pvArray.length; i++) {
 			var pv:PropertyValue = pvArray[i];
 			var resolvedValue = resolveValue(pv.getName(), pv.getValue(), beanName, mergedBeanDefinition);
-			deepCopy.addPropertyValue(pv.getName(), resolvedValue, pv.getType());
+			deepCopy.addPropertyValueByNameAndValueAndType(pv.getName(), resolvedValue, pv.getType());
 		}
 		try {
 			beanWrapper.setPropertyValues(deepCopy);
@@ -1067,7 +1067,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var beanDefinition:RootBeanDefinition;
 		try {
 			beanDefinition = getMergedBeanDefinition(beanName, false);
-		} catch (exception:org.as2lib.bean.factory.NoSuchBeanDefinitionException) {
+		}
+		catch (exception:org.as2lib.bean.factory.NoSuchBeanDefinitionException) {
 			if (parentBeanFactory != null) {
 				return getParentBeanFactory().getBeanByName(name);
 			}
@@ -1281,7 +1282,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	}
 	
 	public function getBeanPostProcessors(Void):Array {
-		return beanPostProcessors.concat();
+		return beanPostProcessors;
 	}
 	
 	public function registerPropertyValueConverter(requiredType:Function, propertyValueConverter:PropertyValueConverter):Void {
