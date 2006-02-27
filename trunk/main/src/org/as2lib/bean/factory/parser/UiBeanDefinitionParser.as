@@ -172,7 +172,6 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 			for (var i:Number = 0; i < aliases.length; i++) {
 				registry.registerAlias(holder.getBeanName(), aliases[i]);
 			}
-			return;
 		}
 		return propertyValue;
 	}
@@ -184,9 +183,6 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	
 	private function parseDataBindingValue(value:String, beanName:String):XMLNode {
 		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
-		// {myBean.myProperty}    p{myBean.myProperty}
-		// v{myBean.myVariable}
-		// m{myBean.myMethod}
 		var strippedValue:String = value.substring(value.indexOf(DATA_BINDING_PREFIX) + 1, value.length - 1);
 		var isStatic:Boolean = false;
 		var targetObject:String;
