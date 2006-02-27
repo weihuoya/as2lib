@@ -119,7 +119,8 @@ public class As2api extends Task {
     }
     
     /**
-     * Sets a new package containing types to document.
+     * Sets new packages containing types to document. Multple packages can be
+     * separated by ';'.
      * 
      * @param pazkage the new package
      */
@@ -136,12 +137,12 @@ public class As2api extends Task {
     }
     
     /**
-     * Adds a new package containing types to document.
+     * Creates a new package containing types to document.
      * 
      * @param pazkage the new package
      */
-    public void addPackage(String pazkage) {
-        packages.add(pazkage);
+    public void addConfiguredPackage(Pazkage pazkage) {
+        setPackage(pazkage.getName());
     }
     
     /**
@@ -385,6 +386,27 @@ public class As2api extends Task {
         catch (IOException e) {
             throw new BuildException("Error running " + command.getCommandline()[0] + " compiler.", e, getLocation());
         }
+    }
+    
+    /**
+     * {@code Pazkage} represents a package. A package has only one argument:
+     * "name".
+     */
+    public static class Pazkage {
+        
+        private String name;
+        
+        public Pazkage() {
+        }
+        
+        public String getName() {
+            return name;
+        }
+        
+        public void setName(String name) {
+            this.name = name;
+        }
+        
     }
     
 }
