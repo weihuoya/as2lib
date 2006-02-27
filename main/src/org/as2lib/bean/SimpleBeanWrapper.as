@@ -30,6 +30,7 @@ import org.as2lib.bean.MethodInvocationException;
 import org.as2lib.bean.NotReadablePropertyException;
 import org.as2lib.bean.NotWritablePropertyException;
 import org.as2lib.bean.NullValueInNestedPathException;
+import org.as2lib.bean.PropertyAccessException;
 import org.as2lib.bean.PropertyAccessExceptionsException;
 import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValueConverter;
@@ -114,7 +115,19 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 			return nestedBeanWrapper.isWritableProperty(getFinalPath(propertyName));
 		}
 		var tokens:Array = getPropertyNameTokens(propertyName);
-		return (findMethodName(SET_PROPERTY_PREFIXES, tokens.actualName) != null);
+		var methodName:String = findMethodName(SET_PROPERTY_PREFIXES, tokens.actualName);
+		if (methodName != null) {
+			return true;
+		}
+		try {
+			if (wrappedBean[tokens.actualName] !== undefined) {
+				return true;
+			}
+		}
+		catch (exception) {
+			// ignore exception that may be thrown by __resolve or a Flash property
+		}
+		return false;
 	}
 	
 	public function isReadableProperty(propertyName:String):Boolean {
@@ -394,26 +407,41 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		}
 		var tokens:Array = getPropertyNameTokens(propertyName);
 		var methodName:String = findMethodName(GET_PROPERTY_PREFIXES, tokens.actualName);
-		if (methodName == null) {
-			throw new NotReadablePropertyException(rootBean, nestedPath + propertyName, this, arguments);
-		}
-		var keys:Array = tokens.keys;
 		var value;
-		try {
-			if (keys.length == 1) {
-				var key:String = keys[0];
-				if (isNaN(key)) {
-					value = wrappedBean[methodName](key);
-				} else {
-					value = wrappedBean[methodName](Number(key));
+		var keys:Array = tokens.keys;
+		if (methodName != null) {
+			try {
+				if (keys.length == 1) {
+					var key:String = keys[0];
+					if (isNaN(key)) {
+						value = wrappedBean[methodName](key);
+					}
+					else {
+						value = wrappedBean[methodName](Number(key));
+					}
 				}
-			} else {
-				value = wrappedBean[methodName]();
+				else {
+					value = wrappedBean[methodName]();
+				}
+			}
+			catch (exception) {
+				throw (new MethodInvocationException(propertyName, "Method invocation of method '" + methodName +
+						"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
 			}
 		}
-		catch (exception) {
-			throw (new MethodInvocationException(propertyName, "Method invocation of method '" + methodName +
-					"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+		else {
+			try {
+				if (wrappedBean[tokens.actualName] !== undefined) {
+					value = wrappedBean[tokens.actualName];
+				}
+				else {
+					throw new NotReadablePropertyException(rootBean, nestedPath + propertyName, this, arguments);
+				}
+			}
+			catch (exception) {
+				throw (new PropertyAccessException(propertyName, "Variable access to variable '" + tokens.actualName +
+						"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+			}
 		}
 		if (keys != null) {
 			for (var i:Number = 0; i < keys.length; i++) {
@@ -480,30 +508,43 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		}
 		var tokens:Array = getPropertyNameTokens(propertyName);
 		var methodName:String = findMethodName(SET_PROPERTY_PREFIXES, tokens.actualName);
-		if (methodName == null) {
-			throw new NotWritablePropertyException(rootBean, nestedPath + propertyName,
-					"Bean property '" + propertyName + "' is not writable.", this, arguments);
-		}
-		var keys:Array = tokens.keys;
-		try {
-			if (keys != null) {
-				if (keys.length == 1) {
-					var key:String = keys[0];
-					if (isNaN(key)) {
-						wrappedBean[methodName](key, value);
+		if (methodName != null) {
+			var keys:Array = tokens.keys;
+			try {
+				if (keys != null) {
+					if (keys.length == 1) {
+						var key:String = keys[0];
+						if (isNaN(key)) {
+							wrappedBean[methodName](key, value);
+						} else {
+							wrappedBean[methodName](Number(key), value);
+						}
 					} else {
-						wrappedBean[methodName](Number(key), value);
+						// TODO: get property for all keys except last one and set property of returned property to value
 					}
 				} else {
-					// TODO: get property for all keys except last one and set property of returned property to value
+					wrappedBean[methodName](value);
 				}
-			} else {
-				wrappedBean[methodName](value);
+			}
+			catch (exception) {
+				throw (new MethodInvocationException(propertyName, "Method invocation of method '" + methodName +
+						"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
 			}
 		}
-		catch (exception) {
-			throw (new MethodInvocationException(propertyName, "Method invocation of method '" + methodName +
-					"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+		else {
+			try {
+				if (wrappedBean[tokens.actualName] !== undefined) {
+					wrappedBean[tokens.actualName] = value;
+				}
+				else {
+					throw new NotWritablePropertyException(rootBean, nestedPath + propertyName,
+							"Bean property '" + propertyName + "' is not writable.", this, arguments);
+				}
+			}
+			catch (exception) {
+				throw (new PropertyAccessException(propertyName, "Variable access to variable '" + tokens.actualName +
+						"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+			}
 		}
 	}
 	
