@@ -16,7 +16,7 @@
 
 import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.context.ApplicationContext;
-import org.as2lib.context.support.AbstractRefreshableApplicationContext;
+import org.as2lib.context.support.DefaultApplicationContext;
 
 import com.asual.enflash.EnFlash;
 import com.asual.enflash.EnFlashObject;
@@ -33,7 +33,7 @@ import com.asual.enflash.EnFlashObject;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.EnFlashApplicationContext extends AbstractRefreshableApplicationContext {
+class org.as2lib.context.support.EnFlashApplicationContext extends DefaultApplicationContext {
 	
 	/** The internal enflash application. */
 	private var enFlash:EnFlash;
@@ -60,13 +60,15 @@ class org.as2lib.context.support.EnFlashApplicationContext extends AbstractRefre
 	
 	/**
 	 * Loads the instances from the internal enflash application and registers them as
-	 * singleton beans with their id as bean names on the given {@code beanFactory}.
+	 * singleton beans with their id as bean names on the bean factory.
 	 * 
 	 * <p>These beans may then be referenced by other beans of this context.
 	 * 
 	 * @param beanFactory the bean factory to register beans on
 	 */
-	private function loadBeanDefinitions(beanFactory:ConfigurableListableBeanFactory):Void {
+	private function refreshBeanFactory(Void):Void {
+		super.refreshBeanFactory();
+		var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
 		// TODO: Ask EnFlash developers to implement 'getObjects' method.
 		var beans:Array = enFlash["_objects"];
 		for (var i:Number = 0; i < beans.length; i++) {
