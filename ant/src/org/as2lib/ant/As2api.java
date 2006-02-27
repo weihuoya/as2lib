@@ -31,6 +31,12 @@ import org.apache.tools.ant.types.Path;
  * {@code As2api} generates HTML API documentation from ActionScript 2 source code
  * with As2api.
  * 
+ * <p>Example:
+ * <pre>&lt;as2api package="org.as2lib.*" classpath="${dist.dir}/src"
+ *    outputDir="${docs.dir}/api" dotExe="dot.exe" drawDiagrams="yes"
+ *    progress="yes" title="As2lib - Open Source ActionScript 2.0 Library"
+ *    sources="yes"/&gt;</pre>
+ * 
  * <p>This task can take the following arguments:
  * <ul>
  *   <li>package</li>
@@ -257,7 +263,7 @@ public class As2api extends Task {
      * 
      * @param dotExe
      * @see #setDrawDiagrams(boolean)
-     * @see http://www.graphviz.org
+     * @see <a href="http://www.graphviz.org">Graphviz</a>
      */
     public void setDotExe(File dotExe) {
         this.dotExe = dotExe;
@@ -279,7 +285,7 @@ public class As2api extends Task {
      * 
      * @param drawDiagrams
      * @see #setDotExe(File)
-     * @see http://www.graphviz.org
+     * @see <a href="http://www.graphviz.org">Graphviz</a>
      */
     public void setDrawDiagrams(boolean drawDiagrams) {
         this.drawDiagrams = drawDiagrams;
