@@ -26,30 +26,30 @@
     <mkdir dir="${dist.dir}/samples"/>
     <mkdir dir="${dist.dir}/docs/api"/>
     
-    <copy tofile="${dist.dir}/build.xml" file="build.xml" preservelastmodified="true"/>
-    <copy tofile="${dist.dir}/license.txt" file="license.txt" preservelastmodified="true"/>
-    <copy tofile="${dist.dir}/readme.txt" file="readme.txt" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/build.xml" file="build.xml"/>
+    <copy tofile="${dist.dir}/license.txt" file="license.txt"/>
+    <copy tofile="${dist.dir}/readme.txt" file="readme.txt"/>
     
-    <copy todir="${dist.dir}/src" preservelastmodified="true">
+    <copy todir="${dist.dir}/src">
       <fileset dir="${src.dir}">
         <include name="**/*.java"/>
         <include name="**/*.class"/>
       </fileset>
     </copy>
     
-    <copy todir="${dist.dir}/samples" preservelastmodified="true">
+    <copy todir="${dist.dir}/samples">
       <fileset dir="${samples.dir}">
         <include name="**/*.*"/>
       </fileset>
     </copy>
     
-    <copy todir="${dist.dir}/docs/api" preservelastmodified="true">
+    <copy todir="${dist.dir}/docs/api">
       <fileset dir="${javadocs.dir}">
         <include name="**/*.*"/>
       </fileset>
     </copy>
     
-    <copy tofile="${dist.dir}/as2ant.jar" file="${build.dir}/as2ant.jar" preservelastmodified="true"/>
+    <copy tofile="${dist.dir}/as2ant.jar" file="${build.dir}/as2ant.jar"/>
     
     <zip destfile="${dist.dir}/as2ant.zip" basedir="${dist.dir}"/>
   </target>
