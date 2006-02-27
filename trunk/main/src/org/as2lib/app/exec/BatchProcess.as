@@ -49,14 +49,13 @@ import org.as2lib.app.exec.Batch;
  * @version 1.0
  */
 class org.as2lib.app.exec.BatchProcess extends AbstractProcess
-	implements Batch,
-	    ProcessUpdateListener,
-		ProcessPauseListener,
-	    ProcessResumeListener,
-	    ProcessStartListener,
-		ProcessFinishListener,
-		ProcessErrorListener
-	 {
+		implements Batch, ProcessUpdateListener,
+			ProcessPauseListener,
+			ProcessResumeListener,
+			ProcessStartListener,
+			ProcessFinishListener,
+			ProcessErrorListener
+	{
 	
 	/** List that contains all processes */
 	private var list:Array;
@@ -132,14 +131,15 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 * @param info Finished Process.
 	 */
 	public function onProcessFinish(info:Process):Void {
-		if (info == getCurrentProcess()) {
+		// TODO: Comparing given process with current process is not correct in all cases, because sometimes the current process just delegates everything to another process instance, that passes itself. In this case the check returns false although everything is correct!
+		//if (info == getCurrentProcess()) {
 			info.removeListener(this);
 			nextProcess();
-		} else {
+		/*} else {
 			var error:IllegalArgumentException = new IllegalArgumentException("Unexpected onFinishProcess occured from "+info+".", this, arguments);
 			publishError(error);
 			finish();
-		}
+		}*/
 	}
 	
 	/**
@@ -173,11 +173,11 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 * @param info to the process that has been paused.
 	 */
 	public function onProcessPause(info:Process):Void {
-		if (info == getCurrentProcess()) {
+		//if (info == getCurrentProcess()) {
 			sendPauseEvent();
-		} else {
+		/*} else {
 			publishError(new IllegalArgumentException("Unexpected onPauseProcess occured from "+info+". Expected was "+getCurrentProcess(), this, arguments));
-		}
+		}*/
 	}
 	
 	/**
@@ -187,11 +187,11 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 * @param info to the process that has been resumed.
 	 */
 	public function onProcessResume(info:Process):Void {
-		if (info == getCurrentProcess()) {
+		//if (info == getCurrentProcess()) {
 			sendResumeEvent();
-		} else {
+		/*} else {
 			publishError(new IllegalArgumentException("Unexpected onResumeProcess occured from "+info+".", this, arguments));
-		}
+		}*/
 	}
 	
 	/**
@@ -202,10 +202,9 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 */
 	public function onProcessError(info:Process, error):Boolean {
 		var result:Boolean = false;
-		if (info != getCurrentProcess()) {
+		/*if (info != getCurrentProcess()) {
 			error = new IllegalArgumentException("Unexpected onProcessError occured from "+info+".", this, arguments);
-		}
-		
+		}*/
 		result = publishError(error);
 		if (!result) {
 			finish();
@@ -231,7 +230,7 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 * Starts the execution of the Batch.
 	 */
     public function start() {
-    	if(!started) {
+    	if (!started) {
 			current = -1;
 			started = false;
 			finished = false;
@@ -256,7 +255,7 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 * @return internal identifier of the process
 	 */
 	public function addProcess(p:Process):Number {
-		if(p != this) {
+		if (p != this) {
 			list.push(p);
 			updatePercent(100);
 			return list.length-1;
@@ -359,9 +358,9 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 */
 	private function sendUpdateEvent(Void):Void {
 		super.sendUpdateEvent();
-		var finishDistributor:BatchUpdateListener =
+		var updateDistributor:BatchUpdateListener =
 				dC.getDistributor(BatchUpdateListener);
-		finishDistributor.onBatchUpdate(this);
+		updateDistributor.onBatchUpdate(this);
 	}
 	
 	/**
@@ -369,8 +368,9 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess
 	 */
 	private function sendStartEvent(Void):Void {
 		super.sendStartEvent();
-		var finishDistributor:BatchStartListener =
+		var startDistributor:BatchStartListener =
 				dC.getDistributor(BatchStartListener);
-		finishDistributor.onBatchStart(this);
+		startDistributor.onBatchStart(this);
 	}
+	
 }
