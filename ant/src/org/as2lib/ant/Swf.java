@@ -712,6 +712,9 @@ public class Swf extends Mtasc {
 	        if (font.getGlyphs() != null) {
 	            outputWriter.write(" glyphs=\"" + font.getGlyphs() + "\"");
 	        }
+            if (font.getName() != null) {
+                outputWriter.write(" name=\"" + font.getName() + "\"");
+            }
 	        outputWriter.write("/>\n");
         }
     }
@@ -900,6 +903,7 @@ public class Swf extends Mtasc {
      */
     public static class Font extends Symbol {
         
+        private String name;
         private String glyphs;
         private List includes;
         
@@ -908,6 +912,27 @@ public class Swf extends Mtasc {
          */
         public Font() {
             this.includes = new ArrayList();
+        }
+        
+        /**
+         * Sets the new font family name to use (overriding the original name). This
+         * makes it much easier to address fonts from ActionScript and to "unite" font
+         * families.
+         * 
+         * @param name the font family name to use
+         * @see <a href="http://0xdf.com/?p=50">the poodle’s kern (sample and explanation by Daniel Fischer)</a>
+         */
+        public void setName(String name) {
+            this.name = name;
+        }
+        
+        /**
+         * Returns the font family name.
+         * 
+         * @see #setName(String)
+         */
+        public String getName() {
+            return this.name;
         }
         
         /**
