@@ -77,6 +77,7 @@ public class Swfmill extends Task {
     public static final String HELP = "-h";
     public static final String QUIET = "-q";
     public static final String VERBOSE = "-v";
+    public static final String EXTRA_VERBOSE = "-V";
     public static final String DUMP = "-d";
     
     private String swfmill;
@@ -87,6 +88,7 @@ public class Swfmill extends Task {
     private boolean help;
     private boolean quiet;
     private boolean verbose;
+    private boolean extraVerbose;
     private boolean dump;
     
     /**
@@ -373,6 +375,20 @@ public class Swfmill extends Task {
     }
     
     /**
+     * Sets whether to make extra verbose debugging output.
+     */
+    public void setExtraVerbose(boolean extraVerbose) {
+        this.extraVerbose = extraVerbose;
+    }
+    
+    /**
+     * Returns whether extra verbose debugging ouput is made.
+     */
+    public boolean getExtraVerbose() {
+        return this.extraVerbose;
+    }
+    
+    /**
      * Sets whether to dump swf data when loaded.
      * 
      * @param dump determines whether to dump swf data
@@ -423,6 +439,7 @@ public class Swfmill extends Task {
         if (this.help) command.createArgument().setValue(HELP);
         if (this.quiet) command.createArgument().setValue(QUIET);
         if (this.verbose) command.createArgument().setValue(VERBOSE);
+        if (this.extraVerbose) command.createArgument().setValue(EXTRA_VERBOSE);
         if (this.dump) command.createArgument().setValue(DUMP);
     }
     

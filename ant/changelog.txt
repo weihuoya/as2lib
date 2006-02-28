@@ -1,23 +1,5 @@
-As2ant 1.0
+As2ant 1.1
 ----------
 
-[+] org.as2lib.ant.As2api
-    Added support for HTML API documentation generation via As2api.
-
-[!] org.as2lib.ant.Mtasc
-    Fixed bug with package-argument: Use relative paths!
-
-[+] org.as2lib.ant.Mtasc
-    Added support for custom arguments: <argument name="-myargument" value="myvalue"/>
-
-[~] org.as2lib.ant.Mtasc
-    Ignore classes in source xml files that cannot be found.
-
-[+] org.as2lib.ant.Mtasc
-    Added support for source xml files with 'type' as attribute.
-
-[+] org.as2lib.ant.Mtasc
-    Improved commandline output by adding locations to all exceptions.
-
-[~] org.as2lib.ant.Mtasc
-    Compile all source files in split-mode, even when one raises a compile error.
+[+] org.as2lib.ant.Swfmill
+    Added support for extra verbose debugging output.
