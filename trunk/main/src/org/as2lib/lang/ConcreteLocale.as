@@ -37,6 +37,10 @@ class org.as2lib.lang.ConcreteLocale extends BasicClass implements Locale {
 		this.messageFormat = new MessageFormat(null, this);
 	}
 	
+	public function getCode(Void):String {
+		return (languageCode + "_" + countryCode);
+	}
+	
 	public function getLanguage(Void):String {
 		return symbols.getProp(languageCode);
 	}

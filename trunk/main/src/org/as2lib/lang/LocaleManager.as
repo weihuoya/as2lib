@@ -47,6 +47,10 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		setTargetLocale(System.capabilities.language);
 	}
 	
+	public function getCode(Void):String {
+		return getTargetLocale().getCode();
+	}
+	
 	public function getLanguage(Void):String {
 		return getTargetLocale().getLanguage();
 	}
