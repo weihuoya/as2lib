@@ -17,6 +17,9 @@
 import org.as2lib.lang.EnglishLocale;
 
 /**
+ * {@code UnitedStatesLocale} represents the United States with language code
+ * "en" and country code "US".
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.lang.UnitedStatesLocale extends EnglishLocale {
