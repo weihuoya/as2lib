@@ -452,14 +452,9 @@ public class Swfmill extends Task {
      * @throws BuildException if the build failed
      */
     public void execute() throws BuildException {
-        try {
         checkParameters();
         Commandline cmd = setupCommand();
         executeCommand(cmd);
-        }
-        catch (Throwable e) {
-            e.printStackTrace();
-        }
     }
     
     private void checkParameters() throws BuildException {
