@@ -452,9 +452,14 @@ public class Swfmill extends Task {
      * @throws BuildException if the build failed
      */
     public void execute() throws BuildException {
+        try {
         checkParameters();
         Commandline cmd = setupCommand();
         executeCommand(cmd);
+        }
+        catch (Throwable e) {
+            e.printStackTrace();
+        }
     }
     
     private void checkParameters() throws BuildException {
@@ -503,17 +508,21 @@ public class Swfmill extends Task {
     }
     
     private boolean isXmlFile(String file) {
-        // are there other extension to check here
-        if (getFileExtension(file).equals("xml")) {
-            return true;
+        if (file != null) {
+            // are there other extension to check here
+            if (getFileExtension(file).equals("xml")) {
+                return true;
+            }
         }
         return false;
     }
     
     private boolean isSwfFile(String file) {
-        // are there other extension to check here
-        if (getFileExtension(file).equals("swf")) {
-            return true;
+        if (file != null) {
+            // are there other extension to check here
+            if (getFileExtension(file).equals("swf")) {
+                return true;
+            }
         }
         return false;
     }
