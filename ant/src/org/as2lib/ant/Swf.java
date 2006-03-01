@@ -107,6 +107,7 @@ import org.apache.tools.ant.BuildException;
  *   <li>mtasc</li>
  *   <li>swfmill</li>
  *   <li>split</li>
+ *   <li>xml</li>
  * </ul>
  * 
  * @author Simon Wacker
