@@ -19,10 +19,19 @@ import org.as2lib.data.holder.properties.SimpleProperties;
 import org.as2lib.lang.ConcreteLocale;
 
 /**
+ * {@code GermanLocale} represents any english speaking country with the language
+ * code "en" and either no country code or the provided one.
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.lang.EnglishLocale extends ConcreteLocale {
 	
+	/**
+	 * Constructs a new {@code EnglishLocale} instance.
+	 * 
+	 * @param countryCode the country code of this locale if it shall represent
+	 * a specific english speaking country
+	 */
 	public function EnglishLocale(countryCode:String) {
 		super("en", countryCode, null);
 	}
