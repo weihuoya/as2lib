@@ -149,18 +149,18 @@ public class Mtasc extends Task {
     private String header;
     private String trace;
     private String version;
-    private boolean split;
-    private boolean help;
-    private boolean verbose;
-    private boolean strict;
-    private boolean msvc;
-    private boolean mx;
-    private boolean keep;
-    private boolean separate;
-    private boolean flash6;
-    private boolean group;
-    private boolean main;
-    private boolean infer;
+    private boolean split  = false;
+    private boolean help = false;
+    private boolean verbose = false;
+    private boolean strict = false;
+    private boolean msvc = false;
+    private boolean mx = false;
+    private boolean keep = false;
+    private boolean separate = false;
+    private boolean flash6 = false;
+    private boolean group = false;
+    private boolean main = false;
+    private boolean infer = false;
     
     /**
      * Constructs a new {@code Mtasc} instance.
@@ -172,7 +172,6 @@ public class Mtasc extends Task {
         this.sourceSets = new ArrayList();
         this.sourceList = new ArrayList();
         this.arguments = new ArrayList();
-        this.split = false;
     }
     
     /**
@@ -881,11 +880,13 @@ public class Mtasc extends Task {
      * Executes this task.
      * 
      * @throws BuildException if neither source directory nor source set nor source file
-     * is specified
+     * nor source xml nor package is specified
      * @throws BuildException if a source does not exist
      */
     public void execute() throws BuildException {
-        checkParameters();
+        if (!checkParameters()) {
+            throw new BuildException("Either 'src', 'srcset', 'srcxml', 'srcdir' or 'pack' must be set.", getLocation());
+        }
         resetCompileFiles();
         addCompileFiles();
         compile();
@@ -895,18 +896,19 @@ public class Mtasc extends Task {
      * Checks whether the required parameters are set. This is either source directory,
      * source set, source file, source xml or pack.
      * 
-     * @throws BuildException if neither source directory nor source set nor source file
-     * nor source xml is specified
+     * @return {@code true} if either source directory or source set or source file
+     * or source xml or package is specified (all necessary data)
      */
-    private void checkParameters() throws BuildException {
+    protected boolean checkParameters() {
         if ((this.sourceDirectory == null || this.sourceDirectory.size() == 0)
         		&& this.sourceSets.size() == 0
         		&& this.source == null
                 && this.sourceList.size() == 0
                 && (this.sourceXml == null || this.sourceXml.size() == 0)
                 && (this.pack == null || this.pack.size() == 0)) {
-            throw new BuildException("Either 'src', 'srcset', 'srcxml', 'srcdir' or 'pack' must be set.", getLocation());
+            return false;
         }
+        return true;
     }
     
     /**
