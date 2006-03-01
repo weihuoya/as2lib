@@ -610,7 +610,7 @@ public class Swf extends Mtasc {
     /**
      * Returns the swfmill xml.
      * 
-     * @see #addConfiguredXml(String)
+     * @see #addConfiguredXml(Xml)
      */
     public String getXml() {
         return this.swfmill.getText();
