@@ -419,7 +419,6 @@ public class Swfmill extends Task {
      * <p>You must wrap the xml in a CDATA block:
      * <pre>&lt;swfmill src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf"&gt;
      *  &lt;![CDATA[
-     *    &lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
      *    &lt;movie width="300" height="100" framerate="31"&gt;
      *      &lt;background color='#FF8A00'/&gt;
      *      &lt;frame&gt;

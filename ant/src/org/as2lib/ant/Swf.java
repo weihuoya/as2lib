@@ -588,7 +588,6 @@ public class Swf extends Mtasc {
      * <pre>&lt;swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf"&gt;
      *  &lt;xml&gt;
      *    &lt;![CDATA[
-     *      &lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
      *      &lt;movie width="300" height="100" framerate="31"&gt;
      *        &lt;background color='#FF8A00'/&gt;
      *        &lt;frame&gt;
