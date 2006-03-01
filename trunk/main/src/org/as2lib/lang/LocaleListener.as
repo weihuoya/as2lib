@@ -17,11 +17,19 @@
 import org.as2lib.lang.LocaleManager;
 
 /**
+ * {@code LocaleListener} can be used to get notified of changes regarding locales.
+ * For example if the target locale of the {@link #LocaleManager} changes.
+ * 
  * @author Martin Heidegger
  * @author Simon Wacker
  */
 interface org.as2lib.lang.LocaleListener {
 	
+	/**
+	 * Gets invoked when the target locale of the given locale manager changed.
+	 * 
+	 * @param localeManager the locale manager whose target locale changed
+	 */
 	public function onLocaleChange(localeManager:LocaleManager):Void;	
 	
 }
