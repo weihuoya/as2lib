@@ -1,8 +1,11 @@
 As2ant 1.1
 ----------
 
+[+] org.as2lib.ant.Swfmill / org.as2lib.ant.Swf
+    Added support for specifying the swfmill xml directly in the tasks.
+
 [+] org.as2lib.ant.Swf
     Added support for overriding font family names.
 
-[+] org.as2lib.ant.Swfmill
+[+] org.as2lib.ant.Swfmill / org.as2lib.ant.Swf
     Added support for extra verbose debugging output.

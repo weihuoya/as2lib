@@ -16,12 +16,17 @@
 
 package org.as2lib.ant;
 
-import java.io.File;
+import java.io.ByteArrayInputStream;
+import java.io.DataInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 
 import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Execute;
+import org.apache.tools.ant.taskdefs.ExecuteStreamHandler;
+import org.apache.tools.ant.taskdefs.ExecuteWatchdog;
+import org.apache.tools.ant.taskdefs.PumpStreamHandler;
 import org.apache.tools.ant.types.Commandline;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
@@ -79,17 +84,19 @@ public class Swfmill extends Task {
     public static final String VERBOSE = "-v";
     public static final String EXTRA_VERBOSE = "-V";
     public static final String DUMP = "-d";
+    public static final String STDIN = "stdin";
     
     private String swfmill;
-    private File source;
-    private File destination;
-    private File xsl;
+    private String source;
+    private String destination;
+    private String xsl;
     private String command;
-    private boolean help;
-    private boolean quiet;
-    private boolean verbose;
-    private boolean extraVerbose;
-    private boolean dump;
+    private String xml;
+    private boolean help = false;
+    private boolean quiet = false;
+    private boolean verbose = false;
+    private boolean extraVerbose = false;
+    private boolean dump = false;
     
     /**
      * Constructs a new {@code Swfmill} instance.
@@ -140,7 +147,7 @@ public class Swfmill extends Task {
      * 
      * @param source the source file
      */
-    public void setSrc(File source) {
+    public void setSrc(String source) {
         this.source = source;
     }
     
@@ -149,7 +156,7 @@ public class Swfmill extends Task {
      * 
      * @return the set source file
      */
-    public File getSrc() {
+    public String getSrc() {
         return this.source;
     }
     
@@ -159,7 +166,7 @@ public class Swfmill extends Task {
      * 
      * @param source the source file
      */
-    public void setSource(File source) {
+    public void setSource(String source) {
         setSrc(source);
     }
     
@@ -168,7 +175,7 @@ public class Swfmill extends Task {
      * 
      * @return the set source file
      */
-    public File getSource() {
+    public String getSource() {
         return getSrc();
     }
     
@@ -178,7 +185,7 @@ public class Swfmill extends Task {
      * 
      * @param source the source file
      */
-    public void setIn(File source) {
+    public void setIn(String source) {
         setSrc(source);
     }
     
@@ -187,7 +194,7 @@ public class Swfmill extends Task {
      * 
      * @return the set source file
      */
-    public File getIn() {
+    public String getIn() {
         return getSrc();
     }
     
@@ -197,7 +204,7 @@ public class Swfmill extends Task {
      * 
      * @param destination the destination file
      */
-    public void setDest(File destination) {
+    public void setDest(String destination) {
         this.destination = destination;
     }
     
@@ -206,7 +213,7 @@ public class Swfmill extends Task {
      * 
      * @return the destination file
      */
-    public File getDest() {
+    public String getDest() {
         return this.destination;
     }
     
@@ -216,7 +223,7 @@ public class Swfmill extends Task {
      * 
      * @param destination the destination file
      */
-    public void setDestination(File destination) {
+    public void setDestination(String destination) {
         setDest(destination);
     }
     
@@ -225,7 +232,7 @@ public class Swfmill extends Task {
      * 
      * @return the destination file
      */
-    public File getDestination() {
+    public String getDestination() {
         return getDest();
     }
     
@@ -235,7 +242,7 @@ public class Swfmill extends Task {
      * 
      * @param destination the destination file
      */
-    public void setOut(File destination) {
+    public void setOut(String destination) {
         setDest(destination);
     }
     
@@ -244,7 +251,7 @@ public class Swfmill extends Task {
      * 
      * @return the destination file
      */
-    public File getOut() {
+    public String getOut() {
         return getDest();
     }
     
@@ -253,7 +260,7 @@ public class Swfmill extends Task {
      * 
      * @param xsl the xsl file
      */
-    public void setXsl(File xsl) {
+    public void setXsl(String xsl) {
         this.xsl = xsl;
     }
     
@@ -262,7 +269,7 @@ public class Swfmill extends Task {
      * 
      * @return the xsl file
      */
-    public File getXsl() {
+    public String getXsl() {
         return this.xsl;
     }
     
@@ -407,6 +414,40 @@ public class Swfmill extends Task {
     }
     
     /**
+     * Sets the swfmill xml.
+     * 
+     * <p>You must wrap the xml in a CDATA block:
+     * <pre>&lt;swfmill src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf"&gt;
+     *  &lt;![CDATA[
+     *    &lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+     *    &lt;movie width="300" height="100" framerate="31"&gt;
+     *      &lt;background color='#FF8A00'/&gt;
+     *      &lt;frame&gt;
+     *        &lt;library&gt;
+     *          &lt;clip id="simonwacker" import="files/simonwacker.jpg"/&gt;
+     *          &lt;font id="pixel" import="files/pixel.ttf"/&gt;
+     *        &lt;/library&gt;
+     *      &lt;/frame&gt;
+     *    &lt;/movie&gt;
+     *  ]]&gt;
+     *&lt;/swf&gt;</pre>
+     * 
+     * @param xml the swfmill xml to use
+     */
+    public void addText(String xml) {
+        this.xml = xml;
+    }
+    
+    /**
+     * Returns the swfmill xml.
+     * 
+     * @see #addText(String)
+     */
+    public String getText() {
+        return this.xml;
+    }
+    
+    /**
      * Executes this task.
      * 
      * @throws BuildException if the build failed
@@ -418,8 +459,8 @@ public class Swfmill extends Task {
     }
     
     private void checkParameters() throws BuildException {
-        if (this.source == null) {
-            throw new BuildException("The 'src', 'source' or 'in' attribute must be set.", getLocation());
+        if (this.source == null && this.xml == null) {
+            throw new BuildException("The 'src', 'source' or 'in' attribute or the xml data must be set.", getLocation());
         }
     }
     
@@ -428,9 +469,14 @@ public class Swfmill extends Task {
         cmd.setExecutable(getSwfmill());
         setupCommandSwitches(cmd);
         cmd.createArgument().setValue(evaluateCommand());
-        cmd.createArgument().setFile(this.source);
+        if (this.source != null) {
+            cmd.createArgument().setValue(this.source);
+        }
+        else {
+            cmd.createArgument().setValue(STDIN);
+        }
         if (this.destination != null) {
-            cmd.createArgument().setFile(this.destination);
+            cmd.createArgument().setValue(this.destination);
         }
         return cmd;
     }
@@ -457,7 +503,7 @@ public class Swfmill extends Task {
         return SIMPLE;
     }
     
-    private boolean isXmlFile(File file) {
+    private boolean isXmlFile(String file) {
         // are there other extension to check here
         if (getFileExtension(file).equals("xml")) {
             return true;
@@ -465,7 +511,7 @@ public class Swfmill extends Task {
         return false;
     }
     
-    private boolean isSwfFile(File file) {
+    private boolean isSwfFile(String file) {
         // are there other extension to check here
         if (getFileExtension(file).equals("swf")) {
             return true;
@@ -473,9 +519,7 @@ public class Swfmill extends Task {
         return false;
     }
     
-    private String getFileExtension(File file) {
-        // is there a better way?
-        String fileName = file.getName();
+    private String getFileExtension(String fileName) {
         String extension = "";
         int lastDotPosition = fileName.lastIndexOf(".");
         if (0 < lastDotPosition && lastDotPosition <= fileName.length() - 2) {
@@ -486,7 +530,15 @@ public class Swfmill extends Task {
     
     private void executeCommand(Commandline command) {
         try {
-            Execute exe = new Execute();
+            Execute exe;
+            if (this.source == null) {
+                InputStream bis = new ByteArrayInputStream(this.xml.getBytes());
+                DataInputStream dis = new DataInputStream(bis);
+                ExecuteStreamHandler sh = new PumpStreamHandler(System.out, System.err, dis);
+                exe = new Execute(sh, new ExecuteWatchdog((long) 10000));
+            } else {
+                exe = new Execute();
+            }
             exe.setAntRun(getProject());
             exe.setWorkingDirectory(getProject().getBaseDir());
             exe.setCommandline(command.getCommandline());

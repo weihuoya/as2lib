@@ -189,7 +189,7 @@ public class Swf extends Mtasc {
      */
     public void setDest(File destination) {
         super.setSwf(destination);
-        this.swfmill.setDest(destination);
+        this.swfmill.setDest(destination.getAbsolutePath());
     }
     
     /**
@@ -544,6 +544,17 @@ public class Swf extends Mtasc {
     }
     
     /**
+     * Sets whether extra verbose debugging output shall be made. Mtasc will configured
+     * to make verbose output, swfmill extra verbose.
+     * 
+     * @param extraVerbose whether to make extra verbose debugging output or not
+     */
+    public void setExtraVerbose(boolean extraVerbose) {
+        super.setVerbose(extraVerbose);
+        this.swfmill.setExtraVerbose(extraVerbose);
+    }
+    
+    /**
      * Sets the header information of the swf to compile. The passed-in argument
      * {@code header} can be a string composed of the following elements:
      * <pre>width:height:fps:bgcolor</pre>
@@ -567,20 +578,59 @@ public class Swf extends Mtasc {
     }
     
     /**
+     * Sets the swfmill xml.
+     * 
+     * <p>Note that if you specify this xml, any other information regarding swfmill
+     * (clips, fonts, imports) will be ignored.
+     * 
+     * <p>You must wrap the xml in a CDATA block:
+     * <pre>&lt;swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf"&gt;
+     *  &lt;xml&gt;
+     *    &lt;![CDATA[
+     *      &lt;?xml version="1.0" encoding="iso-8859-1"?&gt;
+     *      &lt;movie width="300" height="100" framerate="31"&gt;
+     *        &lt;background color='#FF8A00'/&gt;
+     *        &lt;frame&gt;
+     *          &lt;library&gt;
+     *            &lt;clip id="simonwacker" import="files/simonwacker.jpg"/&gt;
+     *            &lt;font id="pixel" import="files/pixel.ttf"/&gt;
+     *          &lt;/library&gt;
+     *        &lt;/frame&gt;
+     *      &lt;/movie&gt;
+     *    ]]&gt;
+     *  &lt;/xml&gt;
+     *&lt;/swf&gt;</pre>
+     * 
+     * @param xml the swfmill xml to use
+     */
+    public void addConfiguredXml(Xml xml) {
+        this.swfmill.addText(xml.getText());
+    }
+    
+    /**
+     * Returns the swfmill xml.
+     * 
+     * @see #addText(String)
+     */
+    public String getXml() {
+        return this.swfmill.getText();
+    }
+    
+    /**
      * Executes this swf task.
      * 
      * @throws BuildException if the build failed
      */
     public void execute() throws BuildException {
-        //File classes = createClassesSwf();
-        createXmlFile();
-        this.swfmill.setSrc(new File(getProject().getBaseDir() + "/" + XML));
-        this.swfmill.setCommand(new Swfmill.Command(Swfmill.SIMPLE));
         this.swfmill.setProject(getProject());
+        this.swfmill.setCommand(new Swfmill.Command(Swfmill.SIMPLE));
+        if (this.swfmill.getText() == null) {
+            //File classes = createClassesSwf();
+            createXmlFile();
+            this.swfmill.setSrc(XML);
+        }
         this.swfmill.execute();
-        if ((getSrcDir() != null && getSrcDir().size() != 0)
-        		|| getSrcSets().length != 0
-        		|| getSrc() != null) {
+        if (checkParameters()) {
             super.execute();
         }
     }
@@ -1056,6 +1106,29 @@ public class Swf extends Mtasc {
          */
         public Import[] getIncludes() {
             return (Import[]) this.includes.toArray(new Import[]{});
+        }
+        
+    }
+    
+    /**
+     * {@code Xml} represents the swfmill xml data. Just specify the xml-element and
+     * put the xml data into a CDATA block as element value.
+     * 
+     * @see Swf#addConfiguredXml(Xml)
+     */
+    public static class Xml {
+        
+        private String text;
+        
+        public Xml() {
+        }
+        
+        public void addText(String text) {
+            this.text = text;
+        }
+        
+        public String getText() {
+            return this.text;
         }
         
     }
