@@ -17,6 +17,9 @@
 import org.as2lib.lang.EnglishLocale;
 
 /**
+ * {@code UnitedKingdomLocale} represents the United Kingdom with language code
+ * "en" and country code "GB".
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.lang.UnitedKingdomLocale extends EnglishLocale {
