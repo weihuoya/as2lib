@@ -19,6 +19,9 @@ import org.as2lib.data.holder.properties.SimpleProperties;
 import org.as2lib.lang.ConcreteLocale;
 
 /**
+ * {@code GermanLocale} represents Germany with the language code "de" and country
+ * code "DE".
+ * 
  * @author Simon Wacker
  */
 class org.as2lib.lang.GermanLocale extends ConcreteLocale {
