@@ -10,6 +10,7 @@
   
   <target name="clean" description="delete all generated files">
     <delete dir="${build.dir}" failonerror="false"/>
+    <delete dir="${dist.dir}" failonerror="false"/>
   </target>
   
   <target name="compile" description="compiles the tasks">
@@ -21,7 +22,7 @@
     <jar destfile="${build.dir}/as2ant.jar" basedir="${build.dir}"/>
   </target>
   
-  <target name="dist" description="generate distribution" depends="jar">
+  <target name="dist" description="generate distribution" depends="clean, jar">
     <mkdir dir="${dist.dir}/src"/>
     <mkdir dir="${dist.dir}/samples"/>
     <mkdir dir="${dist.dir}/docs/api"/>
