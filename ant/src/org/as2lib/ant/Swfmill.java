@@ -534,9 +534,9 @@ public class Swfmill extends Task {
     private void executeCommand(Commandline command) {
         try {
             Execute exe;
-            if (this.source == null) {
+            if (this.xml != null) {
                 String xml = getProject().replaceProperties(this.xml);
-                InputStream bis = new ByteArrayInputStream(xml.getBytes());
+                InputStream bis = new ByteArrayInputStream(xml.trim().getBytes());
                 DataInputStream dis = new DataInputStream(bis);
                 ExecuteStreamHandler sh = new PumpStreamHandler(System.out, System.err, dis);
                 exe = new Execute(sh, new ExecuteWatchdog((long) 10000));
