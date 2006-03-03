@@ -122,26 +122,65 @@ class org.as2lib.env.log.stringifier.TPatternLogMessageStringifier extends TestC
 		assertSame("2", s.execute(m), "anotherSourceMethodName");
 	}
 	
-	public function testClassNameConversionCharacter(Void):Void {
-		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%c");
+	public function testBigClassNameConversionCharacterPriority(Void):Void {
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%C");
+		var m:LogMessage = new LogMessage(null, null, null, null, null, this);
+		m.setSourceClassName("com.simonwacker.JoinPoint");
+		assertSame(s.execute(m), "com.simonwacker.JoinPoint");
+	}
+	
+	public function testBigClassNameConversionCharacter(Void):Void {
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%C");
 		var m:LogMessage = new LogMessage(null, null, null, null, null, this);
 		assertSame(s.execute(m), "org.as2lib.env.log.stringifier.TPatternLogMessageStringifier");
 	}
 	
-	public function testClassNameConversionCharacterWithPrecisionSpecifier(Void):Void {
+	public function testBigClassNameConversionCharacterWithPrecisionSpecifier(Void):Void {
 		var m:LogMessage = new LogMessage(null, null, null, null, null, this);
-		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%c{1}");
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%C{1}");
 		assertSame("{1}", s.execute(m), "TPatternLogMessageStringifier");
-		s = new PatternLogMessageStringifier("%c{3}");
+		s = new PatternLogMessageStringifier("%C{3}");
 		assertSame("{3}", s.execute(m), "log.stringifier.TPatternLogMessageStringifier");
-		s = new PatternLogMessageStringifier("%c{20}");
+		s = new PatternLogMessageStringifier("%C{20}");
 		assertSame("{20}", s.execute(m), "org.as2lib.env.log.stringifier.TPatternLogMessageStringifier");
 	}
 	
-	public function testClassNameAndMethodNameConversionCharacters(Void):Void {
-		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%c.%O");
+	public function testBigClassNameAndMethodNameConversionCharacters(Void):Void {
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%C.%O");
 		var m:LogMessage = new LogMessage(null, null, null, null, arguments.callee, this);
-		assertSame(s.execute(m), "org.as2lib.env.log.stringifier.TPatternLogMessageStringifier.testClassNameAndMethodNameConversionCharacters");
+		assertSame(s.execute(m), "org.as2lib.env.log.stringifier.TPatternLogMessageStringifier.testBigClassNameAndMethodNameConversionCharacters");
+	}
+	
+	public function testSmallClassNameConversionCharacter(Void):Void {
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%c");
+		var m:LogMessage = new LogMessage(null, null, null, null, null, null);
+		m.setSourceClassName("com.simonwacker.project.module.Advice");
+		assertSame(s.execute(m), "com.simonwacker.project.module.Advice");
+	}
+	
+	public function testSmallClassNameConversionCharacterWithPrecisionSpecifier(Void):Void {
+		var m:LogMessage = new LogMessage(null, null, null, null, null, null);
+		m.setSourceClassName("com.simonwacker.project.module.Aspect");
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%c{1}");
+		assertSame("{1}", s.execute(m), "Aspect");
+		s = new PatternLogMessageStringifier("%c{3}");
+		assertSame("{3}", s.execute(m), "project.module.Aspect");
+		s = new PatternLogMessageStringifier("%c{20}");
+		assertSame("{20}", s.execute(m), "com.simonwacker.project.module.Aspect");
+	}
+	
+	public function testFileNameConversionCharacter(Void):Void {
+		var m:LogMessage = new LogMessage(null, null, null, null, null, null);
+		m.setFileName("com/simonwacker/project/module/MyClass.as");
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%f");
+		assertSame(s.execute(m), "com/simonwacker/project/module/MyClass.as");
+	}
+	
+	public function testLineNumberConversionCharacter(Void):Void {
+		var m:LogMessage = new LogMessage(null, null, null, null, null, null);
+		m.setLineNumber(382);
+		var s:PatternLogMessageStringifier = new PatternLogMessageStringifier("%L");
+		assertSame(s.execute(m), "382");
 	}
 	
 	public function testComplexPattern(Void):Void {
