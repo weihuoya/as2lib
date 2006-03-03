@@ -10,7 +10,6 @@
   
   <target name="clean" description="delete all generated files">
     <delete dir="${build.dir}" failonerror="false"/>
-    <delete dir="${dist.dir}" failonerror="false"/>
   </target>
   
   <target name="compile" description="compiles the tasks">
@@ -52,7 +51,7 @@
     
     <copy tofile="${dist.dir}/as2ant.jar" file="${build.dir}/as2ant.jar"/>
     
-    <zip destfile="${dist.dir}/as2ant.zip" basedir="${dist.dir}"/>
+    <zip destfile="as2ant.zip" basedir="${dist.dir}"/>
   </target>
   
   <!--
