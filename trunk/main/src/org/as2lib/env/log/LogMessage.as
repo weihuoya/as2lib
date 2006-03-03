@@ -75,14 +75,23 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	/** The number of milliseconds elapsed from 1/1/1970 until log message was created. */
 	private var timeStamp:Number;
 	
+	/** The name of the source class. */
+	private var sourceClassName:String;
+	
+	/** The object whose method that logs this message (the method's this-scope). */
+	private var sourceObject;
+	
 	/** The name of the source method of this message. */
 	private var sourceMethodName:String;
 	
 	/** The method that logs this message. */
 	private var sourceMethod:Function;
 	
-	/** The object that implements the method that logs this message. */
-	private var sourceObject;
+	/** The name of the file containing the class that logs this message. */
+	private var fileName:String;
+	
+	/** The line number in the file where the log is being made. */
+	private var lineNumber:Number;
 	
 	/**
 	 * Constructs a new {@code LogMessage} instance.
@@ -147,6 +156,38 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	}
 	
 	/**
+	 * Sets the source class name and the source method name. The given class and
+	 * method name must be separated by "::". This is a convenience method to split
+	 * the class and method name passed to MTASC trace methods.
+	 * 
+	 * @param sourceClassAndMethodNames source class and method names separacted by
+	 * "::"
+	 */
+	public function setSourceClassAndMethodNames(sourceClassAndMethodNames:String):Void {
+		var names:Array = sourceClassAndMethodNames.split("::");
+		sourceClassName = names[0];
+		sourceMethodName = names[1];
+	}
+	
+	/**
+	 * Returns the source class name.
+	 * 
+	 * @return the source class name
+	 */
+	public function getSourceClassName(Void):String {
+		return sourceClassName;
+	}
+	
+	/**
+	 * Sets the name of the source class.
+	 * 
+	 * @param sourceClassName the name of the source class
+	 */
+	public function setSourceClassName(sourceClassName:String):Void {
+		this.sourceClassName = sourceClassName;
+	}
+	
+	/**
 	 * Returns the name of the source method of this message.
 	 * 
 	 * @return the name of the source method of this message
@@ -174,9 +215,9 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	}
 	
 	/**
-	 * Returns the object that implements the method that logs this message.
+	 * Returns the object whose method logs this message (the methods this-scope).
 	 * 
-	 * @return the object that implements the source method
+	 * @return the object whose method logs this message
 	 */
 	public function getSourceObject(Void) {
 		return sourceObject;
@@ -189,6 +230,42 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	 */
 	public function setSourceObject(sourceObject):Void {
 		this.sourceObject = sourceObject;
+	}
+	
+	/**
+	 * Returns the name of the file containing the class that logs this message.
+	 * 
+	 * @return thre file name
+	 */
+	public function getFileName(Void):String {
+		return fileName;
+	}
+	
+	/**
+	 * Sets the name of the file containing the class that logs this message.
+	 * 
+	 * @param fileName the file name
+	 */
+	public function setFileName(fileName:String):Void {
+		this.fileName = fileName;
+	}
+	
+	/**
+	 * Returns the line number at which the log is being made.
+	 * 
+	 * @return the line number
+	 */
+	public function getLineNumber(Void):Number {
+		return lineNumber;
+	}
+	
+	/**
+	 * Sets the line number at which the log is being made.
+	 * 
+	 * @param lineNumber the line number
+	 */
+	public function setLineNumber(lineNumber:Number):Void {
+		this.lineNumber = lineNumber;
 	}
 	
 	/**
