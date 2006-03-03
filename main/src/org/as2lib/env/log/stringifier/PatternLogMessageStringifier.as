@@ -110,8 +110,29 @@ import org.as2lib.util.StringUtil;
  *     <td>c</td>
  *     <td>
  *       Outputs the name of the class that implements the method that logged the message
- *       to be stringified if the log message contains the needed information. The class
- *       name is looked up vie reflections.
+ *       to be stringified if the log message contains the source class name.
+ *     </td>
+ *   </tr>
+ *   <tr>
+ *     <td>C</td>
+ *     <td>
+ *       Outputs the name of the class that implements the method that logged the message
+ *       to be stringified if the log message either contains a source class name or a
+ *       source object. In the latter case the class name is looked-up via reflections.
+ *     </td>
+ *   </tr>
+ *   <tr>
+ *     <td>f</td>
+ *     <td>
+ *       Outputs the name of the file that contains the class whose methods logged the
+ *       message, if it is contained in the log message.
+ *     </td>
+ *   </tr>
+ *   <tr>
+ *     <td>L</td>
+ *     <td>
+ *       Outputs the line number from where the logging request was issued, if it is
+ *       contained in the log message.
  *     </td>
  *   </tr>
  * </table>
@@ -520,12 +541,45 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 				break;
 			case "c":
 				return function(m:LogMessage):String {
-					var x:String = ReflectUtil.getTypeName(m.getSourceObject());
+					var x:String = m.getSourceClassName();
 					if (x == null && s) {
 						arguments.caller.s = true;
 						return arguments.callee.n(m);
 					}
 					return z(y(x, Number(d)), l, i, a) + arguments.callee.n(m);
+				};
+				break;
+			case "C":
+				return function(m:LogMessage):String {
+					var x:String = m.getSourceClassName();
+					if (x == null) {
+						x = ReflectUtil.getTypeName(m.getSourceObject());
+						if (x == null && s) {
+							arguments.caller.s = true;
+							return arguments.callee.n(m);
+						}
+					}
+					return z(y(x, Number(d)), l, i, a) + arguments.callee.n(m);
+				};
+				break;
+			case "f":
+				return function(m:LogMessage):String {
+					var x:String = m.getFileName();
+					if (x == null && s) {
+						arguments.caller.s = true;
+						return arguments.callee.n(m);
+					}
+					return z(x, l, i, a) + arguments.callee.n(m);
+				};
+				break;
+			case "L":
+				return function(m:LogMessage):String {
+					var x:String = m.getLineNumber().toString();
+					if (x == null && s) {
+						arguments.caller.s = true;
+						return arguments.callee.n(m);
+					}
+					return z(x, l, i, a) + arguments.callee.n(m);
 				};
 				break;
 		}
