@@ -228,7 +228,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	public function getEventDistributorControl(Void):EventDistributorControl {
 		if (eventDistributorControl == null) {
 			throw new IllegalStateException("Event distributor control not initialized: " +
-					"Declare an event distributor or call 'refresh' before publishing events via this context [" + this + "].", this, arguments);
+					"Declare an event distributor control or call 'refresh' before publishing events via this context [" + this + "].", this, arguments);
 		}
 		return eventDistributorControl;
 	}
