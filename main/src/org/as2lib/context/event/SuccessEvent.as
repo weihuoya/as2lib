@@ -26,6 +26,12 @@ import org.as2lib.context.ApplicationEvent;
  */
 class org.as2lib.context.event.SuccessEvent extends ApplicationEvent {
 	
+	/**
+	 * This is a commonly used prefix for success codes. Separate it from the more
+	 * specific code part with a '.'.
+	 */
+	public static var SUCCESS_CODE_PREFIX:String = "success";
+	
 	private var successCode;
 	
 	/**
