@@ -93,7 +93,6 @@ class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 		result.setProp("long.year", "Jahr");
 		result.setProp("long.years", "Jahre");
 		
-		// TODO: Are these abbreviations correct?
 		result.setProp("short.milliseconds", "ms");
 		result.setProp("short.second", "s");
 		result.setProp("short.minute", "min");
@@ -102,11 +101,10 @@ class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 		result.setProp("short.month", "M");
 		result.setProp("short.year", "J");
 		
-		// TODO: Number format patterns are incorrect.
 		result.setProp("NUMBER", "0.##");
 		result.setProp("INTEGER", "0");
-		result.setProp("CURRENCY", "0.## €");
-		result.setProp("PERCENT", "0 %");
+		result.setProp("CURRENCY", "0.00 ¤");
+		result.setProp("PERCENT", "0%");
 		
 		result.setProp("round", "round");
 		result.setProp("comma", ",");
