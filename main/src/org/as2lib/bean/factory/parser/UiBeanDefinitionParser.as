@@ -19,13 +19,13 @@ import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.BeanDefinitionHolder;
 import org.as2lib.bean.factory.config.MethodInvokingFactoryBean;
 import org.as2lib.bean.factory.config.PropertyPathFactoryBean;
+import org.as2lib.bean.factory.config.RuntimeBeanReference;
 import org.as2lib.bean.factory.config.VariableRetrievingFactoryBean;
 import org.as2lib.bean.factory.parser.XmlBeanDefinitionParser;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.PropertyValues;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.reflect.DelegateFactoryBean;
-import org.as2lib.bean.BeanException;
 
 /**
  * @author Simon Wacker
@@ -173,6 +173,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				for (var i:Number = 0; i < aliases.length; i++) {
 					registry.registerAlias(holder.getBeanName(), aliases[i]);
 				}
+				return new RuntimeBeanReference(holder.getBeanName());
 			}
 		}
 		return propertyValue;
