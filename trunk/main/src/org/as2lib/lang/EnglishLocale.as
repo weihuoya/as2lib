@@ -107,11 +107,10 @@ class org.as2lib.lang.EnglishLocale extends ConcreteLocale {
 		result.setProp("short.month", "M");
 		result.setProp("short.year", "Y");
 		
-		// TODO: Number format patterns are incorrect.
 		result.setProp("NUMBER", "0.##");
 		result.setProp("INTEGER", "0");
-		result.setProp("CURRENCY", "$ 0.##");
-		result.setProp("PERCENT", "0 %");
+		result.setProp("CURRENCY", "¤0.00");
+		result.setProp("PERCENT", "0%");
 		
 		result.setProp("round", "round");
 		result.setProp("comma", ".");
