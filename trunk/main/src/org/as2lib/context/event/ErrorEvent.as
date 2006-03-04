@@ -26,6 +26,12 @@ import org.as2lib.context.ApplicationEvent;
  */
 class org.as2lib.context.event.ErrorEvent extends ApplicationEvent {
 	
+	/**
+	 * This is a commonly used prefix for error codes. Separate it from the more
+	 * specific code part with a '.'.
+	 */
+	public static var ERROR_CODE_PREFIX:String = "error";
+	
 	private var errorCode;
 	
 	/**
