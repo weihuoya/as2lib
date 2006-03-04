@@ -122,6 +122,9 @@ class org.as2lib.lang.EnglishLocale extends ConcreteLocale {
 		result.setProp("US", "United States");
 		result.setProp("de", "German");
 		result.setProp("DE", "Germany");
+		result.setProp("nl", "Dutch");
+		result.setProp("BE", "Belgium");
+		result.setProp("NL", "Netherlands");
 		result.setProp("es", "Spanish");
 		result.setProp("ES", "Spain");
 		result.setProp("fr", "French");
