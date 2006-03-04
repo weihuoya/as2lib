@@ -96,11 +96,11 @@ class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 		// TODO: Are these abbreviations correct?
 		result.setProp("short.milliseconds", "ms");
 		result.setProp("short.second", "s");
-		result.setProp("short.minute", "m");
+		result.setProp("short.minute", "min");
 		result.setProp("short.hour", "h");
 		result.setProp("short.day", "d");
 		result.setProp("short.month", "M");
-		result.setProp("short.year", "Y");
+		result.setProp("short.year", "J");
 		
 		// TODO: Number format patterns are incorrect.
 		result.setProp("NUMBER", "0.##");
@@ -117,6 +117,9 @@ class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 		result.setProp("US", "Vereinigte Staaten");
 		result.setProp("de", "Deutsch");
 		result.setProp("DE", "Deutschland");
+		result.setProp("nl", "Niederländisch");
+		result.setProp("BE", "Belgien");
+		result.setProp("NL", "Niederlande");
 		result.setProp("es", "Spanisch");
 		result.setProp("ES", "Spanien");
 		result.setProp("fr", "Französisch");
