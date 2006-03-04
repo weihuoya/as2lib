@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.data.holder.Properties;
 import org.as2lib.lang.EnglishLocale;
 
 /**
@@ -26,6 +27,12 @@ class org.as2lib.lang.UnitedStatesLocale extends EnglishLocale {
 	
 	public function UnitedStatesLocale(Void) {
 		super("US");
+	}
+	
+	private function createSymbols(Void):Properties {
+		var result:Properties = super.createSymbols();
+		result.setProp("currency", "$");
+		return result;
 	}
 	
 }
