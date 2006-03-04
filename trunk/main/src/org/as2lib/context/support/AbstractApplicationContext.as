@@ -419,7 +419,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * <p>Note that there is no default distributor.
 	 */
 	private function initEventDistributorControl(Void):Void {
-		if (containsLocalBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME)) {
+		if (containsBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME)) {
 			eventDistributorControl = getBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME, EventDistributorControl);
 		}
 	}
@@ -463,7 +463,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		var listeners:Array = getBeansOfType(ApplicationListener, true, false).getValues();
 		for (var i:Number = 0; i < listeners.length; i++) {
 			getEventDistributorControl().addListener(listeners[i]);
-			// TODO: There is a coalition between this context's addListener and the one of the Process interface, rename Process.addListener to Process.addProcessListener?
+			// TODO: There is a collision between this context's addListener and the one of the Process interface, rename Process.addListener to Process.addProcessListener?
 			//addListener(listeners[i]);
 		}
 	}
