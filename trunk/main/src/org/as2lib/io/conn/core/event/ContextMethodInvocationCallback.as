@@ -58,12 +58,30 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 	}
 	
 	/**
+	 * Returns the error code used for publishing error events.
+	 * 
+	 * @return the error code
+	 */
+	public function getErrorCode(Void):String {
+		return errorCode;
+	}
+	
+	/**
 	 * Sets the error code to use for publishing error events.
 	 * 
 	 * @param errorCode the error code
 	 */
 	public function setErrorCode(errorCode:String):Void {
 		this.errorCode = errorCode;
+	}
+	
+	/**
+	 * Returns the success code used for publishing success events.
+	 * 
+	 * @return the success code
+	 */
+	public function getSuccessCode(Void):String {
+		return successCode;
 	}
 	
 	/**
