@@ -6,6 +6,9 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="3">
+				<day value="4">
+					<entry type="add" package="org.as2lib.context.event" class="ErrorEvent">Generic error event that holds an error code.</entry>
+				</day>
 				<day value="3">
 					<entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added support for class name, file name and line number (old class conversion character 'c' is now 'C').</entry>
 					<entry type="add" package="org.as2lib.env.log" class="LogMessage">Added support for class name, file name and line number.</entry>
