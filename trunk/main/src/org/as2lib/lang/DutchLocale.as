@@ -20,7 +20,7 @@ import org.as2lib.lang.ConcreteLocale;
 
 /**
  * {@code DutchLocale} represents any Dutch speaking country with the
- * languagecode "du".
+ * languagecode "nl".
  * 
  * @author Christophe Herreman
  */
@@ -33,7 +33,7 @@ class org.as2lib.lang.DutchLocale extends ConcreteLocale {
 	 * a specific Dutch speaking country
 	 */
 	public function DutchLocale(countryCode:String) {
-		super("du", countryCode, null);
+		super("nl", countryCode, null);
 	}
 	
 	private function createSymbols(Void):Properties {

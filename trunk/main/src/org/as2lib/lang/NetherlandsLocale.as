@@ -17,8 +17,8 @@
 import org.as2lib.lang.DutchLocale;
 
 /**
- * {@code BelgianLocale} represents the Netherlands with language code
- * "du" and country code "NL".
+ * {@code NetherlandsLocale} represents the Netherlands with language code
+ * "nl" and country code "NL".
  * 
  * @author Christophe Herreman
  */
