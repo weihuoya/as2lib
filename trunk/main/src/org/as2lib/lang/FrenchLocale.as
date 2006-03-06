@@ -20,7 +20,7 @@ import org.as2lib.lang.ConcreteLocale;
 
 /**
  * {@code FrenchLocale} represents any French speaking country with the
- * languagecode "fr".
+ * language code "fr".
  * 
  * @author Christophe Herreman
  */
