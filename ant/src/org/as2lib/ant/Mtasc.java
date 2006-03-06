@@ -1011,6 +1011,20 @@ public class Mtasc extends Task {
                     }
                     if (e.hasAttribute("type")) {
                         clazz = e.getAttribute("type");
+                        if (clazz.equals("Class")) {
+                            if (e.hasAttribute("value")) {
+                                clazz = e.getAttribute("value");
+                            }
+                            else if (e.getFirstChild().getNodeType() == Element.TEXT_NODE) {
+                                clazz = e.getFirstChild().getNodeValue();
+                            }
+                            else if (e.getFirstChild().getNodeName().equals("value")) {
+                                Node tn = e.getFirstChild().getFirstChild();
+                                if (tn.getNodeType() == Element.TEXT_NODE) {
+                                    clazz = tn.getNodeValue();
+                                }
+                            }
+                        }
                     }
                     if (clazz != null) {
                         clazz = clazz.replace('.', '/');

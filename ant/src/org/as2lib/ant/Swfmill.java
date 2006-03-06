@@ -18,6 +18,7 @@ package org.as2lib.ant;
 
 import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -87,9 +88,9 @@ public class Swfmill extends Task {
     public static final String STDIN = "stdin";
     
     private String swfmill;
-    private String source;
-    private String destination;
-    private String xsl;
+    private File source;
+    private File destination;
+    private File xsl;
     private String command;
     private String xml;
     private boolean help = false;
@@ -147,7 +148,7 @@ public class Swfmill extends Task {
      * 
      * @param source the source file
      */
-    public void setSrc(String source) {
+    public void setSrc(File source) {
         this.source = source;
     }
     
@@ -156,7 +157,7 @@ public class Swfmill extends Task {
      * 
      * @return the set source file
      */
-    public String getSrc() {
+    public File getSrc() {
         return this.source;
     }
     
@@ -166,7 +167,7 @@ public class Swfmill extends Task {
      * 
      * @param source the source file
      */
-    public void setSource(String source) {
+    public void setSource(File source) {
         setSrc(source);
     }
     
@@ -175,7 +176,7 @@ public class Swfmill extends Task {
      * 
      * @return the set source file
      */
-    public String getSource() {
+    public File getSource() {
         return getSrc();
     }
     
@@ -185,7 +186,7 @@ public class Swfmill extends Task {
      * 
      * @param source the source file
      */
-    public void setIn(String source) {
+    public void setIn(File source) {
         setSrc(source);
     }
     
@@ -194,7 +195,7 @@ public class Swfmill extends Task {
      * 
      * @return the set source file
      */
-    public String getIn() {
+    public File getIn() {
         return getSrc();
     }
     
@@ -204,7 +205,7 @@ public class Swfmill extends Task {
      * 
      * @param destination the destination file
      */
-    public void setDest(String destination) {
+    public void setDest(File destination) {
         this.destination = destination;
     }
     
@@ -213,7 +214,7 @@ public class Swfmill extends Task {
      * 
      * @return the destination file
      */
-    public String getDest() {
+    public File getDest() {
         return this.destination;
     }
     
@@ -223,7 +224,7 @@ public class Swfmill extends Task {
      * 
      * @param destination the destination file
      */
-    public void setDestination(String destination) {
+    public void setDestination(File destination) {
         setDest(destination);
     }
     
@@ -232,7 +233,7 @@ public class Swfmill extends Task {
      * 
      * @return the destination file
      */
-    public String getDestination() {
+    public File getDestination() {
         return getDest();
     }
     
@@ -242,7 +243,7 @@ public class Swfmill extends Task {
      * 
      * @param destination the destination file
      */
-    public void setOut(String destination) {
+    public void setOut(File destination) {
         setDest(destination);
     }
     
@@ -251,7 +252,7 @@ public class Swfmill extends Task {
      * 
      * @return the destination file
      */
-    public String getOut() {
+    public File getOut() {
         return getDest();
     }
     
@@ -260,7 +261,7 @@ public class Swfmill extends Task {
      * 
      * @param xsl the xsl file
      */
-    public void setXsl(String xsl) {
+    public void setXsl(File xsl) {
         this.xsl = xsl;
     }
     
@@ -269,7 +270,7 @@ public class Swfmill extends Task {
      * 
      * @return the xsl file
      */
-    public String getXsl() {
+    public File getXsl() {
         return this.xsl;
     }
     
@@ -469,13 +470,13 @@ public class Swfmill extends Task {
         setupCommandSwitches(cmd);
         cmd.createArgument().setValue(evaluateCommand());
         if (this.source != null) {
-            cmd.createArgument().setValue(this.source);
+            cmd.createArgument().setFile(this.source);
         }
         else {
             cmd.createArgument().setValue(STDIN);
         }
         if (this.destination != null) {
-            cmd.createArgument().setValue(this.destination);
+            cmd.createArgument().setFile(this.destination);
         }
         return cmd;
     }
@@ -502,7 +503,7 @@ public class Swfmill extends Task {
         return SIMPLE;
     }
     
-    private boolean isXmlFile(String file) {
+    private boolean isXmlFile(File file) {
         if (file != null) {
             // are there other extension to check here
             if (getFileExtension(file).equals("xml")) {
@@ -512,7 +513,7 @@ public class Swfmill extends Task {
         return false;
     }
     
-    private boolean isSwfFile(String file) {
+    private boolean isSwfFile(File file) {
         if (file != null) {
             // are there other extension to check here
             if (getFileExtension(file).equals("swf")) {
@@ -522,7 +523,8 @@ public class Swfmill extends Task {
         return false;
     }
     
-    private String getFileExtension(String fileName) {
+    private String getFileExtension(File file) {
+        String fileName = file.getName();
         String extension = "";
         int lastDotPosition = fileName.lastIndexOf(".");
         if (0 < lastDotPosition && lastDotPosition <= fileName.length() - 2) {
