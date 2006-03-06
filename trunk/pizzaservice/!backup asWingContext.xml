@@ -1,0 +1,220 @@
+<?xml version="1.0"?>
+
+<beans>
+	
+	<bean id="delegate" class="org.as2lib.env.reflect.DelegateFactoryBean" abstract="true"/>
+	<bean id="property" class="org.as2lib.bean.factory.config.PropertyPathFactoryBean" abstract="true"/>
+	<bean id="variable" class="org.as2lib.bean.factory.config.VariableRetrievingFactoryBean" abstract="true"/>
+	
+	<bean id="button" class="org.aswing.JButton" abstract="true"/>
+	<bean id="formItem" class="org.as2lib.sample.pizza.view.aswing.AsWingFormItem" abstract="true">
+		<property name="layout">
+			<bean class="org.aswing.SoftBoxLayout">
+				<constructor-arg><bean id="org.aswing.SoftBoxLayout.Y_AXIS" parent="variable"/></constructor-arg>
+			</bean>
+		</property>
+	</bean>
+	<bean id="component" abstract="true">
+		<property name="preferredSize">120, 20</property>
+	</bean>
+	<bean id="label" class="org.aswing.JLabel" abstract="true"/>
+	<bean id="textField" class="org.aswing.JTextField" parent="component" abstract="true"/>
+	
+	<bean id="view" class="org.as2lib.sample.pizza.view.aswing.AsWingView" init-method="show">
+		<property name="navigation"><ref local="navigation"/></property>
+		<property name="orderForm"><ref local="orderForm"/></property>
+		<property name="viewOrdersForm"><ref local="viewOrdersForm"/></property>
+		<property name="size">445, 350</property>
+		<property name="resizable">false</property>
+	</bean>
+	
+	<bean id="navigation" class="org.aswing.JPanel">
+		<property name="insert[0]"><ref local="orderFormButton"/></property>
+		<property name="insert[1]"><ref local="viewOrdersButton"/></property>
+	</bean>
+	
+	<bean id="orderFormButton" parent="button">
+		<property name="text"><bean id="messageSource.message[button.orderForm]" parent="property"/></property>
+		<property name="actionListener"><bean id="view.showOrderForm" parent="delegate"/></property>
+	</bean>
+	
+	<bean id="viewOrdersButton" parent="button">
+		<property name="text"><bean id="messageSource.message[button.viewOrders]" parent="property"/></property>
+		<property name="actionListener"><bean id="view.showViewOrdersForm" parent="delegate"/></property>
+	</bean>
+	
+	<bean id="orderForm" class="org.as2lib.sample.pizza.view.aswing.AsWingOrderForm" init-method="init">
+		<property name="controller"><ref bean="controller"/></property>
+		<property name="nameFormItem"><ref local="nameFormItem"/></property>
+		<property name="quantityFormItem"><ref local="quantityFormItem"/></property>
+		<property name="sizeFormItem"><ref local="sizeFormItem"/></property>
+		<property name="crustFormItem"><ref local="crustFormItem"/></property>
+		<property name="toppingsFormItem"><ref local="toppingsFormItem"/></property>
+		<property name="addButton"><ref local="addButton"/></property>
+		<property name="orderTicketFormItem"><ref local="orderTicketFormItem"/></property>
+		<property name="removeButton"><ref local="removeButton"/></property>
+		<property name="placeOrderButton"><ref local="placeOrderButton"/></property>
+	</bean>
+	
+	<bean id="nameFormItem" parent="formItem">
+		<property name="label">
+			<bean parent="label">
+				<property name="text"><bean id="messageSource.message[label.name]" parent="property"/></property>
+			</bean>
+		</property>
+		<property name="component"><bean parent="textField"/></property>
+	</bean>
+	
+	<bean id="quantityFormItem" parent="formItem">
+		<property name="label">
+			<bean parent="label">
+				<property name="text"><bean id="messageSource.message[label.quantity]" parent="property"/></property>
+			</bean>
+		</property>
+		<property name="component"><bean parent="textField"/></property>
+	</bean>
+	
+	<bean id="comboBox" class="org.aswing.JComboBox" parent="component" abstract="true"/>
+	
+	<bean id="sizeFormItem" parent="formItem">
+		<property name="label">
+			<bean parent="label">
+				<property name="text"><bean id="messageSource.message[label.size]" parent="property"/></property>
+			</bean>
+		</property>
+		<property name="component">
+			<bean parent="comboBox">
+				<property name="listData">
+					<array>
+						<bean id="messageSource.message[size.small]" parent="property"/>
+						<bean id="messageSource.message[size.medium]" parent="property"/>
+						<bean id="messageSource.message[size.large]" parent="property"/>
+						<bean id="messageSource.message[size.family]" parent="property"/>
+					</array>
+				</property>
+				<property name="selectedIndex">0</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="crustFormItem" parent="formItem">
+		<property name="label">
+			<bean parent="label">
+				<property name="text"><bean id="messageSource.message[label.crust]" parent="property"/></property>
+			</bean>
+		</property>
+		<property name="component">
+			<bean parent="comboBox">
+				<property name="listData">
+					<array>
+						<bean id="messageSource.message[crust.thin]" parent="property"/>
+						<bean id="messageSource.message[crust.deepDish]" parent="property"/>
+						<bean id="messageSource.message[crust.stuffed]" parent="property"/>
+					</array>
+				</property>
+				<property name="selectedIndex">0</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="toppingsFormItem" parent="formItem">
+		<property name="label">
+			<bean parent="label">
+				<property name="text"><bean id="messageSource.message[label.toppings]" parent="property"/></property>
+			</bean>
+		</property>
+		<property name="component">
+			<bean class="org.aswing.JScrollPane" parent="component">
+				<property name="view">
+					<bean class="org.aswing.JList" parent="component">
+						<property name="listData">
+							<array>
+								<bean id="messageSource.message[toppings.sausage]" parent="property"/>
+								<bean id="messageSource.message[toppings.pepperoni]" parent="property"/>
+								<bean id="messageSource.message[toppings.onions]" parent="property"/>
+								<bean id="messageSource.message[toppings.mushrooms]" parent="property"/>
+								<bean id="messageSource.message[toppings.tomatoes]" parent="property"/>
+								<bean id="messageSource.message[toppings.peppers]" parent="property"/>
+								<bean id="messageSource.message[toppings.olives]" parent="property"/>
+								<bean id="messageSource.message[toppings.garlic]" parent="property"/>
+							</array>
+						</property>
+					</bean>
+				</property>
+				<property name="preferredSize">140, 120</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="addButton" parent="button">
+		<property name="text"><bean id="messageSource.message[button.add]" parent="property"/></property>
+		<property name="actionListener"><bean id="orderForm.addOrderItem" parent="delegate"/></property>
+	</bean>
+	
+	<bean id="orderTicketFormItem" parent="formItem">
+		<property name="label">
+			<bean parent="label">
+				<property name="text"><bean id="messageSource.message[label.orderTicket]" parent="property"/></property>
+			</bean>
+		</property>
+		<property name="component">
+			<bean class="org.aswing.JScrollPane" parent="component">
+				<property name="view"><bean class="org.aswing.JList" parent="component">
+					<property name="listData"><array><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value></array></property>
+				</bean></property>
+				<property name="preferredSize">0, 70</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="removeButton" parent="button">
+		<property name="text"><bean id="messageSource.message[button.remove]" parent="property"/></property>
+	</bean>
+	
+	<bean id="placeOrderButton" parent="button">
+		<property name="text"><bean id="messageSource.message[button.placeOrder]" parent="property"/></property>
+	</bean>
+	
+	<bean id="viewOrdersForm" class="org.as2lib.sample.pizza.view.aswing.AsWingViewOrdersForm" init-method="init">
+		<property name="ordersFormItem"><ref local="ordersFormItem"/></property>
+		<property name="pizzasFormItem"><ref local="pizzasFormItem"/></property>
+		<property name="cancelOrderButton"><ref local="cancelOrderButton"/></property>
+	</bean>
+	
+	<bean id="ordersFormItem" parent="formItem">
+		<property name="label">
+			<bean parent="label">
+				<property name="text"><bean id="messageSource.message[label.orders]" parent="property"/></property>
+			</bean>
+		</property>
+		<property name="component">
+			<bean class="org.aswing.JScrollPane" parent="component">
+				<property name="view"><bean class="org.aswing.JList" parent="component">
+					<property name="listData"><array><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value></array></property>
+				</bean></property>
+				<property name="preferredSize">120, 248</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="pizzasFormItem" parent="formItem">
+		<property name="label">
+			<bean parent="label">
+				<property name="text"><bean id="messageSource.message[label.pizzas]" parent="property"/></property>
+			</bean>
+		</property>
+		<property name="component">
+			<bean class="org.aswing.JScrollPane" parent="component">
+				<property name="view"><bean class="org.aswing.JList" parent="component">
+					<property name="listData"><array><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value><value>4</value></array></property>
+				</bean></property>
+				<property name="preferredSize">290, 248</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="cancelOrderButton" parent="button">
+		<property name="text"><bean id="messageSource.message[button.cancelOrder]" parent="property"/></property>
+	</bean>
+	
+</beans>

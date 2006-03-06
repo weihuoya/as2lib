@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>as2lib pizza service</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+		<buildCommand>
+			<name>com.pf.fdt.IncrementalProjectBuilder1</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+	</buildSpec>
+	<natures>
+		<nature>com.pf.fdt.FlashNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>actionstep</name>
+			<type>2</type>
+			<location>actionstep</location>
+		</link>
+		<link>
+			<name>debugit</name>
+			<type>2</type>
+			<location>debugit</location>
+		</link>
+		<link>
+			<name>core</name>
+			<type>2</type>
+			<location>C:/Dokumente und Einstellungen/Administrator/Lokale Einstellungen/Anwendungsdaten/Macromedia/Flash 8/en/Configuration/Classes/FP8</location>
+		</link>
+		<link>
+			<name>enflash</name>
+			<type>2</type>
+			<location>enflash</location>
+		</link>
+		<link>
+			<name>as2lib</name>
+			<type>2</type>
+			<location>as2lib</location>
+		</link>
+		<link>
+			<name>aswing</name>
+			<type>2</type>
+			<location>aswing</location>
+		</link>
+		<link>
+			<name>MX Library [Flash 8]</name>
+			<type>2</type>
+			<location>C:/Programme/Macromedia/Flash 8/en/First Run/Classes</location>
+		</link>
+	</linkedResources>
+</projectDescription>

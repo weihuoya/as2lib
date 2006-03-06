@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+
+<logging>
+	
+	<logger class="org.as2lib.env.log.logger.DebugItLogger"/>
+	
+</logging>

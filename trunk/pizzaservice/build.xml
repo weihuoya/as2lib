@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+
+<project name="As2lib Pizza" default="build" basedir=".">
+  
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../ant/src"/>
+  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../ant/src"/>
+  
+  <property name="src.dir" location="src"/>
+  <property name="build.dir" location="build"/>
+  <property name="files.dir" location="files"/>
+  <property name="as2lib.dir" location="D:/Documents/Projects/As2lib/main/src"/>
+  <property name="debugit.dir" location="D:/Programming/Flash/DebugIt"/>
+  <property name="aswing.dir" location="D:/Programming/Flash/aswing/src"/>
+  <property name="actionstep.dir" location="D:/Programming/Flash/actionstep/src"/>
+  <property name="enflash.dir" location="D:/Programming/Flash/enflash/src/classes"/>
+  <property name="remoting.dir" location="C:/Programme/Macromedia/Flash 8/en/First Run/Classes"/>
+  
+  <property name="logging.xml" location="${src.dir}/logging.xml"/>
+  <property name="applicationContext.xml" location="${src.dir}/applicationContext.xml"/>
+  <property name="asWingContext.xml" location="${src.dir}/asWingContext.xml"/>
+  <property name="actionStepContext.xml" location="${src.dir}/actionStepContext.xml"/>
+  <property name="enFlashContext.xml" location="${src.dir}/enFlashContext.xml"/>
+  
+  <property name="pizza.swf" location="${build.dir}/pizza.swf"/>
+  
+  <property name="player.exe" location="C:/Programme/Macromedia/Flash 8/Players/SAFlashPlayer.exe"/>
+  
+  <target name="build">
+    <mkdir dir="${build.dir}"/>
+    <copy todir="${build.dir}">
+      <fileset dir="${src.dir}">
+        <include name="**/*.xml"/>
+        <include name="**/*.properties"/>
+      </fileset>
+    </copy>
+    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${pizza.swf}" header="445:360:31" version="8">
+      <classpath>
+        <!--<pathelement path="${enflash.dir}"/>
+        <pathelement path="${actionstep.dir}"/>-->
+        <pathelement path="${aswing.dir}"/>
+        <pathelement path="${remoting.dir}"/>
+        <pathelement path="${debugit.dir}"/>
+        <pathelement path="${as2lib.dir}"/>
+        <pathelement path="${src.dir}"/>
+      </classpath>
+      <srcxml>
+        <pathelement path="${logging.xml}"/>
+        <pathelement path="${applicationContext.xml}"/>
+        <pathelement path="${asWingContext.xml}"/>
+        <!--<pathelement path="${actionStepContext.xml}"/>
+        <pathelement path="${enFlashContext.xml}"/>-->
+      </srcxml>
+    </swf>
+    <exec executable="${player.exe}" spawn="yes"><arg value="${pizza.swf}"/></exec>
+  </target>
+  
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+  </target>
+  
+  <target name="compile">
+    <mtasc srcdir="${src.dir}" version="8" split="yes">
+      <classpath path="${enflash.dir}"/>
+      <classpath path="${actionstep.dir}"/>
+      <classpath path="${aswing.dir}"/>
+      <classpath path="${debugit.dir}"/>
+      <classpath path="${as2lib.dir}"/>
+      <classpath path="${src.dir}"/>
+    </mtasc>
+  </target>
+  
+</project>
