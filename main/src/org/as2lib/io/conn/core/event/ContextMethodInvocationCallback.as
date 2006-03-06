@@ -20,9 +20,12 @@ import org.as2lib.context.ApplicationEventPublisher;
 import org.as2lib.context.event.ErrorEvent;
 import org.as2lib.context.event.SuccessEvent;
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogManager;
 import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
+import org.as2lib.util.StringUtil;
 
 /**
  * {@code ContextMethodInvocationCallback} is a simple method invocation callback
@@ -30,12 +33,12 @@ import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
  * or {@link SuccessEvent} instances with the given error code and success code
  * respectively.
  * 
- * <p>Note that error or success events are only published if there is a error
- * or success code, respectively.
- * 
+ * TODO: Set only code, and add 'error.' and 'success.' prefixes dynamically.
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends BasicClass implements MethodInvocationCallback, ApplicationContextAware {
+	
+	private static var logger:Logger = LogManager.getLogger("org.as2lib.io.conn.core.event.ContextMethodInvocationCallback");
 	
 	private var applicationContext:ApplicationContext;
 	
@@ -44,6 +47,10 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 	private var errorCode:String;
 	
 	private var successCode:String;
+	
+	private var errorEventClass:Function;
+	
+	private var successEventClass:Function;
 	
 	/**
 	 * Constructs a new {@code ContextMethodInvocationCallback} instance with error and
@@ -55,6 +62,8 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 	public function ContextMethodInvocationCallback(errorCode:String, successCode:String) {
 		this.errorCode = errorCode;
 		this.successCode = successCode;
+		errorEventClass = ErrorEvent;
+		successEventClass = SuccessEvent;
 	}
 	
 	/**
@@ -93,37 +102,62 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 		this.successCode = successCode;
 	}
 	
+	/**
+	 * Sets the error event class to use. This event class will be instantiated when
+	 * an error occurred and the constructor will be passed the error code and
+	 * application context. The error event instance will then be published.
+	 * 
+	 * @param errorEventClass the error event class to use on errors
+	 */
+	public function setErrorEventClass(errorEventClass:Function):Void {
+		this.errorEventClass = errorEventClass;
+	}
+	
+	/**
+	 * Sets the success event class to use. This event class will be instantiated when
+	 * the method invocation returned successfully and the constructor will be passed
+	 * the success code and application context. The success event instance will then
+	 * be published.
+	 * 
+	 * @param successEventClass the success event class to use on successful returns 
+	 */
+	public function setSuccessEventClass(successEventClass:Function):Void {
+		this.successEventClass = successEventClass;
+	}
+	
 	public function setApplicationContext(applicationContext:ApplicationContext):Void {
 		this.applicationContext = applicationContext;
 		this.eventPublisher = applicationContext.getEventPublisher();
 	}
 	
 	/**
-	 * Publishes a success event if a success code has been set. The success event
-	 * contains the success code.
+	 * Publishes a success event. The success event will contain the success code.
 	 * 
 	 * @param returnInfo the return info of the method invocation
 	 * @see SuccessEvent
 	 */
 	public function onReturn(returnInfo:MethodInvocationReturnInfo):Void {
-		if (successCode != null) {
-			var event:SuccessEvent = new SuccessEvent(successCode, applicationContext);
-			eventPublisher.publishEvent(event);
-		}
+		/*if (logger.isDebugEnabled()) {
+			logger.debug("Method invocation returned successfully:\n" +
+					StringUtil.addSpaceIndent(returnInfo.toString(), 2));
+		}*/
+		var event:SuccessEvent = new successEventClass(successCode, applicationContext);
+		eventPublisher.publishEvent(event);
 	}
 	
 	/**
-	 * Publishes an error event if an error code has been set. The error event contains
-	 * the error code.
+	 * Publishes an error event. The error event will contain the error code.
 	 * 
 	 * @param errorInfo the error info of the method invocation
 	 * @see ErrorEvent
 	 */
 	public function onError(errorInfo:MethodInvocationErrorInfo):Void {
-		if (errorCode != null) {
-			var event:ErrorEvent = new ErrorEvent(errorCode, applicationContext);
-			eventPublisher.publishEvent(event);
-		}
+		/*if (logger.isErrorEnabled()) {
+			logger.error("Method invocation failed:\n" +
+					StringUtil.addSpaceIndent(errorInfo.toString(), 2));
+		}*/
+		var event:ErrorEvent = new errorEventClass(errorCode, applicationContext);
+		eventPublisher.publishEvent(event);
 	}
 	
 }
