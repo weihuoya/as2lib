@@ -190,7 +190,7 @@ public class Swf extends Mtasc {
      */
     public void setDest(File destination) {
         super.setSwf(destination);
-        this.swfmill.setDest(destination.getAbsolutePath());
+        this.swfmill.setDest(destination);
     }
     
     /**
@@ -627,7 +627,7 @@ public class Swf extends Mtasc {
         if (this.swfmill.getText() == null) {
             //File classes = createClassesSwf();
             createXmlFile();
-            this.swfmill.setSrc(XML);
+            this.swfmill.setSrc(new File(getProject().getBaseDir() + "/" + XML));
         }
         this.swfmill.execute();
         if (checkParameters()) {
