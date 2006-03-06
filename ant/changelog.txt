@@ -1,5 +1,8 @@
-As2ant 1.1
+As2ant 1.5
 ----------
+
+[+] org.as2lib.ant.Mtasc
+    Added special XML support for As2lib Bean Factory and Context.
 
 [+] org.as2lib.ant.Swfmill / org.as2lib.ant.Swf
     Added support for specifying the swfmill xml directly in the tasks.
