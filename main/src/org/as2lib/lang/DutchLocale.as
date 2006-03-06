@@ -20,7 +20,7 @@ import org.as2lib.lang.ConcreteLocale;
 
 /**
  * {@code DutchLocale} represents any Dutch speaking country with the
- * languagecode "nl".
+ * language code "nl".
  * 
  * @author Christophe Herreman
  */
