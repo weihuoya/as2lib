@@ -77,7 +77,7 @@ class org.as2lib.io.conn.webservice.WebServiceProxy extends AbstractClientServic
 		if (callback == null) {
 			callback = getBlankMethodInvocationCallback();
 		}
-		var pc:PendingCall = service[methodName].apply(args);
+		var pc:PendingCall = service[methodName].apply(service, args);
 		pc.onResult = function(result):Void {
 			callback.onReturn(new MethodInvocationReturnInfo(this, methodName, args, result));
 		};

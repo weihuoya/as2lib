@@ -63,7 +63,7 @@ class org.as2lib.io.conn.remoting.RemotingServiceProxy extends AbstractClientSer
 		if (callback == null) {
 			callback = getBlankMethodInvocationCallback();
 		}
-		var pc:PendingCall = service[methodName].apply(args);
+		var pc:PendingCall = service[methodName].apply(service, args);
 		var responder:Object = new Object();
 		responder.onResult = function(resultEvent:ResultEvent):Void {
 			var info:MethodInvocationReturnInfo = new MethodInvocationReturnInfo(this, methodName, args, resultEvent.result);
