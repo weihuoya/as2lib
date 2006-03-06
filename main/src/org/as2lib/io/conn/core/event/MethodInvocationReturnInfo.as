@@ -15,7 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.io.conn.core.ServiceProxy;
+import org.as2lib.util.StringUtil;
 
 /**
  * {@code MethodInvocationReturnInfo} informs clients that the method invocation
@@ -89,6 +91,31 @@ class org.as2lib.io.conn.core.event.MethodInvocationReturnInfo extends BasicClas
 	 */
 	public function getReturnValue(Void) {
 		return returnValue;
+	}
+	
+	public function toString():String {
+		var result:String = "MethodInvocationReturnInfo(";
+		if (serviceProxy != null) {
+			result += "\n" + StringUtil.addSpaceIndent(serviceProxy.toString(), 2);
+		}
+		if (methodName != null) {
+			result += "\n  " + methodName + "(";
+			if (methodArguments != null) {
+				for (var i:Number = 0; i < methodArguments.length; i++) {
+					var argument = methodArguments[i];
+					result += ReflectUtil.getTypeNameForInstance(argument);
+					if (i < methodArguments.length - 1) {
+						result += ", ";
+					}
+				}
+			}
+			result += ")";
+		}
+		if (returnValue != null) {
+			result += "\n  " + returnValue;
+		}
+		result += "\n)";
+		return result;
 	}
 	
 }

@@ -15,8 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.io.conn.core.client.ClientServiceProxy;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.io.conn.core.ServiceProxy;
+import org.as2lib.util.StringUtil;
 
 /**
  * {@code MethodInvocationErrorInfo} informs the client of an error that occured on
@@ -153,6 +154,38 @@ class org.as2lib.io.conn.core.event.MethodInvocationErrorInfo extends BasicClass
 	 */
 	public function getException(Void) {
 		return exception;
+	}
+	
+	public function toString():String {
+		var result:String = "MethodInvocationErrorInfo(";
+		if (serviceProxy != null) {
+			result += "\n" + StringUtil.addSpaceIndent(serviceProxy.toString(), 2);
+		}
+		// TODO: Source this out into the ObjectUtil?
+		if (methodName != null) {
+			result += "\n  " + methodName + "(";
+			if (methodArguments != null) {
+				for (var i:Number = 0; i < methodArguments.length; i++) {
+					var argument = methodArguments[i];
+					result += ReflectUtil.getTypeNameForInstance(argument);
+					if (i < methodArguments.length - 1) {
+						result += ", ";
+					}
+				}
+			}
+			result += ")";
+		}
+		if (errorCode != null) {
+			result += "\n  " + errorCode;
+			if (errorMessage != null) {
+				result += ": " + errorMessage;
+			}
+		}
+		else if (errorMessage != null) {
+			result += "\n  " + errorMessage;
+		}
+		result += "\n)";
+		return result;
 	}
 	
 }
