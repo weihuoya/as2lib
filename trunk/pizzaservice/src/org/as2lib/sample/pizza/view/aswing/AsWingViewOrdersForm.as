@@ -17,7 +17,7 @@
 import org.as2lib.context.ApplicationEvent;
 import org.as2lib.context.ApplicationListener;
 import org.as2lib.sample.pizza.control.Controller;
-import org.as2lib.sample.pizza.event.OrderCancelledEvent;
+import org.as2lib.sample.pizza.event.OrderCanceledEvent;
 import org.as2lib.sample.pizza.event.OrdersLoadedEvent;
 import org.aswing.JButton;
 import org.aswing.JList;
@@ -50,7 +50,7 @@ class org.as2lib.sample.pizza.view.aswing.AsWingViewOrdersForm extends JPanel im
 			progressBar.setVisible(false);
 			return;
 		}
-		if (event instanceof OrderCancelledEvent) {
+		if (event instanceof OrderCanceledEvent) {
 			controller.loadOrders();
 			return;
 		}

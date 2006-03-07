@@ -50,7 +50,7 @@
 	<bean id="cancelOrderCallback" class="org.as2lib.sample.pizza.control.CancelOrderCallback">
 		<property name="errorCode">error.cancelOrder</property>
 		<property name="successCode">success.cancelOrder</property>
-		<property name="successEventClass" type="Class">org.as2lib.sample.pizza.event.OrderCancelledEvent</property>
+		<property name="successEventClass" type="Class">org.as2lib.sample.pizza.event.OrderCanceledEvent</property>
 	</bean>
 	
 	<!--<bean id="weaver" class="org.as2lib.aop.weaver.SimpleWeaver">

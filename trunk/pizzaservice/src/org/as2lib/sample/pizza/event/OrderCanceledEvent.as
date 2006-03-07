@@ -20,9 +20,9 @@ import org.as2lib.context.event.SuccessEvent;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.sample.pizza.event.OrderCancelledEvent extends SuccessEvent {
+class org.as2lib.sample.pizza.event.OrderCanceledEvent extends SuccessEvent {
 	
-	public function OrderCancelledEvent(successCode:String, applicationContext:ApplicationContext) {
+	public function OrderCanceledEvent(successCode:String, applicationContext:ApplicationContext) {
 		super(successCode, applicationContext);
 	}
 	
