@@ -89,9 +89,9 @@
     </copy>
     
     <delete dir="${docs.dir}/api"/>
-    <as2api package="org.as2lib.*" classpath="${dist.dir}/src" outputDir="${docs.dir}/api"
-            dotExe="dot.exe" drawDiagrams="yes" progress="yes"
-            title="As2lib - Open Source ActionScript 2.0 Library" sources="yes"/>
+    <as2api package="org.as2lib.*;main.*" classpath="${dist.dir}/src" outputDir="${docs.dir}/api"
+            dotExe="dot.exe" drawDiagrams="yes" sources="yes"
+            title="As2lib - Open Source ActionScript 2.0 Library"/>
     <copy todir="${dist.dir}/docs/api">
       <fileset dir="${docs.dir}/api">
         <include name="**/*.*"/>
