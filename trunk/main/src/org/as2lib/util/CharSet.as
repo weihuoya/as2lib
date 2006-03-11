@@ -17,7 +17,7 @@ dynamic class org.as2lib.util.CharSet extends BasicClass {
 	}
 	public function inverse(Void):CharSet {
 		if (!inversed) {
-			inversed = new CharSetInverser(this);
+			inversed = new CharSetInverser();
 		}
 		return inversed;
 	}
