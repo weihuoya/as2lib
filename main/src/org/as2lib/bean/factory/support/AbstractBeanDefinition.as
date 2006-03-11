@@ -172,30 +172,30 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 */
 	public function override(beanDefinition:AbstractBeanDefinition):Void {
 		if (beanDefinition.hasBeanClass()) {
-			setBeanClass(beanDefinition.getBeanClass());
+			beanClass = beanDefinition.getBeanClass();
 		}
-		setAbstract(beanDefinition.isAbstract());
-		setSingleton(beanDefinition.isSingleton());
-		setLazyInit(beanDefinition.isLazyInit());
-		setAutowireMode(beanDefinition.getAutowireMode());
-		setDependencyCheck(beanDefinition.getDependencyCheck());
-		setDependsOn(beanDefinition.getDependsOn());
-		getConstructorArgumentValues().addArgumentValues(beanDefinition.getConstructorArgumentValues());
-		getPropertyValues().addPropertyValues(beanDefinition.getPropertyValues());
-		getMethodOverrides().addOverrides(beanDefinition.getMethodOverrides());
+		abstract = beanDefinition.isAbstract();
+		singleton = beanDefinition.isSingleton();
+		lazyInit = beanDefinition.isLazyInit();
+		autowireMode = beanDefinition.getAutowireMode();
+		dependencyCheck = beanDefinition.getDependencyCheck();
+		dependsOn = beanDefinition.getDependsOn();
+		constructorArgumentValues.addArgumentValues(beanDefinition.getConstructorArgumentValues());
+		propertyValues.addPropertyValues(beanDefinition.getPropertyValues());
+		methodOverrides.addOverrides(beanDefinition.getMethodOverrides());
 		if (beanDefinition.getFactoryBeanName() != null) {
-			setFactoryBeanName(beanDefinition.getFactoryBeanName());
+			factoryBeanName = beanDefinition.getFactoryBeanName();
 		}
 		if (beanDefinition.getFactoryMethodName() != null) {
-			setFactoryMethodName(beanDefinition.getFactoryMethodName());
+			factoryMethodName = beanDefinition.getFactoryMethodName();
 		}
 		if (beanDefinition.getInitMethodName() != null) {
-			setInitMethodName(beanDefinition.getInitMethodName());
-			setEnforceInitMethod(beanDefinition.isEnforceInitMethod());
+			initMethodName = beanDefinition.getInitMethodName();
+			enforceInitMethod = beanDefinition.isEnforceInitMethod();
 		}
 		if (beanDefinition.getDestroyMethodName() != null) {
-			setDestroyMethodName(beanDefinition.getDestroyMethodName());
-			setEnforceDestroyMethod(beanDefinition.isEnforceDestroyMethod());
+			destroyMethodName = beanDefinition.getDestroyMethodName();
+			enforceDestroyMethod = beanDefinition.isEnforceDestroyMethod();
 		}
 	}
 	
@@ -358,10 +358,6 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	public function getConstructorArgumentValues(Void):ConstructorArgumentValues {
 		return constructorArgumentValues;
 	}
-	
-	public function hasConstructorArgumentValues(Void):Boolean {
-		return (constructorArgumentValues != null && !constructorArgumentValues.isEmpty());
-	}
 
 	/**
 	 * Specifies property values for this bean, if any.
@@ -376,10 +372,6 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		return propertyValues;
 	}
 	
-	public function hasPropertyValues(Void):Boolean {
-		return (propertyValues != null && !propertyValues.isEmpty());
-	}
-
 	/**
 	 * Specifies method overrides for this bean, if any.
 	 * 
