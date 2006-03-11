@@ -169,7 +169,7 @@ class org.as2lib.bean.factory.config.PropertyPathFactoryBean extends BasicClass 
 		}
 		if (targetBeanWrapper == null && beanFactory.isSingleton(targetBeanName)) {
 			// Eagerly fetch singleton target bean, and determine result type.
-			targetBeanWrapper = new SimpleBeanWrapper(beanFactory.getBean(targetBeanName));
+			targetBeanWrapper = new SimpleBeanWrapper(beanFactory.getBeanByName(targetBeanName));
 			//resultType = targetBeanWrapper.getPropertyType(this.propertyPath);
 		}
 	}
@@ -178,7 +178,7 @@ class org.as2lib.bean.factory.config.PropertyPathFactoryBean extends BasicClass 
 		var target:BeanWrapper = targetBeanWrapper;
 		if (target == null) {
 			// fetch prototype target bean
-			target = new SimpleBeanWrapper(beanFactory.getBean(targetBeanName));
+			target = new SimpleBeanWrapper(beanFactory.getBeanByName(targetBeanName));
 		}
 		var value = target.getPropertyValue(propertyPath);
 		if (value == null) {
