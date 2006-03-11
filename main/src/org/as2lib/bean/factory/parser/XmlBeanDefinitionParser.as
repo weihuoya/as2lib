@@ -485,10 +485,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		}
 		var value = parsePropertyValue(element, beanName, "<constructor-arg> element");
 		if (index == null) {
-			argumentValues.addArgumentValue(new ConstructorArgumentValue(value, type));
+			argumentValues.addArgumentValueByValue(new ConstructorArgumentValue(value, type));
 		}
 		else {
-			argumentValues.addArgumentValue(index, new ConstructorArgumentValue(value, type));
+			argumentValues.addArgumentValueByIndexAndValue(index, new ConstructorArgumentValue(value, type));
 		}
 	}
 	
