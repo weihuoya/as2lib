@@ -126,26 +126,12 @@ interface org.as2lib.bean.factory.config.BeanDefinition extends BasicInterface {
 	public function isEnforceDestroyMethod(Void):Boolean;
 	
 	/**
-	 * Returns whether this bean has any constructor argument values.
-	 * 
-	 * @return {@code true} if there are constructor argument values else {@code false}
-	 */
-	public function hasConstructorArgumentValues(Void):Boolean;
-	
-	/**
 	 * Returns the constructor argument values for this bean, if any. Can be modified
 	 * during bean factory post-processing.
 	 * 
 	 * @return the constructor argument values or {@code null}
 	 */
 	public function getConstructorArgumentValues(Void):ConstructorArgumentValues;
-	
-	/**
-	 * Returns whether this bean has any property values.
-	 * 
-	 * @return {@code true} if there are property values else {@code false}
-	 */
-	public function hasPropertyValues(Void):Boolean;
 	
 	/**
 	 * Returns the property values to be applied to a new instance of this bean, if any.
