@@ -38,20 +38,10 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 	
 	/**
 	 * @overload RootBeanDefinitionByValues
-	 * @overload RootBeanDefinitionByClass
-	 * @overload RootBeanDefinitionByClassAndPropertyValuesAndSingleton
-	 * @overload RootBeanDefinitionByClassAndSingleton
-	 * @overload RootBeanDefinitionByClassAndAutowireAndDependency
 	 * @overload RootBeanDefinitionBySource
 	 */
 	public function RootBeanDefinition() {
 		var o:Overload = new Overload(this);
-		o.addHandler([], RootBeanDefinitionByValues);
-		o.addHandler([Function], RootBeanDefinitionByClassAndPropertyValuesAndSingleton);
-		o.addHandler([Function, PropertyValues], RootBeanDefinitionByClassAndPropertyValuesAndSingleton);
-		o.addHandler([Function, PropertyValues, Boolean], RootBeanDefinitionByClassAndPropertyValuesAndSingleton);
-		o.addHandler([Function, Boolean], RootBeanDefinitionByClassAndSingleton);
-		o.addHandler([Function, Number, Boolean], RootBeanDefinitionByClassAndAutowireAndDependency);
 		o.addHandler([ConstructorArgumentValues, PropertyValues], RootBeanDefinitionByValues);
 		o.addHandler([AbstractBeanDefinition], RootBeanDefinitionBySource);
 		o.forward(arguments);
@@ -70,51 +60,6 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 	}
 	
 	/**
-	 * Constructs a new {@code RootBeanDefinition} with the given bean class, property
-	 * values and singleton flag.
-	 * 
-	 * @param beanClass the class of the bean
-	 * @param propertyValues the property values
-	 * @param singleton whether the defined bean is a singleton
-	 */
-	private function RootBeanDefinitionByClassAndPropertyValuesAndSingleton(beanClass:Function, propertyValues:PropertyValues, singleton:Boolean):Void {
-		setBeanClass(beanClass);
-		if (propertyValues != null) {
-			setPropertyValues(propertyValues);
-		}
-		if (singleton != null) {
-			setSingleton(singleton);
-		}
-	}
-	
-	/**
-	 * Constructs a new {@code RootBeanDefinition} with the given bean class and
-	 * singleton flag.
-	 * 
-	 * @param beanClass the class of the bean
-	 * @param singleton whether the defined bean is a singleton
-	 */
-	private function RootBeanDefinitionByClassAndSingleton(beanClass:Function, singleton:Boolean):Void {
-		RootBeanDefinitionByClassAndPropertyValuesAndSingleton(beanClass, null, singleton);
-	}
-	
-	/**
-	 * Constructs a new {@code RootBeanDefinition} with the given bean class, autowire
-	 * mode and dependency check code.
-	 * 
-	 * @param beanClass the class of the bean
-	 * @param autowireMode the autowire mode
-	 * @param dependencyCheck the dependency check code
-	 */
-	private function RootBeanDefinitionByClassAndAutowireAndDependency(beanClass:Function, autowireMode:Number, dependencyCheck:Boolean):Void {
-		setBeanClass(beanClass);
-		setAutowireMode(autowireMode);
-		if (dependencyCheck) {
-			setDependencyCheck(DEPENDENCY_CHECK_OBJECTS);
-		}
-	}
-	
-	/**
 	 * Constructs a new {@code RootBeanDefinition} by copying the given source bean
 	 * definition.
 	 * 
@@ -124,21 +69,21 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 		if (source.hasBeanClass()) {
 			setBeanClass(source.getBeanClass());
 		}
-		setAbstract(source.isAbstract());
-		setSingleton(source.isSingleton());
-		setLazyInit(source.isLazyInit());
-		setAutowireMode(source.getAutowireMode());
-		setDependencyCheck(source.getDependencyCheck());
-		setDependsOn(source.getDependsOn());
-		setConstructorArgumentValues(new ConstructorArgumentValues(source.getConstructorArgumentValues()));
-		setPropertyValues(new PropertyValues(source.getPropertyValues()));
-		setMethodOverrides(new MethodOverrides(source.getMethodOverrides()));
-		setFactoryBeanName(source.getFactoryBeanName());
-		setFactoryMethodName(source.getFactoryMethodName());
-		setInitMethodName(source.getInitMethodName());
-		setEnforceInitMethod(source.isEnforceInitMethod());
-		setDestroyMethodName(source.getDestroyMethodName());
-		setEnforceDestroyMethod(source.isEnforceDestroyMethod());
+		abstract = source.isAbstract();
+		singleton = source.isSingleton();
+		lazyInit = source.isLazyInit();
+		autowireMode = source.getAutowireMode();
+		dependencyCheck = source.getDependencyCheck();
+		dependsOn = source.getDependsOn();
+		constructorArgumentValues = new ConstructorArgumentValues(source.getConstructorArgumentValues());
+		propertyValues = new PropertyValues(source.getPropertyValues());
+		methodOverrides = new MethodOverrides(source.getMethodOverrides());
+		factoryBeanName = source.getFactoryBeanName();
+		factoryMethodName = source.getFactoryMethodName();
+		initMethodName = source.getInitMethodName();
+		enforceInitMethod = source.isEnforceInitMethod();
+		destroyMethodName = source.getDestroyMethodName();
+		enforceDestroyMethod = source.isEnforceDestroyMethod();
 	}
 	
 	public function validate(Void):Void {
