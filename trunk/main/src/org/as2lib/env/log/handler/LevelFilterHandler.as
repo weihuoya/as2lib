@@ -95,7 +95,7 @@ class org.as2lib.env.log.handler.LevelFilterHandler implements LogHandler {
 	}
 	
 	/**
-	 * Forwards that passed-in {@code message} to the wrapped handler if the message
+	 * Forwards the passed-in {@code message} to the wrapped handler if the message
 	 * has a higher or the same level than the specified one.
 	 * 
 	 * @param message the message to forward to the wrapped handler	 */
