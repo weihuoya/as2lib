@@ -87,13 +87,20 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	 * @param propertyValue the property value to add
 	 */
 	public function addPropertyValueByPropertyValue(propertyValue:PropertyValue):Void {
-		for (var i:Number = 0; i < propertyValues.length; i++) {
-			var currentPropertyValue:PropertyValue = propertyValues[i];
-			if (currentPropertyValue.getName() == propertyValue.getName()) {
-				mergeIfRequired(propertyValue, currentPropertyValue);
-				propertyValues[i] = propertyValue;
-				return;
+		var propertyName:String = propertyValue.getName();
+		if (propertyValues[propertyName]) {
+			for (var i:Number = 0; i < propertyValues.length; i++) {
+				var currentPropertyValue:PropertyValue = propertyValues[i];
+				if (currentPropertyValue.getName() == propertyName) {
+					if (mergeIfRequired(propertyValue, currentPropertyValue)) {
+						propertyValues[i] = propertyValue;
+						return;
+					}
+				}
 			}
+		}
+		else {
+			propertyValues[propertyName] = true;
 		}
 		propertyValues.push(propertyValue);
 	}
@@ -104,16 +111,19 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	 * 
 	 * @param newPropertyValue the new property value to merge if required
 	 * @param currentPropertyValue the current property value
+	 * @return {@code true} if merge was required else {@code false}
 	 * @see Mergeable
 	 */
-	private function mergeIfRequired(newPropertyValue:PropertyValue, currentPropertyValue:PropertyValue):Void {
+	private function mergeIfRequired(newPropertyValue:PropertyValue, currentPropertyValue:PropertyValue):Boolean {
 		var value = newPropertyValue.getValue();
 		if (value instanceof Mergeable) {
 			var mergable:Mergeable = value;
 			if (mergable.isMergeEnabled()) {
 				mergable.merge(currentPropertyValue.getValue());
 			}
+			return true;
 		}
+		return false;
 	}
 	
 	/**
@@ -169,7 +179,7 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	 * {@code false}
 	 */
 	public function contains(propertyName:String):Boolean {
-		return (getPropertyValue(propertyName) != null);
+		return (propertyValues[propertyName] == true);
 	}
 	
 	/**
