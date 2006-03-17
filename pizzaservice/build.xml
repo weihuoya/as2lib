@@ -7,7 +7,7 @@
   
   <property name="src.dir" location="src"/>
   <property name="build.dir" location="build"/>
-  <property name="files.dir" location="files"/>
+  <property name="view.dir" location="view"/>
   <property name="as2lib.dir" location="D:/Documents/Projects/As2lib/main/src"/>
   <property name="debugit.dir" location="D:/Programming/Flash/DebugIt"/>
   <property name="aswing.dir" location="D:/Programming/Flash/aswing/src"/>
@@ -15,11 +15,13 @@
   <property name="enflash.dir" location="D:/Programming/Flash/enflash/src/classes"/>
   <property name="remoting.dir" location="C:/Programme/Macromedia/Flash 8/en/First Run/Classes"/>
   
-  <property name="logging.xml" location="${src.dir}/logging.xml"/>
-  <property name="applicationContext.xml" location="${src.dir}/applicationContext.xml"/>
-  <property name="asWingContext.xml" location="${src.dir}/asWingContext.xml"/>
-  <property name="actionStepContext.xml" location="${src.dir}/actionStepContext.xml"/>
-  <property name="enFlashContext.xml" location="${src.dir}/enFlashContext.xml"/>
+  <property name="logging.xml" location="${view.dir}/logging.xml"/>
+  <property name="applicationContext.xml" location="${view.dir}/applicationContext.xml"/>
+  <property name="asWingContext.xml" location="${view.dir}/aswing/asWingContext.xml"/>
+  <property name="asWingOrderForm.xml" location="${view.dir}/aswing/asWingOrderForm.xml"/>
+  <property name="asWingViewOrdersForm.xml" location="${view.dir}/aswing/asWingViewOrdersForm.xml"/>
+  <property name="actionStepContext.xml" location="${view.dir}/actionstep/actionStepContext.xml"/>
+  <property name="enFlashContext.xml" location="${view.dir}/enflash/enFlashContext.xml"/>
   
   <property name="pizza.swf" location="${build.dir}/pizza.swf"/>
   
@@ -28,7 +30,7 @@
   <target name="build">
     <mkdir dir="${build.dir}"/>
     <copy todir="${build.dir}">
-      <fileset dir="${src.dir}">
+      <fileset dir="${view.dir}">
         <include name="**/*.xml"/>
         <include name="**/*.properties"/>
       </fileset>
@@ -47,6 +49,8 @@
         <pathelement path="${logging.xml}"/>
         <pathelement path="${applicationContext.xml}"/>
         <pathelement path="${asWingContext.xml}"/>
+        <pathelement path="${asWingOrderForm.xml}"/>
+        <pathelement path="${asWingViewOrdersForm.xml}"/>
         <!--<pathelement path="${actionStepContext.xml}"/>
         <pathelement path="${enFlashContext.xml}"/>-->
       </srcxml>
