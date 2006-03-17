@@ -19,7 +19,14 @@ import org.as2lib.app.exec.BatchErrorListener;
 import org.as2lib.app.exec.BatchFinishListener;
 import org.as2lib.app.exec.BatchProcess;
 import org.as2lib.app.exec.BatchStartListener;
+import org.as2lib.app.exec.BatchUpdateListener;
+import org.as2lib.app.exec.Process;
+import org.as2lib.app.exec.ProcessErrorListener;
+import org.as2lib.app.exec.ProcessFinishListener;
+import org.as2lib.app.exec.ProcessStartListener;
+import org.as2lib.app.exec.ProcessUpdateListener;
 import org.as2lib.context.support.AsWingApplicationContext;
+import org.as2lib.context.support.LoadingApplicationContext;
 import org.as2lib.context.support.XmlApplicationContext;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
@@ -33,16 +40,19 @@ import com.interactiveAlchemy.utils.Debug;
 /**
  * @author Simon Wacker
  */
-class main.Mtasc extends BasicClass implements BatchStartListener, BatchErrorListener, BatchFinishListener {
+class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateListener, BatchErrorListener,
+		BatchFinishListener, ProcessStartListener, ProcessUpdateListener, ProcessErrorListener, ProcessFinishListener {
 	
 	private static var logger:Logger = LogManager.getLogger("main.Mtasc");
 	
 	public static var LOG_CONFIGURATION_URI:String = "logging.xml";
 	public static var ROOT_APPLICATION_CONTEXT_URI:String = "applicationContext.xml";
-	public static var ASWING_APPLICATION_CONTEXT_URI:String = "asWingContext.xml";
+	public static var ASWING_APPLICATION_CONTEXT_URI:String = "aswing/asWingContext.xml";
+	public static var ACTIONSTEP_APPLICATION_CONTEXT_URI:String = "actionstep/actionStepContext.xml";
+	public static var ENFLASH_APPLICATION_CONTEXT_URI:String = "enflash/enFlashContext.xml";
 	
 	private var rootApplicationContext:XmlApplicationContext;
-	private var childApplicationContext:AsWingApplicationContext;
+	private var childApplicationContext:LoadingApplicationContext;
 	
 	public function Mtasc(Void) {
 		System.useCodepage = true;
@@ -57,6 +67,8 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchErrorLis
 				new LogConfigurationProcess(LOG_CONFIGURATION_URI, new XmlLogConfigurationParser());
 		rootApplicationContext = new XmlApplicationContext(ROOT_APPLICATION_CONTEXT_URI);
 		childApplicationContext = new AsWingApplicationContext(ASWING_APPLICATION_CONTEXT_URI, rootApplicationContext);
+		//childApplicationContext = new ActionStepApplicationContext(ACTIONSTEP_APPLICATION_CONTEXT_URI, rootApplicationContext);
+		//childApplicationContext = new EnFlashApplicationContext(ENFLASH_APPLICATION_CONTEXT_URI, rootApplicationContext);
 		batchProcess.addProcess(logConfigurationProcess);
 		batchProcess.addProcess(rootApplicationContext);
 		batchProcess.addProcess(childApplicationContext);
@@ -65,6 +77,28 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchErrorLis
 	
 	public function onBatchStart(batch:Batch):Void {
 		Debug.write("Batch started.");
+	}
+	
+	public function onProcessStart(process:Process):Void {
+		// TODO: Use process name for preloader to show what is currently being loaded.
+		Debug.write("Started process '" + process.getName() + "'.");
+	}
+	
+	public function onProcessUpdate(process:Process):Void {
+		Debug.write("Process percentage: " + process.getPercentage());
+	}
+	
+	public function onProcessError(process:Process, error):Boolean {
+		Debug.write("Process error: " + process.getName());
+		return false;
+	}
+	
+	public function onProcessFinish(process:Process):Void {
+		Debug.write("Finished process '" + process.getName() + "'.");
+	}
+	
+	public function onBatchUpdate(batch:Batch):Void {
+		//Debug.write("Batch percentage: " + batch.getPercentage());
 	}
 	
 	public function onBatchError(batch:Batch, error):Boolean {
