@@ -1,0 +1,48 @@
+<?xml version="1.0"?>
+
+<beans>
+	
+	<bean id="Import" class="org.as2lib.context.support.LoadingApplicationContextFactoryBean" abstract="true">
+		<applicationContextClass type="Class">org.as2lib.context.support.AsWingApplicationContext</applicationContextClass>
+	</bean>
+	
+	<bean id="Panel" class="org.aswing.JPanel" abstract="true"/>
+	<bean id="SoftBox" class="org.aswing.SoftBox" abstract="true"/>
+	<bean id="SoftBoxLayout" class="org.aswing.SoftBoxLayout" abstract="true"/>
+	<bean id="FormItem" class="org.aswing.JPanel" abstract="true">
+		<layout><SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}"/></layout>
+	</bean>
+	<bean id="Label" class="org.aswing.JLabel" abstract="true"/>
+	<bean id="TextField" preferredWidth="120" preferredHeight="20" class="org.aswing.JTextField" abstract="true"/>
+	<bean id="Button" class="org.aswing.JButton" abstract="true"/>
+	<bean id="ComboBox" class="org.aswing.JComboBox" abstract="true"/>
+	<bean id="ScrollPane" class="org.aswing.JScrollPane" abstract="true"/>
+	<bean id="List" class="org.aswing.JList" abstract="true"/>
+	<bean id="ProgressBar" class="org.aswing.JProgressBar" abstract="true"/>
+	<bean id="Form" abstract="true">
+		<layout><SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
+	</bean>
+	<bean id="Border" class="org.aswing.border.EmptyBorder" singleton="false">
+		<insets><bean bottom="0" left="5" right="5" top="5" class="org.aswing.Insets"/></insets>
+	</bean>
+	
+	<bean id="view" width="445" height="360" resizable="false"
+			class="org.as2lib.sample.pizza.view.aswing.AsWingView" init-method="show">
+		<controller>b{controller}</controller>
+		<progressBar>b{progressBar}</progressBar>
+		<statusLabel>b{statusLabel}</statusLabel>
+		<Panel constraints="v{org.aswing.WindowLayout.TITLE}" background="v{org.aswing.ASColor.BLACK}" opaque="true">
+			<Button text="{messageSource.message[button.orderForm]}" actionListener="d{view.showOrderForm}"/>
+			<Button text="{messageSource.message[button.viewOrders]}" actionListener="d{view.showViewOrdersForm}"/>
+			<Label id="statusLabel" foreground="v{org.aswing.ASColor.WHITE}"/>
+			<ProgressBar id="progressBar" value="110" visible="false"/>
+		</Panel>
+		<orderForm>
+			<Import id="orderForm" beanDefinitionUri="aswing/asWingOrderForm.xml"/>
+		</orderForm>
+		<viewOrdersForm>
+			<Import id="viewOrdersForm" beanDefinitionUri="aswing/asWingViewOrdersForm.xml"/>
+		</viewOrdersForm>
+	</bean>
+	
+</beans>
