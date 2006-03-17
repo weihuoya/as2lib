@@ -75,6 +75,7 @@ class org.as2lib.sample.pizza.view.aswing.AsWingView extends JFrame implements A
 				var message:String = messageSource.getMessage(errorCode);
 				statusLabel.setText(message);
 			}
+			progressBar.setVisible(false);
 			return;
 		}
 		if (event instanceof OrderPlacedEvent) {
