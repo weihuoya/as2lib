@@ -7,5 +7,5 @@
 <AS2Classpath type="source">src</AS2Classpath>
 <AS2Classpath type="source">debugit</AS2Classpath>
 <AS2Classpath type="source">aswing</AS2Classpath>
-<AS2Classpath type="source">MX Library [Flash 8]</AS2Classpath>
+<AS2Classpath type="source">Core Library [Flash 8]</AS2Classpath>
 </AS2Classpathes>
