@@ -62,6 +62,7 @@ class org.as2lib.sample.pizza.view.aswing.AsWingViewOrdersForm extends JPanel im
 		if (orderNames.length > 0) {
 			orderList.setSelectedIndex(0);
 			cancelOrderButton.setEnabled(true);
+			updatePizzas();
 		}
 	}
 	
