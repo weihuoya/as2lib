@@ -21,14 +21,19 @@
 			<location>actionstep</location>
 		</link>
 		<link>
+			<name>core</name>
+			<type>2</type>
+			<location>D:/Programming/Flash/mtasc/std</location>
+		</link>
+		<link>
 			<name>debugit</name>
 			<type>2</type>
 			<location>debugit</location>
 		</link>
 		<link>
-			<name>core</name>
+			<name>Core Library [Flash 8]</name>
 			<type>2</type>
-			<location>C:/Dokumente und Einstellungen/Administrator/Lokale Einstellungen/Anwendungsdaten/Macromedia/Flash 8/en/Configuration/Classes/FP8</location>
+			<location>flash8</location>
 		</link>
 		<link>
 			<name>enflash</name>
@@ -44,11 +49,6 @@
 			<name>aswing</name>
 			<type>2</type>
 			<location>aswing</location>
-		</link>
-		<link>
-			<name>MX Library [Flash 8]</name>
-			<type>2</type>
-			<location>C:/Programme/Macromedia/Flash 8/en/First Run/Classes</location>
 		</link>
 	</linkedResources>
 </projectDescription>
