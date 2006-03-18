@@ -623,6 +623,9 @@ public class Swf extends Mtasc {
      */
     public void execute() throws BuildException {
         this.swfmill.setProject(getProject());
+        this.swfmill.setTaskName(getTaskName());
+        this.swfmill.setTaskType(getTaskType());
+        this.swfmill.setLocation(getLocation());
         this.swfmill.setCommand(new Swfmill.Command(Swfmill.SIMPLE));
         if (this.swfmill.getText() == null) {
             //File classes = createClassesSwf();
