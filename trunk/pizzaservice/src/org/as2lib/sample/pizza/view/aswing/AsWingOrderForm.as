@@ -48,7 +48,7 @@ class org.as2lib.sample.pizza.view.aswing.AsWingOrderForm extends JPanel impleme
 	
 	public function onApplicationEvent(event:ApplicationEvent):Void {
 		if (event instanceof OrderPlacedEvent) {
-			// TODO: Find a better solution for removing items to the list.
+			// TODO: Find a better solution for removing items from the list.
 			var model:VectorListModel = VectorListModel(orderTicketList.getModel());
 			model.removeRange(0, model.size() - 1);
 		}
@@ -60,9 +60,11 @@ class org.as2lib.sample.pizza.view.aswing.AsWingOrderForm extends JPanel impleme
 	}
 	
 	public function addOrderItem(Void):Void {
-		var qty:Number = Number(quantityTextField.getText());
-		var item:String = controller.addOrderItem(qty, String(sizeComboBox.getSelectedItem()),
-				String(crustComboBox.getSelectedItem()), toppingList.getSelectedValues());
+		var quantity:Number = Number(quantityTextField.getText());
+		var size:String = String(sizeComboBox.getSelectedItem());
+		var crust:String = String(crustComboBox.getSelectedItem());
+		var toppings:Array = toppingList.getSelectedValues();
+		var item:String = controller.addOrderItem(quantity, size, crust, toppings);
 		// TODO: Find a better solution for adding items to the list.
 		var model:VectorListModel = VectorListModel(orderTicketList.getModel());
 		model.append(item);
