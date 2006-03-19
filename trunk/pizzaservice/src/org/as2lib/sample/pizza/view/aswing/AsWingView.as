@@ -35,8 +35,6 @@ import org.aswing.WindowLayout;
  */
 class org.as2lib.sample.pizza.view.aswing.AsWingView extends JFrame implements ApplicationListener, MessageSourceAware {
 	
-	private static var logger:Logger = LogManager.getLogger("org.as2lib.sample.pizza.view.aswing.AsWingView");
-	
 	private var messageSource:MessageSource = null;
 	private var controller:Controller = null;
 	private var orderForm:JPanel = null;
