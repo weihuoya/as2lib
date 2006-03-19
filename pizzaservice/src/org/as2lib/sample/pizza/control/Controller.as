@@ -115,7 +115,7 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 	}
 	
 	public function removeOrderItems(items:Array):Void {
-		for (var i:Number = items.length; i >= 0; i--) {
+		for (var i:Number = items.length - 1; i >= 0; i--) {
 			removeOrderItem(Number(items[i]));
 		}
 	}
