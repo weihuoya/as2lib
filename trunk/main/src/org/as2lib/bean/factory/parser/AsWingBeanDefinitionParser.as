@@ -29,6 +29,8 @@ import org.aswing.geom.Point;
  */
 class org.as2lib.bean.factory.parser.AsWingBeanDefinitionParser extends UiBeanDefinitionParser {
 	
+	public static var DEFAULT_PROPERTY:String = "append";
+	
 	/**
 	 * Constructs a new {@code XmlBeanDefinitionParser} instance.
 	 * 
@@ -37,10 +39,7 @@ class org.as2lib.bean.factory.parser.AsWingBeanDefinitionParser extends UiBeanDe
 	 */
 	public function AsWingBeanDefinitionParser(registry:BeanDefinitionRegistry) {
 		super(registry);
-	}
-	
-	private function getDefaultPropertyName(counter:Number):String {
-		return "insert[" + counter + "]";
+		defaultProperty = DEFAULT_PROPERTY;
 	}
 	
 }
