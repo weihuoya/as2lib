@@ -109,6 +109,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	/** The property values of this bean. */
 	private var propertyValues:PropertyValues;
 	
+	/** The default property name. */
+	private var defaultPropertyName:String;
+	
 	/** The method overrides of this bean. */
 	private var methodOverrides:MethodOverrides;
 	
@@ -156,13 +159,13 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	/**
 	 * Overrides settings in this bean definition from the given bean definition.
 	 * 
-	 * <p><ul>
+	 * <ul>
 	 *   <li>Will override beanClass if specified in the given bean definition.
 	 *   <li>Will always take abstract, singleton, lazyInit from the given bean definition.
 	 *   <li>Will add argumentValues, propertyValues, methodOverrides to
 	 *       existing ones.
 	 *   <li>Will override initMethodName, destroyMethodName, staticFactoryMethodName
-	 *       if specified.
+	 *       and defaultPropertyName if specified.
 	 *   <li>Will always take dependsOn, autowireMode, dependencyCheck from the
 	 *       given bean definition.
 	 * </ul>
@@ -196,6 +199,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		if (beanDefinition.getDestroyMethodName() != null) {
 			destroyMethodName = beanDefinition.getDestroyMethodName();
 			enforceDestroyMethod = beanDefinition.isEnforceDestroyMethod();
+		}
+		if (beanDefinition.getDefaultPropertyName() != null) {
+			defaultPropertyName = beanDefinition.getDefaultPropertyName();
 		}
 	}
 	
@@ -370,6 +376,20 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	
 	public function getPropertyValues(Void):PropertyValues {
 		return propertyValues;
+	}
+	
+	/**
+	 * Specified the default property name to use if non has been specified for a
+	 * property.
+	 * 
+	 * @param defaultPropertyName the name of the default property
+	 */
+	public function setDefaultPropertyName(defaultPropertyName:String):Void {
+		this.defaultPropertyName = defaultPropertyName;
+	}
+	
+	public function getDefaultPropertyName(Void):String {
+		return defaultPropertyName;
 	}
 	
 	/**
