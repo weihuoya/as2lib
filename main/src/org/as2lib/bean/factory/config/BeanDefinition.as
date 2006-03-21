@@ -142,6 +142,14 @@ interface org.as2lib.bean.factory.config.BeanDefinition extends BasicInterface {
 	public function getPropertyValues(Void):PropertyValues;
 	
 	/**
+	 * Returns the name of the default property to use if non has been specified for
+	 * a property.
+	 * 
+	 * @return the default property name
+	 */
+	public function getDefaultPropertyName(Void):String;
+	
+	/**
 	 * Returns whether this bean is a singleton with a single shared instance returned
 	 * on all calls.
 	 * 
