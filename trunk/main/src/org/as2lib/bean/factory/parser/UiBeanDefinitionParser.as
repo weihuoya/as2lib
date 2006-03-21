@@ -22,9 +22,10 @@ import org.as2lib.bean.factory.config.PropertyPathFactoryBean;
 import org.as2lib.bean.factory.config.RuntimeBeanReference;
 import org.as2lib.bean.factory.config.VariableRetrievingFactoryBean;
 import org.as2lib.bean.factory.parser.XmlBeanDefinitionParser;
+import org.as2lib.bean.factory.support.AbstractBeanDefinition;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
+import org.as2lib.bean.factory.support.ChildBeanDefinition;
 import org.as2lib.bean.PropertyValues;
-import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.reflect.DelegateFactoryBean;
 
 /**
@@ -46,6 +47,11 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	public static var METHOD_INVOKING_FACTORY_BEAN_CLASS_NAME:String = "org.as2lib.bean.factory.config.MethodInvokingFactoryBean";
 	public static var DELEGATE_FACTORY_BEAN_CLASS_NAME:String = "org.as2lib.env.reflect.DelegateFactoryBean";
 	
+	public static var DEFAULT_PROPERTY_ATTRIBUTE:String = "default-property";
+	
+	/** The name of the default property. */
+	private var defaultProperty:String;
+	
 	/**
 	 * Constructs a new {@code UiBeanDefinitionParser} instance with a default bean
 	 * definition registry.
@@ -59,6 +65,13 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		var v:Function = VariableRetrievingFactoryBean;
 		var m:Function = MethodInvokingFactoryBean;
 		var d:Function = DelegateFactoryBean;
+	}
+	
+	private function initDefaults(root:XMLNode):Void {
+		super.initDefaults(root);
+		if (root.attributes[DEFAULT_PROPERTY_ATTRIBUTE] != null) {
+			defaultProperty = root.attributes[DEFAULT_PROPERTY_ATTRIBUTE];
+		}
 	}
 	
 	private function parseElement(element:XMLNode):Void {
@@ -78,11 +91,18 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 					&& i != DEPENDENCY_CHECK_ATTRIBUTE && i != AUTOWIRE_ATTRIBUTE
 					&& i != INIT_METHOD_ATTRIBUTE && i != DESTROY_METHOD_ATTRIBUTE
 					&& i != ABSTRACT_ATTRIBUTE && i != SINGLETON_ATTRIBUTE
-					&& i != LAZY_INIT_ATTRIBUTE) {
+					&& i != LAZY_INIT_ATTRIBUTE && i != DEFAULT_PROPERTY_ATTRIBUTE) {
 				convertAttributeToPropertyElement(i, element);
 			}
 		}
-		return super.parseBeanDefinitionElementWithoutRegardToNameOrAliases(element, beanName);
+		// TODO: This needs some refactoring! ;)
+		var result:AbstractBeanDefinition = AbstractBeanDefinition(
+				super.parseBeanDefinitionElementWithoutRegardToNameOrAliases(element, beanName));
+		var defaultProperty:String = element.attributes[DEFAULT_PROPERTY_ATTRIBUTE];
+		if (defaultProperty != null) {
+			result.setDefaultPropertyName(defaultProperty);
+		}
+		return BeanDefinition(result);
 	}
 	
 	private function convertAttributeToPropertyElement(attribute:String, element:XMLNode):Void {
@@ -101,7 +121,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				beanElement.insertBefore(propertyElement, node);
 				node.removeNode();
 				if (isUpperCaseLetter(node.nodeName.charAt(0)) || node.nodeName == BEAN_ELEMENT) {
-					propertyElement.attributes[NAME_ATTRIBUTE] = getDefaultPropertyName(counter++);
+					propertyElement.attributes[NAME_ATTRIBUTE] = getDefaultPropertyName(beanElement, counter++);
 					propertyElement.appendChild(node);
 				}
 				else {
@@ -116,9 +136,35 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		return super.parsePropertyElements(beanElement, beanName);
 	}
 	
-	private function getDefaultPropertyName(counter:Number):String {
-		throw new AbstractOperationException("This method must be implemented by sub-classes.", this, arguments);
-		return null;
+	private function getDefaultPropertyName(beanElement:XMLNode, counter:Number):String {
+		// TODO: Support default properties generally?
+		var result:String = beanElement.attributes[DEFAULT_PROPERTY_ATTRIBUTE];
+		if (result == null) {
+			var parentName:String = beanElement.attributes[PARENT_ATTRIBUTE];
+			while (parentName != null) {
+				// TODO: Problem: Parent bean definition must be parsed first, otherwise this won't work!
+				if (registry.containsBeanDefinition(parentName, true)) {
+					var parent:BeanDefinition = registry.getBeanDefinition(parentName, true);
+					result = parent.getDefaultPropertyName();
+					if (result != null) {
+						break;
+					}
+					else if (parent instanceof ChildBeanDefinition) {
+						parentName = ChildBeanDefinition(parent).getParentName();
+					}
+					else {
+						break;
+					}
+				}
+				else {
+					break;
+				}
+			}
+			if (result == null) {
+				result = defaultProperty;
+			}
+		}
+		return result;
 	}
 	
 	private function parsePropertyValue(element:XMLNode, beanName:String, propertyName:String) {
