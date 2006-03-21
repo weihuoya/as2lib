@@ -108,6 +108,9 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 					propertyElement.attributes[NAME_ATTRIBUTE] = node.nodeName;
 					propertyElement.appendChild(node.firstChild);
 				}
+				if (node.attributes[TYPE_ATTRIBUTE] != null) {
+					propertyElement.attributes[TYPE_ATTRIBUTE] = node.attributes[TYPE_ATTRIBUTE];
+				}
 			}
 		}
 		return super.parsePropertyElements(beanElement, beanName);
