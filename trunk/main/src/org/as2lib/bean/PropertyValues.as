@@ -35,9 +35,10 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	 * Constructs a new {@code PropertyValues} instance.
 	 * 
 	 * <p>If the given {@code source} is not {@code null} its property values will
-	 * be copied to this new instance. Note that populating on construction is faster
-	 * than populating via {@link #addPropertyValues} because duplicate entries must
-	 * not be checked.
+	 * be duplicated and the duplicates will be copied to this new instance. Note
+	 * that populating on construction is faster than populating via {@link #addPropertyValues}
+	 * because it must not be checked whether values are mergeable. Note also that
+	 * {@code addPropertyValues} does not duplicate property values.
 	 * 
 	 * @param source the property values to populate this instance with
 	 */
@@ -47,7 +48,11 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 			var pvs:Array = source.getPropertyValues();
 			for (var i:Number = 0; i < pvs.length; i++) {
 				var pv:PropertyValue = pvs[i];
-				propertyValues.push(new PropertyValue(pv.getName(), pv.getValue(), pv.getType()));
+				var pn:String = pv.getName();
+				if (pn != null) {
+					propertyValues[pn] = true;
+				}
+				propertyValues.push(new PropertyValue(pn, pv.getValue(), pv.getType()));
 			}
 		}
 	}
@@ -55,8 +60,8 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	/**
 	 * Populates this instance with the given property values.
 	 * 
-	 * <p>Note that populating on construction is faster because duplicate entries
-	 * must not be checked there.
+	 * <p>Note that populating on construction is faster because it must not be checked
+	 * whether values are mergeable there.
 	 * 
 	 * @param propertyValues the property values to populate this instance with
 	 */
@@ -99,7 +104,7 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 				}
 			}
 		}
-		else {
+		else if (propertyName != null) {
 			propertyValues[propertyName] = true;
 		}
 		propertyValues.push(propertyValue);
