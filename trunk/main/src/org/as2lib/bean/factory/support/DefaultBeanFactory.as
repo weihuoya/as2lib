@@ -145,7 +145,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	// Implementation of AutowireCapableBeanFactory interface
 	//---------------------------------------------------------------------
 	
-	public function autowire(beanClass, autowireMode:Number, dependencyCheck:Boolean) {
+	/*public function autowire(beanClass, autowireMode:Number, dependencyCheck:Boolean) {
 		// Use non-singleton bean definition, to avoid registering bean as dependent bean.
 		var bd:RootBeanDefinition = new RootBeanDefinition(beanClass, autowireMode, dependencyCheck);
 		bd.setSingleton(false);
@@ -161,7 +161,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var bd:RootBeanDefinition = new RootBeanDefinition(eval("_global." + beanClassName), autowireMode, dependencyCheck);
 		bd.setSingleton(false);
 		populateBean(beanClassName, existingBean, bd);
-	}
+	}*/
 	
 	//---------------------------------------------------------------------
 	// Implementation methods
@@ -510,12 +510,12 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 */
 	private function populateBean(beanName:String, bean, mergedBeanDefinition:RootBeanDefinition):Void {
 		var propertyValues:PropertyValues = mergedBeanDefinition.getPropertyValues();
-		if (mergedBeanDefinition.getAutowireMode() == RootBeanDefinition.AUTOWIRE_BY_NAME) {
+		/*if (mergedBeanDefinition.getAutowireMode() == RootBeanDefinition.AUTOWIRE_BY_NAME) {
 			var pvs:PropertyValues = new PropertyValues(propertyValues);
 			// Add property values based on autowire by name if applicable.
 			autowireByName(beanName, bean, mergedBeanDefinition, pvs);
 			propertyValues = pvs;
-		}
+		}*/
 		//checkDependencies(beanName, mergedBeanDefinition, bw, pvs);
 		applyPropertyValues(beanName, bean, mergedBeanDefinition, propertyValues);
 	}
@@ -529,7 +529,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * @param mergedBeanDefinition the bean definition to update through autowiring
 	 * @param propertyValues the property values to register wired objects with
 	 */
-	private function autowireByName(beanName:String, bean, mergedBeanDefinition:RootBeanDefinition, propertyValues:PropertyValues):Void {
+	/*private function autowireByName(beanName:String, bean, mergedBeanDefinition:RootBeanDefinition, propertyValues:PropertyValues):Void {
 		var propertyNames:Array = getBeanNames(true);
 		var beanWrapper:BeanWrapper = new SimpleBeanWrapper(bean);
 		initBeanWrapper(beanWrapper);
@@ -545,7 +545,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				}
 			}
 		}
-	}
+	}*/
 	
 	/**
 	 * Applies the given property values, resolving any runtime references to other
@@ -566,10 +566,15 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		// Create a deep copy, resolving any references for values.
 		var deepCopy:PropertyValues = new PropertyValues();
 		var pvArray:Array = propertyValues.getPropertyValues();
+		var defaultName:String = mergedBeanDefinition.getDefaultPropertyName();
 		for (var i:Number = 0; i < pvArray.length; i++) {
 			var pv:PropertyValue = pvArray[i];
-			var resolvedValue = resolveValue(pv.getName(), pv.getValue(), beanName, mergedBeanDefinition);
-			deepCopy.addPropertyValueByNameAndValueAndType(pv.getName(), resolvedValue, pv.getType());
+			var name:String = pv.getName();
+			if (name == null) {
+				name = defaultName;
+			}
+			var resolvedValue = resolveValue(name, pv.getValue(), beanName, mergedBeanDefinition);
+			deepCopy.addPropertyValueByNameAndValueAndType(name, resolvedValue, pv.getType());
 		}
 		try {
 			beanWrapper.setPropertyValues(deepCopy);

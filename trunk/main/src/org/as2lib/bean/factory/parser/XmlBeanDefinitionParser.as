@@ -76,6 +76,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var DEFAULT_INIT_METHOD_ATTRIBUTE:String = "default-init-method";
 	public static var DEFAULT_DESTROY_METHOD_ATTRIBUTE:String = "default-destroy-method";
 	public static var DEFAULT_MERGE_ATTRIBUTE:String = "default-merge";
+	public static var DEFAULT_PROPERTY_ATTRIBUTE:String = "default-property";
 	
 	public static var ALIAS_ELEMENT:String = "alias";
 	public static var NAME_ATTRIBUTE:String = "name";
@@ -153,6 +154,8 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	
 	private var defaultMerge:String;
 	
+	private var defaultProperty:String;
+	
 	/**
 	 * Constructs a new {@code XmlBeanDefinitionParser} instance.
 	 * 
@@ -161,6 +164,13 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 */
 	public function XmlBeanDefinitionParser(registry:BeanDefinitionRegistry) {
 		this.registry = registry;
+	}
+	
+	/**
+	 * Sets the default property.
+	 */
+	private function setDefaultProperty(defaultProperty:String):Void {
+		this.defaultProperty = defaultProperty;
 	}
 	
 	/**
@@ -205,12 +215,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Initializes the default lazy-init, autowire and dependency check settings.
+	 * Initializes the default lazy-init, autowire and dependency check, init-method,
+	 * destroy-method, property and merge settings.
 	 * 
 	 * @param root the root element
-	 * @see #setDefaultLazyInit
-	 * @see #setDefaultAutowire
-	 * @see #setDefaultDependencyCheck
 	 */
 	private function initDefaults(root:XMLNode):Void {
 		defaultLazyInit = root.attributes[DEFAULT_LAZY_INIT_ATTRIBUTE];
@@ -221,6 +229,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		}
 		if (root.attributes[DEFAULT_DESTROY_METHOD_ATTRIBUTE] != null) {
 			defaultDestroyMethod = root.attributes[DEFAULT_DESTROY_METHOD_ATTRIBUTE];
+		}
+		if (root.attributes[DEFAULT_PROPERTY_ATTRIBUTE] != null) {
+			defaultProperty = root.attributes[DEFAULT_PROPERTY_ATTRIBUTE];
 		}
 		defaultMerge = root.attributes[DEFAULT_MERGE_ATTRIBUTE];
 	}
@@ -368,6 +379,19 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 				lazyInit = defaultLazyInit;
 			}
 			bd.setLazyInit(TRUE_VALUE == lazyInit);
+			var defaultProperty:String = element.attributes[DEFAULT_PROPERTY_ATTRIBUTE];
+			if (defaultProperty != null) {
+				if (defaultProperty != "") {
+					bd.setDefaultPropertyName(defaultProperty);
+				}
+			}
+			else {
+				if (this.defaultProperty != null) {
+					if (parent == null || parent == "") {
+						bd.setDefaultPropertyName(this.defaultProperty);
+					}
+				}
+			}
 			return BeanDefinition(bd);
 		}
 		catch (exception:org.as2lib.bean.factory.BeanDefinitionStoreException) {
@@ -501,9 +525,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 */
 	private function parsePropertyElement(element:XMLNode, beanName:String, propertyValues:PropertyValues):Void {
 		var propertyName:String = element.attributes[NAME_ATTRIBUTE];
-		if (propertyName == null || propertyName == "") {
+		// Property names must not be specified because there may be a default a default property name!
+		/*if (propertyName == null || propertyName == "") {
 			throw new BeanDefinitionStoreException(beanName, "Tag 'property' must have a 'name' attribute.", this, arguments);
-		}
+		}*/
 		// We allow multiple property definitions!
 		/*if (propertyValues.contains(propertyName)) {
 			throw new BeanDefinitionStoreException(beanName, "Multiple 'property' definitions for property '" + propertyName + "'.", this, arguments);
