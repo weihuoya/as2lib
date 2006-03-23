@@ -496,6 +496,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	}
 	
 	public function validate(Void):Void {
+		// TODO: Validate whether all property values have a property name and if not whether a default property name is available.
 		if (lazyInit && !singleton) {
 			throw new BeanDefinitionValidationException("Lazy initialization is only applicable to singleton beans.", this, arguments);
 		}
