@@ -6,6 +6,9 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="3">
+				<day value="23">
+					<entry type="add" package="org.as2lib.bean.factory.parser" class="ActionStepBeanDefinitionParser">Added support for actionstep bean definitions.</entry>
+				</day>
 				<day value="4">
 					<entry type="add" package="org.as2lib.io.conn.core.event" class="ContextMethodInvocationCallback">A simple MI callback to be used within an application context.</entry>
 					<entry type="add" package="org.as2lib.context.event" class="SuccessEvent">Generic success event that holds a success code.</entry>
