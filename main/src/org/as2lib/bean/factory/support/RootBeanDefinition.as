@@ -84,6 +84,7 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 		enforceInitMethod = source.isEnforceInitMethod();
 		destroyMethodName = source.getDestroyMethodName();
 		enforceDestroyMethod = source.isEnforceDestroyMethod();
+		defaultPropertyName = source.getDefaultPropertyName();
 	}
 	
 	public function validate(Void):Void {
