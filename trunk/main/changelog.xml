@@ -7,6 +7,7 @@
 		<year value="2006">
 			<month value="3">
 				<day value="24">
+					<entry type="add" package="org.as2lib.context.support" class="LoadingApplicationContextFactoryBean">Enables splitting views into one main and multiple sub-views; this technique is sometimes called tiles- or composite-view.</entry>
 					<entry type="add" package="org.as2lib.bean.factory.parser" class="EnFlashApplicationContext">Parser for enFlash xml bean definitions.</entry>
 					<entry type="change" package="org.as2lib.context.support" class="EnFlashApplicationContext">Works now with bean definition files rather than with EnFlash object; as LoadingApplicationContext does.</entry>
 					<entry type="add" package="org.as2lib.context.support" class="ActionStepApplicationContext">Context for convenient ActionStep integration.</entry>
