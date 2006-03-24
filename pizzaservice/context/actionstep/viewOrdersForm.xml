@@ -1,0 +1,27 @@
+<beans>
+	
+	<Form id="viewOrdersForm" x="10" y="35" width="445" height="335" hidden="true" class="org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm">
+		<controller>b{controller}</controller>
+		<orderList>b{orderList}</orderList>
+		<pizzaList>b{pizzaList}</pizzaList>
+		<cancelOrderButton>b{cancelOrderButton}</cancelOrderButton>
+		<progressBar>b{progressBar}</progressBar>
+		<HBox>
+			<init>true</init>
+			<FormItem>
+				<init>true</init>
+				<Label stringValue="{messageSource.message[label.orders]}" width="85" height="25"/>
+				<List id="orderList" target="b{viewOrdersForm}" action="updatePizzas" width="120" height="253"/>
+			</FormItem>
+			<FormItem>
+				<init>true</init>
+				<Label stringValue="{messageSource.message[label.pizzas]}" width="85" height="25"/>
+				<List id="pizzaList" width="300" height="253"/>
+			</FormItem>
+		</HBox>
+		<Button id="cancelOrderButton" title="{messageSource.message[button.cancelOrder]}"
+				target="b{viewOrdersForm}" action="cancelOrder" enabled="false"
+				x="0" y="288" width="85" height="25"/>
+	</Form>
+	
+</beans>
