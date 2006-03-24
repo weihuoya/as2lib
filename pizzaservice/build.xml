@@ -8,6 +8,7 @@
   <property name="src.dir" location="src"/>
   <property name="build.dir" location="build"/>
   <property name="context.dir" location="context"/>
+  <property name="view.dir" location="${context.dir}/aswing"/>
   <property name="as2lib.dir" location="D:/Documents/Projects/As2lib/main/src"/>
   <property name="debugit.dir" location="D:/Programming/Flash/DebugIt"/>
   <property name="aswing.dir" location="D:/Programming/Flash/aswing/src"/>
@@ -17,11 +18,9 @@
   
   <property name="logging.xml" location="${context.dir}/logging.xml"/>
   <property name="applicationContext.xml" location="${context.dir}/applicationContext.xml"/>
-  <property name="asWingContext.xml" location="${context.dir}/aswing/asWingContext.xml"/>
-  <property name="asWingOrderForm.xml" location="${context.dir}/aswing/asWingOrderForm.xml"/>
-  <property name="asWingViewOrdersForm.xml" location="${context.dir}/aswing/asWingViewOrdersForm.xml"/>
-  <property name="actionStepContext.xml" location="${context.dir}/actionstep/actionStepContext.xml"/>
-  <property name="enFlashContext.xml" location="${context.dir}/enflash/enFlashContext.xml"/>
+  <property name="view.xml" location="${view.dir}/view.xml"/>
+  <property name="orderForm.xml" location="${view.dir}/orderForm.xml"/>
+  <property name="viewOrdersForm.xml" location="${view.dir}/viewOrdersForm.xml"/>
   
   <property name="pizza.swf" location="${build.dir}/pizza.swf"/>
   
@@ -35,10 +34,11 @@
         <include name="**/*.properties"/>
       </fileset>
     </copy>
-    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${pizza.swf}" header="445:360:31" version="8">
+    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${pizza.swf}" header="445:360:31" version="8"
+        trace="main/Mtasc.trace">
       <classpath>
-        <!--<pathelement path="${enflash.dir}"/>
-        <pathelement path="${actionstep.dir}"/>-->
+        <pathelement path="${enflash.dir}"/>
+        <pathelement path="${actionstep.dir}"/>
         <pathelement path="${aswing.dir}"/>
         <pathelement path="${remoting.dir}"/>
         <pathelement path="${debugit.dir}"/>
@@ -48,11 +48,9 @@
       <srcxml>
         <pathelement path="${logging.xml}"/>
         <pathelement path="${applicationContext.xml}"/>
-        <pathelement path="${asWingContext.xml}"/>
-        <pathelement path="${asWingOrderForm.xml}"/>
-        <pathelement path="${asWingViewOrdersForm.xml}"/>
-        <!--<pathelement path="${actionStepContext.xml}"/>
-        <pathelement path="${enFlashContext.xml}"/>-->
+        <pathelement path="${view.xml}"/>
+        <pathelement path="${orderForm.xml}"/>
+        <pathelement path="${viewOrdersForm.xml}"/>
       </srcxml>
     </swf>
     <exec executable="${player.exe}" spawn="yes"><arg value="${pizza.swf}"/></exec>
