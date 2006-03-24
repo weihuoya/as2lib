@@ -46,10 +46,14 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateLi
 	private static var logger:Logger = LogManager.getLogger("main.Mtasc");
 	
 	public static var LOG_CONFIGURATION_URI:String = "logging.xml";
-	public static var ROOT_APPLICATION_CONTEXT_URI:String = "applicationContext.xml";
-	public static var ASWING_APPLICATION_CONTEXT_URI:String = "aswing/asWingContext.xml";
-	public static var ACTIONSTEP_APPLICATION_CONTEXT_URI:String = "actionstep/actionStepContext.xml";
-	public static var ENFLASH_APPLICATION_CONTEXT_URI:String = "enflash/enFlashContext.xml";
+	public static var APPLICATION_CONTEXT_URI:String = "applicationContext.xml";
+	public static var ASWING_VIEW_URI:String = "aswing/view.xml";
+	public static var ACTIONSTEP_VIEW_URI:String = "actionstep/view.xml";
+	public static var ENFLASH_VIEW_URI:String = "enflash/view.xml";
+	
+	public static function trace(message:String):Void {
+		Debug.write(message);
+	}
 	
 	private var rootApplicationContext:XmlApplicationContext;
 	private var childApplicationContext:LoadingApplicationContext;
@@ -65,10 +69,10 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateLi
 		batchProcess.addListener(this);
 		var logConfigurationProcess:LogConfigurationProcess =
 				new LogConfigurationProcess(LOG_CONFIGURATION_URI, new XmlLogConfigurationParser());
-		rootApplicationContext = new XmlApplicationContext(ROOT_APPLICATION_CONTEXT_URI);
-		childApplicationContext = new AsWingApplicationContext(ASWING_APPLICATION_CONTEXT_URI, rootApplicationContext);
-		//childApplicationContext = new ActionStepApplicationContext(ACTIONSTEP_APPLICATION_CONTEXT_URI, rootApplicationContext);
-		//childApplicationContext = new EnFlashApplicationContext(ENFLASH_APPLICATION_CONTEXT_URI, rootApplicationContext);
+		rootApplicationContext = new XmlApplicationContext(APPLICATION_CONTEXT_URI);
+		childApplicationContext = new AsWingApplicationContext(ASWING_VIEW_URI, rootApplicationContext);
+		//childApplicationContext = new ActionStepApplicationContext(ACTIONSTEP_VIEW_URI, rootApplicationContext);
+		//childApplicationContext = new EnFlashApplicationContext(ENFLASH_VIEW_URI, rootApplicationContext);
 		batchProcess.addProcess(logConfigurationProcess);
 		batchProcess.addProcess(rootApplicationContext);
 		batchProcess.addProcess(childApplicationContext);
