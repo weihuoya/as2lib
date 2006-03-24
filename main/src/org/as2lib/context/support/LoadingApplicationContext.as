@@ -58,10 +58,15 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 	 */
 	public function LoadingApplicationContext(beanDefinitionUri:String, beanDefitionParser:BeanDefinitionParser, parent:ApplicationContext) {
 		super(parent);
+		// TODO: Add support for specifying multiple URIs for the same application context!
 		this.beanDefinitionUri = beanDefinitionUri;
 		this.beanDefinitionParser = beanDefitionParser;
 		setBatchProcess(new BatchProcess());
+	}
+	
+	public function start() {
 		initFileLoaderProcess();
+		batchProcess.start();
 	}
 	
 	/**
@@ -74,7 +79,12 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 		// TODO: Find a solution for the following ugly workaround.
 		var owner:LoadingApplicationContext = this;
 		fileLoaderProcess.onLoadComplete = function(fl:FileLoader):Void {
-			owner["onLoadComplete"](fl);
+			try {
+				owner["onLoadComplete"](fl);
+			}
+			catch (exception) {
+				this.sendErrorEvent(exception);
+			}
 			// finish the loading process after possible process beans have been added
 			// otherwise the batch process distributes a finish event before possible
 			// processes in the bean factory have been run
@@ -94,20 +104,8 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 	 */
 	private function onLoadComplete(fileLoader:FileLoader):Void {
 		var textFile:TextFile = TextFileLoader(fileLoader).getTextFile();
-		// TODO: Throwable.toString is as it seems not anymore automatically invoked when exception is not catched
-		try {
-			beanDefinitionParser.parse(textFile.getContent(), beanFactory);
-			super.start();
-		}
-		catch (exception) {
-			if (logger.isFatalEnabled()) {
-				logger.fatal(exception);
-			}
-		}
-	}
-	
-	public function start() {
-		batchProcess.start();
+		beanDefinitionParser.parse(textFile.getContent(), beanFactory);
+		super.start();
 	}
 	
 	/**
@@ -120,6 +118,15 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 	}
 	
 	/**
+	 * Sets the uri of the bean definition file to load.
+	 * 
+	 * @param beanDefinitionUri the uri of the bean definition to load
+	 */
+	public function setBeanDefinitionUri(beanDefinitionUri:String):Void {
+		this.beanDefinitionUri = beanDefinitionUri;
+	}
+	
+	/**
 	 * Returns the bean definition parser used to parse the loaded bean definition
 	 * file.
 	 * 
@@ -127,6 +134,15 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 	 */
 	public function getBeanDefinitionParser(Void):BeanDefinitionParser {
 		return beanDefinitionParser;
+	}
+	
+	/**
+	 * Sets the bean definition parser used to parse the loaded bean definition file.
+	 * 
+	 * @param beanDefinitionParser the bean definition parser
+	 */
+	public function setBeanDefinitionParser(beanDefinitionParser:BeanDefinitionParser):Void {
+		this.beanDefinitionParser = beanDefinitionParser;
 	}
 	
 }
