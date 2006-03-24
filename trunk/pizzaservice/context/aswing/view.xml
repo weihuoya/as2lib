@@ -38,10 +38,10 @@
 			<ProgressBar id="progressBar" value="110" visible="false"/>
 		</Panel>
 		<orderForm>
-			<Import id="orderForm" beanDefinitionUri="aswing/asWingOrderForm.xml"/>
+			<Import id="orderForm" beanDefinitionUri="aswing/orderForm.xml"/>
 		</orderForm>
 		<viewOrdersForm>
-			<Import id="viewOrdersForm" beanDefinitionUri="aswing/asWingViewOrdersForm.xml"/>
+			<Import id="viewOrdersForm" beanDefinitionUri="aswing/viewOrdersForm.xml"/>
 		</viewOrdersForm>
 	</bean>
 	
