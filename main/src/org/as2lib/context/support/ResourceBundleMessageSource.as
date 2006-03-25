@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.app.exec.Batch;
-import org.as2lib.app.exec.BatchProcess;
 import org.as2lib.app.exec.Process;
+import org.as2lib.app.exec.SimpleBatch;
 import org.as2lib.bean.factory.InitializingBean;
 import org.as2lib.context.support.AbstractMessageSource;
 import org.as2lib.data.holder.Map;
@@ -67,10 +67,26 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 	
 	public function ResourceBundleMessageSource(Void) {
 		baseNames = new Array();
-		batchProcess = new BatchProcess();
 		loadAllLocales = false;
 		resourceBundles = new Array();
 		cachedMessageFormats = new HashMap();
+	}
+	
+	/**
+	 * Returns the batch process used internally for loading resource bundles.
+	 */
+	public function getBatchProcess(Void):Batch {
+		if (batchProcess == null) {
+			batchProcess = new SimpleBatch();
+		}
+		return batchProcess;
+	}
+	
+	/**
+	 * Sets the batch process to use for loading resource bundles.
+	 */
+	public function setBatchProcess(batchProcess:Batch):Void {
+		this.batchProcess = batchProcess;
 	}
 	
 	public function afterPropertiesSet(Void):Void {
@@ -96,9 +112,9 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 			var baseName:String = baseNames[k];
 			var code:String = locale.getLanguageCode();
 			var languageProcess:FileLoaderProcess = createFileLoaderProcess(baseName, locale.getLanguageCode());
-			batchProcess.addProcess(languageProcess);
+			getBatchProcess().addProcess(languageProcess);
 			var countryProcess:FileLoaderProcess = createFileLoaderProcess(baseName, locale.getLanguageCode() + "_" + locale.getCountryCode());
-			batchProcess.addProcess(countryProcess);
+			getBatchProcess().addProcess(countryProcess);
 		}
 	}
 	
@@ -288,79 +304,87 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 	}
 	
 	public function start() {
-		batchProcess.start();
+		getBatchProcess().start();
 	}
 	
 	public function hasStarted(Void):Boolean {
-		return batchProcess.hasStarted();
+		return getBatchProcess().hasStarted();
 	}
 	
 	public function hasFinished(Void):Boolean {
-		return batchProcess.hasFinished();
+		return getBatchProcess().hasFinished();
 	}
 	
 	public function isPaused(Void):Boolean {
-		return batchProcess.isPaused();
+		return getBatchProcess().isPaused();
 	}
 	
 	public function isRunning(Void):Boolean {
-		return batchProcess.isRunning();
+		return getBatchProcess().isRunning();
 	}
 	
 	public function getPercentage(Void):Number {
-		return batchProcess.getPercentage();
+		return getBatchProcess().getPercentage();
 	}
 	
 	public function setParentProcess(process:Process):Void {
-		batchProcess.setParentProcess(process);
+		getBatchProcess().setParentProcess(process);
 	}
 	
 	public function getParentProcess(Void):Process {
-		return batchProcess.getParentProcess();
+		return getBatchProcess().getParentProcess();
 	}
 	
 	public function getErrors(Void):Array {
-		return batchProcess.getErrors();
+		return getBatchProcess().getErrors();
 	}
 	
 	public function hasError(Void):Boolean {
-		return batchProcess.hasError();
+		return getBatchProcess().hasError();
 	}
 	
 	public function getDuration(Void):Time {
-		return batchProcess.getDuration();
+		return getBatchProcess().getDuration();
 	}
 	
 	public function getEstimatedTotalTime(Void):Time {
-		return batchProcess.getEstimatedTotalTime();
+		return getBatchProcess().getEstimatedTotalTime();
 	}
 	
 	public function getEstimatedRestTime(Void):Time {
-		return batchProcess.getEstimatedRestTime();
+		return getBatchProcess().getEstimatedRestTime();
 	}
 	
 	public function addListener(listener):Void {
-		batchProcess.addListener(listener);
+		getBatchProcess().addListener(listener);
 	}
 	
 	public function addAllListeners(listeners:Array):Void {
-		batchProcess.addAllListeners(listeners);
+		getBatchProcess().addAllListeners(listeners);
 	}
 	
 	public function removeListener(listener):Void {
-		batchProcess.removeListener(listener);
+		getBatchProcess().removeListener(listener);
 	}
 	
 	public function removeAllListeners(Void):Void {
-		batchProcess.removeAllListeners();
+		getBatchProcess().removeAllListeners();
 	}
 	
 	public function getAllListeners(Void):Array {
-		return batchProcess.getAllListeners();
+		return getBatchProcess().getAllListeners();
 	}
 	
 	public function hasListener(listener):Boolean {
-		return batchProcess.hasListener(listener);
+		return getBatchProcess().hasListener(listener);
+	}
+	
+	public function getName(Void):String {
+		return getBatchProcess().getName();
+	}
+	
+	public function setName(name:String):Void {
+		getBatchProcess().setName(name);
 	}
 	
 }
