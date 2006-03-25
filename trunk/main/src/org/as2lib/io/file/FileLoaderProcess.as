@@ -44,8 +44,8 @@ import org.as2lib.app.exec.Executable;
  * @author Martin Heidegger
  * @version 1.0
  */
-class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
-		implements LoadStartListener, LoadCompleteListener, LoadProgressListener, LoadErrorListener {
+class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess implements LoadStartListener,
+		LoadCompleteListener, LoadProgressListener, LoadErrorListener {
 	
 	/** Resource loader to be mediated. */
 	private var resourceLoader:FileLoader;
@@ -94,6 +94,9 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
 		this.method = method;
 		this.parameter = parameter;
 		this.callBack = callBack;
+		if (getName() == null) {
+			setName(uri);
+		}
 	}
 	
 	/**
@@ -133,7 +136,8 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
 	 * @param fileLoader the file loader that distributes the event
 	 */
 	public function onLoadStart(fileLoader:FileLoader):Void {
-		sendStartEvent();
+		// Start event has already been distributed by the AbstractProcess.prepare method.
+		//sendStartEvent();
 	}
 	
 	/**
@@ -151,7 +155,7 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
 	 * @param fileLoader the file loader that distributes the event
 	 */
 	public function onLoadProgress(fileLoader:FileLoader):Void {
-		sendUpdateEvent();
+		distributeUpdateEvent();
 	}
 	
 	/**
@@ -161,7 +165,8 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess
 	 */
 	public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean {
 		if (!ignoreErrors) {
-			interrupt(error);
+			// TODO: Refactor error. Is error argument always the file name?
+			interrupt(errorCode + ": " + error.toString());
 		}
 		else {
 			finish();
