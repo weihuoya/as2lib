@@ -81,9 +81,7 @@ import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
  * @see ProcessUpdateListener
  */
 class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
-	implements Process,
-		ProcessErrorListener,
-		ProcessFinishListener {
+		implements Process, ProcessErrorListener, ProcessFinishListener {
 	
 	/** Flag if execution was paused. */
 	private var paused:Boolean;
@@ -100,24 +98,23 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	/** Contains the possible parent. */
 	private var parent:Process;
 	
-	/** Shorter name for the concrete distributorControl. */
-	private var dC:CompositeEventDistributorControl;
+	/** The name of this process. */
+	private var name:String;
 	
 	/**
 	 * Constructs a new {@code AbstractProcess}.
 	 */
 	private function AbstractProcess(Void) {
-		dC = distributorControl;
+		errors = new Array();
+		subProcesses = new HashMap();
+		paused = false;
+		working = false;
 		acceptListenerType(ProcessStartListener);
 		acceptListenerType(ProcessErrorListener);
 		acceptListenerType(ProcessUpdateListener);
 		acceptListenerType(ProcessPauseListener);
 		acceptListenerType(ProcessResumeListener);
 		acceptListenerType(ProcessFinishListener);
-		errors = new Array();
-		subProcesses = new HashMap();
-		paused = false;
-		working = false;
 	}
 	
 	/**
@@ -131,12 +128,12 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	 *         instance in its parent hierarchy or it is the current instance
 	 */
 	public function setParentProcess(p:Process):Void {
+		parent = p;
 		do {
-			if(p == this) {
+			if (p == this) {
 				throw new IllegalArgumentException("You can not start a process with itself as super process.", this, arguments);
 			}
 		} while (p = p.getParentProcess());
-		parent = p;
 	}
 	
 	/**
@@ -146,6 +143,14 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	 */
 	public function getParentProcess(Void):Process {
 		return parent;
+	}
+	
+	public function getName(Void):String {
+		return name;
+	}
+	
+	public function setName(name:String):Void {
+		this.name = name;
 	}
 	
 	/**
@@ -191,7 +196,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	 */
 	public function pause(Void):Void {
 		paused = true;
-		sendPauseEvent();
+		distributePauseEvent();
 	}
 	
 	/**
@@ -199,7 +204,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	 */
 	public function resume(Void):Void {
 		paused = false;
-		sendResumeEvent();
+		distributeResumeEvent();
 		finish();
 	}
 	
@@ -213,7 +218,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 		working = false;
 		totalTime.setValue(0);
 		restTime.setValue(0);
-		sendStartEvent();
+		distributeStartEvent();
 		started = true;
 	}
 	
@@ -232,7 +237,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
     		startTime = getTimer();
 			result = MethodUtil.invoke("run", this, arguments);
     	} catch(e) {
-    		sendErrorEvent(e);
+    		distributeErrorEvent(e);
     	}
 		if(!isPaused() && !isWorking()) {
 			finish();
@@ -304,7 +309,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
      * @return {@code true} if error was consumed
      */
 	public function onProcessError(process:Process, error):Boolean {
-		return sendErrorEvent(error);
+		return distributeErrorEvent(error);
 	}
 	
 	/**
@@ -316,7 +321,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 			started = false;
 			working = false;
 			endTime = getTimer();
-			sendFinishEvent();
+			distributeFinishEvent();
 		}
 	}
 	
@@ -338,6 +343,10 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 		return errors;
 	}
 	
+	private function addError(error):Void {
+		errors.push(error);
+	}
+	
 	/**
 	 * Stores the {@code error} in the list of occured errors and finishes the process.
 	 * 
@@ -346,74 +355,89 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	 * @param error error that occured to interrupt
 	 */
 	private function interrupt(error):Void {
-		publishError(error);
+		distributeErrorEvent(error);
 		finish();
-	}
-	
-	/**
-	 * Publishes the error event and stores the error in the error list.
-	 * 
-	 * @param error error to be published
-	 * @return {@code true} if event was consumed
-	 */
-	private function publishError(error):Boolean {
-		if (!error) error = -1;
-		this.errors.push(error);
-		return sendErrorEvent(error);
 	}
 	
 	/**
 	 * Internal method to send update events for {@link ProcessUpdateListener}.
 	 */
-	private function sendUpdateEvent(Void):Void {
-		var updateDistributor:ProcessUpdateListener
-			= dC.getDistributor(ProcessUpdateListener);
-		updateDistributor.onProcessUpdate(this);
+	private function distributeUpdateEvent(process:Process):Void {
+		if (process == null) process = this;
+		try {
+			var updateDistributor:ProcessUpdateListener = distributorControl.getDistributor(ProcessUpdateListener);
+			updateDistributor.onProcessUpdate(process);
+		}
+		catch (exception:org.as2lib.env.event.EventExecutionException) {
+			distributeErrorEvent(exception.getCause());
+		}
 	}
 	
 	/**
 	 * Internal method to send pause events for {@link ProcessPauseListener}.
 	 */
-	private function sendPauseEvent(Void):Void {
-		var pauseDistributor:ProcessPauseListener
-			= dC.getDistributor(ProcessPauseListener);
-		pauseDistributor.onProcessPause(this);
+	private function distributePauseEvent(process:Process):Void {
+		if (process == null) process = this;
+		try {
+			var pauseDistributor:ProcessPauseListener = distributorControl.getDistributor(ProcessPauseListener);
+			pauseDistributor.onProcessPause(process);
+		}
+		catch (exception:org.as2lib.env.event.EventExecutionException) {
+			distributeErrorEvent(exception.getCause());
+		}
 	}
 	
 	/**
 	 * Internal method to send resume events for {@link ProcessResumeListener}.
 	 */
-	private function sendResumeEvent(Void):Void {
-		var resumeDistributor:ProcessResumeListener
-			= dC.getDistributor(ProcessResumeListener);
-		resumeDistributor.onProcessResume(this);
+	private function distributeResumeEvent(process:Process):Void {
+		if (process == null) process = this;
+		try {
+			var resumeDistributor:ProcessResumeListener = distributorControl.getDistributor(ProcessResumeListener);
+			resumeDistributor.onProcessResume(process);
+		}
+		catch (exception:org.as2lib.env.event.EventExecutionException) {
+			distributeErrorEvent(exception.getCause());
+		}
 	}
 	
 	/**
 	 * Internal method to send start events for {@link ProcessStartListener}.
 	 */
-	private function sendStartEvent(Void):Void {
-		var startDistributor:ProcessStartListener
-			= dC.getDistributor(ProcessStartListener);
-		startDistributor.onProcessStart(this);
+	private function distributeStartEvent(process:Process):Void {
+		if (process == null) process = this;
+		try {
+			var startDistributor:ProcessStartListener = distributorControl.getDistributor(ProcessStartListener);
+			startDistributor.onProcessStart(process);
+		}
+		catch (exception:org.as2lib.env.event.EventExecutionException) {
+			distributeErrorEvent(exception.getCause());
+		}
 	}
 	
 	/**
 	 * Internal method to send error events for {@link ProcessErrorListener}.
 	 */
-	private function sendErrorEvent(error):Boolean {
-		var errorDistributor:ProcessErrorListener
-			= dC.getDistributor(ProcessErrorListener);
-		return errorDistributor.onProcessError(this, error);
+	private function distributeErrorEvent(error, process:Process):Boolean {
+		if (process == null) process = this;
+		addError(error);
+		var errorDistributor:ProcessErrorListener = distributorControl.getDistributor(ProcessErrorListener);
+		// TODO: errorDistributor.onProcessError always returns 'null'!
+		return errorDistributor.onProcessError(process, error);
 	}
 	
 	/**
 	 * Internal method to send finish events for {@link ProcessFinishListener}.
 	 */
-	private function sendFinishEvent(Void):Void {
-		var finishDistributor:ProcessFinishListener
-			= dC.getDistributor(ProcessFinishListener);
-		finishDistributor.onProcessFinish(this);
+	private function distributeFinishEvent(process:Process):Void {
+		if (process == null) process = this;
+		try {
+			var finishDistributor:ProcessFinishListener = distributorControl.getDistributor(ProcessFinishListener);
+			finishDistributor.onProcessFinish(process);
+		}
+		catch (exception:org.as2lib.env.event.EventExecutionException) {
+			distributeErrorEvent(exception.getCause());
+		}
 	}
-
+	
 }
