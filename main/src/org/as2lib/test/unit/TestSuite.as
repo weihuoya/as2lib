@@ -41,7 +41,7 @@ import org.as2lib.test.unit.TestCaseMethodInfo;
  * @see org.as2lib.test.unit.TestSuiteFactory
  */
 class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestRunner {
-
+	
 	/** 
 	 * Blocks the collection of 
 	 * {@code org.as2lib.test.unit.TestSuiteFactory#collectAllTestCases}.
@@ -203,7 +203,7 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 	 * @return {@code TestResult} to the current executing {@code TestCase}
 	 */
 	public function getCurrentTestCase(Void):TestCaseResult {
-		return list[current].getCurrentTestCase();
+		return processes[currentProcess].getCurrentTestCase();
 	}
 	
 	/**
@@ -217,6 +217,7 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 	 * @see #getCurrentTestCase
 	 */
 	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo {
-		return list[current].getCurrentTestCaseMethodInfo();
+		return processes[currentProcess].getCurrentTestCaseMethodInfo();
 	}
+	
 }
