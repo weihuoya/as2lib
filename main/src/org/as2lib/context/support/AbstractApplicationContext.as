@@ -276,7 +276,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		// tells subclass to refresh the internal bean factory
 		var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
 		// populates the bean factory with context-specific resource editors
-		beanFactory.registerPropertyValueConverter(Function, new ClassConverter());
+		// ClassConverter is a default property value converter of bean wrappers.
+		//beanFactory.registerPropertyValueConverter(Function, new ClassConverter());
 		// configures the bean factory with context semantics
 		beanFactory.addBeanPostProcessor(new ApplicationContextAwareProcessor(getThis()));
 		// allows post-processing of the bean factory in context subclasses
@@ -647,14 +648,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * @param batch the internal batch that finished its run
 	 */
 	public function onBatchFinish(batch:Batch):Void {
-		try {
-			postRefresh();
-		}
-		catch (exception) {
-			if (logger.isFatalEnabled()) {
-				logger.fatal(exception);
-			}
-		}
+		postRefresh();
 	}
 	
 	public function hasStarted(Void):Boolean {
@@ -729,6 +723,14 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		return getBatchProcess().hasListener(listener);
 	}
 	
+	public function getName(Void):String {
+		return getBatchProcess().getName();
+	}
+	
+	public function setName(name:String):Void {
+		getBatchProcess().setName(name);
+	}
+	
 	/**
 	 * Returns the batch process to add asynchronous processes to.
 	 * 
@@ -755,7 +757,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * 
 	 * @param batchProcess the new batch process
 	 */
-	private function setBatchProcess(batchProcess:Batch):Void {
+	public function setBatchProcess(batchProcess:Batch):Void {
 		this.batchProcess = batchProcess;
 		batchProcess.addListener(this);
 	}
