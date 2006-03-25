@@ -26,6 +26,7 @@ import org.as2lib.bean.factory.support.ManagedList;
 import org.as2lib.bean.factory.support.ManagedMap;
 import org.as2lib.bean.factory.support.ManagedProperties;
 import org.as2lib.bean.InvalidPropertyException;
+import org.as2lib.bean.Mergeable;
 import org.as2lib.bean.MethodInvocationException;
 import org.as2lib.bean.NotReadablePropertyException;
 import org.as2lib.bean.NotWritablePropertyException;
@@ -375,26 +376,28 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	 * @return the index of the nested property separator, or {@code -1} if none
 	 */
 	private function getNestedPropertySeparatorIndex(propertyPath:String, last:Boolean):Number {
-		if (last == null) last = false;
-		var inKey:Boolean = false;
-		var length:Number = propertyPath.length;
-		var i:Number = (last ? length - 1 : 0);
-		while (last ? i >= 0 : i < length) {
-			switch (propertyPath.charAt(i)) {
-				case PROPERTY_KEY_PREFIX:
-				case PROPERTY_KEY_SUFFIX:
-					inKey = !inKey;
-					break;
-				case NESTED_PROPERTY_SEPARATOR:
-					if (!inKey) {
-						return i;
-					}
-			}
-			if (last) {
-				i--;
-			}
-			else {
-				i++;
+		if (propertyPath.indexOf(".") != -1) {
+			if (last == null) last = false;
+			var inKey:Boolean = false;
+			var length:Number = propertyPath.length;
+			var i:Number = (last ? length - 1 : 0);
+			while (last ? i >= 0 : i < length) {
+				switch (propertyPath.charAt(i)) {
+					case PROPERTY_KEY_PREFIX:
+					case PROPERTY_KEY_SUFFIX:
+						inKey = !inKey;
+						break;
+					case NESTED_PROPERTY_SEPARATOR:
+						if (!inKey) {
+							return i;
+						}
+				}
+				if (last) {
+					i--;
+				}
+				else {
+					i++;
+				}
 			}
 		}
 		return -1;
@@ -551,90 +554,104 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	public function convertPropertyValue(name:String, value, type:Function) {
 		if (typeof(value) == "string" || value instanceof String) {
 			if (type == null) {
+				// TODO: do not do type conversion directly
 				if (!isNaN(value)) {
-					type = Number;
+					//type = Number;
+					return Number(value);
 				}
-				else if (value == "true" || value == "false") {
-					type = Boolean;
+				else if (value == "true") {
+					//type = Boolean;
+					return true;
+				}
+				else if (value == "false") {
+					return false;
 				}
 			}
-			var propertyValueConverter:PropertyValueConverter = findPropertyValueConverter(type, name);
-			if (propertyValueConverter != null) {
-				return propertyValueConverter.convertPropertyValue(value, type);
-			}
-		}
-		// TODO: Convert not only managed arrays, lists, ... but also normal arrays, lists, ... (type conversion of sub-elements is not possible there)
-		if (value instanceof ManagedArray) {
-			var result:Array;
-			if (type == null) {
-				result = new Array();
-			}
-			else {
-				if (!ClassUtil.isAssignable(type, Array)) {
-					throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Array) + "].", this, arguments);
+			// TODO: Remove type != null check
+			if (type != null) {
+				var propertyValueConverter:PropertyValueConverter = findPropertyValueConverter(type, name);
+				if (propertyValueConverter != null) {
+					return propertyValueConverter.convertPropertyValue(value, type);
 				}
-				result = new type();
 			}
-			var array:ManagedArray = value;
-			var elementType:Function = array.getElementType();
-			for (var i:Number = 0; i < array.length; i++) {
-				var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i + PROPERTY_KEY_SUFFIX, array[i], elementType);
-				result.push(element);
-			}
-			return result;
 		}
-		if (value instanceof ManagedList) {
-			if (type == null) {
-				throw new TypeMismatchException(name, value, List, "Supplied list implementation is 'null'. Note that the type of a managed list (the list implementation to instantiate) must be declared.", this, arguments);
+		else {
+			// TODO: Convert not only managed arrays, lists, ... but also normal arrays, lists, ... (type conversion of sub-elements is not possible there)
+			// TODO: Missuse of Mergeable interface.
+			if (value instanceof Mergeable) {
+				if (value instanceof ManagedArray) {
+					var result:Array;
+					if (type == null) {
+						result = new Array();
+					}
+					else {
+						if (!ClassUtil.isAssignable(type, Array)) {
+							throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Array) + "].", this, arguments);
+						}
+						result = new type();
+					}
+					var array:ManagedArray = value;
+					var elementType:Function = array.getElementType();
+					for (var i:Number = 0; i < array.length; i++) {
+						var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i + PROPERTY_KEY_SUFFIX, array[i], elementType);
+						result.push(element);
+					}
+					return result;
+				}
+				if (value instanceof ManagedList) {
+					if (type == null) {
+						throw new TypeMismatchException(name, value, List, "Supplied list implementation is 'null'. Note that the type of a managed list (the list implementation to instantiate) must be declared.", this, arguments);
+					}
+					if (!ClassUtil.isAssignable(type, List)) {
+						throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(List) + "].", this, arguments);
+					}
+					var result:List = new type();
+					var list:ManagedList = value;
+					var array:Array = list.toArray();
+					var elementType:Function = list.getElementType();
+					for (var i:Number = 0; i < array.length; i++) {
+						var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i + PROPERTY_KEY_SUFFIX, array[i], elementType);
+						result.insert(element);
+					}
+					return result;
+				}
+				if (value instanceof ManagedMap) {
+					if (type == null) {
+						throw new TypeMismatchException(name, value, Map, "Supplied map implementation is 'null'. Note that the type of a managed map (the map implementation to instantiate) must be declared.", this, arguments);
+					}
+					if (!ClassUtil.isAssignable(type, Map)) {
+						throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Map) + "].", this, arguments);
+					}
+					var result:Map = new type();
+					var map:ManagedMap = value;
+					var keys:Array = map.getKeys();
+					var values:Array = map.getValues();
+					var keyType:Function = map.getKeyType();
+					var valueType:Function = map.getValueType();
+					for (var i:Number = 0; i < keys.length; i++) {
+						var k = convertPropertyValue(name, keys[i], keyType);
+						var v = convertPropertyValue(name + PROPERTY_KEY_PREFIX + keys[i] + PROPERTY_KEY_SUFFIX, values[i], valueType);
+						result.put(k, v);
+					}
+					return result;
+				}
+				if (value instanceof ManagedProperties) {
+					if (type == null) {
+						throw new TypeMismatchException(name, value, Properties, "Supplied properties implementation is 'null'. Note that the type of a managed properties (the properties implementation to instantiate) must be declared.", this, arguments);
+					}
+					if (!ClassUtil.isAssignable(type, Properties)) {
+						throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Properties) + "].", this, arguments);
+					}
+					var result:Properties = new type();
+					var properties:ManagedProperties = value;
+					var keys:Array = properties.getKeys();
+					var values:Array = properties.getValues();
+					for (var i:Number = 0; i < keys.length; i++) {
+						result.setProp(keys[i], values[i]);
+					}
+					return result;
+				}
 			}
-			if (!ClassUtil.isAssignable(type, List)) {
-				throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(List) + "].", this, arguments);
-			}
-			var result:List = new type();
-			var list:ManagedList = value;
-			var array:Array = list.toArray();
-			var elementType:Function = list.getElementType();
-			for (var i:Number = 0; i < array.length; i++) {
-				var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i + PROPERTY_KEY_SUFFIX, array[i], elementType);
-				result.insert(element);
-			}
-			return result;
-		}
-		if (value instanceof ManagedMap) {
-			if (type == null) {
-				throw new TypeMismatchException(name, value, Map, "Supplied map implementation is 'null'. Note that the type of a managed map (the map implementation to instantiate) must be declared.", this, arguments);
-			}
-			if (!ClassUtil.isAssignable(type, Map)) {
-				throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Map) + "].", this, arguments);
-			}
-			var result:Map = new type();
-			var map:ManagedMap = value;
-			var keys:Array = map.getKeys();
-			var values:Array = map.getValues();
-			var keyType:Function = map.getKeyType();
-			var valueType:Function = map.getValueType();
-			for (var i:Number = 0; i < keys.length; i++) {
-				var k = convertPropertyValue(name, keys[i], keyType);
-				var v = convertPropertyValue(name + PROPERTY_KEY_PREFIX + keys[i] + PROPERTY_KEY_SUFFIX, values[i], valueType);
-				result.put(k, v);
-			}
-			return result;
-		}
-		if (value instanceof ManagedProperties) {
-			if (type == null) {
-				throw new TypeMismatchException(name, value, Properties, "Supplied properties implementation is 'null'. Note that the type of a managed properties (the properties implementation to instantiate) must be declared.", this, arguments);
-			}
-			if (!ClassUtil.isAssignable(type, Properties)) {
-				throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Properties) + "].", this, arguments);
-			}
-			var result:Properties = new type();
-			var properties:ManagedProperties = value;
-			var keys:Array = properties.getKeys();
-			var values:Array = properties.getValues();
-			for (var i:Number = 0; i < keys.length; i++) {
-				result.setProp(keys[i], values[i]);
-			}
-			return result;
 		}
 		return value;
 	}
@@ -642,7 +659,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	public function setPropertyValues(propertyValues:PropertyValues, ignoreUnknown:Boolean):Void {
 		var propertyAccessExceptions:Array = new Array();
 		var values:Array = propertyValues.getPropertyValues();
-		for (var i:Number = 0; i < values.length; i++) {
+		var length:Number = values.length;
+		for (var i:Number = 0; i < length; i++) {
 			try {
 				setPropertyValue(values[i]);
 			}
