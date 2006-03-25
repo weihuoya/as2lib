@@ -17,7 +17,6 @@
 import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.BatchErrorListener;
 import org.as2lib.app.exec.BatchFinishListener;
-import org.as2lib.app.exec.BatchProcess;
 import org.as2lib.app.exec.BatchStartListener;
 import org.as2lib.app.exec.BatchUpdateListener;
 import org.as2lib.app.exec.Process;
@@ -25,6 +24,7 @@ import org.as2lib.app.exec.ProcessErrorListener;
 import org.as2lib.app.exec.ProcessFinishListener;
 import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.ProcessUpdateListener;
+import org.as2lib.app.exec.SimpleBatch;
 import org.as2lib.context.support.AsWingApplicationContext;
 import org.as2lib.context.support.LoadingApplicationContext;
 import org.as2lib.context.support.XmlApplicationContext;
@@ -64,8 +64,7 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateLi
 	
 	public function init(Void):Void {
 		Debug.write("Initializing.");
-		// TODO: Give every batch process a name. Use onBatchUpdate event to display name to user.
-		var batchProcess:BatchProcess = new BatchProcess();
+		var batchProcess:SimpleBatch = new SimpleBatch();
 		batchProcess.addListener(this);
 		var logConfigurationProcess:LogConfigurationProcess =
 				new LogConfigurationProcess(LOG_CONFIGURATION_URI, new XmlLogConfigurationParser());
