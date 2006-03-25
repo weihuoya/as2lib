@@ -45,6 +45,7 @@ class org.as2lib.env.log.parser.LogConfigurationProcess extends AbstractProcess 
 	public function LogConfigurationProcess(logConfigurationUri:String, logConfigurationParser:LogConfigurationParser) {
 		this.logConfigurationUri = logConfigurationUri;
 		this.logConfigurationParser = logConfigurationParser;
+		setName(logConfigurationUri);
 	}
 	
 	/**
