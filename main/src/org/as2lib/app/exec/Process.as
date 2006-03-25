@@ -206,4 +206,24 @@ interface org.as2lib.app.exec.Process extends EventListenerSource {
 	 * @return estimated rest time of the execution of the process.
 	 */
 	public function getEstimatedRestTime(Void):Time;
+	
+	/**
+	 * Returns the name of this process intended for display to users, but it is also
+	 * helpful for debugging.
+	 * 
+	 * <p>Note that batch processes may choose to return not their name but rather the
+	 * name of the process currently running.
+	 * 
+	 * @return the name of this process
+	 */
+	public function getName(Void):String;
+	
+	/**
+	 * Sets the name of this process.
+	 * 
+	 * @param name the name of this process
+	 * @see #getName
+	 */
+	public function setName(name:String):Void;
+	
 }

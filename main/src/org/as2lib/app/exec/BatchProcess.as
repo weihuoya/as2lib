@@ -14,363 +14,83 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.app.exec.Process;
-import org.as2lib.app.exec.BatchStartListener;
-import org.as2lib.app.exec.BatchFinishListener;
-import org.as2lib.app.exec.BatchErrorListener;
-import org.as2lib.app.exec.BatchUpdateListener;
-import org.as2lib.app.exec.ProcessErrorListener;
-import org.as2lib.app.exec.ProcessPauseListener;
-import org.as2lib.app.exec.ProcessFinishListener;
-import org.as2lib.app.exec.ProcessResumeListener;
-import org.as2lib.app.exec.ProcessUpdateListener;
-import org.as2lib.app.exec.ProcessStartListener;
-import org.as2lib.app.exec.AbstractProcess;
+import org.as2lib.app.exec.AbstractBatch;
 import org.as2lib.app.exec.Batch;
+import org.as2lib.app.exec.BatchErrorListener;
+import org.as2lib.app.exec.BatchFinishListener;
+import org.as2lib.app.exec.BatchStartListener;
+import org.as2lib.app.exec.BatchUpdateListener;
+import org.as2lib.app.exec.Process;
+import org.as2lib.app.exec.ProcessErrorListener;
+import org.as2lib.app.exec.ProcessFinishListener;
+import org.as2lib.app.exec.ProcessPauseListener;
+import org.as2lib.app.exec.ProcessResumeListener;
+import org.as2lib.app.exec.ProcessStartListener;
+import org.as2lib.app.exec.ProcessUpdateListener;
 
 /**
- * {@code BatchProcess} is a implementation of {@link Batch} for a list of
- * Processes.
+ * {@code BatchProcess} is a batch that acts to the outside like a process. Use this
+ * batch if you want to treat multiple process executions like one execution, otherwise
+ * use {@link SimpleBatch}.
  * 
- * <p>A {@code BatchProcess} acts like a row execution of {@link Process}
- * instances. All listed processes will be executed after each other.
+ * <p>This batch executes its child-processes after each other. This means that the
+ * first child-process will be executed at the beginning, the second after the first
+ * finished execution and so on.
  * 
- * <p>As {@code BatchProcess} itself acts like a Process you can use it as a 
- * composite to execute a {@code BatchProcess} within another
- * {@code BatchProcess}.
+ * <p>You can seamlessly add this batch to other {@code BatchProcess} instances or
+ * to {@code SimpleBatch} instances. But do never add {@code SimpleBatch} instances
+ * as child-processes to this batch.
  * 
- * <p>It supports beneath all listeners of {@link Process} seperate events for
- * {@code Batch} processing:
- *   {@link BatchStartListener}, {@link BatchFinishListener},
- *   {@link BatchUpdateListener} and {@link BatchErrorListener}
+ * <p>Because this batch acts like a process it does not distribute batch events but
+ * only process events.
  *
  * @author Martin Heidegger
- * @version 1.0
+ * @author Simon Wacker
+ * @version 2.0
  */
-class org.as2lib.app.exec.BatchProcess extends AbstractProcess
-		implements Batch, ProcessUpdateListener,
-			ProcessPauseListener,
-			ProcessResumeListener,
-			ProcessStartListener,
-			ProcessFinishListener,
-			ProcessErrorListener
-	{
-	
-	/** List that contains all processes */
-	private var list:Array;
-	
-	/** Holder for the percents already executed */
-	private var percent:Number;
-	
-	/** Current running process */
-	private var current:Number;
+class org.as2lib.app.exec.BatchProcess extends AbstractBatch implements ProcessUpdateListener, ProcessErrorListener {
 	
 	/**
-	 * Constructs a new {@code BatchProcess}
+	 * Constructs a new {@code BatchProcess} instance.
 	 */
 	public function BatchProcess(Void) {
-		acceptListenerType(BatchStartListener);
-		acceptListenerType(BatchFinishListener);
-		acceptListenerType(BatchErrorListener);
-		acceptListenerType(BatchUpdateListener);
-		list = new Array();
-		
-		percent = 0;
-		started = false;
-		finished = false;
 	}
 	
 	/**
-	 * Setter for the parent process
+	 * Distributes a process error event with the given error.
 	 * 
-	 * @throws IllegalArgumentException if the passed process has the current
-	 *         instance as a parent process (recursion safe).
-	 * @param p Process to be set as parent
+	 * @param process the process that raised the error
+	 * @param error the raised error
 	 */
-	public function setParentProcess(p:Process):Void {
-		parent = p;
-		do {
-			if(p == this) {
-				throw new IllegalArgumentException("You can not start a process with itself as super process.", this, arguments);
-			}
-		} while (p = p.getParentProcess());
+	public function onProcessError(process:Process, error):Boolean {
+		return distributeErrorEvent(error);
 	}
 	
 	/**
-	 * Getter for the applied parent process.
+	 * Distributes a process update event.
 	 * 
-	 * @return Parent process or null if no parent process has been set.
+	 * @param process the process that was updated
 	 */
-	public function getParentProcess(Void):Process {
-		return parent;
-	}
-	
-	/**
-	 * Getter for the currently execution process.
-	 * 
-	 * @return Currently processing Process.
-	 */
-    public function getCurrentProcess(Void):Process {
-		return list[current];
-	}
-	
-	/**
-	 * Getter for a list of all added processes with {@link #addProcess} in
-	 * form of a array.
-	 * 
-	 * @return Array that contains all processes that has been added.
-	 */
-	public function getAllAddedProcesses(Void):Array {
-		return list.concat();
-	}
-	
-	/**
-	 * To be executed if one child process has been finished.
-	 * 
-	 * @param info Finished Process.
-	 */
-	public function onProcessFinish(info:Process):Void {
-		// TODO: Comparing given process with current process is not correct in all cases, because sometimes the current process just delegates everything to another process instance, that passes itself. In this case the check returns false although everything is correct!
-		//if (info == getCurrentProcess()) {
-			info.removeListener(this);
-			nextProcess();
-		/*} else {
-			var error:IllegalArgumentException = new IllegalArgumentException("Unexpected onFinishProcess occured from "+info+".", this, arguments);
-			publishError(error);
-			finish();
-		}*/
-	}
-	
-	/**
-	 * Internal helper to start the next process.
-	 */
-	private function nextProcess(Void):Void {
-		if (current < list.length-1) {
-			updatePercent(100);
-			current ++;
-			var c:Process = list[current];
-			c.setParentProcess(this);
-			c.addListener(this);
-			sendUpdateEvent();
-			c.start();
-		} else {
-			finish();
+	public function onProcessUpdate(process:Process):Void {
+		var percentage:Number = getCurrentProcess().getPercentage();
+		if (percentage != null) {
+			updatePercentage(percentage);
 		}
+		distributeUpdateEvent();
 	}
 	
 	/**
-	 * Void implementation of {@link ProcessStartListener#onProcessStart}
+	 * Distributes a process error event with the given error.
 	 * 
-	 * @param info to the process that has been started.
+	 * @param error the error to distribute
 	 */
-	public function onProcessStart(info:Process):Void {}
-	
-	/**
-	 * Implementation of {@link ProcessPauseListener#onProcessPause} that redirects
-	 * to internal eventbroadcasting.
-	 * 
-	 * @param info to the process that has been paused.
-	 */
-	public function onProcessPause(info:Process):Void {
-		//if (info == getCurrentProcess()) {
-			sendPauseEvent();
-		/*} else {
-			publishError(new IllegalArgumentException("Unexpected onPauseProcess occured from "+info+". Expected was "+getCurrentProcess(), this, arguments));
-		}*/
-	}
-	
-	/**
-	 * Implementation of {@link ProcessResumeListener#onProcessResume} that redirects
-	 * to internal eventbroadcasting.
-	 * 
-	 * @param info to the process that has been resumed.
-	 */
-	public function onProcessResume(info:Process):Void {
-		//if (info == getCurrentProcess()) {
-			sendResumeEvent();
-		/*} else {
-			publishError(new IllegalArgumentException("Unexpected onResumeProcess occured from "+info+".", this, arguments));
-		}*/
-	}
-	
-	/**
-	 * Implementation of {@link ProcessErrorListener#onProcessError} that redirects
-	 * to internal eventbroadcasting.
-	 * 
-	 * @param info to the process that has thrown the error.
-	 */
-	public function onProcessError(info:Process, error):Boolean {
-		var result:Boolean = false;
-		/*if (info != getCurrentProcess()) {
-			error = new IllegalArgumentException("Unexpected onProcessError occured from "+info+".", this, arguments);
-		}*/
-		result = publishError(error);
-		if (!result) {
+	private function distributeErrorEvent(error):Boolean {
+		// TODO: 'result' is always 'null' because distributers do not return values!
+		var result:Boolean = super.distributeErrorEvent(error);
+		if (!result && !hasFinished()) {
 			finish();
 		}
 		return result;
-	}
-	
-	/**
-	 * Implementation of {@link ProcessUpdateListener#onProcessUpdate} that redirects
-	 * to internal eventbroadcasting.
-	 * 
-	 * @param info to the process that got updated.
-	 */
-	public function onProcessUpdate(info:Process):Void {
-		var p:Number = info.getPercentage();
-		if(p != null) {
-			updatePercent(p);
-		}
-		sendUpdateEvent();
-	}
-	
-	/**
-	 * Starts the execution of the Batch.
-	 */
-    public function start() {
-    	if (!started) {
-			current = -1;
-			started = false;
-			finished = false;
-			working = true;
-			percent = 0;
-			
-			delete endTime;
-			startTime = getTimer();
-			sendStartEvent();
-			started = true;
-			nextProcess();
-    	}
-	}
-	
-	/**
-	 * Adds a {@link Process} to the list of processes to execute.
-	 * 
-	 * <p>Its possible to at the same process more than one times. It will be
-	 * executed as often as you add it.
-	 * 
-	 * @param p {@code Process} to be added
-	 * @return internal identifier of the process
-	 */
-	public function addProcess(p:Process):Number {
-		if (p != this) {
-			list.push(p);
-			updatePercent(100);
-			return list.length-1;
-		}
-	}
-	
-	/**
-	 * Removes all instances of a process that were added to the {@code Batch}.
-	 * 
-	 * <p>If a process has been added more than one times, it removes all
-	 * executions.
-	 * 
-	 * @param process {@link Process} to be removed
-	 * @see removeProcessById
-	 */
-	public function removeProcess(p:Process):Void {
-		var i:Number = list.length;
-		while(--i-(-1)) {
-			if(list[i] == p) {
-				list.slice(i, i);
-				return;
-			}
-		}
-	}
-	
-	/**
-	 * Removes a process by its internal id.
-	 * 
-	 * <p>{@link #addProcess} returns the internal id of a added process. This
-	 * method helps to remove concrete reference to the process.
-	 * 
-	 * @param id Internal Id of the process.
-	 * @see #removeProcess
-	 */
-	public function removeProcessById(id:Number):Void {
-		list.splice(id, 1);
-	}
-	
-	/**
-	 * Getter for the current percentage of execution.
-	 * 
-	 * @return Amount of solved execution in percent.
-	 */
-    public function getPercentage(Void):Number {
-		return percent;
-	}
-	
-	/**
-	 * Internal Update of percentage
-	 * 
-	 * @param cP Percentage of the current process.
-	 */
-	private function updatePercent(cP:Number):Void {
-		percent = 100/list.length*(current+(1/100*cP));
-	}
-	
-	
-	/**
-	 * Internal method to send error events.
-	 * 
-	 * @param error error to be provided
-	 * @return {@code true} to consume the event
-	 */
-	private function sendErrorEvent(error):Boolean {
-		var result:Boolean = false;
-		if (super.sendErrorEvent(error)) {
-			return true;
-		}
-		var errorDistributor:BatchErrorListener =
-				dC.getDistributor(BatchErrorListener);
-		return errorDistributor.onBatchError(this, error);
-	}
-	
-	/**
-	 * Internal method to send finish events.
-	 */
-	private function sendFinishEvent(Void):Void {
-		super.sendFinishEvent();
-		var finishDistributor:BatchFinishListener =
-				dC.getDistributor(BatchFinishListener);
-		finishDistributor.onBatchFinish(this);
-	}
-	
-	/**
-	 * Internal method to send pause events.
-	 */
-	private function sendPauseEvent(Void):Void {
-		sendUpdateEvent();
-	}
-	
-	/**
-	 * Internal method to send resume events.
-	 */
-	private function sendResumeEvent(Void):Void {
-		sendUpdateEvent();
-	}
-	
-	/**
-	 * Internal method to send update events.
-	 */
-	private function sendUpdateEvent(Void):Void {
-		super.sendUpdateEvent();
-		var updateDistributor:BatchUpdateListener =
-				dC.getDistributor(BatchUpdateListener);
-		updateDistributor.onBatchUpdate(this);
-	}
-	
-	/**
-	 * Internal method to send start events.
-	 */
-	private function sendStartEvent(Void):Void {
-		super.sendStartEvent();
-		var startDistributor:BatchStartListener =
-				dC.getDistributor(BatchStartListener);
-		startDistributor.onBatchStart(this);
 	}
 	
 }

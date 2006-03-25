@@ -17,55 +17,71 @@
 import org.as2lib.app.exec.Process;
 
 /**
- * {@code Batch} is the definition for a list of processes that will be executed
- * after each other.
+ * {@code Batch} runs multiple processes (most batches run one process after each
+ * other).
  * 
- * <p>{@code Batch} allows with {@link #addProcess} to define a list of processes
- * that will be started after each other. The execution will follow in the order
- * of the arrival.
+ * <p>Use the {@link #addProcess} method to add a new child-process to this batch.
+ * Most implementations run processes in the order they get added to them.
  * 
- * <p>{@code Batch} is a composite (it implements {@link Process}), so you can
- * even add one {@code Batch} with {@link #addProcess} to another {@code Batch}.
+ * <p>This interface extends the {@code Process} interface. This means that this
+ * batch is a composite, so you can add one batch with the {@code addProcess}
+ * method as child-process to another batch.
  * 
- * <p>It supports beneath all listeners of {@link Process} seperate events for
- * {@code Batch} processing:
- *   {@link BatchStartListener}, {@link BatchFinishListener},
- *   {@link BatchUpdateListener} and {@link BatchErrorListener}
+ * <p>Besides the listeners provided by processes batchs normally also support the
+ * following listeners: {@link BatchStartListener}, {@link BatchFinishListener},
+ * {@link BatchUpdateListener} and {@link BatchErrorListener}.
  * 
  * <p>Example:
  * <code>
  *   import org.as2lib.app.exec.Batch;
  *   import org.as2lib.app.exec.BatchProcess;
  *   
- *   var b:Batch = new BatchProcess();
- *   b.addListener(new MyStartUpController());
- *   b.addProcess(new MyStartUpProcess());
- *   b.addProcess(new MyXMLParsingProcess());
- *   b.start();
+ *   var batch:Batch = new BatchProcess();
+ *   batch.addListener(new MyStartUpController());
+ *   batch.addProcess(new MyStartUpProcess());
+ *   batch.addProcess(new MyXMLParsingProcess());
+ *   batch.start();
  * </code>
  * 
  * @author Martin Heidegger
- * @version 1.0
- * @see Process
+ * @author Simon Wacker
+ * @version 2.0
  */
 interface org.as2lib.app.exec.Batch extends Process {
-    
-    /**
-     * Returns the currently execution {@code Process}
-     * 
-     * @return currently executing {@code Process}
-     */
-    public function getCurrentProcess(Void):Process;	
-    
-    /**
-	 * Adds a {@link Process} to the list of processes to execute.
+	
+	/**
+	 * Returns the currently running process.
 	 * 
-	 * <p>Its possible to at the same process more than one times. It will be
-	 * executed as often as you add it.
-	 * 
-	 * @param process {@code Process} to be added
-	 * @return internal identifier of the process
+	 * @return the process that is currently running
 	 */
-	public function addProcess(process:Process):Number;
-    
+	public function getCurrentProcess(Void):Process;	
+	
+	/**
+	 * Adds the given process to be executed by this batch.
+	 * 
+	 * @param process the process to add
+	 */
+	public function addProcess(process:Process):Void;
+	
+	/**
+	 * Removes the given process.
+	 * 
+	 * @param process the process to remove
+	 */
+	public function removeProcess(process:Process):Void;
+	
+	/**
+	 * Returns all added processes.
+	 * 
+	 * @return all added processes
+	 */
+	public function getAllProcesses(Void):Array;
+	
+	/**
+	 * Returns the number of processes added to this batch.
+	 * 
+	 * @return the total number of processes
+	 */
+	public function getProcessCount(Void):Number;
+	
 }
