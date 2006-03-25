@@ -195,6 +195,10 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 		return applicationContext.getName();
 	}
 	
+	public function setName(name:String):Void {
+		applicationContext.setName(name);
+	}
+	
 	public function addListener(listener):Void {
 		applicationContext.addListener(listener);
 	}
