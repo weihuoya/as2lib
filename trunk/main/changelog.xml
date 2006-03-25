@@ -6,6 +6,11 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="3">
+				<day value="25">
+					<entry type="add" package="org.as2lib.app.exec" class="SimpleBatch">Distributes batch events on state changes or errors and forwards events of child processes.</entry>
+					<entry type="change" package="org.as2lib.app.exec" class="BatchProcess">Batch process does not distribute batch events anymore; it acts like a real process now.</entry>
+					<entry type="add" package="org.as2lib.app.exec" class="Batch">Declared some further methods needed by batches.</entry>
+				</day>
 				<day value="24">
 					<entry type="add" package="org.as2lib.context.support" class="LoadingApplicationContextFactoryBean">Enables splitting views into one main and multiple sub-views; this technique is sometimes called tiles- or composite-view.</entry>
 					<entry type="add" package="org.as2lib.bean.factory.parser" class="EnFlashApplicationContext">Parser for enFlash xml bean definitions.</entry>
