@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.app.exec.BatchProcess;
+import org.as2lib.app.exec.SimpleBatch;
 import org.as2lib.bean.factory.parser.BeanDefinitionParser;
 import org.as2lib.context.ApplicationContext;
 import org.as2lib.context.support.DefaultApplicationContext;
@@ -61,12 +61,12 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 		// TODO: Add support for specifying multiple URIs for the same application context!
 		this.beanDefinitionUri = beanDefinitionUri;
 		this.beanDefinitionParser = beanDefitionParser;
-		setBatchProcess(new BatchProcess());
+		setBatchProcess(new SimpleBatch());
 	}
 	
 	public function start() {
 		initFileLoaderProcess();
-		batchProcess.start();
+		getBatchProcess().start();
 	}
 	
 	/**
@@ -83,11 +83,12 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 				owner["onLoadComplete"](fl);
 			}
 			catch (exception) {
-				this.sendErrorEvent(exception);
+				this.distributeErrorEvent(exception);
 			}
 			// finish the loading process after possible process beans have been added
 			// otherwise the batch process distributes a finish event before possible
 			// processes in the bean factory have been run
+			// TODO: Shall onLoadComplete event even be published if an exception was thrown?
 			this.__proto__.onLoadComplete.apply(this, [fl]);
 		};
 		getBatchProcess().addProcess(fileLoaderProcess);
