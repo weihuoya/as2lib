@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.app.exec.Batch;
+import org.as2lib.app.exec.BatchProcess;
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.SimpleBatch;
 import org.as2lib.bean.factory.InitializingBean;
@@ -384,6 +385,9 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 	}
 	
 	public function setName(name:String):Void {
+		if (batchProcess == null) {
+			batchProcess = new BatchProcess();
+		}
 		getBatchProcess().setName(name);
 	}
 	
