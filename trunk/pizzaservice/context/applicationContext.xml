@@ -14,6 +14,7 @@
 	</bean>
 	
 	<bean id="messageSource" class="org.as2lib.context.support.ResourceBundleMessageSource" depends-on="localeManager">
+		<property name="name">messages.properties</property>
 		<property name="baseName">messages</property>
 	</bean>
 	
