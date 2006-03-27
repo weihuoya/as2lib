@@ -1,4 +1,4 @@
-﻿﻿/*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -31,12 +31,6 @@ import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
  */
 class org.as2lib.env.log.logger.AbstractLogger extends BasicClass {
 	
-	/** Pattern to stringify log messages for MTASC */
-	public static var MTASC_MESSAGE_PATTERN:String = "%d{HH:nn:ss.SSS} %c.%o():%L - %m";
-	
-	/** Stringifier instance to stringify messages for MTASC */
-	private static var mtascStringifier:Stringifier;
-	
 	/** All log messages get logged. */
 	public static var ALL:LogLevel = AbstractLogLevel.ALL;
 	
@@ -57,6 +51,34 @@ class org.as2lib.env.log.logger.AbstractLogger extends BasicClass {
 	
 	/** No log messages get logged. */
 	public static var NONE:LogLevel = AbstractLogLevel.NONE;
+	
+	/** Default pattern to stringify log messages for MTASC with. */
+	public static var MTASC_MESSAGE_PATTERN:String = "%d{HH:nn:ss.SSS} %c.%o():%L - %m";
+	
+	/** Stringifier to stringify messages for MTASC. */
+	private static var mtascStringifier:Stringifier;
+	
+	/** 
+	 * Stringifies the given {@code message} for MTASC.
+	 * 
+	 * @param message the message to stringify
+	 * @param location the fully qualified class name and the method name separated by "::"
+	 * @param fileName the name of the file defining the class
+	 * @param lineNumber the line number at which the message was logged
+	 * @return the string representation of the given {@code message} plus the additional
+	 * information
+	 * @see #mtascStringifier
+	 */
+	public static function createMtascMessage(message, location:String, fileName:String, lineNumber:Number):String {
+		if (mtascStringifier == null) {
+			mtascStringifier = new PatternLogMessageStringifier(MTASC_MESSAGE_PATTERN);
+		}
+		var m:LogMessage = new LogMessage(message);
+		m.setSourceClassAndMethodNames(location);
+		m.setFileName(fileName);
+		m.setLineNumber(lineNumber);
+		return mtascStringifier.execute(m);	
+	}
 	
 	/** The debug level. */
 	private var debugLevel:LogLevel;
@@ -107,22 +129,6 @@ class org.as2lib.env.log.logger.AbstractLogger extends BasicClass {
 		errorLevelAsNumber = errorLevel.toNumber();
 		fatalLevel = FATAL;
 		fatalLevelAsNumber = fatalLevel.toNumber();
-	}
-
-	/** 
-	 * Stringifies message for MTASC. 
-	 */
-	private static function createMtascLogMessage(message, location:String, fileName:String, lineNumber:Number):String {
-		if (mtascStringifier == null) {
-			mtascStringifier = new PatternLogMessageStringifier(MTASC_MESSAGE_PATTERN);
-		}
-		
-		var m:LogMessage = new LogMessage(message);
-		m.setSourceClassAndMethodNames(location);
-		m.setFileName(fileName);
-		m.setLineNumber(lineNumber);
-		
-		return mtascStringifier.execute(m);	
 	}
 	
 }
