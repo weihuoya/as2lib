@@ -6,6 +6,15 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="3">
+				<day value="27">
+					<entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger" variable="MTASC_MESSAGE_PATTERN">Default message stringify pattern for -trace MTASC support</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger" variable="mtascStringifier">Message stringifier for -trace MTASC support</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger" method="createMtascLogMessage">Creates string message for -trace MTASC support</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="SosLogger" variable="mtascLogger">Logger instance for -trace MTASC support</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="SosLogger" method="send">Adds core method to send message directly to SOS Logger console</entry>
+					<entry type="enhancement" package="org.as2lib.env.log.logger" class="SosLogger" method="log">Sends messages to SOS Logger console using "send" method</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="SosLogger" method="trace">Logs message using MTASC logger</entry>
+				</day>
 				<day value="25">
 					<entry type="add" package="org.as2lib.app.exec" class="SimpleBatch">Distributes batch events on state changes or errors and forwards events of child processes.</entry>
 					<entry type="change" package="org.as2lib.app.exec" class="BatchProcess">Batch process does not distribute batch events anymore; it acts like a real process now.</entry>
