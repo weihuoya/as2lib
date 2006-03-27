@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -15,8 +15,11 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.LogMessage;
+import org.as2lib.util.Stringifier;
+import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
 
 /**
  * {@code AbstractLogger} offers support for simple logger tasks.
@@ -27,6 +30,12 @@ import org.as2lib.env.log.level.AbstractLogLevel;
  * @author Simon Wacker
  */
 class org.as2lib.env.log.logger.AbstractLogger extends BasicClass {
+	
+	/** Pattern to stringify log messages for MTASC */
+	public static var MTASC_MESSAGE_PATTERN:String = "%d{HH:nn:ss.SSS} %c.%o():%L - %m";
+	
+	/** Stringifier instance to stringify messages for MTASC */
+	private static var mtascStringifier:Stringifier;
 	
 	/** All log messages get logged. */
 	public static var ALL:LogLevel = AbstractLogLevel.ALL;
@@ -98,6 +107,22 @@ class org.as2lib.env.log.logger.AbstractLogger extends BasicClass {
 		errorLevelAsNumber = errorLevel.toNumber();
 		fatalLevel = FATAL;
 		fatalLevelAsNumber = fatalLevel.toNumber();
+	}
+
+	/** 
+	 * Stringifies message for MTASC. 
+	 */
+	private static function createMtascLogMessage(message, location:String, fileName:String, lineNumber:Number):String {
+		if (mtascStringifier == null) {
+			mtascStringifier = new PatternLogMessageStringifier(MTASC_MESSAGE_PATTERN);
+		}
+		
+		var m:LogMessage = new LogMessage(message);
+		m.setSourceClassAndMethodNames(location);
+		m.setFileName(fileName);
+		m.setLineNumber(lineNumber);
+		
+		return mtascStringifier.execute(m);	
 	}
 	
 }

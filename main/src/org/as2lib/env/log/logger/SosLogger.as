@@ -1,4 +1,4 @@
-﻿/*
+﻿﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -40,6 +40,9 @@ import org.as2lib.env.log.LogMessage;
  */
 class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logger {
 	
+	/** Static logger instance for MTASC trace logging */
+	private static var mtascLogger:SosLogger;
+	
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Object = AbstractLogger;
 	
@@ -70,7 +73,6 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
     /** Color of fatal messages. */
     private static var FATAL_COLOR:Number = 0xCC99CC;
     
-	
 	/**
 	 * Constructs a new {@code SosLogger} instance.
 	 *
@@ -243,6 +245,17 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 	}
 	
 	/**
+	 * Sends specified {@code message} directly to logger using specified {@code key}.
+	 * 
+	 * @param message the message to send
+	 * @param key the key used to identify message type  
+	 */
+	private function send(message, key:Number):Void {
+		socket.send("<showMessage key='" + key + "'><![CDATA[" 
+				+ message.toString() + "]]></showMessage>\n");
+	}
+	
+	/**
 	 * Logs the passed-in {@code message} at the given {@code level}.
 	 *
 	 * <p>The {@code message} is only logged when this logger is enabled for the
@@ -255,8 +268,7 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
 			var m:LogMessage = new LogMessage(message, level, name);
-			socket.send("<showMessage key='" + level.toNumber() + "'><![CDATA[" 
-					+ m.toString() + "]]></showMessage>\n");
+			send(message, level.toNumber());
 		}
 	}
 	
@@ -335,4 +347,21 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 		}
 	}
 	
+	/**
+	 * Proxy trace method for MTASC. Provides direct output of the specified {@code message} to the
+	 * SOS logger console using MTASC <code>-trace</code> option.
+	 * 
+	 * @param message the message to log
+	 * @param location the string represented class and method name which invokes {@code #trace} method,
+	 * separated using <code>::</code>
+	 * @param fileName the source file name which contains current {@code #trace} method invocation
+	 * @param lineNumber the line number in the file contained {@code #trace} method invocation
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		// initialize mtasc logger
+		if (mtascLogger == null) {
+			mtascLogger = new SosLogger();	
+		}
+		mtascLogger.send(createMtascLogMessage(message, location, fileName, lineNumber), NONE.toNumber());
+	}
 }
