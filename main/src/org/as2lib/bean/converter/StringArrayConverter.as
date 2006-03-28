@@ -74,6 +74,7 @@ class org.as2lib.bean.converter.StringArrayConverter extends BasicClass implemen
 			return array;
 		}
 		if (value != "") {
+			// TODO: Trim the individual elements and convert numbers and booleans!
 			return value.split(separator);
 		}
 		return new Array();
