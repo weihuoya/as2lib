@@ -40,6 +40,9 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	/** The currently used stringifier. */
 	private static var stringifier:Stringifier;
 	
+	/** Stringifier to stringify messages for MTASC. */
+	private static var mtascStringifier:Stringifier;
+	
 	/**
 	 * Returns either the stringifier set via {@link #setStringifier} or the default
 	 * one which is an instance of class {@link PatternLogMessageStringifier}.
@@ -61,6 +64,47 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	 */
 	public static function setStringifier(newStringifier:Stringifier):Void {
 		stringifier = newStringifier;
+	}
+
+	/**
+	 * Returns either the stringifier set via {@link #setMtascStringifier} or the default
+	 * MTASC stringifier which is an instance of class {@link PatternLogMessageStringifier}
+	 * and uses {@link PatternLogMessageStringifier#MTASC_PATTERN} pattern.
+	 *
+	 * @return the currently used MTASC stringifier
+	 */
+	public static function getMtascStringifier(Void):Stringifier {
+		if (!mtascStringifier) mtascStringifier = new PatternLogMessageStringifier(PatternLogMessageStringifier.MTASC_PATTERN);
+		return mtascStringifier;
+	}
+	
+	/**
+	 * Sets a new MTASC stringifier to be used by the {@link #toMtascString} method.
+	 *
+	 * <p>If {@code newMtascStringifier} is {@code null} the {@link #getMtascStringifier} method
+	 * will return the default MTASC stringifier.
+	 *
+	 * @param newMtascStringifier the new MTASC stringifier to be used
+	 */
+	public static function setMtascStringifier(newMtascStringifier:Stringifier):Void {
+		mtascStringifier = newMtascStringifier;
+	}
+	
+	/** 
+	 * Creates new {@code LogMessage} instance for MTASC with the MTASC-specified arguments.
+	 * 
+	 * @param message the message object to log
+	 * @param location the fully qualified class name and the method name separated by "::"
+	 * @param fileName the name of the file defining the class
+	 * @param lineNumber the line number at which the message was logged
+	 * @return the {@code LogMessage} instance for MTASC 
+	 */
+	public static function forMtasc(message, location:String, fileName:String, lineNumber:Number):LogMessage {
+		var m:LogMessage = new LogMessage(message);
+		m.setSourceClassAndMethodNames(location);
+		m.setFileName(fileName);
+		m.setLineNumber(lineNumber);
+		return m;	
 	}
 	
 	/** The message object to log. */
@@ -276,6 +320,15 @@ class org.as2lib.env.log.LogMessage extends BasicClass {
 	 */
 	public function toString():String {
 		return getStringifier().execute(this);
+	}
+
+	/**
+	 * Uses the MTASC stringifier to stringify this instance.
+	 *
+	 * @return the string representation of this log message
+	 */
+	public function toMtascString():String {
+		return getMtascStringifier().execute(this);
 	}
 	
 }
