@@ -81,7 +81,7 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 		if (mtascLogger == null) {
 			mtascLogger = new SosLogger();	
 		}
-		mtascLogger.send(createMtascMessage(message, location, fileName, lineNumber), NONE.toNumber());
+		mtascLogger.send(LogMessage.forMtasc(message, location, fileName, lineNumber).toMtascString(), NONE.toNumber());
 	}
 	
 	/** The set level. */
