@@ -127,6 +127,13 @@ class org.as2lib.regexp.Pattern extends BasicClass
     public function Pattern(newPattern:String, newFlags:Number) {
     	super();
     	
+	 	if (!ACCEPT) {
+	    	ACCEPT = new Node();
+	  	}
+	  	if (!LASTACCEPT) {
+	    	LASTACCEPT = new LastNode();
+	  	}
+    	
         pattern = newPattern;
         flags = (newFlags != null) ? newFlags : 0;
         
@@ -1256,6 +1263,9 @@ class org.as2lib.regexp.Pattern extends BasicClass
     public static var POSSESSIVE:Number 	= 2;
     public static var INDEPENDENT:Number 	= 3;
 
+	public static var ACCEPT:Node;
+    public static var LASTACCEPT:Node;
+	
 
     private function parseClosure(prev:Node):Node {
         var atom:Node;
@@ -1425,10 +1435,6 @@ class org.as2lib.regexp.Pattern extends BasicClass
             return new SliceU(tmp);
         }
     }
-
-    static var ACCEPT:Node 		= new Node();
-    static var LASTACCEPT:Node 	= new LastNode();
-
 
 	private function toCharCodeArray(source:String):Array {
 		var charCodeArray:Array = new Array(source.length);
