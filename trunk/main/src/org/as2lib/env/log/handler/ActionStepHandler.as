@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-import org.as2lib.util.Stringifier;
-import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.AbstractLogHandler;
-
-import org.actionstep.ASDebugger;
+import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogHandler;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.util.Stringifier;
 
 /**
  * {@code ActionStepHandler} uses the {@code org.actionstep.ASDebugger.trace} method to log

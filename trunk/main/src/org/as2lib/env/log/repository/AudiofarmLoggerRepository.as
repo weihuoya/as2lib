@@ -16,8 +16,8 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LoggerRepository;
 import org.as2lib.env.log.logger.AudiofarmLogger;
+import org.as2lib.env.log.LoggerRepository;
 
 /**
  * {@code AudiofarmLoggerRepository} returns loggers of type {@link AudiofarmLogger}.

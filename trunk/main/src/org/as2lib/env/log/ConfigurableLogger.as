@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogHandler;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code ConfigurableLogger} declares methods needed to configure most loggers.

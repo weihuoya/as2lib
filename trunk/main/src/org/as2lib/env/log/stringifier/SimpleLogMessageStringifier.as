@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.log.message.LogMessage;
 import org.as2lib.util.Stringifier;
-import org.as2lib.env.log.LogMessage;
 
 /**
  * {@code SimpleLogMessageStringifier} stringifies {@link LogMessage} instances in the

@@ -17,8 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 
-import org.actionstep.FDTDebugger;
-
 /**
  * {@code FlashDebugToolLogger} provides support for the Flash Debug Tool Project.
  * 

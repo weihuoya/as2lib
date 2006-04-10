@@ -18,8 +18,6 @@ import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogLevel;
 
-import de.richinternet.utils.Dumper;
-
 /**
  * {@code RichInternetLogger} delegates all log messages to the appropriate methods
  * of the {@code de.richinternet.utils.Dumper} class of Dirk Eisman's Flex Trace

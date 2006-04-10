@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright the original author or authors.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -16,8 +16,8 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.env.log.LogManager;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code LogSupport} can be used to easily gain access to loggers.

@@ -15,12 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.List;
 import org.as2lib.env.log.Logger;
-
-import org.log4f.logging.IFilter;
-import org.log4f.logging.IPublisher;
-import org.log4f.logging.Level;
-import org.log4f.logging.util.List;
 
 /**
  * {@code Log4fLogger} acts as a wrapper for a {@code org.log4f.logging.Logger}

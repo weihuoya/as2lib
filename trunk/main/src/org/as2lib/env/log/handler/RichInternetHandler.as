@@ -14,13 +14,11 @@
  * limitations under the License.
  */
 
-import org.as2lib.util.Stringifier;
-import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.AbstractLogHandler;
-
-import de.richinternet.utils.Dumper;
+import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogHandler;
+import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.util.Stringifier;
 
 /**
  * {@code RichInternetHandler} logs messages to Dirk Eisman's Flex Trace Panel.

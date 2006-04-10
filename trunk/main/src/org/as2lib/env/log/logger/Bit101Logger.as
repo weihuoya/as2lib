@@ -15,9 +15,8 @@
  */
 
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code Bit101Logger} delegates all log messages to the {@code Debug.trace}

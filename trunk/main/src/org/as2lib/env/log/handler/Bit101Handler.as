@@ -16,7 +16,7 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.LogMessage;
 
 /**
  * {@code Bit101Handler} logs messages to the Bit-101 Debug Panel.

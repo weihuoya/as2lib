@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicInterface;
-import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.LogMessage;
 
 /**
  * {@code LogHandler} is used to actually log messages.

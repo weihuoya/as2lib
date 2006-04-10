@@ -16,8 +16,8 @@
  
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LoggerRepository;
 import org.as2lib.env.log.logger.AscbLogger;
+import org.as2lib.env.log.LoggerRepository;
 
 /**
  * {@code AscbLoggerRepository} returns loggers of type {@link AscbLogger}.

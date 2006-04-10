@@ -14,8 +14,8 @@
  * limitations under the License.
  */
  
-import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code DynamicLogLevel} lets you dynamically create your own levels.

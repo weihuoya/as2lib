@@ -17,9 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 
-import LuminicBox.Log.Level;
-import LuminicBox.Log.IPublisher;
-
 /**
  * {@code LuminicBoxLogger} acts as a wrapper for a {@code Logger} instance of the
  * LuminicBox Logging API.
