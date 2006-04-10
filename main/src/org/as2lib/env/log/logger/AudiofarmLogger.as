@@ -15,12 +15,8 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.data.holder.List;
 import org.as2lib.env.log.Logger;
-
-import logging.IPublisher;
-import logging.IFilter;
-import logging.Level;
-import logging.util.List;
 
 /**
  * {@code AudiofarmLogger} acts as a wrapper for a {@code logging.Logger} instance

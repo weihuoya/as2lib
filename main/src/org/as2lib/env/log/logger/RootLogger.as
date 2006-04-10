@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.logger.SimpleHierarchicalLogger;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code RootLogger} represents the root in a logger hierarchy.

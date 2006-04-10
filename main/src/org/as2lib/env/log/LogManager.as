@@ -15,9 +15,9 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LoggerRepository;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code LogManager} is the core access point of the As2lib Logging API.

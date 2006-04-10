@@ -17,8 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 
-import net.hiddenresource.util.Debug;
-
 /**
  * {@code AlconLogger} delegates all messages to the
  * {@code net.hiddenresource.util.Debug.trace} method.

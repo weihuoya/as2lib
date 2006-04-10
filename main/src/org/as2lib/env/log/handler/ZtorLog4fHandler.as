@@ -14,12 +14,12 @@
  * limitations under the License.
  */
 
-import org.as2lib.util.Stringifier;
-import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.handler.AbstractLogHandler;
+import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogHandler;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.util.Stringifier;
 
 /**
  * {@code ZtorLog4fHandler} uses the {@code Log4f.log} method of the ZTOR Log4f

@@ -15,12 +15,10 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.level.AbstractLogLevel;
-
-import net.hiddenresource.util.Debug;
+import org.as2lib.env.log.LogHandler;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.message.LogMessage;
 
 /**
  * {@code AlconHandler} uses the {@code net.hiddenresource.util.Debug} class

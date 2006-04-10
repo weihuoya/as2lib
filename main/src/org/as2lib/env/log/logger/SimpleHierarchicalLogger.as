@@ -22,7 +22,8 @@ import org.as2lib.env.log.HierarchicalLogger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.env.log.message.SimpleLogMessage;
 
 /**
  * {@code SimpleHierarchicalLogger} is a simple implementation of the
@@ -384,7 +385,7 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
 			if (!addedParentHandlers) addParentHandlers();
-			var logMessage:LogMessage = new LogMessage(message, level, name, null, arguments[3]);
+			var logMessage:LogMessage = new SimpleLogMessage(message, level, name, null, arguments[3]);
 			if (typeof(arguments[2]) == "string") {
 				logMessage.setSourceMethodName(arguments[2]);
 			} else {

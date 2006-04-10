@@ -15,8 +15,8 @@
  */
 
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.logger.AbstractLogger;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code FludgeLogger} delegates all log messages to the appropriate methods on

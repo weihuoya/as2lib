@@ -15,9 +15,9 @@
  */
 
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.message.SimpleLogMessage;
 
 /**
  * {@code TraceLogger} logs messages using {@code trace}.
@@ -252,7 +252,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			trace(new LogMessage(message, level, name));
+			trace(new SimpleLogMessage(message, level, name));
 		}
 	}
 	
@@ -269,7 +269,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			trace(new LogMessage(message, debugLevel, name));
+			trace(new SimpleLogMessage(message, debugLevel, name));
 		}
 	}
 	
@@ -286,7 +286,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			trace(new LogMessage(message, infoLevel, name));
+			trace(new SimpleLogMessage(message, infoLevel, name));
 		}
 	}
 	
@@ -303,7 +303,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			trace(new LogMessage(message, warningLevel, name));
+			trace(new SimpleLogMessage(message, warningLevel, name));
 		}
 	}
 	
@@ -320,7 +320,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			trace(new LogMessage(message, errorLevel, name));
+			trace(new SimpleLogMessage(message, errorLevel, name));
 		}
 	}
 	
@@ -337,7 +337,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			trace(new LogMessage(message, fatalLevel, name));
+			trace(new SimpleLogMessage(message, fatalLevel, name));
 		}
 	}
 	

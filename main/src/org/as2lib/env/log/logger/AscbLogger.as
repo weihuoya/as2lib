@@ -15,10 +15,8 @@
  */
 
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.logger.AbstractLogger;
-
-import ascb.util.logging.Level;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code AscbLogger} acts as a wrapper for a {@code ascb.util.logging.Logger}

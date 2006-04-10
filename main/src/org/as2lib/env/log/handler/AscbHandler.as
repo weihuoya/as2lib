@@ -15,13 +15,11 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.LogMessage;
-import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.level.AbstractLogLevel;
-
-import ascb.util.logging.LogManager;
-import ascb.util.logging.Level;
+import org.as2lib.env.log.LogHandler;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.message.LogMessage;
 
 /**
  * {@code AscbHandler} delegates the log message to the {@code LogManager.log}

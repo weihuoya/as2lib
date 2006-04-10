@@ -15,9 +15,10 @@
  */
 
 import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.logger.AbstractLogger;
+import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.env.log.message.SimpleLogMessage;
 
 /**
  * {@code MusicTheoryLogger} writes messages to the SWF Console from Ricci Adams'
@@ -258,7 +259,7 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			var m:LogMessage = new LogMessage(message, level, name);
+			var m:LogMessage = new SimpleLogMessage(message, level, name);
 			getURL("javascript:showText('" + m + "')");
 		}
 	}

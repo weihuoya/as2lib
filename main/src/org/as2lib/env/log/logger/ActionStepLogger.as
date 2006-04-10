@@ -17,8 +17,6 @@
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 
-import org.actionstep.ASDebugger;
-
 /**
  * {@code ActionStepLogger} provides support for the ActionStep Debugger.
  * 
