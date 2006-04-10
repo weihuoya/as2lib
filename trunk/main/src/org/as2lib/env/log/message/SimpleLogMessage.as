@@ -16,6 +16,7 @@
 
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.message.AbstractLogMessage;
+import org.as2lib.env.log.message.LogMessage;
 import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
 import org.as2lib.util.Stringifier;
 
@@ -33,7 +34,7 @@ import org.as2lib.util.Stringifier;
  * @author Simon Wacker
  * @author Igor Sadovskiy
  */
-class org.as2lib.env.log.message.SimpleLogMessage extends AbstractLogMessage {
+class org.as2lib.env.log.message.SimpleLogMessage extends AbstractLogMessage implements LogMessage {
 	
 	/** The currently used stringifier. */
 	private static var stringifier:Stringifier;

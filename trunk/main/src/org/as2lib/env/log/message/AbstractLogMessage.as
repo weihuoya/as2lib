@@ -16,7 +16,6 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.message.LogMessage;
 
 /**
  * {@code AbstractLogMessage} is a dumb data holder that contains all the information about
@@ -28,7 +27,7 @@ import org.as2lib.env.log.message.LogMessage;
  * @author Simon Wacker
  * @author Igor Sadovskiy
  */
-class org.as2lib.env.log.message.AbstractLogMessage extends BasicClass implements LogMessage {
+class org.as2lib.env.log.message.AbstractLogMessage extends BasicClass {
 	
 	/** The message object to log. */
 	private var message;

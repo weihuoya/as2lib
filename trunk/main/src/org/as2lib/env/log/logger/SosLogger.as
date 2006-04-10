@@ -17,7 +17,6 @@
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.message.LogMessage;
 import org.as2lib.env.log.message.MtascLogMessage;
 import org.as2lib.env.log.message.SimpleLogMessage;
 
@@ -279,8 +278,7 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			var m:LogMessage = new SimpleLogMessage(message, level, name);
-			send(message, level.toNumber());
+			send(new SimpleLogMessage(message, level, name), level.toNumber());
 		}
 	}
 	
