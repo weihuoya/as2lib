@@ -79,6 +79,7 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	public function addPropertyValue():Void {
 		var o:Overload = new Overload(this);
 		o.addHandler([PropertyValue], addPropertyValueByPropertyValue);
+		o.addHandler([Number, PropertyValue], addPropertyValueByIndexAndPropertyValue);
 		o.addHandler([String, Object], addPropertyValueByNameAndValueAndType);
 		o.addHandler([String, Object, Function], addPropertyValueByNameAndValueAndType);
 		o.forward(arguments);
@@ -92,6 +93,25 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	 * @param propertyValue the property value to add
 	 */
 	public function addPropertyValueByPropertyValue(propertyValue:PropertyValue):Void {
+		addPropertyValueByIndexAndPropertyValue(null, propertyValue);
+	}
+	
+	/**
+	 * Adds the given {@code propertyValue} at the given index, merging its value if
+	 * there is already a property value for the same property name and the value
+	 * implements the {@link Mergeable} interface.
+	 * 
+	 * <p>If the given index is negative or {@code null} the property value will be
+	 * added at the last position. Otherwise it will be added at the given position
+	 * and the property values directly on the index and right of the index will be
+	 * moved by one position to the right.
+	 * 
+	 * <p>Note that the index will be ignored if the property value is merged with
+	 * another property value.
+	 * 
+	 * @param propertyValue the property value to add
+	 */
+	public function addPropertyValueByIndexAndPropertyValue(index:Number, propertyValue:PropertyValue):Void {
 		var propertyName:String = propertyValue.getName();
 		if (propertyValues[propertyName]) {
 			for (var i:Number = 0; i < propertyValues.length; i++) {
@@ -107,7 +127,12 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 		else if (propertyName != null) {
 			propertyValues[propertyName] = true;
 		}
-		propertyValues.push(propertyValue);
+		if (index == null || index < 0) {
+			propertyValues.push(propertyValue);
+		}
+		else {
+			propertyValues.splice(index, 0, propertyValue);
+		}
 	}
 	
 	/**
