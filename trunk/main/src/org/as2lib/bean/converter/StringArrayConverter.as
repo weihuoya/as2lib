@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.BeanUtil;
 import org.as2lib.bean.PropertyValueConverter;
 import org.as2lib.core.BasicClass;
 
@@ -67,15 +68,13 @@ class org.as2lib.bean.converter.StringArrayConverter extends BasicClass implemen
 			var array:Array = new type();
 			if (value != "") {
 				var values:Array = value.split(separator);
-				for (var i:Number = 0; i < values.length; i++) {
-					array.push(values[i]);
-				}
+				BeanUtil.trimAndConvertValues(values, array);
 			}
 			return array;
 		}
 		if (value != "") {
-			// TODO: Trim the individual elements and convert numbers and booleans!
-			return value.split(separator);
+			var values:Array = value.split(separator);
+			return BeanUtil.trimAndConvertValues(values);
 		}
 		return new Array();
 	}
