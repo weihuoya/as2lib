@@ -488,23 +488,13 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * @param argumentValues the constructor argument values to add the parsed value to
 	 */
 	private function parseConstructorArgElement(element:XMLNode, beanName:String, argumentValues:ConstructorArgumentValues):Void {
-		var index:Number;
-		var indexAttribute:String = element.attributes[INDEX_ATTRIBUTE];
-		if (indexAttribute != null && indexAttribute != "") {
-			if (isNaN(indexAttribute)) {
-				throw new BeanDefinitionStoreException(beanName, "Attribute 'index' of tag 'constructor-arg' must be a number.", this, arguments);
-			}
-			index = Number(indexAttribute);
-			if (index < 0) {
-				throw new BeanDefinitionStoreException(beanName, "'index' cannot be lower than 0.", this, arguments);
-			}
-		}
+		var index:Number = parseIndexAttribute(beanName, element, "constructor-arg");
 		var typeName:String = element.attributes[TYPE_ATTRIBUTE];
 		var type:Function;
 		if (typeName != null && typeName != "") {
 			type = resolveType(typeName);
 			if (type == null) {
-				throw new BeanDefinitionStoreException(beanName, "Type '" + typeName + "' for constructor argument '" + indexAttribute + "' not found.", this, arguments);
+				throw new BeanDefinitionStoreException(beanName, "Type '" + typeName + "' for constructor argument '" + index + "' not found.", this, arguments);
 			}
 		}
 		var value = parsePropertyValue(element, beanName, "<constructor-arg> element");
@@ -533,6 +523,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		/*if (propertyValues.contains(propertyName)) {
 			throw new BeanDefinitionStoreException(beanName, "Multiple 'property' definitions for property '" + propertyName + "'.", this, arguments);
 		}*/
+		var index:Number = parseIndexAttribute(beanName, element, "property");
 		var typeName:String = element.attributes[TYPE_ATTRIBUTE];
 		var type:Function;
 		if (typeName != null && typeName != "") {
@@ -542,7 +533,13 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			}
 		}
 		var value = parsePropertyValue(element, beanName, "<property> element for property '" + propertyName + "'");
-		propertyValues.addPropertyValueByPropertyValue(new PropertyValue(propertyName, value, type));
+		var property:PropertyValue = new PropertyValue(propertyName, value, type);
+		if (index == null) {
+			propertyValues.addPropertyValueByPropertyValue(property);
+		}
+		else {
+			propertyValues.addPropertyValueByIndexAndPropertyValue(index, property);
+		}
 	}
 	
 	/**
@@ -558,6 +555,34 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			return AbstractBeanWrapper.PACKAGE_TYPE;
 		}
 		return eval("_global." + typeName);
+	}
+	
+	/**
+	 * Parses the index-attribute of the given element.
+	 * 
+	 * @param beanName the name of the bean declaring the given element
+	 * @param element the element with the index-attribute
+	 * @param elementName the name of the element (for example 'property' or
+	 * 'constructor-arg')
+	 * @return the parsed index or {@code null}
+	 * @throws BeanDefinitionStoreException if the index-attribute's value is not a
+	 * number
+	 * @throws BeanDefinitionStoreException if the index-attribute's value is less
+	 * than 0
+	 */
+	private function parseIndexAttribute(beanName:String, element:XMLNode, elementName:String):Number {
+		var result:Number = null;
+		var indexAttribute:String = element.attributes[INDEX_ATTRIBUTE];
+		if (indexAttribute != null && indexAttribute != "") {
+			if (isNaN(indexAttribute)) {
+				throw new BeanDefinitionStoreException(beanName, "Attribute 'index' of tag '" + elementName + "' must be a number.", this, arguments);
+			}
+			result = Number(indexAttribute);
+			if (result < 0) {
+				throw new BeanDefinitionStoreException(beanName, "'index' cannot be less than 0.", this, arguments);
+			}
+		}
+		return result;
 	}
 	
 	/**
