@@ -21,7 +21,7 @@ import org.as2lib.env.log.LogLevel;
  * {@code AbstractLogMessage} is a dumb data holder that contains all the information about
  * the message to log.
  * 
- * <p>These information are the the message to log, its level and the name of the
+ * <p>These information are the message to log, its level and the name of the
  * logger that is responsible for logging the message.
  * 
  * @author Simon Wacker
