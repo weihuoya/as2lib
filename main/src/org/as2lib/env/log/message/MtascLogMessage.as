@@ -21,7 +21,7 @@ import org.as2lib.util.Stringifier;
 
 /**
  * {@code MtascLogMessage} is a data holder that contains all information to
- * log messages using MTASC <i>-trace</i> facilities.
+ * log messages using MTASC's <i>-trace</i> facility.
  * 
  * <p>The {@link #toString} method uses the set stringifier to obtain its string
  * representation. If you want a different appearance of the log message you can
@@ -61,7 +61,7 @@ class org.as2lib.env.log.message.MtascLogMessage extends AbstractLogMessage impl
 	public static function setStringifier(newStringifier:Stringifier):Void {
 		stringifier = newStringifier;
 	}
-			
+	
 	/**
 	 * Constructs a new {@code MtascLogMessage} instance.
 	 * 
@@ -76,7 +76,7 @@ class org.as2lib.env.log.message.MtascLogMessage extends AbstractLogMessage impl
 		this.fileName = fileName;
 		this.lineNumber = lineNumber;
 	}
-		
+	
 	/**
 	 * Sets the source class name and the source method name. The given class and
 	 * method name must be separated by "::". This is a convenience method to split
@@ -89,7 +89,7 @@ class org.as2lib.env.log.message.MtascLogMessage extends AbstractLogMessage impl
 		sourceClassName = names[0];
 		sourceMethodName = names[1];
 	}
-		
+	
 	/**
 	 * Uses the stringifier returned by the static {@link #getStringifier} method
 	 * to stringify this instance.
@@ -99,5 +99,5 @@ class org.as2lib.env.log.message.MtascLogMessage extends AbstractLogMessage impl
 	public function toString():String {
 		return getStringifier().execute(this);
 	}
-		
+	
 }
