@@ -15,12 +15,12 @@
  */
 
 import org.as2lib.bean.AbstractBeanWrapper;
+import org.as2lib.bean.BeanUtil;
 import org.as2lib.bean.factory.BeanDefinitionStoreException;
 import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.BeanDefinitionHolder;
 import org.as2lib.bean.factory.config.ConstructorArgumentValue;
 import org.as2lib.bean.factory.config.ConstructorArgumentValues;
-import org.as2lib.bean.factory.config.PropertyPathFactoryBean;
 import org.as2lib.bean.factory.config.RuntimeBeanReference;
 import org.as2lib.bean.factory.parser.BeanDefinitionParser;
 import org.as2lib.bean.factory.support.AbstractBeanDefinition;
@@ -99,6 +99,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var FACTORY_BEAN_ATTRIBUTE:String = "factory-bean";
 	
 	public static var CONSTRUCTOR_ARG_ELEMENT:String = "constructor-arg";
+	public static var CONSTRUCTOR_ARGS_ELEMENT:String = "constructor-args";
 	public static var INDEX_ATTRIBUTE:String = "index";
 	public static var TYPE_ATTRIBUTE:String = "type";
 	public static var PROPERTY_ELEMENT:String = "property";
@@ -419,6 +420,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			if (CONSTRUCTOR_ARG_ELEMENT == node.nodeName) {
 				parseConstructorArgElement(node, beanName, result);
 			}
+			else if (CONSTRUCTOR_ARGS_ELEMENT == node.nodeName) {
+				parseConstructorArgsElement(node, beanName, result);
+			}
 		}
 		return result;
 	}
@@ -503,6 +507,35 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		}
 		else {
 			argumentValues.addArgumentValueByIndexAndValue(index, new ConstructorArgumentValue(value, type));
+		}
+	}
+	
+	/**
+	 * Parses a constructor-args element.
+	 * 
+	 * @param element the constructor-args element to parse
+	 * @param beanName the name of the bean declaring the constructor-args element
+	 * @param argumentValues the constructor argument values to add the parsed values to
+	 */
+	private function parseConstructorArgsElement(element:XMLNode, beanName:String, argumentValues:ConstructorArgumentValues):Void {
+		var value:String = element.firstChild.nodeValue;
+		// TODO: Shall an exception be thrown if value is an empty string.
+		if (value != "") {
+			var typeName:String = element.attributes[TYPE_ATTRIBUTE];
+			var type:Function;
+			if (typeName != null && typeName != "") {
+				type = resolveType(typeName);
+				if (type == null) {
+					throw new BeanDefinitionStoreException(beanName, "Type '" + typeName + "' for constructor arguments not found.", this, arguments);
+				}
+			}
+			// TODO: Do not hard-code separator.
+			var args:Array = value.split(",");
+			BeanUtil.trimAndConvertValues(args);
+			for (var i:Number = 0; i < args.length; i++) {
+				var argument:ConstructorArgumentValue = new ConstructorArgumentValue(args[i], type);
+				argumentValues.addArgumentValueByValue(argument);
+			}
 		}
 	}
 	
