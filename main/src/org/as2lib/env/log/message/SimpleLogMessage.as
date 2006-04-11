@@ -61,7 +61,7 @@ class org.as2lib.env.log.message.SimpleLogMessage extends AbstractLogMessage imp
 	public static function setStringifier(newStringifier:Stringifier):Void {
 		stringifier = newStringifier;
 	}
-		
+	
 	/**
 	 * Constructs a new {@code SimpleLogMessage} instance.
 	 * 
@@ -80,7 +80,7 @@ class org.as2lib.env.log.message.SimpleLogMessage extends AbstractLogMessage imp
 		this.sourceMethod = sourceMethod;
 		this.sourceObject = sourceObject;
 	}
-
+	
 	/**
 	 * Uses the stringifier returned by the static {@link #getStringifier} method
 	 * to stringify this instance.
