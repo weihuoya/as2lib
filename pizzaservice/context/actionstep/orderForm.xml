@@ -15,17 +15,17 @@
 		<VBox>
 			<HBox>
 				<FormItem>
-					<Label stringValue="{messageSource.message[label.name]}" width="85" height="25"/>
-					<TextField id="nameTextField" target="b{orderForm}" action="onNameChanged" width="85" height="25"/>
+					<Label stringValue="{messageSource.message[label.name]}"/>
+					<TextField id="nameTextField" target="b{orderForm}" action="onNameChanged"/>
 				</FormItem>
 				<VBox>
 					<FormItem>
-						<Label stringValue="{messageSource.message[label.quantity]}" width="85" height="25"/>
-						<Stepper id="quantityStepper" minValue="1" maxValue="10" width="85" height="25"/>
+						<Label stringValue="{messageSource.message[label.quantity]}"/>
+						<Stepper id="quantityStepper" minValue="1" maxValue="10"/>
 					</FormItem>
 					<FormItem>
-						<Label stringValue="{messageSource.message[label.size]}" width="85" height="25"/>
-						<ComboBox id="sizeComboBox" selectItemAtIndex="0" editable="false" width="85" height="25">
+						<Label stringValue="{messageSource.message[label.size]}"/>
+						<ComboBox id="sizeComboBox" selectItemAtIndex="0" editable="false">
 							<itemsWithObjectValues>
 								<Array>
 									<object>{messageSource.message[size.small]}</object>
@@ -37,8 +37,8 @@
 						</ComboBox>
 					</FormItem>
 					<FormItem>
-						<Label stringValue="{messageSource.message[label.crust]}" width="85" height="25"/>
-						<ComboBox id="crustComboBox" selectItemAtIndex="0" width="85" height="25" editable="false">
+						<Label stringValue="{messageSource.message[label.crust]}"/>
+						<ComboBox id="crustComboBox" selectItemAtIndex="0" editable="false">
 							<itemsWithObjectValues>
 								<Array>
 									<object>{messageSource.message[crust.thin]}</object>
@@ -51,7 +51,7 @@
 				</VBox>
 				<VBox>
 					<FormItem>
-						<Label stringValue="{messageSource.message[label.toppings]}" width="85" height="25"/>
+						<Label stringValue="{messageSource.message[label.toppings]}"/>
 						<List id="toppingList" multipleSelection="true" target="b{orderForm}" action="onToppingsChanged" width="140" height="120">
 							<itemWithLabelData>{messageSource.message[toppings.sausage]}</itemWithLabelData>
 							<itemWithLabelData>{messageSource.message[toppings.pepperoni]}</itemWithLabelData>
@@ -63,20 +63,20 @@
 							<itemWithLabelData>{messageSource.message[toppings.garlic]}</itemWithLabelData>
 						</List>
 					</FormItem>
-					<Button id="addButton" stringValue="{messageSource.message[button.add]}" target="b{orderForm}" action="addOrderItem" width="85" height="25" enabled="false"/>
+					<Button id="addButton" stringValue="{messageSource.message[button.add]}" target="b{orderForm}" action="addOrderItem" enabled="false"/>
 				</VBox>
 			</HBox>
 			<FormItem>
-				<Label stringValue="{messageSource.message[label.orderTicket]}" width="85" height="25"/>
+				<Label stringValue="{messageSource.message[label.orderTicket]}"/>
 				<List id="orderTicketList" multipleSelection="true" width="425" height="70"/>
 			</FormItem>
 		</VBox>
-		<Button id="removeButton" title="{messageSource.message[button.remove]}"
-				target="b{orderForm}" action="removeOrderItem" enabled="false"
-				x="0" y="288" width="85" height="25"/>
-		<Button id="placeOrderButton" title="{messageSource.message[button.placeOrder]}"
-				target="b{orderForm}" action="placeOrder" enabled="false"
-				x="85" y="288" width="85" height="25"/>
+		<Button id="removeButton" x="0" y="288" width="85" height="25"
+				title="{messageSource.message[button.remove]}" enabled="false"
+				target="b{orderForm}" action="removeOrderItem"/>
+		<Button id="placeOrderButton" x="85" y="288" width="85" height="25"
+				title="{messageSource.message[button.placeOrder]}" enabled="false"
+				target="b{orderForm}" action="placeOrder"/>
 	</Form>
 	
 </beans>

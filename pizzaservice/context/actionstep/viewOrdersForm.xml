@@ -8,17 +8,17 @@
 		<progressBar>b{progressBar}</progressBar>
 		<HBox>
 			<FormItem>
-				<Label stringValue="{messageSource.message[label.orders]}" width="85" height="25"/>
+				<Label stringValue="{messageSource.message[label.orders]}"/>
 				<List id="orderList" target="b{viewOrdersForm}" action="updatePizzas" width="120" height="253"/>
 			</FormItem>
 			<FormItem>
-				<Label stringValue="{messageSource.message[label.pizzas]}" width="85" height="25"/>
+				<Label stringValue="{messageSource.message[label.pizzas]}"/>
 				<List id="pizzaList" width="300" height="253"/>
 			</FormItem>
 		</HBox>
-		<Button id="cancelOrderButton" title="{messageSource.message[button.cancelOrder]}"
-				target="b{viewOrdersForm}" action="cancelOrder" enabled="false"
-				x="0" y="288" width="85" height="25"/>
+		<Button id="cancelOrderButton" x="0" y="288" width="85" height="25"
+				title="{messageSource.message[button.cancelOrder]}" enabled="false"
+				target="b{viewOrdersForm}" action="cancelOrder"/>
 	</Form>
 	
 </beans>
