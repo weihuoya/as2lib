@@ -61,6 +61,7 @@ class org.as2lib.bean.factory.parser.ActionStepBeanDefinitionParser extends UiBe
 			// TODO: Why is this case still occurring although attributes x, y, width and height get deleted?
 			if (element.attributes[attribute] != null) {
 				var property:XMLNode = createPropertyElement(FRAME_PROPERTY_NAME);
+				property.attributes[INDEX_ATTRIBUTE] = 0;
 				var x:String = element.attributes[X_ATTRIBUTE];
 				var y:String = element.attributes[Y_ATTRIBUTE];
 				var width:String = element.attributes[WIDTH_ATTRIBUTE];
@@ -71,13 +72,7 @@ class org.as2lib.bean.factory.parser.ActionStepBeanDefinitionParser extends UiBe
 				delete element.attributes[WIDTH_ATTRIBUTE];
 				delete element.attributes[HEIGHT_ATTRIBUTE];
 				property.appendChild(bean);
-				// The rectangle must be set at the beginning.
-				if (element.firstChild != null) {
-					element.insertBefore(property, element.firstChild);
-				}
-				else {
-					element.appendChild(property);
-				}
+				element.appendChild(property);
 			}
 		}
 		else {
