@@ -51,10 +51,6 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateLi
 	public static var ACTIONSTEP_VIEW_URI:String = "actionstep/view.xml";
 	public static var ENFLASH_VIEW_URI:String = "enflash/view.xml";
 	
-	public static function trace(message:String):Void {
-		Debug.write(message);
-	}
-	
 	private var rootApplicationContext:XmlApplicationContext;
 	private var childApplicationContext:LoadingApplicationContext;
 	
