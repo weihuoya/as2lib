@@ -67,7 +67,7 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 	 * the SOS logger console.
 	 * 
 	 * <p>You can use this method as trace method for MTASC's trace support:
-	 * <code>mtasc ... -trace org/as2lib/env/log/logger/SosLogger.trace</code>
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.SosLogger.trace</code>
 	 * 
 	 * @param message the message to log
 	 * @param location the fully qualified name of the class and method which invoked the

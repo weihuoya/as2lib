@@ -18,7 +18,7 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.log.level.AbstractLogLevel;
 import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.env.log.LogMessage;
 
 /**
  * {@code LevelFilterHandler} filters log messages depending on their level.

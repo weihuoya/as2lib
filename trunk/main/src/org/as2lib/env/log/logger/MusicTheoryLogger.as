@@ -17,7 +17,7 @@
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.message.SimpleLogMessage;
 
 /**

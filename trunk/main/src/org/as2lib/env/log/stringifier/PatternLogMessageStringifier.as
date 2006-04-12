@@ -15,7 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.lang.DateFormat;
 import org.as2lib.util.Stringifier;

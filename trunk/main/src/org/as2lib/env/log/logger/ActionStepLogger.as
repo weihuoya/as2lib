@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.actionstep.ASDebugger;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 
@@ -31,40 +32,57 @@ import org.as2lib.env.log.Logger;
  * application but just the underlying configuration on startup.
  * 
  * @author Simon Wacker
+ * @author Igor Sadovskiy
  * @see org.as2lib.env.log.handler.ActionStepHandler
  * @see <a href="http://actionstep.sourceforge.net">ActionStep</a>
  */
 class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements Logger {
 	
 	/** All level. */
-	public static var ALL:Number = 5;
+	public static var ALL:Number = ASDebugger.ALL;
 	
 	/** ActionStep debug level. */
-	public static var DEBUG:Number = 4;
+	public static var DEBUG:Number = ASDebugger.DEBUG;
 	
 	/** ActionStep info level. */
-	public static var INFO:Number = 3;
+	public static var INFO:Number = ASDebugger.INFO;
 	
 	/** ActionStep warning level. */
-	public static var WARNING:Number = 2;
+	public static var WARNING:Number = ASDebugger.WARNING;
 	
 	/** ActionStep error level. */
-	public static var ERROR:Number = 1;
+	public static var ERROR:Number = ASDebugger.ERROR;
 	
 	/** ActionStep fatal level. */
-	public static var FATAL:Number = 0;
+	public static var FATAL:Number = ASDebugger.FATAL;
 	
 	/** None level. */
-	public static var NONE:Number = -1;
+	public static var NONE:Number = ASDebugger.NONE;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the ActionStep logger console.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.ActionStepLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		ASDebugger.trace(message, ALL, location, fileName, lineNumber);
+	}
 	
 	/** The name of this logger. */
 	private var name:String;
 	
 	/** The set level as number. */
 	private var level:Number;
-	
-	/** {@code ASDebugger} class reference for fast access. */
-	private var asDebugger:Function;
 	
 	/** ActionStep debug level. */
 	private var debugLevel:Number;
@@ -95,7 +113,6 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	public function ActionStepLogger(name:String) {
 		this.name = name;
 		this.level = ALL;
-		this.asDebugger = ASDebugger;
 		this.debugLevel = DEBUG;
 		this.infoLevel = INFO;
 		this.warningLevel = WARNING;
@@ -246,7 +263,7 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	public function log(message, level:Number, className:String, fileName:String, lineNumber:Number):Void {
 		if (isEnabled(level)) {
 			if (className == null) className = this.name;
-			asDebugger.trace(message, level, className, fileName, lineNumber);
+			ASDebugger.trace(message, level, className, fileName, lineNumber);
 		}
 	}
 	
@@ -269,10 +286,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isDebugEnabled
 	 */
-	public function debug(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			if (className == null) className = this.name;
-			asDebugger.trace(message, this.debugLevel, className, fileName, lineNumber);
+			log(message, debugLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
@@ -295,10 +311,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isInfoEnabled
 	 */
-	public function info(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function info(message):Void {
 		if (isInfoEnabled()) {
-			if (className == null) className = this.name;
-			asDebugger.trace(message, this.infoLevel, className, fileName, lineNumber);
+			log(message, infoLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
@@ -321,10 +336,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isWarningEnabled
 	 */
-	public function warning(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			if (className == null) className = this.name;
-			asDebugger.trace(message, this.warningLevel, className, fileName, lineNumber);
+			log(message, warningLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
@@ -347,10 +361,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isErrorEnabled
 	 */
-	public function error(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function error(message):Void {
 		if (isErrorEnabled()) {
-			if (className == null) className = this.name;
-			asDebugger.trace(message, this.errorLevel, className, fileName, lineNumber);
+			log(message, errorLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	
@@ -373,10 +386,9 @@ class org.as2lib.env.log.logger.ActionStepLogger extends BasicClass implements L
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isFatalEnabled
 	 */
-	public function fatal(message, className:String, fileName:String, lineNumber:Number):Void {
+	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			if (className == null) className = this.name;
-			asDebugger.trace(message, this.fatalLevel, className, fileName, lineNumber);
+			log(message, fatalLevel, arguments[1], arguments[2], arguments[3]);
 		}
 	}
 	

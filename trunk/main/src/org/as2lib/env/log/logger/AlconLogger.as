@@ -16,6 +16,10 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.MtascLogMessage;
+
+import net.hiddenresource.util.Debug;
 
 /**
  * {@code AlconLogger} delegates all messages to the
@@ -29,6 +33,7 @@ import org.as2lib.env.log.Logger;
  * {@code Debug} class itself.
  *
  * @author Simon Wacker
+ * @author Igor Sadovskiy
  * @see org.as2lib.env.log.handler.AlconHandler
  * @see <a href="http://hiddenresource.corewatch.net/index.php?itemid=17">Alcon</a>
  */
@@ -48,6 +53,27 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	
 	/** Alcon fatal level. */
 	public static var FATAL:Number = 4;
+		
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the Alcon logger console.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.AlconLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		var alconDebug:Function = Debug;
+		var m:LogMessage = new MtascLogMessage(alconDebug.traceObject(message), location, fileName, lineNumber);
+		Debug.trace(m.toString());
+	}
 	
 	/** Determines whether to trace recursively or not. */
 	private var recursiveTracing:Boolean;

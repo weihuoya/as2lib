@@ -14,8 +14,10 @@
  * limitations under the License.
  */
 
+import org.actionstep.FDTDebugger;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.logger.AbstractLogger;
 
 /**
  * {@code FlashDebugToolLogger} provides support for the Flash Debug Tool Project.
@@ -40,22 +42,41 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	public static var ALL:Number = 1;
 	
 	/** Flash Debug Tool debug level. */
-	public static var DEBUG:Number = 2;
+	public static var DEBUG:Number = FDTDebugger.DEBUG;
 	
 	/** Flash Debug Tool info level. */
-	public static var INFO:Number = 3;
+	public static var INFO:Number = FDTDebugger.INFO;
 	
 	/** Flash Debug Tool warning level. */
-	public static var WARNING:Number = 4;
+	public static var WARNING:Number = FDTDebugger.WARNING;
 	
 	/** Flash Debug Tool error level. */
-	public static var ERROR:Number = 5;
+	public static var ERROR:Number = FDTDebugger.ERROR;
 	
 	/** Flash Debug Tool fatal level. */
-	public static var FATAL:Number = 6;
+	public static var FATAL:Number = FDTDebugger.FATAL;
 	
 	/** None level. */
 	public static var NONE:Number = 7;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the Flash Debug Tool.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.FlashDebugToolLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		FDTDebugger.trace(message, ALL, location, fileName, lineNumber);
+	}
 	
 	/** The name of this logger. */
 	private var name:String;
@@ -243,10 +264,10 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @param lineNumber (optional) the line number at which the logging call stands
 	 * @see #isEnabled
 	 */
-	public function log(message, level:Number):Void {
+	public function log(message, level:Number, className:String, fileName:String, lineNumber:Number):Void {
 		if (isEnabled(level)) {
-			if (arguments[2] == null) arguments[2] = this.name;
-			fdtDebugger.trace(message, level, arguments[2], arguments[3], arguments[4]);
+			if (className == null) className = this.name;
+			fdtDebugger.trace(message, level, className, fileName, lineNumber);
 		}
 	}
 	
@@ -271,8 +292,8 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			if (arguments[1] == null) arguments[1] = this.name;
-			fdtDebugger.trace(message, this.debugLevel, arguments[1], arguments[2], arguments[3]);
+			var className:String = (arguments[1] != null) ? arguments[1] : this.name;
+			fdtDebugger.trace(message, this.debugLevel, className, arguments[2], arguments[3]);
 		}
 	}
 	
@@ -296,9 +317,10 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @see #isInfoEnabled
 	 */
 	public function info(message):Void {
+		trace("here");
 		if (isInfoEnabled()) {
-			if (arguments[1] == null) arguments[1] = this.name;
-			fdtDebugger.trace(message, this.infoLevel, arguments[1], arguments[2], arguments[3]);
+			var className:String = (arguments[1] != null) ? arguments[1] : this.name;
+			fdtDebugger.trace(message, this.infoLevel, className, arguments[2], arguments[3]);
 		}
 	}
 	
@@ -323,8 +345,8 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			if (arguments[1] == null) arguments[1] = this.name;
-			fdtDebugger.trace(message, this.warningLevel, arguments[1], arguments[2], arguments[3]);
+			var className:String = (arguments[1] != null) ? arguments[1] : this.name;
+			fdtDebugger.trace(message, this.warningLevel, className, arguments[2], arguments[3]);
 		}
 	}
 	
@@ -349,8 +371,8 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			if (arguments[1] == null) arguments[1] = this.name;
-			fdtDebugger.trace(message, this.errorLevel, arguments[1], arguments[2], arguments[3]);
+			var className:String = (arguments[1] != null) ? arguments[1] : this.name;
+			fdtDebugger.trace(message, this.errorLevel, className, arguments[2], arguments[3]);
 		}
 	}
 	
@@ -375,8 +397,8 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			if (arguments[1] == null) arguments[1] = this.name;
-			fdtDebugger.trace(message, this.fatalLevel, arguments[1], arguments[2], arguments[3]);
+			var className:String = (arguments[1] != null) ? arguments[1] : this.name;
+			fdtDebugger.trace(message, this.fatalLevel, className, arguments[2], arguments[3]);
 		}
 	}
 	

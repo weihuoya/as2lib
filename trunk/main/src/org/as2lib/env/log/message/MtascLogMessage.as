@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.message.AbstractLogMessage;
-import org.as2lib.env.log.message.LogMessage;
 import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
 import org.as2lib.util.Stringifier;
 

@@ -16,8 +16,10 @@
 
 import org.as2lib.env.log.handler.AbstractLogHandler;
 import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.env.log.LogMessage;
 import org.as2lib.util.Stringifier;
+
+import com.interactiveAlchemy.utils.Debug;
 
 /**
  * {@code DebugItHandler} uses {@code com.interactiveAlchemy.utils.Debug.write} of the
