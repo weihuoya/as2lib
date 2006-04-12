@@ -18,6 +18,7 @@ import org.as2lib.bean.AbstractBeanWrapper;
 import org.as2lib.bean.BeanWrapper;
 import org.as2lib.bean.converter.BooleanConverter;
 import org.as2lib.bean.converter.ClassConverter;
+import org.as2lib.bean.converter.InstanceConverter;
 import org.as2lib.bean.converter.NumberConverter;
 import org.as2lib.bean.converter.PackageConverter;
 import org.as2lib.bean.converter.StringArrayConverter;
@@ -99,6 +100,7 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		defaultConverters.put(Function, new ClassConverter());
 		defaultConverters.put(PACKAGE_TYPE, new PackageConverter());
 		defaultConverters.put(Array, new StringArrayConverter());
+		defaultConverters.put(Object, new InstanceConverter());
 	}
 	
 	public function isWritableProperty(propertyName:String):Boolean {
