@@ -15,8 +15,14 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.List;
 import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.MtascLogMessage;
+
+import logging.IFilter;
+import logging.IPublisher;
+import logging.Level;
+import logging.util.List;
 
 /**
  * {@code AudiofarmLogger} acts as a wrapper for a {@code logging.Logger} instance
@@ -28,6 +34,7 @@ import org.as2lib.env.log.Logger;
  * just the underlying configuration on startup.
  * 
  * @author Simon Wacker
+ * @author Igor Sadovskiy
  * @see <a href="http://code.audiofarm.de/Logger/">as2logger - Logging Framework for ActionScript 2</a>
  */
 class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Logger {
@@ -72,6 +79,33 @@ class org.as2lib.env.log.logger.AudiofarmLogger extends BasicClass implements Lo
 	 * level is equivalent to the as2logger {@code OFF} level.
 	 */
 	public static var NONE:Level = Level.OFF;
+	
+	/** Static logger instance for MTASC trace logging */
+	private static var mtascLogger:AudiofarmLogger;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the as2logger framework.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.AudiofarmLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		// initialize mtasc logger
+		if (mtascLogger == null) {
+			mtascLogger = new AudiofarmLogger();	
+		}
+		var m:LogMessage = new MtascLogMessage(message, location, fileName, lineNumber);
+		mtascLogger.logger.log(ALL, m.toString());
+	}
 	
 	/** The {@code Logger} instance of as2logger every task is delegated to. */
 	private var logger:logging.Logger;

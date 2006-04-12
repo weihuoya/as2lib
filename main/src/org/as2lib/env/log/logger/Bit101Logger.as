@@ -17,6 +17,8 @@
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.MtascLogMessage;
 
 /**
  * {@code Bit101Logger} delegates all log messages to the {@code Debug.trace}
@@ -36,6 +38,26 @@ class org.as2lib.env.log.logger.Bit101Logger extends AbstractLogger implements L
 	
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Object = AbstractLogger;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the Keith Peter's Debug Panel.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.Bit101Logger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		var m:LogMessage = new MtascLogMessage(message, location, fileName, lineNumber);
+		Debug.trace(m.toString());
+	}
 	
 	/** The set level. */
 	private var level:LogLevel;

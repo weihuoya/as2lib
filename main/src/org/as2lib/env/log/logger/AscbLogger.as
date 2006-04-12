@@ -17,6 +17,10 @@
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.MtascLogMessage;
+
+import ascb.util.logging.Level;
 
 /**
  * {@code AscbLogger} acts as a wrapper for a {@code ascb.util.logging.Logger}
@@ -36,6 +40,7 @@ import org.as2lib.env.log.LogLevel;
  * level functionality to be enabled just do not set a level on this logger.
  * 
  * @author Simon Wacker
+ * @author Igor Sadovskiy
  * @see org.as2lib.env.log.handler.AscbHandler
  * @see <a href="http://www.person13.com/ascblibrary">ASCB Library</a>
  */
@@ -43,6 +48,34 @@ class org.as2lib.env.log.logger.AscbLogger extends AbstractLogger implements Log
 	
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Object = AbstractLogger;
+	
+	/** Static logger instance for MTASC trace logging */
+	private static var mtascLogger:AscbLogger;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the ASCB Logger.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.AscbLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		// initialize mtasc logger
+		if (mtascLogger == null) {
+			mtascLogger = new AscbLogger();	
+		}
+		
+		var m:LogMessage = new MtascLogMessage(message, location, fileName, lineNumber);
+		mtascLogger.logger.log(Level.ALL, m.toString());
+	}
 	
 	/** The {@code Logger} instance of ASCB every task is delegated to. */
 	private var logger:ascb.util.logging.Logger;

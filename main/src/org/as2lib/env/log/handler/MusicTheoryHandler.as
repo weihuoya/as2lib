@@ -16,7 +16,7 @@
 
 import org.as2lib.env.log.handler.AbstractLogHandler;
 import org.as2lib.env.log.LogHandler;
-import org.as2lib.env.log.message.LogMessage;
+import org.as2lib.env.log.LogMessage;
 import org.as2lib.util.Stringifier;
 
 /**

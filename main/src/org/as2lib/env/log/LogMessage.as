@@ -24,7 +24,7 @@ import org.as2lib.env.log.LogLevel;
  * @author Simon Wacker
  * @author Igor Sadovskiy
  */
-interface org.as2lib.env.log.message.LogMessage extends BasicInterface {
+interface org.as2lib.env.log.LogMessage extends BasicInterface {
 	
 	/**
 	 * Returns the message object to log
