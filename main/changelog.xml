@@ -6,9 +6,18 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="4">
+				<day value="11">
+					<entry type="add" package="org.as2lib.env.log.logger" class="ActionStepLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="AlconLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="AscbLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="AsdtLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="AudiofarmLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="Bit101Logger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="DebugItLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="FlashDebugToolLogger" method="trace">MTASC -trace support is added.</entry>
+				</day>
 				<day value="10">
-					<entry type="remove" package="org.as2lib.env.log" class="LogMessage">Refactored</entry>
-					<entry type="add" package="org.as2lib.env.log.message" class="LogMessage"></entry>
+					<entry type="enhancement" package="org.as2lib.env.log" class="LogMessage">Refined to interface</entry>
 					<entry type="add" package="org.as2lib.env.log.message" class="AbstractLogMessage"></entry>
 					<entry type="add" package="org.as2lib.env.log.message" class="SimpleLogMessage"></entry>
 					<entry type="add" package="org.as2lib.env.log.message" class="MtascLogMessage"></entry>
@@ -22,7 +31,7 @@
 					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getMtascStringifier"></entry>
 					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="setMtascStringifier"></entry>
 					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="forMtasc">Constructs new LogMessage instance with MTASC-specified arguments.</entry>
-					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="toMtascString">Stringifies log message using MTASC stringifier</entry>
+					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="toMtascString">Stringifies log message using MTASC stringifier.</entry>
 				</day>
 				<day value="27">
 					<entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger" variable="MTASC_MESSAGE_PATTERN">Default message stringify pattern for MTASC trace support.</entry>
