@@ -27,6 +27,7 @@ import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.factory.support.ChildBeanDefinition;
 import org.as2lib.bean.PropertyValues;
 import org.as2lib.env.reflect.DelegateFactoryBean;
+import org.as2lib.bean.factory.config.ConstructorArgumentValues;
 
 /**
  * @author Simon Wacker
@@ -91,13 +92,27 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		delete element.attributes[attribute];
 	}
 	
+	private function parseConstructorArgElements(beanElement:XMLNode, beanName:String):ConstructorArgumentValues {
+		var node:XMLNode = beanElement.firstChild;
+		if (node.nodeType == 3) {
+			if (node.nodeValue != "") {
+				var constructorArgsElement:XMLNode = new XMLNode(1, CONSTRUCTOR_ARGS_ELEMENT);
+				beanElement.insertBefore(constructorArgsElement, node);
+				node.removeNode();
+				constructorArgsElement.appendChild(node);
+			}
+		}
+		return super.parseConstructorArgElements(beanElement, beanName);
+	}
+	
 	private function parsePropertyElements(beanElement:XMLNode, beanName:String):PropertyValues {
 		var counter:Number = 0;
 		var nodes:Array = beanElement.childNodes;
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
 			if (node.nodeName != PROPERTY_ELEMENT && node.nodeName != CONSTRUCTOR_ARG_ELEMENT
-					&& node.nodeName != LOOKUP_METHOD_ELEMENT && node.nodeName != REPLACED_METHOD_ELEMENT) {
+					&& node.nodeName != LOOKUP_METHOD_ELEMENT && node.nodeName != REPLACED_METHOD_ELEMENT
+					&& node.nodeName != CONSTRUCTOR_ARGS_ELEMENT) {
 				var propertyElement:XMLNode = new XMLNode(1, PROPERTY_ELEMENT);
 				beanElement.insertBefore(propertyElement, node);
 				node.removeNode();
