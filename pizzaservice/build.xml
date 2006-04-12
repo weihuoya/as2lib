@@ -34,8 +34,7 @@
         <include name="**/*.properties"/>
       </fileset>
     </copy>
-    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${pizza.swf}" header="445:360:31" version="8"
-        trace="main/Mtasc.trace">
+    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${pizza.swf}" header="445:360:31" version="8">
       <classpath>
         <pathelement path="${enflash.dir}"/>
         <pathelement path="${actionstep.dir}"/>
