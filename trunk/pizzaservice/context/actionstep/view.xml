@@ -6,15 +6,21 @@
 		<applicationContextClass type="Class">org.as2lib.context.support.ActionStepApplicationContext</applicationContextClass>
 	</bean>
 	
-	<bean id="HBox" class="org.actionstep.layout.ASHBox" default-property="view" abstract="true"/>
-	<bean id="VBox" class="org.actionstep.layout.ASVBox" default-property="view" abstract="true"/>
+	<bean id="HBox" class="org.actionstep.layout.ASHBox" default-property="view" abstract="true">
+		<init>true</init>
+	</bean>
+	<bean id="VBox" class="org.actionstep.layout.ASVBox" default-property="view" abstract="true">
+		<init>true</init>
+	</bean>
 	
 	<bean id="Button" class="org.actionstep.NSButton" abstract="true"/>
 	<bean id="Label" class="org.actionstep.ASLabel" abstract="true"/>
 	<bean id="ProgressBar" class="org.actionstep.NSProgressIndicator" abstract="true"/>
 	
 	<bean id="Form" abstract="true"/>
-	<bean id="FormItem" parent="VBox" abstract="true"/>
+	<bean id="FormItem" parent="VBox" abstract="true">
+		<init>true</init>
+	</bean>
 	<bean id="List" class="org.actionstep.ASList"/>
 	
 	<bean id="TextField" class="org.actionstep.NSTextField"/>
@@ -22,11 +28,12 @@
 	<bean id="Stepper" class="org.actionstep.NSStepper"/>
 	
 	<bean id="Array" class="org.actionstep.NSArray"/>
+	<bean id="Rectangle" class="org.actionstep.NSRect"/>
 	
 	<bean class="org.actionstep.NSApplication" factory-method="sharedApplication" init-method="run" depends-on="window"/>
 	
 	<bean id="window" class="org.actionstep.NSWindow">
-		<property name="contentRect">0, 0, 445, 360</property>
+		<property name="contentRect"><Rectangle>0, 0, 445, 360</Rectangle></property>
 		<property name="backgroundColor">m{org.actionstep.ASColors.lightGrayColor}</property>
 		<property name="contentView.subview"><ref local="view"/></property>
 	</bean>
@@ -36,7 +43,6 @@
 		<progressBar>b{progressBar}</progressBar>
 		<statusText>b{statusText}</statusText>
 		<HBox>
-			<init>true</init>
 			<Button title="{messageSource.message[button.orderForm]}" target="b{view}" action="showOrderForm" width="85" height="25"/>
 			<Button title="{messageSource.message[button.viewOrders]}" target="b{view}" action="showViewOrdersForm" width="85" height="25"/>
 			<Label id="statusText" selectable="false" width="200" height="25"/>

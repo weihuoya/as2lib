@@ -7,14 +7,11 @@
 		<cancelOrderButton>b{cancelOrderButton}</cancelOrderButton>
 		<progressBar>b{progressBar}</progressBar>
 		<HBox>
-			<init>true</init>
 			<FormItem>
-				<init>true</init>
 				<Label stringValue="{messageSource.message[label.orders]}" width="85" height="25"/>
 				<List id="orderList" target="b{viewOrdersForm}" action="updatePizzas" width="120" height="253"/>
 			</FormItem>
 			<FormItem>
-				<init>true</init>
 				<Label stringValue="{messageSource.message[label.pizzas]}" width="85" height="25"/>
 				<List id="pizzaList" width="300" height="253"/>
 			</FormItem>

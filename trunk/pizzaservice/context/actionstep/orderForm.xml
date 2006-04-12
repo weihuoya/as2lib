@@ -13,23 +13,17 @@
 		<placeOrderButton>b{placeOrderButton}</placeOrderButton>
 		<progressBar>b{progressBar}</progressBar>
 		<VBox>
-			<init>true</init>
 			<HBox>
-				<init>true</init>
 				<FormItem>
-					<init>true</init>
 					<Label stringValue="{messageSource.message[label.name]}" width="85" height="25"/>
 					<TextField id="nameTextField" target="b{orderForm}" action="onNameChanged" width="85" height="25"/>
 				</FormItem>
 				<VBox>
-					<init>true</init>
 					<FormItem>
-						<init>true</init>
 						<Label stringValue="{messageSource.message[label.quantity]}" width="85" height="25"/>
 						<Stepper id="quantityStepper" minValue="1" maxValue="10" width="85" height="25"/>
 					</FormItem>
 					<FormItem>
-						<init>true</init>
 						<Label stringValue="{messageSource.message[label.size]}" width="85" height="25"/>
 						<ComboBox id="sizeComboBox" selectItemAtIndex="0" editable="false" width="85" height="25">
 							<itemsWithObjectValues>
@@ -43,7 +37,6 @@
 						</ComboBox>
 					</FormItem>
 					<FormItem>
-						<init>true</init>
 						<Label stringValue="{messageSource.message[label.crust]}" width="85" height="25"/>
 						<ComboBox id="crustComboBox" selectItemAtIndex="0" width="85" height="25" editable="false">
 							<itemsWithObjectValues>
@@ -57,9 +50,7 @@
 					</FormItem>
 				</VBox>
 				<VBox>
-					<init>true</init>
 					<FormItem>
-						<init>true</init>
 						<Label stringValue="{messageSource.message[label.toppings]}" width="85" height="25"/>
 						<List id="toppingList" multipleSelection="true" target="b{orderForm}" action="onToppingsChanged" width="140" height="120">
 							<itemWithLabelData>{messageSource.message[toppings.sausage]}</itemWithLabelData>
@@ -76,7 +67,6 @@
 				</VBox>
 			</HBox>
 			<FormItem>
-				<init>true</init>
 				<Label stringValue="{messageSource.message[label.orderTicket]}" width="85" height="25"/>
 				<List id="orderTicketList" multipleSelection="true" width="425" height="70"/>
 			</FormItem>
