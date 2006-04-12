@@ -85,27 +85,6 @@ class org.as2lib.bean.factory.parser.ActionStepBeanDefinitionParser extends UiBe
 		}
 	}
 	
-	private function parsePropertyElement(element:XMLNode, beanName:String, propertyValues:PropertyValues):Void {
-		var name:String = element.attributes[NAME_ATTRIBUTE].toLowerCase();
-		if (StringUtil.endsWith(name, "rect") || StringUtil.endsWith(name, "frame")) {
-			var value:String = element.firstChild.nodeValue;
-			if (value == null || value == "") {
-				value = element.attributes[VALUE_ATTRIBUTE];
-				delete element.attributes[VALUE_ATTRIBUTE];
-			}
-			if (value != null && value != "") {
-				var args:Array = value.split(",");
-				for (var i:Number = 0; i < args.length; i++) {
-					args[i] = TrimUtil.trim(args[i]);
-				}
-				var bean:XMLNode = createRectangleElement(args[0], args[1], args[2], args[3]);
-				element.firstChild.removeNode();
-				element.appendChild(bean);
-			}
-		}
-		super.parsePropertyElement(element, beanName, propertyValues);
-	}
-	
 	private function createRectangleElement(x:String, y:String, width:String, height:String):XMLNode {
 		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
 		result.attributes[CLASS_ATTRIBUTE] = RECTANGLE_CLASS_NAME;
