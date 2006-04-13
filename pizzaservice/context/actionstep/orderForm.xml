@@ -1,6 +1,6 @@
 <beans>
 	
-	<Form id="orderForm" x="10" y="35" width="445" height="335" class="org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm">
+	<Form id="orderForm" class="org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm">
 		<controller>b{controller}</controller>
 		<nameTextField>b{nameTextField}</nameTextField>
 		<quantityStepper>b{quantityStepper}</quantityStepper>
