@@ -32,8 +32,8 @@
 
 		s += "Type: " + typeOf;
 		if(typeOf == "array") s += "\t\tCount: " + o.value.length;
-		if(o.reachLimit) s += "\t<font color=\"#FF0000\">MaxDepth reached!</font>"
-		if(o.crossRef) s += "\t<font color=\"#FF0000\">Cross-Reference detected</font>"
+		if(o.reachLimit) s += "\t<font color=\"#FF0000\">MaxDepth reached!</font>";
+		if(o.crossRef) s += "\t<font color=\"#FF0000\">Cross-Reference detected</font>";
 		
 		txtInfo.htmlText = s;
 	}

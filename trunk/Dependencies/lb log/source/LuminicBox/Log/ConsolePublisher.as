@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2005 Pablo Costantini (www.luminicbox.com). All rights reserved.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -189,11 +189,11 @@ class LuminicBox.Log.ConsolePublisher implements IPublisher {
 			type.stringify = true;
 		} else if(o instanceof XMLNode) {
 			// XML node
-			type.name = "xmlnode"
+			type.name = "xmlnode";
 			type.stringify = true;
 		} else if(o instanceof Color) {
 			// COLOR
-			type.name = "color"
+			type.name = "color";
 		} else if(o instanceof Sound) {
 			// SOUND
 			type.name = "sound";

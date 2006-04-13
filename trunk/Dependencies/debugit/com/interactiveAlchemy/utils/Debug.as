@@ -40,7 +40,7 @@ class com.interactiveAlchemy.utils.Debug extends MovieClip
 		// Trace each argument on its own line in the Output panel as well
 		for (var i = 0; i < arguments.length; i ++)
 		{
-			trace (arguments [i]);
+			_global.trace (arguments [i]);
 		}
 	}
 }

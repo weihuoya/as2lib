@@ -23,7 +23,7 @@
 		a["DEBUG"] = 0x0066CC;
 		a["INFO"] = 0x009999;
 		a["WARN"] = 0xFF9900;
-		a["ERROR"] = 0xFF6600
+		a["ERROR"] = 0xFF6600;
 		a["FATAL"] = 0xFF0000;
 		return a;
 	}

@@ -1,4 +1,4 @@
-import logging.errors.IllegalArgumentError;
+﻿import logging.errors.IllegalArgumentError;
 import logging.errors.InvalidLevelError;
 
 /**

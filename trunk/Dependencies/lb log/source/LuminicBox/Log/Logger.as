@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2005 Pablo Costantini (www.luminicbox.com). All rights reserved.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -222,7 +222,7 @@ class LuminicBox.Log.Logger {
 	 * 	- <LuminicBox.Log.ConsolePublisher>
 	 */
 	public function addPublisher(publisher:IPublisher):Void {
-		if( !_publishers[publisher.toString()] ) _publishers[publisher.toString()] = publisher
+		if( !_publishers[publisher.toString()] ) _publishers[publisher.toString()] = publisher;
 	}
 	
 	/*

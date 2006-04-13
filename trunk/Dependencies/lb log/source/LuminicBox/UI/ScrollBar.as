@@ -19,13 +19,13 @@
 	public function get smoothScroll():Boolean { return _smoothScroll; }
 	public function set smoothScroll(value:Boolean) { _smoothScroll = value; }
 	
-	[Inspectable()]
+	[Inspectable]
 	public function get content():MovieClip { return mcContent; }
 	public function set content(mc:MovieClip) {
 		if(typeof(mc) == "string") mc = this._parent[mc];
 		mcContent = mc;
 	}
-	[Inspectable()]
+	[Inspectable]
 	public function get mask():MovieClip { return mcMask; }
 	public function set mask(mc:MovieClip) {
 		if(typeof(mc) == "string") mc = this._parent[mc];
@@ -91,7 +91,7 @@
 		// caculate bar size
 		var pageSizePer = (pageSize *  100) / contentSize;
 		// validate size
-		btnBar._visible = (pageSizePer < 100)
+		btnBar._visible = (pageSizePer < 100);
 		if(pageSizePer >= 100) return;
 		var barSize = (barArea * pageSizePer) / 100;
 		btnBar._height = barSize;
@@ -100,7 +100,7 @@
 		var newPos = barStart +  (barArea-barSize) * posPer / 100;
 		// validate new bar position
 		//if(newPos < (barArea + barStart - barSize)) newPos = (barArea + barStart - barSize);
-		var maxPos = (barStart + barArea) - barSize
+		var maxPos = (barStart + barArea) - barSize;
 		if(newPos > maxPos) newPos = maxPos;
 		btnBar._y = newPos;
 	}
@@ -128,7 +128,7 @@
 		} else if(newPos < maxPos) {
 			newPos = maxPos;
 		}
-		moveContent(newPos)
+		moveContent(newPos);
 	}
 	
 	private function moveContent(posY) {

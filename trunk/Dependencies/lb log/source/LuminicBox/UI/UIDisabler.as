@@ -16,7 +16,7 @@
 			Stage.addListener(this);
 			onResize();
 			this.useHandCursor = false;
-			this.onRelease = function() { }
+			this.onRelease = function() { };
 			this._visible = true;
 		}
 	}

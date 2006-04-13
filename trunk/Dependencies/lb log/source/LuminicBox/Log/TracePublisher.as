@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2005 Pablo Costantini (www.luminicbox.com). All rights reserved.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
@@ -74,7 +74,7 @@ class LuminicBox.Log.TracePublisher implements IPublisher {
 		if(e.loggerId) txt += ":" + e.loggerId;
 		txt += ":";
 		txt += analyzeObj(arg,1);
-		trace(txt);
+		_global.trace(txt);
 	}
 	
 	/*
@@ -144,7 +144,7 @@ class LuminicBox.Log.TracePublisher implements IPublisher {
 				typeOf = "function";
 				analize = false;
 			}
-			txt += "(" 
+			txt += "(";
 			if(stringifyObj) txt += typeOf + " " + o;
 			else if(typeOf == "object") txt += o;
 			else if(typeOf == "array") txt += typeOf + ":" + o.length;

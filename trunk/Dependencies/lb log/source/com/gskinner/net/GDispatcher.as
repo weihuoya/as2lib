@@ -16,7 +16,7 @@ class com.gskinner.net.GDispatcher {
 	private var gDispatcher_listeners:Object;
 	
 	static function initialize(p_obj:Object):Void {
-		if ($instance == undefined) { $instance = new GDispatcher; }
+		if ($instance == undefined) { $instance = new GDispatcher(); }
 		p_obj.dispatchEvent = $instance.dispatchEvent;
 		p_obj.eventListenerExists = $instance.eventListenerExists;
 		p_obj.addEventListener = $instance.addEventListener;

@@ -1,4 +1,4 @@
-import logging.IFilter;
+﻿import logging.IFilter;
 import logging.IPublisher;
 import logging.Level;
 import logging.LogRecord;

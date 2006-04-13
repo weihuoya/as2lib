@@ -26,7 +26,7 @@ class LuminicBox.FlashInspector.UI.MainTabItem extends RepeaterItem {
 		// set text
 		txtName.text = text;
 		txtShadow.text = text;
-		var width = txtName.textWidth+5
+		var width = txtName.textWidth+5;
 		txtName._width = width;
 		txtShadow._width = width;
 		// bg

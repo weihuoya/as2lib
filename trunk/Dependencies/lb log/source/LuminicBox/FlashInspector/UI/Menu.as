@@ -7,9 +7,9 @@ class LuminicBox.FlashInspector.UI.Menu extends LuminicBox.UI.BaseComponent {
 	public function Menu() {
 		super();
 		cssEnabled = new TextField.StyleSheet();
-		cssEnabled.parseCSS("a{color:#FFFFFF;} a:hover{color:#00CCFF;}")
+		cssEnabled.parseCSS("a{color:#FFFFFF;} a:hover{color:#00CCFF;}");
 		cssDisabled = new TextField.StyleSheet();
-		cssDisabled.parseCSS("a{color:#FFFFFF;}")
+		cssDisabled.parseCSS("a{color:#FFFFFF;}");
 		//var html = "<a href=\"asfunction:openLink,settings\">SETTINGS</a> | <a href=\"asfunction:openLink,help\">HELP</a> | <a href=\"asfunction:openLink,about\">ABOUT</a>";
 		var html = "<a href=\"asfunction:openLink,about\">ABOUT</a>";
 		

@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Log4f
  */
 
@@ -74,7 +74,7 @@ class Log4f {
     var x_f  = p_init.attributes["flush"];
     var x_r  = p_init.attributes["reset"];
 
-    if (x_p!=undefined) { __prog = x_p+" "+new Date().getTime(); __name=x_p;}
+    if (x_p!=undefined) { __prog = x_p+" "+(new Date()).getTime(); __name=x_p;}
     if (x_l!=undefined) { __logger = x_l; }
     if (x_m!=undefined) { 
       __maxmsg = parseInt(x_m);
@@ -105,7 +105,7 @@ class Log4f {
       if (x_r.toUpperCase()=="TRUE") { __reset = true; }
     }
 
-    __initparm = true
+    __initparm = true;
 
 //trace("["+__prog+"]"+"["+__logger+"]"+"["+__maxmsg+"]"+"["+__minmsg+"]"+"["+__minlevel+"]"+"["+__flush+"]");
 
@@ -120,7 +120,7 @@ class Log4f {
    * @param p_body  - body
    */
   private static function pushMessage( p_type : Number, p_head : String, p_body : String ) {
-    __timestamp = new Date().getTime();
+    __timestamp = (new Date()).getTime();
     __number++;
     if (__timestamp<=__oldtimestamp) { __timestamp = __oldtimestamp+1; }
     __oldtimestamp = __timestamp;
@@ -132,7 +132,7 @@ class Log4f {
       msgnum    : __number,
       header    : p_head,
       body      : p_body 
-    } 
+    };
     __so.data.pool.push(x_obj);    
   }
 
@@ -150,7 +150,7 @@ class Log4f {
 
     /* init logger files */ 
     if (!__init) {
-      if (__prog=="") { __name="Program"; __prog = __name+" "+new Date().getTime(); }
+      if (__prog=="") { __name="Program"; __prog = __name+" "+(new Date()).getTime(); }
       __so_dir = SharedObject.getLocal(__logger+"_dir", "/");  
       if (__reset) {
         if (__so_dir.data.fn!=undefined) {

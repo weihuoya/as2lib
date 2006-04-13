@@ -9,7 +9,7 @@ class LuminicBox.FlashInspector.LogReciever extends Object {
 	private var _minRequiredVersion:Number = 0.1;		// the ConsolePublisher minimal required version
 	private var _log:Logger;
 	
-	var onError:Function
+	var onError:Function;
 	var onLogEvent:Function;
 	function get isConnected():Boolean { return _connected; }
 	function get logEvents():LogEventCollection { return _logEvents; }
@@ -27,7 +27,7 @@ class LuminicBox.FlashInspector.LogReciever extends Object {
 	private function connect():Boolean {
 		// create local connection obj
 		_lc = new LocalConnection();
-		_lc.allowDomain = function(domain) { return true; }
+		_lc.allowDomain = function(domain) { return true; };
 		_lc["log"] = mx.utils.Delegate.create(this, onEvent);
 		_connected = _lc.connect("_luminicbox_log_console");
 		return _connected;
@@ -45,7 +45,7 @@ class LuminicBox.FlashInspector.LogReciever extends Object {
 		// save log message
 		var logEvent:LogEvent = LogEvent.deserialize(e);
 		_logEvents.push( logEvent );
-		onLogEvent( logEvent )
+		onLogEvent( logEvent );
 	}
 	
 }
