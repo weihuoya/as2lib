@@ -91,18 +91,18 @@ class org.as2lib.env.event.distributor.AbstractEventDistributorControl extends T
 		var e:AbstractEventDistributorControl = this;
 		//var d:Function = e["distribute"];
 		result.__resolve = function(n:String):Function {
-			return (function():Void {
+			return (function() {
 				//d.apply(e, n, arguments); causes 255 recursion error
 				// e.distribute is not MTASC compatible because "distribute" is private
-				e["distribute"](n, arguments);
+				return e["distribute"](n, arguments);
 			});
 		};
 		var p:Object = t.prototype;
 		while (p != Object.prototype) {
 			for (var i:String in p) {
-				result[i] = function():Void {
+				result[i] = function() {
 					// e.distribute is not MTASC compatible because "distribute" is private
-					e["distribute"](arguments.callee.n, arguments);
+					return e["distribute"](arguments.callee.n, arguments);
 				};
 				result[i].n = i;
 			}
@@ -118,11 +118,14 @@ class org.as2lib.env.event.distributor.AbstractEventDistributorControl extends T
 	 * @param eventName the name of the event method to execute on the added listeners
 	 * @param args any number of arguments that are used as parameters on execution of
 	 * the event on the listeners
+	 * @return {@code true} if the event was consumed else {@code false} (only supported
+	 * by consumeable event distributors)
 	 * @throws EventExecutionException if an event method on a listener threw an
 	 * exception
 	 */
-	private function distribute(eventName:String, args:Array):Void {
+	private function distribute(eventName:String, args:Array):Boolean {
 		throw new AbstractOperationException("This method is marked as abstract and must be overwritten.", this, arguments);
+		return null;
 	}
 	
 }

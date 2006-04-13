@@ -87,10 +87,11 @@ class org.as2lib.env.event.distributor.SimpleEventDistributorControl extends Abs
 	 * @param eventName the name of the event method to execute on the added listeners
 	 * @param args any number of arguments that are used as parameters on execution of
 	 * the event on the listeners
+	 * @return always {@code false}
 	 * @throws EventExecutionException if an event method on a listener threw an
 	 * exception
 	 */
-	private function distribute(eventName:String, args:Array):Void {
+	private function distribute(eventName:String, args:Array):Boolean {
 		if (eventName != null) {
 			if (this.l.length > 0) {
 				try {
@@ -101,6 +102,7 @@ class org.as2lib.env.event.distributor.SimpleEventDistributorControl extends Abs
 				}
 			}
 		}
+		return false;
 	}
 	
 }
