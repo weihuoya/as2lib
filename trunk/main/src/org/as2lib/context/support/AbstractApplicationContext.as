@@ -609,7 +609,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * @see BatchFinishListener
 	 */
 	public function start() {
-		// TODO: Finishing process (internal batch process) is not application context that gets registered to using batch process -> Unexpected onFinishProcess
 		preRefresh();
 		var batchProcess:Batch = getBatchProcess();
 		registerProcessBeans();
