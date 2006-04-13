@@ -1,6 +1,6 @@
 <beans>
 	
-	<Form id="viewOrdersForm" x="10" y="35" width="445" height="335" hidden="true" class="org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm">
+	<Form id="viewOrdersForm" hidden="true" class="org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm">
 		<controller>b{controller}</controller>
 		<orderList>b{orderList}</orderList>
 		<pizzaList>b{pizzaList}</pizzaList>
