@@ -188,7 +188,6 @@ class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends Basic
 			// either targetClass or targetObject specified
 			throw new IllegalArgumentException("'targetVariable' is required.", this, arguments);
 		}
-		// TODO: Shall we check whether the variable on targetBean or targetClass is === undefined and throw an exception in that case? This may help to find errors more quickly, but it requires that variables are initialized with null.
 	}
 	
 	public function getObject(Void) {
