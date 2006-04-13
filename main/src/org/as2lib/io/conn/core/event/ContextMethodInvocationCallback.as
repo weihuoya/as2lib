@@ -87,8 +87,7 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 	 * @see #setErrorCode
 	 */
 	public function setCode(code:String):Void {
-		errorCode = ErrorEvent.ERROR_CODE_PREFIX + "." + code;
-		successCode = SuccessEvent.SUCCESS_CODE_PREFIX + "." + code;
+		this.code = code;
 	}
 	
 	/**
@@ -97,6 +96,9 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 	 * @return the error code
 	 */
 	public function getErrorCode(Void):String {
+		if (errorCode == null) {
+			return (ErrorEvent.ERROR_CODE_PREFIX + "." + code);
+		}
 		return errorCode;
 	}
 	
@@ -115,6 +117,9 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 	 * @return the success code
 	 */
 	public function getSuccessCode(Void):String {
+		if (successCode == null) {
+			return (SuccessEvent.SUCCESS_CODE_PREFIX + "." + code);
+		}
 		return successCode;
 	}
 	
@@ -166,7 +171,7 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 			logger.debug("Method invocation returned successfully:\n" +
 					StringUtil.addSpaceIndent(returnInfo.toString(), 2));
 		}*/
-		var event:SuccessEvent = new successEventClass(successCode, applicationContext);
+		var event:SuccessEvent = new successEventClass(getSuccessCode(), applicationContext);
 		eventPublisher.publishEvent(event);
 	}
 	
@@ -181,7 +186,7 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 			logger.error("Method invocation failed:\n" +
 					StringUtil.addSpaceIndent(errorInfo.toString(), 2));
 		}*/
-		var event:ErrorEvent = new errorEventClass(errorCode, applicationContext);
+		var event:ErrorEvent = new errorEventClass(getErrorCode(), applicationContext);
 		eventPublisher.publishEvent(event);
 	}
 	
