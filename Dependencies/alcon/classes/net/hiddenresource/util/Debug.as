@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @class			Debug
  * @version		1.0.5
  * @author			Sascha Balkau <sascha@hiddenresource.corewatch.net>

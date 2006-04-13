@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2004 Ralf Siegel
 
    Licensed under the Apache License, Version 2.0 (the "License");

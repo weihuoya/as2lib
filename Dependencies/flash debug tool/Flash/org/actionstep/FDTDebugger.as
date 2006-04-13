@@ -46,7 +46,7 @@ class org.actionstep.FDTDebugger
 	// Configuration properties.
 	// 
 	static var SERVER_URL:String 	= "127.0.0.1";
-	static var SERVER_PORT:Number 	= 4500;
+	static var SERVER_PORT:Number 	= 4577;
 					
 	//
 	// Debug levels
@@ -330,8 +330,8 @@ class org.actionstep.FDTDebugger
 		obj.attributes.line = line;
 		obj.attributes.message = msg;
 		
-	//	if (!g_connected)
-		//	g_socket.connect(SERVER_URL, SERVER_PORT);
+//		if (!g_connected)
+//			g_socket.connect(SERVER_URL, SERVER_PORT);
 			
 		g_socket.send(obj.toString());
 	}

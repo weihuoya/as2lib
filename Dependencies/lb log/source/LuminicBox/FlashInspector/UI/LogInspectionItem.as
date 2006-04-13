@@ -50,7 +50,7 @@ class LuminicBox.FlashInspector.UI.LogInspectionItem extends LuminicBox.UI.Repea
 		mcBg.onReleaseOutside = mcBg.onRollOut;
 		mcBg.onRelease = Delegate.create(this, onBgRelease);
 		// calculate left margin
-		var offsetX:Number = (_parent["inspectionDepth"]*20)
+		var offsetX:Number = (_parent["inspectionDepth"]*20);
 		mcToggleIcon._x = mcToggleIcon._x + offsetX;
 		txtValue._x = txtValue._x + offsetX;
 		// what to print
@@ -63,7 +63,7 @@ class LuminicBox.FlashInspector.UI.LogInspectionItem extends LuminicBox.UI.Repea
 			// objects
 			case("properties"):
 				txtValue.textColor = 0x3366cc;
-				_printValue = getObj().type
+				_printValue = getObj().type;
 				expandable = true;
 				delete dataItem.property;
 				if(!getObj().value.reversed) {
@@ -240,7 +240,7 @@ class LuminicBox.FlashInspector.UI.LogInspectionItem extends LuminicBox.UI.Repea
 		} else {
 			mcBg.gotoAndStop(1);
 		}
-		if(_expandable) mcToggleIcon.prevFrame()
+		if(_expandable) mcToggleIcon.prevFrame();
 		if(getObj().crossRef) crossRefItem.hideCrossRefHint();
 		dispatchEvent( {type:"itemrollout",item:this} );
 	}

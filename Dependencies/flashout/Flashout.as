@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @author Eugene Potapenko (www.potapenko.com)
  *  date created: 01.03.2005 8:27:35
  */
@@ -47,7 +47,7 @@ class Flashout extends Object
 	}
 	
 	/**
-     * @deprecated use trace(Flashut.DEBUG + message);
+     * @deprecated use TRACE(Flashut.DEBUG + message);
      */
 	
 	public static function log(text:Object):Void
@@ -56,7 +56,7 @@ class Flashout extends Object
 	}
 	
 	/**
-     * @deprecated use trace(Flashut.INFO + message);
+     * @deprecated use TRACE(Flashut.INFO + message);
      */
      
 	public static function info(text:Object):Void
@@ -65,7 +65,7 @@ class Flashout extends Object
 	}
 	
 	/**
-     * @deprecated use trace(Flashut.WARN + message);
+     * @deprecated use TRACE(Flashut.WARN + message);
      */
 	
 	public static function warning(text:Object):Void
@@ -74,7 +74,7 @@ class Flashout extends Object
 	}
 	
 	/**
-     * @deprecated use trace(Flashut.DEBUG + message);
+     * @deprecated use TRACE(Flashut.DEBUG + message);
      */	
      
 	public static function debug(text:Object):Void
@@ -83,7 +83,7 @@ class Flashout extends Object
 	}
 	
 	/**
-     * @deprecated use trace(Flashut.ERROR + message);
+     * @deprecated use TRACE(Flashut.ERROR + message);
      */	
      
 	public static function error(text:Object):Void
@@ -92,7 +92,7 @@ class Flashout extends Object
 	}
 	
 	/**
-     * @deprecated use trace(Flashut.FATAL + message);
+     * @deprecated use TRACE(Flashut.FATAL + message);
      */	
      
 	public static function fatal(text:Object):Void
@@ -101,7 +101,7 @@ class Flashout extends Object
 	}
 	
 	/**
-     * @deprecated use trace(Flashut.SERVER_IN + message);
+     * @deprecated use TRACE(Flashut.SERVER_IN + message);
      */
 	
 	public static function serverIn(text:Object):Void
@@ -110,7 +110,7 @@ class Flashout extends Object
 	}
 	
 	/**
-     * @deprecated use trace(Flashut.SERVER_OUT + message);
+     * @deprecated use TRACE(Flashut.SERVER_OUT + message);
      */
 	
 	public static function serverOut(text:Object):Void
@@ -153,7 +153,7 @@ class Flashout extends Object
 	
 	var test:MyClass = new MyClass("anyName", "Hello!");
 	
-	trace(test);
+	TRACE(test);
 	
 	// in out
 	// MyClass{name="anyName", data="Hello!"};
@@ -243,8 +243,8 @@ class Flashout extends Object
 				o.socket.send(o.messages[i]);
 			}
 			o.messages = new Array();
-		}
-		socket.connect("localhost", parseInt(_root.FLASHOUT_PORT))
+		};
+		socket.connect("localhost", parseInt(_root.FLASHOUT_PORT));
 	}	
 	
 	//-------------------------------------------------------------------------

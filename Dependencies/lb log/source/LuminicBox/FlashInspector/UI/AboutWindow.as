@@ -9,7 +9,7 @@ class LuminicBox.FlashInspector.UI.AboutWindow extends LuminicBox.UI.BaseCompone
 	function AboutWindow() {
 		super();
 		btnClose["owner"] = this;
-		btnClose.onRelease = function() { this.owner.close(); }
+		btnClose.onRelease = function() { this.owner.close(); };
 		
 		Mouse.addListener(this);
 		//mcText.useHandCursor = false;

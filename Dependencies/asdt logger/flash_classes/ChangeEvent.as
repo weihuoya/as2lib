@@ -1,4 +1,4 @@
-/**
+﻿/**
  *
  * @author Sascha Wolter
  * @version 1

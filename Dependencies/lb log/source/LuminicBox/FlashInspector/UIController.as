@@ -43,7 +43,7 @@ class LuminicBox.FlashInspector.UIController {
 		Stage.align = "TL";
 		var stageListener:Object = new Object();
 		stageListener.owner = this;
-		stageListener.onResize = function() { this.owner.onStageResize(); }
+		stageListener.onResize = function() { this.owner.onStageResize(); };
 		Stage.addListener(stageListener);
 		// save controls
 		this.root = root;
@@ -57,16 +57,16 @@ class LuminicBox.FlashInspector.UIController {
 		bg = root.bg;
 		// attach events
 		filterTabBox.addEventListener("changeFilter", this, "onFilterChange");
-		eventWindow.addEventListener("eventInfo", this, "onEventInfo")
-		eventWindow.addEventListener("eventInfoOut", this, "onEventInfoOut")
-		eventWindow.addEventListener("eventInspect", this, "onEventInspect")
+		eventWindow.addEventListener("eventInfo", this, "onEventInfo");
+		eventWindow.addEventListener("eventInfoOut", this, "onEventInfoOut");
+		eventWindow.addEventListener("eventInspect", this, "onEventInspect");
 		btnClear["owner"] = this;
-		btnClear.onRelease = function() { this.owner.onClearRequest(); }
+		btnClear.onRelease = function() { this.owner.onClearRequest(); };
 		menu.addEventListener("click", this, "onMenuClick");
 		// set initial state controls
 		uiDisabler.enabled = false;
 		infoBar._visible = false;
-		filterTabBox.setFilter(LuminicBox.Log.Level.LOG)
+		filterTabBox.setFilter(LuminicBox.Log.Level.LOG);
 		// create for logReciever
 		if(!createLogReciever()) {
 			// halt

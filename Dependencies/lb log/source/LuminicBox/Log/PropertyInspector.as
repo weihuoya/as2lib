@@ -1,4 +1,4 @@
-/*
+﻿/*
  * Copyright (c) 2005 Pablo Costantini (www.luminicbox.com). All rights reserved.
  * 
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");

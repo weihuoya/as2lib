@@ -1,4 +1,4 @@
-/*
+﻿/*
    Copyright 2004 Ralf Siegel
 
    Licensed under the Apache License, Version 2.0 (the "License");
@@ -67,7 +67,7 @@ class org.log4f.logging.LogManager
 	public static function getNewFilterInstanceByName(className:String):IFilter
 	{
 		var Filter:Function = Class.forName(className);
-		if (!(new Filter instanceof IFilter)) {
+		if (!((new Filter()) instanceof IFilter)) {
 			throw new InvalidFilterError(className);
 		}
 		return new Filter();		
@@ -81,7 +81,7 @@ class org.log4f.logging.LogManager
 	public static function getNewFormatterInstanceByName(className:String):IFormatter
 	{
 		var Formatter:Function = Class.forName(className);
-		if (!(new Formatter instanceof IFormatter)) {
+		if (!((new Formatter()) instanceof IFormatter)) {
 			throw new InvalidFormatterError(className);
 		}
 		return new Formatter();		
@@ -95,7 +95,7 @@ class org.log4f.logging.LogManager
 	public static function getNewPublisherInstanceByName(className:String):IPublisher
 	{
 		var Publisher:Function = Class.forName(className);
-		if (!(new Publisher instanceof IPublisher)) {
+		if (!((new Publisher()) instanceof IPublisher)) {
 			throw new InvalidPublisherError(className);
 		}
 		return new Publisher();		

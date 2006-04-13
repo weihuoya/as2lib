@@ -10,7 +10,7 @@ class LuminicBox.FlashInspector.UI.MainTabBox extends LuminicBox.UI.BaseComponen
 	[Inspectable(type="Array")]
 	public function set itemLabels(value:Array) {
 		_itemLabels = value;
-		if(tabRepeater) tabRepeater.databind(value)
+		if(tabRepeater) tabRepeater.databind(value);
 	}
 	public function get itemLabels():Array { return _itemLabels; }
 	

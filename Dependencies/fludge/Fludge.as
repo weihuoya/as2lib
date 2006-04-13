@@ -1,4 +1,4 @@
-class Fludge {
+﻿class Fludge {
 	static private var _idCnt:Number = 0;
 	static private var _observed:Object = {};
 	

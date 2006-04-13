@@ -42,7 +42,7 @@
 	}
 	
 	private function setupEvents() {
-		mcBg.onRelease = function() { _parent._parent.selectedItem = _parent;  }
+		mcBg.onRelease = function() { _parent._parent.selectedItem = _parent;  };
 	}
 	
 	private function removeEvents() {

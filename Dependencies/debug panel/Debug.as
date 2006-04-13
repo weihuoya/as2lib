@@ -1,4 +1,4 @@
-/*
+﻿/*
     Debug class for use with bit-101 Flash Debug Panel
     See www.bit-101.com/DebugPanel
 */
@@ -28,10 +28,10 @@ class Debug
 
 	public static function traceObject(o:Object, recurseDepth:Number, indent:Number):Void {
 		if(recurseDepth == undefined){
-			var recurseDepth:Number = 0;
+			recurseDepth = 0;
 		}
 		if(indent == undefined){
-			var indent:Number = 0;
+			indent = 0;
 		}
 		for(var prop in o){
 			var lead:String = "";
