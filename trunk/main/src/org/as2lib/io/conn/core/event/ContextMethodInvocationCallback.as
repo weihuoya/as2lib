@@ -33,7 +33,6 @@ import org.as2lib.util.StringUtil;
  * or {@link SuccessEvent} instances with the given error code and success code
  * respectively.
  * 
- * TODO: Set only code, and add 'error.' and 'success.' prefixes dynamically.
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends BasicClass implements MethodInvocationCallback, ApplicationContextAware {
@@ -43,6 +42,8 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 	private var applicationContext:ApplicationContext;
 	
 	private var eventPublisher:ApplicationEventPublisher;
+	
+	private var code:String;
 	
 	private var errorCode:String;
 	
@@ -64,6 +65,30 @@ class org.as2lib.io.conn.core.event.ContextMethodInvocationCallback extends Basi
 		this.successCode = successCode;
 		errorEventClass = ErrorEvent;
 		successEventClass = SuccessEvent;
+	}
+	
+	/**
+	 * Returns the code used for publishing success or error events.
+	 * 
+	 * @return the code
+	 */
+	public function getCode(Void):String {
+		return code;
+	}
+	
+	/**
+	 * Sets the code to use for publishing success and error events.
+	 * 
+	 * <p>Note that on error events the used error code will be the prefix "error."
+	 * plus the given {@code code}. On success events the prefix "success." is used.
+	 * 
+	 * @param code the code for publishing events
+	 * @see #setSuccessCode
+	 * @see #setErrorCode
+	 */
+	public function setCode(code:String):Void {
+		errorCode = ErrorEvent.ERROR_CODE_PREFIX + "." + code;
+		successCode = SuccessEvent.SUCCESS_CODE_PREFIX + "." + code;
 	}
 	
 	/**
