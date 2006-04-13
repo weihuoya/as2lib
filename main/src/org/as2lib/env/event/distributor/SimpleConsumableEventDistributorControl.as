@@ -85,20 +85,19 @@ class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl e
 	 * @param eventName the name of the event method to execute on the added listeners
 	 * @param args any number of arguments that are used as parameters on execution of
 	 * the event on the listeners
+	 * @return {@code true} if the event was consumed else {@code false}
 	 * @throws EventExecutionException if an event method on a listener threw an
 	 * exception
 	 */
-	private function distribute(eventName:String, args:Array):Void {
+	private function distribute(eventName:String, args:Array):Boolean {
 		if (eventName != null) {
 			if (this.l.length > 0) {
 				var h:Number = this.l.length;
 				var i:Number;
 				try {
 					for (i = 0; i < h; i++) {
-						// check "true" explicitely because only an object or something similar
-						// does not suffice, but would also result in "true" for the if-statement
 						if (this.l[i][eventName].apply(this.l[i], args) == true) {
-							return;
+							return true;
 						}
 					}
 				} catch (e) {
@@ -107,6 +106,7 @@ class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl e
 				}
 			}
 		}
+		return false;
 	}
 	
 }
