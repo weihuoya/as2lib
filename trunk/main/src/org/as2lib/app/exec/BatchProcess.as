@@ -96,7 +96,6 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess implements Batch,
 	 * @param error the error to distribute
 	 */
 	private function distributeErrorEvent(error):Boolean {
-		// TODO: 'result' is always 'null' because distributers do not return values!
 		var result:Boolean = super.distributeErrorEvent(error);
 		if (!result && !hasFinished()) {
 			finish();

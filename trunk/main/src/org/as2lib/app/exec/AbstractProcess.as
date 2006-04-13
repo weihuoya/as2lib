@@ -185,7 +185,7 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 			// Start if not started.
 			// Re-start if finished.
 			// Do nothing if started but not finished.
-			if(!process.hasStarted() || process.hasFinished()) {
+			if (!process.hasStarted() || process.hasFinished()) {
 				process["start"].apply(process, args);
 			}
 		}
@@ -236,10 +236,11 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
     		delete endTime;
     		startTime = getTimer();
 			result = MethodUtil.invoke("run", this, arguments);
-    	} catch(e) {
+    	}
+    	catch(e) {
     		distributeErrorEvent(e);
     	}
-		if(!isPaused() && !isWorking()) {
+		if (!isPaused() && !isWorking()) {
 			finish();
 		}
 		return result;
@@ -422,7 +423,6 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 		if (process == null) process = this;
 		addError(error);
 		var errorDistributor:ProcessErrorListener = distributorControl.getDistributor(ProcessErrorListener);
-		// TODO: errorDistributor.onProcessError always returns 'null'!
 		return errorDistributor.onProcessError(process, error);
 	}
 	
