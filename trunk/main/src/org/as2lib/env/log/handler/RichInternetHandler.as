@@ -20,6 +20,8 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.util.Stringifier;
 
+import de.richinternet.utils.Dumper;
+
 /**
  * {@code RichInternetHandler} logs messages to Dirk Eisman's Flex Trace Panel.
  * 

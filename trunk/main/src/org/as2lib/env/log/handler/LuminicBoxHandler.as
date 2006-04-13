@@ -20,6 +20,10 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
 
+import LuminicBox.Log.ConsolePublisher;
+import LuminicBox.Log.Level;
+import LuminicBox.Log.LogEvent;
+
 /**
  * {@code LuminicBoxHandler} is a wrapper of the {@code ConsolePublisher} class
  * from the LuminicBox Logging API. It can be used to write log messages to the

@@ -6,6 +6,16 @@
 	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
 		<year value="2006">
 			<month value="4">
+				<day value="13">
+					<entry type="add" package="org.as2lib.env.log.logger" class="FlashoutLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="FludgeLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="Log4fLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="LuminicBoxLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="MusicTheoryLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="TraceLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="RichInternetLogger" method="trace">MTASC -trace support is added.</entry>
+					<entry type="add" package="org.as2lib.env.log.logger" class="ZtorLog4fLogger" method="trace">MTASC -trace support is added.</entry>
+				</day>
 				<day value="11">
 					<entry type="add" package="org.as2lib.env.log.logger" class="ActionStepLogger" method="trace">MTASC -trace support is added.</entry>
 					<entry type="add" package="org.as2lib.env.log.logger" class="AlconLogger" method="trace">MTASC -trace support is added.</entry>

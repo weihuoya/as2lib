@@ -17,6 +17,9 @@
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogLevel;
+import org.as2lib.env.log.message.MtascLogMessage;
+
+import de.richinternet.utils.Dumper;
 
 /**
  * {@code RichInternetLogger} delegates all log messages to the appropriate methods
@@ -29,6 +32,8 @@ import org.as2lib.env.log.LogLevel;
  * startup.
  * 
  * @author Simon Wacker
+ * @author Igor Sadovskiy
+ * 
  * @see org.as2lib.env.log.handler.RichInternetHandler
  * @see <a href="http://www.richinternet.de/blog/index.cfm?entry=EB3BA9D6-A212-C5FA-A9B1B5DB4BB7F555">Flex Trace Panel</a>
  */
@@ -36,6 +41,25 @@ class org.as2lib.env.log.logger.RichInternetLogger extends AbstractLogger implem
 	
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Object = AbstractLogger;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the Dirk Eisman's Flex Trace Panel.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.RichInternetLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		Dumper.dump(new MtascLogMessage(message, location, fileName, lineNumber));
+	}
 	
 	/** The set level. */
 	private var level:LogLevel;

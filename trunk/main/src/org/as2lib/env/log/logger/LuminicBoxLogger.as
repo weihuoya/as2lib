@@ -16,6 +16,12 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.MtascLogMessage;
+
+import LuminicBox.Log.ConsolePublisher;
+import LuminicBox.Log.IPublisher;
+import LuminicBox.Log.Level;
 
 /**
  * {@code LuminicBoxLogger} acts as a wrapper for a {@code Logger} instance of the
@@ -31,11 +37,41 @@ import org.as2lib.env.log.Logger;
  * 
  * @author Simon Wacker
  * @author Christoph Atteneder
+ * @author Igor Sadovskiy
  * 
  * @see org.as2lib.env.log.handler.LuminicBoxHandler
  * @see <a href="http://www.luminicbox.com/dev/flash/log">LuminicBox Logging API</a>
  */
 class org.as2lib.env.log.logger.LuminicBoxLogger extends BasicClass implements Logger {
+	
+	/** Static logger instance for MTASC trace logging */
+	private static var mtascLogger:LuminicBoxLogger;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the LuminicBox Logging console.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.LuminicBoxLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		// initialize mtasc logger
+		if (mtascLogger == null) {
+			mtascLogger = new LuminicBoxLogger("MtascLogger");
+			mtascLogger.addPublisher(new ConsolePublisher());
+		}
+		
+		var m:LogMessage = new MtascLogMessage(message, location, fileName, lineNumber);
+		mtascLogger.logger.log(m.toString());
+	}
 	
 	/** The Logger instance of LuminicBox every task is delegated to. */
 	private var logger:LuminicBox.Log.Logger;
