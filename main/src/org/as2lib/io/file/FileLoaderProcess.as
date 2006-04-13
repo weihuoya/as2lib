@@ -171,7 +171,6 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess implements Lo
 		else {
 			finish();
 		}
-		// TODO: Why does this event listener consume the error?
 		return true;
 	}
 	
