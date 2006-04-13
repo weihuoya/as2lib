@@ -35,7 +35,9 @@ import org.as2lib.env.log.message.SimpleLogMessage;
  * <p>Note that this logger uses the {@link LogMessage} class to wrap and decorate 
  * log messages.
  * 
+ * @author Simon Wacker
  * @author Igor Sadovskiy
+ * 
  * @see org.as2lib.env.log.handler.SosHandler
  * @see <a href="http://sos.powerflasher.com">SOS - SocketOutputServer</a>
  */
@@ -267,6 +269,18 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 	}
 	
 	/**
+	 * Sends the specified {@code message} directly to the SocketOutputServer using
+	 * the specified {@code key}.
+	 * 
+	 * @param message the message to send
+	 * @param key the key used to identify the message type  
+	 */
+	private function send(message, key:Number):Void {
+		socket.send("<showMessage key='" + key + "'><![CDATA[" +
+				message.toString() + "]]></showMessage>\n");
+	}
+	
+	/**
 	 * Logs the passed-in {@code message} at the given {@code level}.
 	 *
 	 * <p>The {@code message} is only logged when this logger is enabled for the
@@ -281,19 +295,7 @@ class org.as2lib.env.log.logger.SosLogger extends AbstractLogger implements Logg
 			send(new SimpleLogMessage(message, level, name), level.toNumber());
 		}
 	}
-	
-	/**
-	 * Sends the specified {@code message} directly to the SocketOutputServer using
-	 * the specified {@code key}.
-	 * 
-	 * @param message the message to send
-	 * @param key the key used to identify the message type  
-	 */
-	private function send(message, key:Number):Void {
-		socket.send("<showMessage key='" + key + "'><![CDATA[" +
-				message.toString() + "]]></showMessage>\n");
-	}
-	
+		
 	/**
 	 * Logs the passed-in {@code message} at debug level.
 	 *

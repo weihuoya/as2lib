@@ -32,6 +32,7 @@ import org.as2lib.env.log.LogLevel;
  * with MTASC.
  * 
  * @author Simon Wacker
+ * @author Igor Sadovskiy
  * @see org.as2lib.env.log.handler.FlashoutHandler
  * @see <a href="http://www.potapenko.com/flashout">Flashout</a>
  */
@@ -39,6 +40,25 @@ class org.as2lib.env.log.logger.FlashoutLogger extends AbstractLogger implements
 	
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Object = AbstractLogger;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the Flashout logger console.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.FlashoutLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		Flashout.traceReplacer(message, location, fileName, lineNumber);
+	}
 	
 	/** The set level. */
 	private var level:LogLevel;

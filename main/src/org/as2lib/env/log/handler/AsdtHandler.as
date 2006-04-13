@@ -24,6 +24,7 @@ import org.as2lib.util.Stringifier;
 /**
  * {@code AsdtHandler} logs messages with {@code Logger.addMessage} method.
  *   
+ * @author Simon Wacker  
  * @author Igor Sadovskiy
  * @see <a href="http://www.asdt.org">AS Development Tool (ASDT)</a>
  */

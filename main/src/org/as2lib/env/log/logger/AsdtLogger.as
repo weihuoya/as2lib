@@ -29,7 +29,9 @@ import org.as2lib.env.log.Logger;
  * <p>Every global configuration must be done via the static methods on the
  * {@code Log} class itself.
  * 
+ * @author Simon Wacker
  * @author Igor Sadovskiy
+ * 
  * @see org.as2lib.env.log.handler.AsdtHandler
  * @see <a href="http://www.asdt.org">AS Development Tool (ASDT)</a>
  */

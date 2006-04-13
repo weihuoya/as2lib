@@ -317,7 +317,6 @@ class org.as2lib.env.log.logger.FlashDebugToolLogger extends BasicClass implemen
 	 * @see #isInfoEnabled
 	 */
 	public function info(message):Void {
-		trace("here");
 		if (isInfoEnabled()) {
 			var className:String = (arguments[1] != null) ? arguments[1] : this.name;
 			fdtDebugger.trace(message, this.infoLevel, className, arguments[2], arguments[3]);

@@ -17,7 +17,7 @@
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogLevel;
-import org.as2lib.env.log.LogMessage;
+import org.as2lib.env.log.message.MtascLogMessage;
 import org.as2lib.env.log.message.SimpleLogMessage;
 
 /**
@@ -68,6 +68,8 @@ import org.as2lib.env.log.message.SimpleLogMessage;
  * the {@link SimpleHierarchicalLogger} instead, together with a log handler.
  *
  * @author Simon Wacker
+ * @author Igor Sadovskiy
+ * 
  * @see org.as2lib.env.log.handler.MusicTheoryHandler
  * @see <a href="http://source.musictheory.net/swfconsole">SWF Console</a>
  */
@@ -75,6 +77,32 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Object = AbstractLogger;
+	
+	/** Static logger instance for MTASC trace logging */
+	private static var mtascLogger:MusicTheoryLogger;
+	
+	/**
+	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
+	 * the LuminicBox Logging console.
+	 * 
+	 * <p>You can use this method as trace method for MTASC's trace support:
+	 * <code>mtasc ... -trace org.as2lib.env.log.logger.LuminicBoxLogger.trace</code>
+	 * 
+	 * @param message the message to log
+	 * @param location the fully qualified name of the class and method which invoked the
+	 * {@code trace} method separated by "::"
+	 * @param fileName the name of the source file which defines the class and method
+	 * which called the {@code trace} method
+	 * @param lineNumber the line number in the file at which the {@code trace} method was
+	 * called
+	 */
+	public static function trace(message, location:String, fileName:String, lineNumber:Number):Void {
+		// initialize mtasc logger
+		if (mtascLogger == null) {
+			mtascLogger = new MusicTheoryLogger();
+		}
+		mtascLogger.send(new MtascLogMessage(message, location, fileName, lineNumber));
+	}	
 	
 	/** The set level. */
 	private var level:LogLevel;
@@ -244,6 +272,15 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	public function isFatalEnabled(Void):Boolean {
 		return (levelAsNumber >= fatalLevelAsNumber);
 	}
+
+	/**
+	 * Sends the passed-in {@code message} directly to the Musictheory SWF Console.
+	 *
+	 * @param message the message object to log
+	 */
+	private function send(message):Void {
+		getURL("javascript:showText('" + message + "')");
+	}
 	
 	/**
 	 * Logs the passed-in {@code message} at the given {@code level}.
@@ -259,8 +296,7 @@ class org.as2lib.env.log.logger.MusicTheoryLogger extends AbstractLogger impleme
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			var m:LogMessage = new SimpleLogMessage(message, level, name);
-			getURL("javascript:showText('" + m + "')");
+			send(new SimpleLogMessage(message, level, name));
 		}
 	}
 	
