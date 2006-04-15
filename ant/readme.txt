@@ -42,3 +42,58 @@ ActionScript 2.0 Library (http://www.as2lib.org).
    source files.
    For more information take a look at the API documentation of the org.as2lib.ant.As2api
    class.
+
+
+5. Using As2ant
+   
+   (1) Create a 'build.xml' file (take a look at 'samples/swf/build.xml' for a complete
+       example):
+       
+       <project name="My Project" default="mytarget" basedir="."></project>
+       
+   (2) Add task definitions for the needed tasks ('classpath' must be an absolute or relative
+       path to 'as2ant.jar' or to the folder with the compiled sources):
+       
+       <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="as2ant.jar"/>
+       <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="as2ant.jar"/>
+       <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="as2ant.jar"/>
+       
+   (3) Create a target which uses the defined tasks:
+       
+       <target name="mytarget" description="my target description">
+         <swf src="${src.dir}/com/simonwacker/ant/MySample.as" dest="${build.dir}/mysample.swf"
+             classpath="${src.dir}" width="300" height="100" framerate="31" bgcolor="FF8A00">
+           <clip id="simonwacker" import="${files.dir}/simonwacker.jpg"/>
+           <font id="pixel" import="${files.dir}/PixelClassic.ttf"/>
+         </swf>
+       </target>
+   
+   (4) Run the target:
+       
+       > With the command line (requires '{ant.home}/bin' to be part of the 'PATH' environment
+         variable):
+         
+         ant mytarget
+       
+       > With Eclipse (any further builds can be triggered with the green arrow with brief
+         case (External Tools)):
+       
+         Right click on your build.xml file.
+         Select Run As -> Ant Build
+
+
+6. Additional Eclipse Setup
+   
+   (1) Define tasks globally (frees you from defining tasks in every build.xml file):
+       
+       > Go to Window -> Preferences
+       > Open Ant -> Runtime
+       > Add 'as2ant.jar' as External JAR
+       > Select Tasks -> Add Tasks
+       > Enter a name (e.g. 'swf', 'mtasc' or 'swfmill')
+       > Set 'as2ant.jar' as location
+       > Go to /org/as2lib/ant in the left window below 'Location'
+       > Select either 'Swf.class', 'Mtasc.class' or 'Swfmill.class', respectively
+       > Click OK
+   
+   (2) ...
