@@ -733,7 +733,7 @@ public class Swf extends Mtasc {
             ow.flush();
             ow.close();
         } catch (IOException e) {
-            throw new BuildException("Problem on generating '" + XML + "'.", getLocation());
+            throw new BuildException("Problem on generating '" + XML + "'.", e, getLocation());
         }
     }
     
