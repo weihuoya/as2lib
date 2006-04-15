@@ -2,8 +2,8 @@
 
 <project name="As2lib Pizza" default="build" basedir=".">
   
-  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../ant/src"/>
-  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../ant/src"/>
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../ant/dist/as2ant.jar"/>
+  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../ant/dist/as2ant.jar"/>
   
   <property name="src.dir" location="src"/>
   <property name="build.dir" location="build"/>
