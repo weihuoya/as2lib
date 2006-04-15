@@ -695,6 +695,9 @@ public class Swf extends Mtasc {
             ow.write(" width=\"" + new Integer(this.width).toString() + "\"");
             ow.write(" height=\"" + new Integer(this.height).toString() + "\"");
             ow.write(" framerate=\"" + new Integer(this.framerate).toString() + "\"");
+            if (getVersion() != null) {
+                ow.write(" version=\"" + new Integer(getVersion()).toString() + "\"");
+            }
             ow.write(">\n");
             if (this.backgroundColor != null) {
                 ow.write("  <background color='#" + this.backgroundColor + "'/>\n");

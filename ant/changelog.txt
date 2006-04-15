@@ -3,6 +3,9 @@ As2ant 2.0
 ----------
 
 
+[+] org.as2lib.ant.Swf
+    Added support for version-attribute in swfmill.
+
 [+] org.as2lib.ant.Mtasc
     Class specified in trace-argument is automatically added as source file now.
 
