@@ -1,20 +1,10 @@
-<project name="Swf Ant Task - Sample" default="usage" basedir=".">
+<project name="Swf Ant Task - Sample" default="sample" basedir=".">
   
-  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../src"/>
+  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../dist/as2ant.jar"/>
   
   <property name="src.dir" location="src"/>
   <property name="files.dir" location="files"/>
   <property name="build.dir" location="build"/>
-  
-  <target name="usage">
-    <echo message=""/>
-    <echo message="------------------------------------------------------"/>
-    <echo message="Among the available targets are:"/>
-    <echo message=""/>
-    <echo message="sample"/>
-    <echo message="------------------------------------------------------"/>
-    <echo message=""/>
-  </target>
   
   <target name="sample" description="builds sample swf">
     <swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf" classpath="${src.dir}" width="300" height="100" framerate="31" bgcolor="FF8A00">

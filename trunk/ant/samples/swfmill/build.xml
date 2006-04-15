@@ -1,6 +1,6 @@
 <project name="Swfmill Ant Task - Samples" default="usage" basedir=".">
   
-  <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="../../src"/>
+  <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="../../dist/as2ant.jar"/>
   
   <property name="swf.file" location="sample.swf"/>
   
