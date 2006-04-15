@@ -18,7 +18,7 @@
   </target>
   
   <target name="jar" description="JARs the task" depends="compile">
-    <jar destfile="${build.dir}/as2ant.jar" basedir="${build.dir}"/>
+    <jar destfile="${dist.dir}/as2ant.jar" basedir="${build.dir}"/>
   </target>
   
   <target name="dist" description="generate distribution" depends="clean, jar">
@@ -48,8 +48,6 @@
         <include name="**/*.*"/>
       </fileset>
     </copy>
-    
-    <copy tofile="${dist.dir}/as2ant.jar" file="${build.dir}/as2ant.jar"/>
     
     <zip destfile="as2ant.zip" basedir="${dist.dir}"/>
   </target>
