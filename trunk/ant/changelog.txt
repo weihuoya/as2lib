@@ -2,3 +2,5 @@
 As2ant 2.0
 ----------
 
+[!] org.as2lib.ant.Swfmill
+    Fixed bug with xslt-command (xsl-file was not added)
