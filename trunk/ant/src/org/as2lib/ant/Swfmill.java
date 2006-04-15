@@ -468,7 +468,11 @@ public class Swfmill extends Task {
         Commandline cmd = new Commandline();
         cmd.setExecutable(getSwfmill());
         setupCommandSwitches(cmd);
-        cmd.createArgument().setValue(evaluateCommand());
+        String command = evaluateCommand();
+        cmd.createArgument().setValue(command);
+        if (command.equals(XSLT)) {
+        	cmd.createArgument().setFile(this.xsl);
+        }
         if (this.source != null) {
             cmd.createArgument().setFile(this.source);
         }
