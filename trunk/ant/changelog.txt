@@ -2,5 +2,9 @@
 As2ant 2.0
 ----------
 
+
+[+] org.as2lib.ant.Mtasc
+    Class specified in trace-argument is automatically added as source file now.
+
 [!] org.as2lib.ant.Swfmill
     Fixed bug with xslt-command (xsl-file was not added)

@@ -927,6 +927,9 @@ public class Mtasc extends Task {
         addCompileFiles((File[]) this.sourceList.toArray(new File[]{}));
         addCompileFiles((FileSet[]) this.sourceSets.toArray(new FileSet[]{}));
         addCompileFile(this.source);
+        if (this.trace != null) {
+            addCompileFile(this.trace.substring(0, this.trace.lastIndexOf('.')));
+        }
     }
     
     /**
@@ -1026,31 +1029,43 @@ public class Mtasc extends Task {
                             }
                         }
                     }
-                    if (clazz != null) {
-                        clazz = clazz.replace('.', '/');
-                        clazz += ".as";
-                        boolean exists = false;
-                        if (classpath != null && classpath.size() > 0) {
-                            String[] a = classpath.list();
-                            for (int k = 0; k < a.length; k++) {
-                                String p = a[k];
-                                File temp = new File(p + "/" + clazz);
-                                if (temp.exists()) {
-                                    exists = true;
-                                }
-                            }
-                        }
-                        if (exists) {
-                            addCompileFile(new File(clazz));
-                        }
-                        else {
-                            log("Class '" + clazz + "' read from xml source file does not exist.");
-                        }
-                    }
+                    addCompileFile(clazz);
                 }
                 if (n.hasChildNodes()) {
                     addCompileFiles(n);
                 }
+            }
+        }
+    }
+    
+    /**
+     * Converts the given class to a file and adds it, if it exists in one of the
+     * classpaths.
+     * 
+     * <p>The given class must look like this: org.as2lib.MyClass
+     * 
+     * @param clazz the class to convert and add
+     */
+    private void addCompileFile(String clazz) {
+        if (clazz != null) {
+            String file = clazz.replace('.', '/') + ".as";
+            boolean exists = false;
+            if (classpath != null && classpath.size() > 0) {
+                String[] a = classpath.list();
+                for (int k = 0; k < a.length; k++) {
+                    String p = a[k];
+                    File temp = new File(p + "/" + file);
+                    if (temp.exists()) {
+                        exists = true;
+                        break;
+                    }
+                }
+            }
+            if (exists) {
+                addCompileFile(new File(file));
+            }
+            else {
+                log("Class '" + clazz + "' does not exist in any of the classpaths.");
             }
         }
     }
@@ -1109,13 +1124,13 @@ public class Mtasc extends Task {
         if (sourceSets != null && sourceSets.length > 0) {
             for (int i = 0; i < sourceSets.length; i++) {
                 FileSet ss = sourceSets[i];
-	            DirectoryScanner ds = ss.getDirectoryScanner(getProject());
-	            ds.setCaseSensitive(true);
-	            ds.setIncludes(new String[]{"*.as"});
-	            String[] fl = ds.getIncludedFiles();
-	            for (int k = 0; k < fl.length; k++) {
-	                addCompileFile(new File(ds.getBasedir() + "/" + fl[k]));
-	            }
+                DirectoryScanner ds = ss.getDirectoryScanner(getProject());
+                ds.setCaseSensitive(true);
+                ds.setIncludes(new String[]{"*.as"});
+                String[] fl = ds.getIncludedFiles();
+                for (int k = 0; k < fl.length; k++) {
+                    addCompileFile(new File(ds.getBasedir() + "/" + fl[k]));
+                }
             }
         }
     }
@@ -1160,7 +1175,7 @@ public class Mtasc extends Task {
         if (this.compileFiles.size() > 0) {
             log("Compiling " + this.compileFiles.size() + " source file"
                 + (this.compileFiles.size() == 1 ? "" : "s")
-				+ ".");
+                + ".");
             if (this.split) {
                 boolean hasCompileErrors = false;
                 for (int i = 0; i < this.compileFiles.size(); i++) {
@@ -1178,7 +1193,7 @@ public class Mtasc extends Task {
                 return;
             }
         }
-    	Commandline cmd = setupCommand();
+        Commandline cmd = setupCommand();
         executeCommand(cmd);
     }
     
@@ -1379,7 +1394,7 @@ public class Mtasc extends Task {
             log(command.toString());
             int r = exe.execute();
             if (r != 0) {
-            	throw new BuildException("Compile error!", getLocation());
+                throw new BuildException("Compile error!", getLocation());
             }
         } catch (IOException e) {
             throw new BuildException("Error running " + command.getCommandline()[0] + " compiler.", e, getLocation());
