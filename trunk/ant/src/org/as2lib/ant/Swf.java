@@ -451,7 +451,7 @@ public class Swf extends Mtasc {
     /**
      * Creates a new clip (MovieClip or Graphic library symbol) to include in the swf.
      * 
-     * <p>The returnd clip can alsobe used as container for multiple clips that shall
+     * <p>The returnd clip can also be used as container for multiple clips that shall
      * be included.
      * 
      * @return the created clip
@@ -747,7 +747,11 @@ public class Swf extends Mtasc {
                 outputWriter.write(" id=\"" + clip.getId() + "\"");
             }
             if (clip.getImport() != null) {
-                outputWriter.write(" import=\"" + clip.getImport() + "\"");
+                String imp = clip.getImport().toString();
+                if (imp.toLowerCase().endsWith(".svg")) {
+                	imp.replace('\\', '/');
+                }
+                outputWriter.write(" import=\"" + imp + "\"");
             }
             if (clip.getClazz() != null) {
                 outputWriter.write(" class=\"" + clip.getClazz() + "\"");
