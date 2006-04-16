@@ -29,6 +29,7 @@
     <copy tofile="${dist.dir}/build.xml" file="build.xml"/>
     <copy tofile="${dist.dir}/license.txt" file="license.txt"/>
     <copy tofile="${dist.dir}/readme.txt" file="readme.txt"/>
+    <copy tofile="${dist.dir}/changelog.txt" file="changelog.txt"/>
     
     <copy todir="${dist.dir}/src">
       <fileset dir="${src.dir}">
