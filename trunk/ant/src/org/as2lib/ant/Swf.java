@@ -749,7 +749,7 @@ public class Swf extends Mtasc {
             if (clip.getImport() != null) {
                 String imp = clip.getImport().toString();
                 if (imp.toLowerCase().endsWith(".svg")) {
-                	imp.replace('\\', '/');
+                	imp = imp.replace('\\', '/');
                 }
                 outputWriter.write(" import=\"" + imp + "\"");
             }
