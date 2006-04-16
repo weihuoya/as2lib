@@ -23,6 +23,7 @@
   
   <target name="dist" description="generate distribution" depends="clean, jar">
     <mkdir dir="${dist.dir}/src"/>
+    <mkdir dir="${dist.dir}/bin"/>
     <mkdir dir="${dist.dir}/samples"/>
     <mkdir dir="${dist.dir}/docs/api"/>
     
@@ -34,6 +35,11 @@
     <copy todir="${dist.dir}/src">
       <fileset dir="${src.dir}">
         <include name="**/*.java"/>
+      </fileset>
+    </copy>
+    
+    <copy todir="${dist.dir}/bin">
+      <fileset dir="${bin.dir}">
         <include name="**/*.class"/>
       </fileset>
     </copy>
