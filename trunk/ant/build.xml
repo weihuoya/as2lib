@@ -3,22 +3,22 @@
 <project name="As2ant - Swf, Swfmill and Mtasc Ant Tasks" basedir="." default="jar">
   
   <property name="src.dir" value="src"/>
-  <property name="build.dir" value="build"/>
+  <property name="bin.dir" value="build"/>
   <property name="dist.dir" value="dist"/>
   <property name="javadocs.dir" value="docs/api"/>
   <property name="samples.dir" value="samples"/>
   
   <target name="clean" description="delete all generated files">
-    <delete dir="${build.dir}" failonerror="false"/>
+    <delete dir="${bin.dir}" failonerror="false"/>
+    <delete dir="${dist.dir}" failonerror="false"/>
   </target>
   
   <target name="compile" description="compiles the tasks">
-    <mkdir dir="${build.dir}"/>
-    <javac srcdir="${src.dir}" destdir="${build.dir}" target="1.3" source="1.3"/>
+    <javac srcdir="${src.dir}" destdir="${bin.dir}" target="1.3" source="1.3"/>
   </target>
   
   <target name="jar" description="JARs the task" depends="compile">
-    <jar destfile="${dist.dir}/as2ant.jar" basedir="${build.dir}"/>
+    <jar destfile="${dist.dir}/as2ant.jar" basedir="${bin.dir}"/>
   </target>
   
   <target name="dist" description="generate distribution" depends="clean, jar">
