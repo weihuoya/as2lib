@@ -14,103 +14,67 @@
  * limitations under the License.
  */
 
-import org.as2lib.bean.factory.parser.XmlBeanDefinitionParser;
-import org.as2lib.context.support.GenericApplicationContext;
+import org.as2lib.app.exec.Batch;
+import org.as2lib.app.exec.BatchErrorListener;
+import org.as2lib.app.exec.BatchFinishListener;
+import org.as2lib.app.exec.BatchStartListener;
+import org.as2lib.app.exec.SimpleBatch;
+import org.as2lib.bean.factory.parser.UiBeanDefinitionParser;
+import org.as2lib.context.support.LoadingApplicationContext;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.parser.LogConfigurationProcess;
 import org.as2lib.env.log.parser.XmlLogConfigurationParser;
 import org.as2lib.io.file.FileLoader;
-import org.as2lib.io.file.LoadCompleteListener;
-import org.as2lib.io.file.LoadErrorListener;
 import org.as2lib.io.file.XmlFile;
-import org.as2lib.io.file.XmlFileLoader;
 import org.as2lib.sample.filebrowser.FileBrowser;
 import org.as2lib.util.StringUtil;
 
 /**
  * @author Simon Wacker
  */
-class main.Configuration extends BasicClass implements LoadErrorListener, LoadCompleteListener {
+class main.Configuration extends BasicClass implements BatchStartListener, BatchErrorListener, BatchFinishListener {
 	
-	private static var logger:Logger = LogManager.getLogger("main.Configuration");
+	private static var LOG_CONFIGURATION_URI:String = "logging.xml";
+	private static var APPLICATION_CONTEXT_URI:String = "applicationContext.xml";
 	
-	private static var LOG_CONFIGURATION:String = "logging.xml";
-	private static var APPLICATION_CONTEXT:String = "applicationContext.xml";
-	
-	private var applicationContext:GenericApplicationContext;
-	private var beanDefinitionParser:XmlBeanDefinitionParser;
+	private var applicationContext:LoadingApplicationContext;
+	private var logConfigurationProcess:LogConfigurationProcess;
 	private var logConfigurationParser:XmlLogConfigurationParser;
 	
 	public function Configuration(Void) {
-		applicationContext = new GenericApplicationContext();
+		applicationContext = new LoadingApplicationContext(APPLICATION_CONTEXT_URI, new UiBeanDefinitionParser());
 		logConfigurationParser = new XmlLogConfigurationParser();
-		beanDefinitionParser = new XmlBeanDefinitionParser();
+		logConfigurationProcess = new LogConfigurationProcess(LOG_CONFIGURATION_URI, logConfigurationParser);
 	}
 	
 	public function init(Void):Void {
-		// TODO: Composite file loader that handles multiple loaders by priority.
-		var logConfigurationLoader:FileLoader = new XmlFileLoader();
-		logConfigurationLoader.addListener(this);
-		logConfigurationLoader.load(LOG_CONFIGURATION);
-		var applicationContextLoader:FileLoader = new XmlFileLoader();
-		applicationContextLoader.addListener(this);
-		applicationContextLoader.load(APPLICATION_CONTEXT);
+		var batch:SimpleBatch = new SimpleBatch();
+		batch.addListener(this);
+		batch.addProcess(applicationContext);
+		batch.addProcess(logConfigurationProcess);
+		batch.start();
 	}
 	
-	private function run(Void):Void {
+	public function onBatchStart(batch:Batch):Void {
+		trace("Batch started.");
+	}
+	
+	public function onBatchError(batch:Batch, error):Boolean {
+		trace("Running batch failed with error: \n" + StringUtil.addSpaceIndent(error.toString(), 2));
+		return false;
+	}
+	
+	public function onBatchFinish(batch:Batch):Void {
+		trace("Batch finished.");
 		try {
 			var fileBrowser:FileBrowser = applicationContext.getBean("fileBrowser");
 			fileBrowser.browse("files.xml");
 		}
-		catch (exception:org.as2lib.bean.BeanException) {
-			if (logger.isErrorEnabled()) {
-				logger.error("Getting bean 'fileBrowser' failed with exception:\n" + StringUtil.addSpaceIndent(exception.toString(), 2));
-			}
-		}
-		catch (exception:org.as2lib.sample.filebrowser.FileBrowserException) {
-			if (logger.isErrorEnabled()) {
-				logger.error("Running file browser failed with exception:\n" + StringUtil.addSpaceIndent(exception.toString(), 2));
-			}
-		}
 		catch (exception:org.as2lib.env.except.Throwable) {
-			if (logger.isFatalEnabled()) {
-				logger.fatal("Running or getting file browser failed with exception:\n" + StringUtil.addSpaceIndent(exception.toString(), 2));
-			}
+			trace("Running or getting file browser failed with exception:\n" + StringUtil.addSpaceIndent(exception.toString(), 2));
 		}
-	}
-	
-	public function onLoadComplete(fileLoader:FileLoader):Void {
-		var xmlFile:XmlFile = XmlFile(fileLoader.getFile());
-		if (fileLoader.getUri() == LOG_CONFIGURATION) {
-			try {
-				logConfigurationParser.parse(xmlFile.getContent());
-			}
-			catch (exception:org.as2lib.env.log.parser.LogConfigurationParseException) {
-				if (logger.isErrorEnabled()) {
-					logger.error("Parsing log configuration failed with exception:\n" + StringUtil.addSpaceIndent(exception.toString(), 2));
-				}
-			}
-		}
-		if (fileLoader.getUri() == APPLICATION_CONTEXT) {
-			try {
-				beanDefinitionParser.parse(xmlFile.getContent(), applicationContext);
-				applicationContext.refresh();
-				run();
-			}
-			catch (exception:org.as2lib.env.except.Throwable) {
-				if (logger.isErrorEnabled()) {
-					logger.error("Parsing or initializing application context failed with exception:\n" + StringUtil.addSpaceIndent(exception.toString(), 2));
-				}
-			}
-		}
-	}
-	
-	public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean {
-		if (logger.isErrorEnabled()) {
-			logger.error("Loading file '" + fileLoader.getUri() + "' failed with error: " + errorCode + ".");
-		}
-		return false;
 	}
 	
 }
