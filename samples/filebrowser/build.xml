@@ -2,8 +2,8 @@
 
 <project name="As2lib File Browser" default="build" basedir=".">
   
-  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../ant/src"/>
-  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../ant/src"/>
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../ant/dist/as2ant.jar"/>
+  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../ant/dist/as2ant.jar"/>
   
   <property name="src.dir" location="src"/>
   <property name="test.dir" location="test"/>
@@ -42,7 +42,8 @@
         <exclude name="**/*.fla"/>
       </fileset>
     </copy>
-    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${browser.swf}" header="430:480:31" version="8">
+    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${browser.swf}"
+        header="430:480:31" version="8" trace="org.as2lib.env.log.logger.DebugItLogger.trace">
       <classpath>
         <pathelement path="${debugit.dir}"/>
         <pathelement path="${as2lib.dir}"/>
