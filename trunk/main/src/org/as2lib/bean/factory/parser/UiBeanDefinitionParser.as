@@ -14,20 +14,19 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.AbstractBeanWrapper;
 import org.as2lib.bean.factory.BeanDefinitionStoreException;
 import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.BeanDefinitionHolder;
+import org.as2lib.bean.factory.config.ConstructorArgumentValues;
 import org.as2lib.bean.factory.config.MethodInvokingFactoryBean;
 import org.as2lib.bean.factory.config.PropertyPathFactoryBean;
 import org.as2lib.bean.factory.config.RuntimeBeanReference;
 import org.as2lib.bean.factory.config.VariableRetrievingFactoryBean;
 import org.as2lib.bean.factory.parser.XmlBeanDefinitionParser;
-import org.as2lib.bean.factory.support.AbstractBeanDefinition;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
-import org.as2lib.bean.factory.support.ChildBeanDefinition;
 import org.as2lib.bean.PropertyValues;
 import org.as2lib.env.reflect.DelegateFactoryBean;
-import org.as2lib.bean.factory.config.ConstructorArgumentValues;
 
 /**
  * @author Simon Wacker
@@ -42,6 +41,8 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	public static var METHOD_INVOCATION:String = "m";
 	public static var DELEGATE:String = "d";
 	public static var RUNTIME_BEAN_REFERENCE:String = "b";
+	
+	public static var PROPERTY_KEY_SEPARATOR:String = "-";
 	
 	public static var PROPERTY_PATH_FACTORY_BEAN_CLASS_NAME:String = "org.as2lib.bean.factory.config.PropertyPathFactoryBean";
 	public static var VARIABLE_RETRIEVING_FACTORY_BEAN_CLASS_NAME:String = "org.as2lib.bean.factory.config.VariableRetrievingFactoryBean";
@@ -120,7 +121,17 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 					propertyElement.appendChild(node);
 				}
 				else {
-					propertyElement.attributes[NAME_ATTRIBUTE] = node.nodeName;
+					var propertyName:String = node.nodeName;
+					if (propertyName.indexOf(PROPERTY_KEY_SEPARATOR) != -1) {
+						var tokens:Array = propertyName.split(PROPERTY_KEY_SEPARATOR);
+						propertyName = tokens[0];
+						for (var j:Number = 1; j < tokens.length; j++) {
+							propertyName += AbstractBeanWrapper.PROPERTY_KEY_PREFIX;
+							propertyName += tokens[j];
+							propertyName += AbstractBeanWrapper.PROPERTY_KEY_SUFFIX;
+						}
+					}
+					propertyElement.attributes[NAME_ATTRIBUTE] = propertyName;
 					propertyElement.appendChild(node.firstChild);
 				}
 				if (node.attributes[TYPE_ATTRIBUTE] != null) {
