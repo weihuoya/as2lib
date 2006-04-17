@@ -1,0 +1,6 @@
+<map id="class_diagram" name="class_diagram">
+<area shape="rect" href="NoSuchFileException.html" title="org.as2lib.sample.filebrowser.view.NoSuchFileException" alt="" coords="8,115,192,163" />
+<area shape="rect" href="ErrorView.html" title="org.as2lib.sample.filebrowser.view.ErrorView" alt="" coords="248,7,350,55" />
+<area shape="rect" href="Background.html" title="org.as2lib.sample.filebrowser.view.Background" alt="" coords="243,79,355,127" />
+<area shape="rect" href="AbstractView.html" title="org.as2lib.sample.filebrowser.view.AbstractView" alt="" coords="38,43,163,91" />
+</map>

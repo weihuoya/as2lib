@@ -1,0 +1,42 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  VideoView[
+    label="VideoView",
+    URL="VideoView.html",
+    tooltip="org.as2lib.sample.filebrowser.view.file.VideoView",
+    shape="record"
+  ];
+  UnsupportedFileExtensionException[
+    label="UnsupportedFileExtensionException",
+    URL="UnsupportedFileExtensionException.html",
+    tooltip="org.as2lib.sample.filebrowser.view.file.UnsupportedFileExtensionException",
+    shape="record"
+  ];
+  TextView[
+    label="TextView",
+    URL="TextView.html",
+    tooltip="org.as2lib.sample.filebrowser.view.file.TextView",
+    shape="record"
+  ];
+  ImageView[
+    label="ImageView",
+    URL="ImageView.html",
+    tooltip="org.as2lib.sample.filebrowser.view.file.ImageView",
+    shape="record"
+  ];
+  FileViewMap[
+    label="FileViewMap",
+    URL="FileViewMap.html",
+    tooltip="org.as2lib.sample.filebrowser.view.file.FileViewMap",
+    shape="record"
+  ];
+  AbstractFileView[
+    label="AbstractFileView",
+    URL="AbstractFileView.html",
+    tooltip="org.as2lib.sample.filebrowser.view.file.AbstractFileView",
+    shape="record"
+  ];
+  AbstractFileView -> VideoView;
+  AbstractFileView -> TextView;
+  AbstractFileView -> ImageView;
+}

@@ -1,0 +1,29 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  NoSuchFileException[
+    label="NoSuchFileException",
+    URL="NoSuchFileException.html",
+    tooltip="org.as2lib.sample.filebrowser.view.NoSuchFileException",
+    shape="record"
+  ];
+  ErrorView[
+    label="ErrorView",
+    URL="ErrorView.html",
+    tooltip="org.as2lib.sample.filebrowser.view.ErrorView",
+    shape="record"
+  ];
+  Background[
+    label="Background",
+    URL="Background.html",
+    tooltip="org.as2lib.sample.filebrowser.view.Background",
+    shape="record"
+  ];
+  AbstractView[
+    label="AbstractView",
+    URL="AbstractView.html",
+    tooltip="org.as2lib.sample.filebrowser.view.AbstractView",
+    shape="record"
+  ];
+  AbstractView -> ErrorView;
+  AbstractView -> Background;
+}

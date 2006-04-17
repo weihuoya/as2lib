@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="iso-8859-1" ?>
+
+<movie width="430" height="480" framerate="31">
+  <background color='#FFFFFF'/>
+  <frame>
+    <library>
+      <clip id="next" import="D:\Documents\Projects\As2lib\samples\file browser\build\images\next.png"/>
+      <clip id="previous" import="D:\Documents\Projects\As2lib\samples\file browser\build\images\previous.png"/>
+      <clip id="title" import="D:\Documents\Projects\As2lib\samples\file browser\build\images\title.png"/>
+      <clip id="background" import="D:\Documents\Projects\As2lib\samples\file browser\build\images\background.jpg"/>
+      <clip id="video" import="D:\Documents\Projects\As2lib\samples\file browser\build\videos\video.swf"/>
+    </library>
+  </frame>
+</movie>

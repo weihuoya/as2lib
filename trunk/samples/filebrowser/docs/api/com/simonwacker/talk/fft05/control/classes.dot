@@ -1,0 +1,21 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  Scene[
+    label="Scene",
+    URL="Scene.html",
+    tooltip="org.as2lib.sample.filebrowser.control.Scene",
+    shape="record"
+  ];
+  PreviousFileListener[
+    label="PreviousFileListener",
+    URL="PreviousFileListener.html",
+    tooltip="org.as2lib.sample.filebrowser.control.PreviousFileListener",
+    shape="record"
+  ];
+  NextFileListener[
+    label="NextFileListener",
+    URL="NextFileListener.html",
+    tooltip="org.as2lib.sample.filebrowser.control.NextFileListener",
+    shape="record"
+  ];
+}

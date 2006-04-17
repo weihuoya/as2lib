@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<AS2Classpathes>
+<AS2Classpath type="source">core</AS2Classpath>
+<AS2Classpath type="source">src</AS2Classpath>
+<AS2Classpath type="source">test</AS2Classpath>
+<AS2Classpath type="source">as2lib</AS2Classpath>
+<AS2Classpath type="source">as2unit</AS2Classpath>
+<AS2Classpath type="source">debugit</AS2Classpath>
+<AS2Classpath type="source">Core Library [Flash 8]</AS2Classpath>
+</AS2Classpathes>

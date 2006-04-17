@@ -1,0 +1,191 @@
+<?xml version="1.0"?>
+
+<!--
+<beans xmlns="http://www.as2lib.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xsi:schemaLocation="http://www.as2lib.org/schema/beans http://www.as2lib.org/schema/beans/as2lib-beans.xsd">
+-->
+
+<beans>
+	
+	<bean id="LocaleManager" class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
+		<property name="defaultLocale"><value>en</value></property>
+		<property name="locales">
+			<array>
+				<bean class="org.as2lib.lang.GermanLocale"/>
+				<bean class="org.as2lib.lang.EnglishLocale"/>
+			</array>
+		</property>
+	</bean>
+	
+	<bean id="messageSource" class="org.as2lib.context.support.StaticMessageSource">
+		<property name="messages[de]" type="org.as2lib.data.holder.properties.SimpleProperties">
+			<props>
+				<prop key="loadingFileFailed">Fehler beim Laden der Datei {0}.</prop>
+				<prop key="noFilesToBrowse">Es wurden keine Dateien zum Durchsuchen aufgeführt.</prop>
+				<prop key="unsupportedFileExtension">Die Erweiterung {0} wird nicht unterstützt.</prop>
+				<prop key="unknownError">Ein unbekannter Fehler ist aufgetreten.</prop>
+			</props>
+		</property>
+		<property name="messages[en]" type="org.as2lib.data.holder.properties.SimpleProperties">
+			<props>
+				<prop key="loadingFileFailed">Error on loading file {0}.</prop>
+				<prop key="noFilesToBrowse">There are no files to browse.</prop>
+				<prop key="unsupportedFileExtension">File extension {0} is not supported.</prop>
+				<prop key="unknownError">An unknown error occurred.</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="fileBrowser" class="org.as2lib.sample.filebrowser.FileBrowser" init-method="init">
+		<property name="title" ref="title"/>
+		<property name="background" ref="background"/>
+		<property name="scene" ref="scene"/>
+		<property name="fileView" ref="fileViewMap"/>
+		<property name="errorView" ref="errorView"/>
+		<property name="navigation" ref="navigation"/>
+	</bean>
+	
+	<bean id="title" class="org.as2lib.sample.filebrowser.view.Title"/>
+	
+	<bean id="background" class="org.as2lib.sample.filebrowser.view.Background">
+		<property name="y"><value>20</value></property>
+		<property name="width"><value>430</value></property>
+		<property name="height"><value>460</value></property>
+	</bean>
+	
+	<bean id="scene" class="org.as2lib.sample.filebrowser.control.Scene">
+		<property name="fileView" ref="fileViewMap"/>
+		<property name="errorView" ref="errorView"/>
+	</bean>
+	
+	<bean id="fileViewMap" class="org.as2lib.sample.filebrowser.view.file.FileViewMap">
+		<!--<property name="defaultFileView" ref="textView"/>-->
+		<property name="fileView[txt]" ref="textView"/>
+		<property name="fileView[jpg]" ref="imageView"/>
+		<property name="fileView[flv]" ref="videoView"/>
+	</bean>
+	
+	<bean id="fileView" abstract="true">
+		<property name="x"><value>10</value></property>
+		<property name="y"><value>60</value></property>
+		<property name="width"><value>410</value></property>
+		<property name="height"><value>200</value></property>
+	</bean>
+	
+	<bean id="textView" class="org.as2lib.sample.filebrowser.view.file.TextView" parent="fileView">
+		<property name="fileLoader" ref="textLoader"/>
+	</bean>
+	
+	<bean id="textLoader" class="org.as2lib.io.file.TextFileLoader"/>
+	
+	<bean id="imageView" class="org.as2lib.sample.filebrowser.view.file.ImageView" parent="fileView">
+		<property name="fileLoader" ref="imageLoader"/>
+	</bean>
+	
+	<bean id="imageLoader" class="org.as2lib.io.file.SwfFileLoader"/>
+	
+	<bean id="videoView" class="org.as2lib.sample.filebrowser.view.file.VideoView" parent="fileView"/>
+	
+	<bean id="errorView" class="org.as2lib.sample.filebrowser.view.ErrorView">
+		<property name="x"><value>10</value></property>
+		<property name="y"><value>30</value></property>
+		<property name="width"><value>410</value></property>
+		<property name="height"><value>20</value></property>
+	</bean>
+	
+	<bean id="navigation" class="org.as2lib.sample.filebrowser.view.navigation.Navigation">
+		<property name="nextButton" ref="nextButton"/>
+		<property name="previousButton" ref="previousButton"/>
+		<property name="x"><value>10</value></property>
+		<property name="y"><value>270</value></property>
+	</bean>
+	
+	<bean id="button" class="org.as2lib.sample.filebrowser.view.navigation.Button" abstract="true">
+		<property name="width"><value>200</value></property>
+		<property name="height"><value>200</value></property>
+	</bean>
+	
+	<bean id="nextButton" parent="button">
+		<property name="releaseListener" ref="nextListener"/>
+		<property name="linkage"><value>next</value></property>
+		<property name="x"><value>210</value></property>
+	</bean>
+	
+	<bean id="nextListener" class="org.as2lib.sample.filebrowser.control.NextFileListener">
+		<property name="scene" ref="scene"/>
+	</bean>
+	
+	<bean id="previousButton" parent="button">
+		<property name="releaseListener" ref="previousListener"/>
+		<property name="linkage"><value>previous</value></property>
+	</bean>
+	
+	<bean id="previousListener" class="org.as2lib.sample.filebrowser.control.PreviousFileListener">
+		<property name="scene" ref="scene"/>
+	</bean>
+	
+	<!--<bean id="weaver" class="org.as2lib.aop.weaver.SimpleWeaver">
+		<property name="aspects">
+			<array>
+				<ref local="navigationControllingAspect"/>
+				<ref local="throwableStackTraceFillingAspect"/>
+				<ref local="traceLoggingAspect"/>
+			</array>
+		</property>
+	</bean>
+	
+	<bean id="navigationControllingAspect" class="org.as2lib.sample.filebrowser.aspect.NavigationControllingAspect">
+		<property name="affectedPackage" type="Package"><value>org.as2lib.sample.filebrowser</value></property>
+	</bean>
+	
+	<bean id="throwableStackTraceFillingAspect" class="org.as2lib.env.except.ThrowableStackTraceFillingAspect">
+		<property name="affectedPackage" type="Package"><value>org.as2lib.sample.filebrowser</value></property>
+	</bean>
+	
+	<bean id="traceLoggingAspect" class="org.as2lib.env.log.aspect.TraceLoggingAspect">
+		<constructor-arg><value>execution(org.as2lib.sample.filebrowser..*.new())</value></constructor-arg>
+		<constructor-arg><value>execution(org.as2lib.env.log.logger.SimpleHierarchicalLogger.debug())</value></constructor-arg>
+		<property name="affectedPackages">
+			<array type="Package">
+				<value>org.as2lib.sample.filebrowser</value>
+				<value>org.as2lib.env.log.logger</value>
+			</array>
+		</property>
+	</bean>-->
+	
+	<!--
+	This approach cannot be taken because exceptions that occur when parsing the application context
+	cannot be logged.
+	<bean id="logConfigurationParser" class="org.as2lib.env.log.parser.XmlLogConfigurationParser">
+		<logConfiguration>
+			<![CDATA[
+				<logging>
+					<register id="logger" class="org.as2lib.env.log.logger.SimpleHierarchicalLogger"/>
+					<register id="level" name="forName" class="org.as2lib.env.log.level.AbstractLogLevel" type="method"/>
+					<register id="stringifier" class="org.as2lib.env.log.stringifier.PatternLogMessageStringifier" type="singleton">
+						<constructor-arg>%d{HH:nn:ss.SSS} %7l %n{1}.%O  %m</constructor-arg>
+					</register>
+					<loggerRepository class="org.as2lib.env.log.repository.LoggerHierarchy">
+						<logger name="main" level="ERROR">
+							<handler><constructor-arg id="stringifier"/></handler>
+						</logger>
+						<logger name="org.as2lib.sample.filebrowser">
+							<handler class="org.as2lib.env.log.handler.LevelFilterHandler">
+								<constructor-arg id="handler"><constructor-arg id="stringifier"/></constructor-arg>
+								<constructor-arg id="level">INFO</constructor-arg>
+							</handler>
+						</logger>
+						<logger name="org.as2lib.env.log.aspect.TraceLoggingAspect">
+							<handler>
+								<constructor-arg class="org.as2lib.env.log.stringifier.SimpleLogMessageStringifier"/>
+							</handler>
+						</logger>
+					</loggerRepository>
+				</logging>
+			]]>
+		</logConfiguration>
+	</bean>
+	-->
+	
+</beans>

@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+
+<project name="As2lib File Browser" default="build" basedir=".">
+  
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../ant/src"/>
+  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../ant/src"/>
+  
+  <property name="src.dir" location="src"/>
+  <property name="test.dir" location="test"/>
+  <property name="build.dir" location="build"/>
+  <property name="files.dir" location="files"/>
+  <property name="as2lib.dir" location="D:/Documents/Projects/As2lib/main/src"/>
+  <property name="unit-test-tool.dir" location="D:/Documents/Projects/As2lib/tools/test/unit/src"/>
+  <property name="debugit.dir" location="D:/Programming/Flash/DebugIt"/>
+  
+  <property name="logging.xml" location="${build.dir}/logging.xml"/>
+  <property name="applicationContext.xml" location="${build.dir}/applicationContext.xml"/>
+  
+  <property name="browser.swf" location="${build.dir}/file_browser.swf"/>
+  <property name="test.swf" location="${test.dir}/test.swf"/>
+  
+  <property name="player.exe" location="C:/Programme/Macromedia/Flash 8/Players/SAFlashPlayer.exe"/>
+  
+  <target name="usage">
+    <echo message=""/>
+    <echo message="------------------------------------------------------"/>
+    <echo message="Among the available targets are:"/>
+    <echo message=""/>
+    <echo message="build"/>
+    <echo message="clean"/>
+    <echo message="compile"/>
+    <echo message="test"/>
+    <echo message="------------------------------------------------------"/>
+    <echo message=""/>
+  </target>
+  
+  <target name="build">
+    <mkdir dir="${build.dir}"/>
+    <copy todir="${build.dir}">
+      <fileset dir="${files.dir}">
+        <include name="**/*.*"/>
+        <exclude name="**/*.fla"/>
+      </fileset>
+    </copy>
+    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${browser.swf}" header="430:480:31" version="8">
+      <classpath>
+        <pathelement path="${debugit.dir}"/>
+        <pathelement path="${as2lib.dir}"/>
+        <pathelement path="${src.dir}"/>
+      </classpath>
+      <srcxml>
+        <pathelement path="${logging.xml}"/>
+        <pathelement path="${applicationContext.xml}"/>
+      </srcxml>
+      <clip>
+        <include id="next" import="${build.dir}/images/next.png"/>
+        <include id="previous" import="${build.dir}/images/previous.png"/>
+        <include id="title" import="${build.dir}/images/title.png"/>
+        <include id="background" import="${build.dir}/images/background.jpg"/>
+        <include id="video" import="${build.dir}/videos/video.swf"/>
+      </clip>
+    </swf>
+    <exec executable="${player.exe}" spawn="yes"><arg value="${browser.swf}"/></exec>
+  </target>
+  
+  <target name="clean">
+    <delete dir="${build.dir}"/>
+  </target>
+  
+  <target name="compile">
+    <mtasc srcdir="${src.dir}" version="8">
+      <classpath path="${debugit.dir}"/>
+      <classpath path="${as2lib.dir}"/>
+      <classpath path="${src.dir}"/>
+    </mtasc>
+  </target>
+  
+  <target name="test">
+    <mtasc src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" swf="${test.swf}" main="yes" mx="yes" version="8">
+      <classpath>
+        <pathelement path="${debugit.dir}"/>
+        <pathelement path="${as2lib.dir}"/>
+        <pathelement path="${unit-test-tool.dir}"/>
+        <pathelement path="${src.dir}"/>
+        <pathelement path="${test.dir}"/>
+      </classpath>
+    </mtasc>
+    <exec executable="${player.exe}" spawn="yes"><arg value="${test.swf}"/></exec>
+  </target>
+  
+</project>

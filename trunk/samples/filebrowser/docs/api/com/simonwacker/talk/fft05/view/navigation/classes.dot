@@ -1,0 +1,9 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  Button[
+    label="Button",
+    URL="Button.html",
+    tooltip="org.as2lib.sample.filebrowser.view.navigation.Button",
+    shape="record"
+  ];
+}

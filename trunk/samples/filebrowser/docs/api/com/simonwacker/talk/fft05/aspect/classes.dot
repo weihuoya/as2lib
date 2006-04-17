@@ -1,0 +1,15 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  LogMethodExecutionsAspect[
+    label="LogMethodExecutionsAspect",
+    URL="LogMethodExecutionsAspect.html",
+    tooltip="org.as2lib.sample.filebrowser.aspect.LogMethodExecutionsAspect",
+    shape="record"
+  ];
+  ControlNavigationAspect[
+    label="ControlNavigationAspect",
+    URL="ControlNavigationAspect.html",
+    tooltip="org.as2lib.sample.filebrowser.aspect.ControlNavigationAspect",
+    shape="record"
+  ];
+}

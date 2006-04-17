@@ -1,0 +1,7 @@
+<map id="class_diagram" name="class_diagram">
+<area shape="rect" href="XmlLoader.html" title="org.as2lib.sample.filebrowser.load.XmlLoader" alt="" coords="229,7,336,55" />
+<area shape="rect" href="VideoLoader.html" title="org.as2lib.sample.filebrowser.load.VideoLoader" alt="" coords="224,79,341,127" />
+<area shape="rect" href="TextLoader.html" title="org.as2lib.sample.filebrowser.load.TextLoader" alt="" coords="229,151,336,199" />
+<area shape="rect" href="ImageLoader.html" title="org.as2lib.sample.filebrowser.load.ImageLoader" alt="" coords="223,223,343,271" />
+<area shape="rect" href="AbstractFileLoader.html" title="org.as2lib.sample.filebrowser.load.AbstractFileLoader" alt="" coords="8,115,173,163" />
+</map>

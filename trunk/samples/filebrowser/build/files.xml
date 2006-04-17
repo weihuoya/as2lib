@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<files>
+  <file path="images/sitting.jpg"/>
+  <file path="images/hopping.jpg"/>
+  <file path="images/playing.jpg"/>
+  <file path="images/unknown_image.jpg"/>
+  <file path="images/standing.jpg"/>
+  <file path="images/handstand.jpg"/>
+  <file path="texts/ezekiel.txt"/>
+  <file path="texts/mephisto.txt"/>
+  <file path="texts/unknown.ext"/>
+  <file path="videos/hunting.flv"/>
+  <file path="videos/reading.flv"/>
+  <file path="videos/unknown_video.flv"/>
+  <file path="videos/standing.flv"/>
+</files>

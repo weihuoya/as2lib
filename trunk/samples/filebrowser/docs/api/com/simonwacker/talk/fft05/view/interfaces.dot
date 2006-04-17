@@ -1,0 +1,10 @@
+strict digraph interface_diagram {
+  rankdir=LR;
+  View[
+    label="View",
+    URL="View.html",
+    tooltip="org.as2lib.sample.filebrowser.view.View",
+    fontname="Times-Italic",
+    shape="record"
+  ];
+}
