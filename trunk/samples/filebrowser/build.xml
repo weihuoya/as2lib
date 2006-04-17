@@ -9,9 +9,9 @@
   <property name="test.dir" location="test"/>
   <property name="build.dir" location="build"/>
   <property name="files.dir" location="files"/>
-  <property name="as2lib.dir" location="D:/Documents/Projects/As2lib/main/src"/>
-  <property name="unit-test-tool.dir" location="D:/Documents/Projects/As2lib/tools/test/unit/src"/>
-  <property name="debugit.dir" location="D:/Programming/Flash/DebugIt"/>
+  <property name="as2lib.dir" location="D:/Projects/As2lib/main/src"/>
+  <property name="unit-test-tool.dir" location="D:/Projects/As2lib/unittestui/src"/>
+  <property name="debugit.dir" location="D:/Projects/As2lib/lib/debugit"/>
   
   <property name="logging.xml" location="${build.dir}/logging.xml"/>
   <property name="applicationContext.xml" location="${build.dir}/applicationContext.xml"/>
