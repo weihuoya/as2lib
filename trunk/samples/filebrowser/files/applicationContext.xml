@@ -19,22 +19,22 @@
 	</bean>
 	
 	<bean id="messageSource" class="org.as2lib.context.support.StaticMessageSource">
-		<property name="messages[de]" type="org.as2lib.data.holder.properties.SimpleProperties">
+		<messages-de type="org.as2lib.data.holder.properties.SimpleProperties">
 			<props>
 				<prop key="loadingFileFailed">Fehler beim Laden der Datei {0}.</prop>
 				<prop key="noFilesToBrowse">Es wurden keine Dateien zum Durchsuchen aufgeführt.</prop>
 				<prop key="unsupportedFileExtension">Die Erweiterung {0} wird nicht unterstützt.</prop>
 				<prop key="unknownError">Ein unbekannter Fehler ist aufgetreten.</prop>
 			</props>
-		</property>
-		<property name="messages[en]" type="org.as2lib.data.holder.properties.SimpleProperties">
+		</messages-de>
+		<messages-en type="org.as2lib.data.holder.properties.SimpleProperties">
 			<props>
 				<prop key="loadingFileFailed">Error on loading file {0}.</prop>
 				<prop key="noFilesToBrowse">There are no files to browse.</prop>
 				<prop key="unsupportedFileExtension">File extension {0} is not supported.</prop>
 				<prop key="unknownError">An unknown error occurred.</prop>
 			</props>
-		</property>
+		</messages-en>
 	</bean>
 	
 	<bean id="fileBrowser" class="org.as2lib.sample.filebrowser.FileBrowser" init-method="init">
@@ -56,19 +56,19 @@
 	
 	<bean id="fileView" class="org.as2lib.sample.filebrowser.view.file.FileViewMap">
 		<!-- <defaultFileView>b{textView}<defaultFileView/> -->
-		<property name="fileView[txt]">
+		<fileView-txt>
 			<FileView id="textView" class="org.as2lib.sample.filebrowser.view.file.TextView">
 				<fileLoader><bean class="org.as2lib.io.file.TextFileLoader"/></fileLoader>
 			</FileView>
-		</property>
-		<property name="fileView[jpg]">
+		</fileView-txt>
+		<fileView-jpg>
 			<FileView class="org.as2lib.sample.filebrowser.view.file.ImageView">
 				<fileLoader><bean class="org.as2lib.io.file.SwfFileLoader"/></fileLoader>
 			</FileView>
-		</property>
-		<property name="fileView[flv]">
+		</fileView-jpg>
+		<fileView-flv>
 			<FileView class="org.as2lib.sample.filebrowser.view.file.VideoView"/>
-		</property>
+		</fileView-flv>
 	</bean>
 	
 	<bean id="errorView" x="10" y="30" width="410" height="20" class="org.as2lib.sample.filebrowser.view.ErrorView"/>
