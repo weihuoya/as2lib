@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+
+<logging>
+  
+  <register id="logger" class="org.as2lib.env.log.logger.SimpleHierarchicalLogger"/>
+  <register id="level" name="forName" class="org.as2lib.env.log.level.AbstractLogLevel" type="method"/>
+  <register id="stringifier" class="org.as2lib.env.log.stringifier.PatternLogMessageStringifier" type="singleton">
+    <constructor-arg>%d{HH:nn:ss.SSS} %7l %n{1}.%O  %m</constructor-arg>
+  </register>
+  
+  <loggerRepository class="org.as2lib.env.log.repository.LoggerHierarchy">
+    <logger name="main" level="ERROR">
+      <handler><constructor-arg id="stringifier"/></handler>
+    </logger>
+    <logger name="org.as2lib.sample.filebrowser">
+      <handler class="org.as2lib.env.log.handler.LevelFilterHandler">
+        <constructor-arg id="handler"><constructor-arg id="stringifier"/></constructor-arg>
+        <constructor-arg id="level">INFO</constructor-arg>
+      </handler>
+    </logger>
+    <logger name="org.as2lib.env.log.aspect.TraceLoggingAspect">
+      <handler>
+        <constructor-arg class="org.as2lib.env.log.stringifier.SimpleLogMessageStringifier"/>
+      </handler>
+    </logger>
+  </loggerRepository>
+  
+</logging>

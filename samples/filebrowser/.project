@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<projectDescription>
+	<name>filebrowser</name>
+	<comment></comment>
+	<projects>
+	</projects>
+	<buildSpec>
+	</buildSpec>
+	<natures>
+		<nature>com.pf.fdt.FlashNature</nature>
+	</natures>
+	<linkedResources>
+		<link>
+			<name>as2unit</name>
+			<type>2</type>
+			<location>as2unit</location>
+		</link>
+		<link>
+			<name>core</name>
+			<type>2</type>
+			<location>D:/Programming/Flash/mtasc/std</location>
+		</link>
+		<link>
+			<name>debugit</name>
+			<type>2</type>
+			<location>debugit</location>
+		</link>
+		<link>
+			<name>Core Library [Flash 8]</name>
+			<type>2</type>
+			<location>flash8</location>
+		</link>
+		<link>
+			<name>as2lib</name>
+			<type>2</type>
+			<location>as2lib</location>
+		</link>
+	</linkedResources>
+</projectDescription>

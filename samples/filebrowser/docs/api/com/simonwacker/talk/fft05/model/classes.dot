@@ -1,0 +1,15 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  MalformedFilePathException[
+    label="MalformedFilePathException",
+    URL="MalformedFilePathException.html",
+    tooltip="org.as2lib.sample.filebrowser.model.MalformedFilePathException",
+    shape="record"
+  ];
+  File[
+    label="File",
+    URL="File.html",
+    tooltip="org.as2lib.sample.filebrowser.model.File",
+    shape="record"
+  ];
+}

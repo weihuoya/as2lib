@@ -1,0 +1,24 @@
+strict digraph interface_diagram {
+  rankdir=LR;
+  LoadErrorListener[
+    label="LoadErrorListener",
+    URL="LoadErrorListener.html",
+    tooltip="org.as2lib.sample.filebrowser.load.LoadErrorListener",
+    fontname="Times-Italic",
+    shape="record"
+  ];
+  LoadCompleteListener[
+    label="LoadCompleteListener",
+    URL="LoadCompleteListener.html",
+    tooltip="org.as2lib.sample.filebrowser.load.LoadCompleteListener",
+    fontname="Times-Italic",
+    shape="record"
+  ];
+  FileLoader[
+    label="FileLoader",
+    URL="FileLoader.html",
+    tooltip="org.as2lib.sample.filebrowser.load.FileLoader",
+    fontname="Times-Italic",
+    shape="record"
+  ];
+}

@@ -1,0 +1,17 @@
+strict digraph interface_diagram {
+  rankdir=LR;
+  FileView[
+    label="FileView",
+    URL="FileView.html",
+    tooltip="org.as2lib.sample.filebrowser.view.file.FileView",
+    fontname="Times-Italic",
+    shape="record"
+  ];
+  ErrorListener[
+    label="ErrorListener",
+    URL="ErrorListener.html",
+    tooltip="org.as2lib.sample.filebrowser.view.file.ErrorListener",
+    fontname="Times-Italic",
+    shape="record"
+  ];
+}

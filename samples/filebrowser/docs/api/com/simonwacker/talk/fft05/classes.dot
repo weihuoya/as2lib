@@ -1,0 +1,15 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  FileBrowserException[
+    label="FileBrowserException",
+    URL="FileBrowserException.html",
+    tooltip="org.as2lib.sample.filebrowser.FileBrowserException",
+    shape="record"
+  ];
+  FileBrowser[
+    label="FileBrowser",
+    URL="FileBrowser.html",
+    tooltip="org.as2lib.sample.filebrowser.FileBrowser",
+    shape="record"
+  ];
+}

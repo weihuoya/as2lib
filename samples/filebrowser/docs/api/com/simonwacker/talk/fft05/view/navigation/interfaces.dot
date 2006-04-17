@@ -1,0 +1,10 @@
+strict digraph interface_diagram {
+  rankdir=LR;
+  ReleaseListener[
+    label="ReleaseListener",
+    URL="ReleaseListener.html",
+    tooltip="org.as2lib.sample.filebrowser.view.navigation.ReleaseListener",
+    fontname="Times-Italic",
+    shape="record"
+  ];
+}

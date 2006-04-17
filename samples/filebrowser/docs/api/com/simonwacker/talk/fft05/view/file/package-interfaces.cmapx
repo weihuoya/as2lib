@@ -1,0 +1,4 @@
+<map id="interface_diagram" name="interface_diagram">
+<area shape="rect" href="FileView.html" title="org.as2lib.sample.filebrowser.view.file.FileView" alt="" coords="27,79,115,127" />
+<area shape="rect" href="ErrorListener.html" title="org.as2lib.sample.filebrowser.view.file.ErrorListener" alt="" coords="8,7,133,55" />
+</map>

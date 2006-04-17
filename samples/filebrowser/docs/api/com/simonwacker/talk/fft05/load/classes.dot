@@ -1,0 +1,37 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  XmlLoader[
+    label="XmlLoader",
+    URL="XmlLoader.html",
+    tooltip="org.as2lib.sample.filebrowser.load.XmlLoader",
+    shape="record"
+  ];
+  VideoLoader[
+    label="VideoLoader",
+    URL="VideoLoader.html",
+    tooltip="org.as2lib.sample.filebrowser.load.VideoLoader",
+    shape="record"
+  ];
+  TextLoader[
+    label="TextLoader",
+    URL="TextLoader.html",
+    tooltip="org.as2lib.sample.filebrowser.load.TextLoader",
+    shape="record"
+  ];
+  ImageLoader[
+    label="ImageLoader",
+    URL="ImageLoader.html",
+    tooltip="org.as2lib.sample.filebrowser.load.ImageLoader",
+    shape="record"
+  ];
+  AbstractFileLoader[
+    label="AbstractFileLoader",
+    URL="AbstractFileLoader.html",
+    tooltip="org.as2lib.sample.filebrowser.load.AbstractFileLoader",
+    shape="record"
+  ];
+  AbstractFileLoader -> XmlLoader;
+  AbstractFileLoader -> VideoLoader;
+  AbstractFileLoader -> TextLoader;
+  AbstractFileLoader -> ImageLoader;
+}

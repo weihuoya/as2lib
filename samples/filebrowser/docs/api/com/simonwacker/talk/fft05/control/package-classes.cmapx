@@ -1,0 +1,5 @@
+<map id="class_diagram" name="class_diagram">
+<area shape="rect" href="Scene.html" title="org.as2lib.sample.filebrowser.control.Scene" alt="" coords="59,151,131,199" />
+<area shape="rect" href="PreviousFileListener.html" title="org.as2lib.sample.filebrowser.control.PreviousFileListener" alt="" coords="8,79,181,127" />
+<area shape="rect" href="NextFileListener.html" title="org.as2lib.sample.filebrowser.control.NextFileListener" alt="" coords="21,7,168,55" />
+</map>
