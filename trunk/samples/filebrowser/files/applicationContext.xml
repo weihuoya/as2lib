@@ -8,7 +8,7 @@
 
 <beans>
 	
-	<bean id="LocaleManager" class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
+	<bean class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
 		<defaultLocale>en</defaultLocale>
 		<locales>
 			<array>
