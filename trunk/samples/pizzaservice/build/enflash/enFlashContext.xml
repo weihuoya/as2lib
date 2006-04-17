@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+
+<beans>
+	
+	<bean id="view" class="org.as2lib.sample.pizza.view.enflash.EnFlashView" init-method="init">
+		<addBar>
+			<MenuBar/>
+		</addBar>
+	</bean>
+	
+</beans>
