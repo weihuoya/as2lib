@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project name="AsWingLib" default="AsWingLib" basedir="." >
+    <property name="mtasc" value="mtasc.exe"/>
+    <property name="aswing" value="."/>
+    <target name="AsWingLib" description="Compiles the AsWing library">
+      <exec executable="${mtasc}" dir=".">
+        <arg line="-cp ${aswing}/src -swf AsWingLib.swf -header 1:1:1  -pack org/aswing -pack org/aswing/awml -pack org/aswing/awml/common -pack org/aswing/awml/component -pack org/aswing/awml/layout -pack org/aswing/border -pack org/aswing/event -pack org/aswing/geom -pack org/aswing/graphics -pack org/aswing/plaf -pack org/aswing/plaf/asw -pack org/aswing/plaf/asw/border -pack org/aswing/plaf/asw/frame -pack org/aswing/plaf/asw/icon -pack org/aswing/plaf/basic -pack org/aswing/plaf/basic/accordion -pack org/aswing/plaf/basic/border -pack org/aswing/plaf/basic/frame -pack org/aswing/plaf/basic/icon -pack org/aswing/plaf/winxp -pack org/aswing/plaf/winxp/border -pack org/aswing/plaf/winxp/frame -pack org/aswing/plaf/winxp/icon -pack org/aswing/util -version 8"/>
+      </exec>
+    </target>
+</project>

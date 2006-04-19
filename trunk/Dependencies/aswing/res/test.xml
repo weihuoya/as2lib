@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<aswing xmlns="http://www.aswing.org" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.aswing.org ../awml.xsd ">
+    <frame id="mainFrame" owner="_root" enabled="true" width="500" height="200" closable="false" title="Test Title" resizable="true">
+        <accordion selected-index="0">
+            <tab title="tab 1" tool-tip="some text">
+                <text-area columns="10" rows="5" html="true" css-file="../res/test.css">
+                    <text><![CDATA[Link: <a href="#">sample</a>]]></text>
+                </text-area>
+           	</tab>
+           	<tab title="tab 2">
+           		<toggle-button text="sample button">
+           			<icon>
+	       				<load-icon url="../res/test.jpg" width="20" height="20" scale="true"/>
+					</icon>
+           			<roll-over-icon>
+		                <offset-icon offset-x="20">
+		       				<load-icon url="../res/test.jpg" width="20" height="20" scale="true"/>
+		       			</offset-icon>
+					</roll-over-icon>
+					<selected-icon>
+					</selected-icon>
+           		</toggle-button>
+            </tab>
+        </accordion>
+        <soft-box-layout axis="y"/>
+    </frame>
+</aswing>

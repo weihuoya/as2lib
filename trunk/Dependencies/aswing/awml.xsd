@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2006 sp2 U (http://www.altova.com) by guide (HOME) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.aswing.org" targetNamespace="http://www.aswing.org" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <xs:complexType name="Component">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="BorderList" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="background" type="Color" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="foreground" type="Color" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="font" type="Font" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="enabled" type="xs:boolean" use="optional" default="true"/>
+        <xs:attribute name="visible" type="xs:boolean" use="optional" default="true"/>
+        <xs:attribute name="focus" type="xs:boolean" use="optional" default="false"/>
+        <xs:attribute name="max-width" type="xs:int" use="optional"/>
+        <xs:attribute name="max-height" type="xs:int" use="optional"/>
+        <xs:attribute name="min-width" type="xs:int" use="optional"/>
+        <xs:attribute name="min-height" type="xs:int" use="optional"/>
+        <xs:attribute name="width" type="xs:int" use="optional"/>
+        <xs:attribute name="height" type="xs:int" use="optional"/>
+        <xs:attribute name="preferred-width" type="xs:int" use="optional"/>
+        <xs:attribute name="preferred-height" type="xs:int" use="optional"/>
+        <xs:attribute name="opaque" type="xs:boolean" use="optional" default="true"/>
+        <xs:attribute name="tool-tip" type="xs:string" use="optional"/>
+        <xs:attribute name="hand-cursor" type="xs:boolean" use="optional" default="true"/>
+        <xs:attribute name="x" type="xs:int" use="optional"/>
+        <xs:attribute name="y" type="xs:int" use="optional"/>
+        <xs:attribute name="constraint" type="ComponentConstraint" use="optional"/>
+        <xs:attribute name="trigger-enabled" type="xs:boolean" use="optional" default="true"/><xs:attribute
+            name="alpha" type="xs:int" use="optional">
+</xs:attribute>
+    	<xs:attribute name="id" type="xs:string" use="optional"></xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="Container">
+        <xs:complexContent>
+            <xs:extension base="Component">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:group ref="LayoutList" minOccurs="0" maxOccurs="1"/>
+                    <xs:group ref="ComponentList" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TextComponent">
+        <xs:complexContent>
+            <xs:extension base="Component">
+            	<xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="text-format" type="TextFormat" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="css" type="xs:string" minOccurs="0" maxOccurs="1"></xs:element>
+                    <xs:element name="text" type="xs:string"
+                    	minOccurs="0" maxOccurs="1">
+                    </xs:element>
+            	</xs:sequence>
+                <xs:attribute name="editable" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="html" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="text" type="xs:string" use="optional"/>
+                <xs:attribute name="max-chars" type="xs:int" use="optional"/>
+                <xs:attribute name="password" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="restrict" type="xs:string" use="optional"/>
+                <xs:attribute name="css-file" type="xs:string" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TextField">
+        <xs:complexContent>
+            <xs:extension base="TextComponent">
+                <xs:attribute name="columns" type="xs:int" use="optional" default="0"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TextArea">
+        <xs:complexContent>
+            <xs:extension base="TextComponent">
+                <xs:attribute name="columns" type="xs:int" use="optional" default="0"/>
+                <xs:attribute name="rows" type="xs:int" use="optional" default="0"/>
+                <xs:attribute name="multiline" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="word-wrap" type="xs:boolean" use="optional" default="true"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Separator">
+        <xs:complexContent>
+            <xs:extension base="Component">
+                <xs:attribute name="orientation" type="SeparatorOrientation" use="optional" default="horizontal"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ProgressBar">
+        <xs:complexContent>
+            <xs:extension base="Component">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:group ref="IconList"></xs:group>
+                </xs:sequence>
+                <xs:attribute name="indeterminate" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="maximum" type="xs:int" use="optional"/>
+                <xs:attribute name="minimum" type="xs:int"/>
+                <xs:attribute name="value" type="xs:int"/>
+                <xs:attribute name="orientation" type="ProgressBarOrientation" use="optional" default="horizontal"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Label">
+        <xs:complexContent>
+            <xs:extension base="Component">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:group ref="IconList"></xs:group>
+                </xs:sequence>
+                <xs:attribute name="horizontal-align" type="LabelHorizontalAlign" use="optional"/>
+                <xs:attribute name="vertical-align" type="LabelVerticalAlign" use="optional"/>
+                <xs:attribute name="horizontal-position" type="LabelHorizontalAlign" use="optional"/>
+                <xs:attribute name="vertical-position" type="LabelVerticalAlign" use="optional"/>
+                <xs:attribute name="icon-text-gap" type="xs:int" use="optional"/>
+                <xs:attribute name="text" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AbstractButton">
+        <xs:complexContent>
+            <xs:extension base="Component">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="margins" type="Insets" minOccurs="0"/>
+                    <xs:group ref="IconList"></xs:group>
+                    <xs:element name="icon" type="IconWrapper" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="disabled-icon" type="IconWrapper" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="pressed-icon" type="IconWrapper" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="roll-over-icon" type="IconWrapper" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="horizontal-align" type="ButtonHorizontalAlign" use="optional"/>
+                <xs:attribute name="vertical-align" type="ButtonVerticalAlign" use="optional"/>
+                <xs:attribute name="horizontal-position" type="ButtonHorizontalAlign" use="optional"/>
+                <xs:attribute name="vertical-position" type="ButtonVerticalAlign" use="optional"/>
+                <xs:attribute name="icon-text-gap" type="xs:int" use="optional"/>
+                <xs:attribute name="text" type="xs:string" use="optional"/>
+                <xs:attribute name="roll-over-enabled" type="xs:boolean" use="optional" default="true"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Button">
+        <xs:complexContent>
+            <xs:extension base="AbstractButton"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ToggleButton">
+        <xs:complexContent>
+            <xs:extension base="AbstractButton">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="selected-icon" type="IconWrapper" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="disabled-selected-icon" type="IconWrapper" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="roll-over-selected-icon" type="IconWrapper" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="selected" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="group-id" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RadioButton">
+        <xs:complexContent>
+            <xs:extension base="ToggleButton"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CheckBox">
+        <xs:complexContent>
+            <xs:extension base="ToggleButton"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Window">
+        <xs:complexContent>
+            <xs:extension base="Container">
+                <xs:attribute name="owner" type="xs:string" use="optional" default="_root"/>
+                <xs:attribute name="active" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="modal" type="xs:boolean" use="optional" default="true"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Frame">
+        <xs:complexContent>
+            <xs:extension base="Window">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="maximized-bounds" type="Bounds" minOccurs="0" maxOccurs="1"/>
+                    <xs:group ref="IconList"></xs:group>
+                </xs:sequence>          
+                <xs:attribute name="closable" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="draggable" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="resizable" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="title" type="xs:string" use="optional"/>
+                <xs:attribute name="state" type="FrameState" use="optional" default="normal"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ToolBar">
+        <xs:complexContent>
+            <xs:extension base="Container">
+            	<xs:sequence minOccurs="0" maxOccurs="unbounded">
+            		<xs:element name="margins" type="Insets" minOccurs="0" maxOccurs="1"></xs:element>
+            	</xs:sequence>
+            	<xs:attribute name="floatable" type="xs:boolean" use="optional"></xs:attribute>
+            	<xs:attribute name="orientation" type="ToolBarOrientation"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ScrollPane">
+        <xs:complexContent>
+            <xs:extension base="Component">
+            	<xs:sequence minOccurs="0" maxOccurs="unbounded">
+            		<xs:element name="horizontal-scroll-bar" type="ScrollBar" minOccurs="0" maxOccurs="1"></xs:element>
+            		<xs:element name="vertical-scroll-bar" type="ScrollBar" minOccurs="0" maxOccurs="1"></xs:element>
+            		<xs:group ref="ComponentList"></xs:group>
+            	</xs:sequence>
+            	<xs:attribute name="horizontal-scroll-bar-policy" type="ScrollPaneScrollBarPolicy" use="optional"></xs:attribute>
+            	<xs:attribute name="vertical-scroll-bar-policy" type="ScrollPaneScrollBarPolicy" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ScrollBar">
+        <xs:complexContent>
+            <xs:extension base="Component">
+            	<xs:attribute name="block-imcrement" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="maximim" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="minimum" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="unit-increment" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="value" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="extent" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="orientation" type="ScrollBarOrientation" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Panel">
+    	<xs:complexContent>
+    		<xs:extension base="Container" />
+    	</xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="List">
+    	<xs:complexContent>
+    		<xs:extension base="Component">
+    			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+    				<xs:element name="list-items" type="ListItems" minOccurs="0" maxOccurs="1"></xs:element>
+    			</xs:sequence>
+    			<xs:attribute name="first-visible-index" type="xs:int" use="optional"></xs:attribute>
+    			<xs:attribute name="last-visible-index" type="xs:int" use="optional"></xs:attribute>
+    			<xs:attribute name="preffered-width-for-shared-cells" type="xs:int" use="optional"></xs:attribute>
+    			<xs:attribute name="selected-index" type="xs:int" use="optional"></xs:attribute>
+    			<xs:attribute name="selected-indices" type="ListSelectedIndices" use="optional"></xs:attribute>
+    			<xs:attribute name="selected-item" type="xs:string" use="optional"></xs:attribute>
+    			<xs:attribute name="selection-mode"
+    				type="ListSelectionMode" use="optional">
+    			</xs:attribute>
+    		</xs:extension>
+    	</xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ComboBox">
+        <xs:complexContent>
+            <xs:extension base="Component">
+    			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+    				<xs:element name="list-items" type="ListItems" minOccurs="0" maxOccurs="1"></xs:element>
+    			</xs:sequence>
+            	<xs:attribute name="editable" type="xs:boolean" use="optional"></xs:attribute>
+            	<xs:attribute name="maximum-row-count" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="selected-index" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="selected-item" type="xs:string" use="optional"></xs:attribute>
+            	<xs:attribute name="popup-visible" type="xs:boolean" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AbstractTabbedPane">
+        <xs:complexContent>
+            <xs:extension base="Component">
+            	<xs:sequence minOccurs="0" maxOccurs="unbounded">
+            	<xs:element name="margins" type="Insets" minOccurs="0" maxOccurs="1"></xs:element>
+            	<xs:element name="tab" type="Tab" minOccurs="0" maxOccurs="unbounded"></xs:element>
+            	</xs:sequence>
+            	<xs:attribute name="horizontal-align" type="TabPaneHorizontalAlign" use="optional"></xs:attribute>
+            	<xs:attribute name="vertical-align" type="TabPaneVerticalAlign" use="optional"></xs:attribute>
+            	<xs:attribute name="horizontal-text-position" type="TabPaneHorizontalTextPosition" use="optional"></xs:attribute>
+            	<xs:attribute name="vertical-text-position" type="TabPaneVerticalTextPosition" use="optional"></xs:attribute>
+            	<xs:attribute name="icon-text-gap" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="selected-index" type="xs:int" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Accordion">
+        <xs:complexContent>
+            <xs:extension base="AbstractTabbedPane"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TabbedPane">
+        <xs:complexContent>
+            <xs:extension base="AbstractTabbedPane">
+            	<xs:attribute name="tab-placement" type="TabPlacement" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="FloorPane">
+        <xs:complexContent>
+            <xs:extension base="Container">
+            	<xs:attribute name="horizontal-align" type="FloorPaneHorizontalAlign" use="optional"></xs:attribute>
+            	<xs:attribute name="vertical-align" type="FloorPaneVerticalAlign" use="optional"></xs:attribute>
+            	<xs:attribute name="offset-x" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="offset-y" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="mask-floor" type="xs:boolean" use="optional"></xs:attribute>
+            	<xs:attribute name="scale-image" type="xs:boolean" use="optional"></xs:attribute>
+            	<xs:attribute name="preferred-size-strategy" type="FloorPanePreferredSizeStrategy" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LoadPane">
+        <xs:complexContent>
+            <xs:extension base="FloorPane">
+            	<xs:attribute name="url" type="xs:string" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AttachPane">
+        <xs:complexContent>
+            <xs:extension base="FloorPane">
+            	<xs:attribute name="symbol-id" type="xs:string" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SoftBox">
+        <xs:complexContent>
+            <xs:extension base="Panel">
+                <xs:sequence/>
+                <xs:attribute name="axis" type="SoftBoxAxis" use="optional"></xs:attribute>
+                <xs:attribute name="gap" type="xs:int" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Box">
+        <xs:complexContent>
+            <xs:extension base="Panel">
+                <xs:sequence/>
+                <xs:attribute name="axis" type="BoxAxis" use="optional"></xs:attribute>
+                <xs:attribute name="gap" type="xs:int" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ViewPort">
+        <xs:complexContent>
+            <xs:extension base="Component">
+    			<xs:sequence minOccurs="0" maxOccurs="unbounded">
+    				<xs:group ref="ComponentList"></xs:group>
+    			</xs:sequence>
+            	<xs:attribute name="horizontal-block-increment" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="horizontal-unit-increment" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="vertical-block-increment" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="vertical-unit-increment" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="view-position-x" type="xs:int" use="optional"></xs:attribute>
+            	<xs:attribute name="view-position-y" type="xs:int" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:element name="aswing">
+        <xs:complexType>
+            <xs:choice>
+                <xs:element name="window" type="Window"/>
+                <xs:element name="frame" type="Frame"/>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="EmptyLayout"/>
+    <xs:complexType name="SoftBoxLayout">
+        <xs:complexContent>
+            <xs:extension base="EmptyLayout">
+                <xs:sequence/>
+                <xs:attribute name="axis" type="SoftBoxAxis" use="optional" default="x"/>
+                <xs:attribute name="gap" type="xs:int" use="optional"/>
+                <xs:attribute name="align" type="SoftBoxAlign" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GridLayout">
+        <xs:complexContent>
+            <xs:extension base="EmptyLayout">
+                <xs:sequence/>
+                <xs:attribute name="rows" type="xs:int" use="optional"/>
+                <xs:attribute name="columns" type="xs:int" use="optional"/>
+                <xs:attribute name="hgap" type="xs:int" use="optional"/>
+                <xs:attribute name="vgap" type="xs:int" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="FlowLayout">
+        <xs:complexContent>
+            <xs:extension base="EmptyLayout">
+                <xs:sequence/>
+                <xs:attribute name="align" type="FlowLayoutAlign" use="optional" default="left"/>
+                <xs:attribute name="hgap" type="xs:int" use="optional"/>
+                <xs:attribute name="vgap" type="xs:int" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BoxLayout">
+        <xs:complexContent>
+            <xs:extension base="EmptyLayout">
+                <xs:sequence/>
+                <xs:attribute name="axis" type="BoxAxis" use="optional" default="x"/>
+                <xs:attribute name="gap" type="xs:int" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BorderLayout">
+        <xs:complexContent>
+            <xs:extension base="EmptyLayout">
+                <xs:sequence/>
+                <xs:attribute name="hgap" type="xs:int" use="optional"/>
+                <xs:attribute name="vgap" type="xs:int" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Font">
+        <xs:attribute name="name" type="xs:string" use="optional"></xs:attribute>
+        <xs:attribute name="size" type="xs:int" use="optional"></xs:attribute>
+        <xs:attribute name="bold" type="xs:boolean" use="optional"></xs:attribute>
+        <xs:attribute name="italic" type="xs:boolean" use="optional"></xs:attribute>
+        <xs:attribute name="underline" type="xs:boolean" use="optional"></xs:attribute>
+        <xs:attribute name="embeded" type="xs:boolean" use="optional"></xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="TextFormat">
+    	<xs:sequence minOccurs="0" maxOccurs="unbounded">
+    		<xs:element name="font" type="Font" minOccurs="0" maxOccurs="1"></xs:element>
+    		<xs:element name="color" type="Color" minOccurs="0" maxOccurs="1"></xs:element>
+    	</xs:sequence>
+    	<xs:attribute name="align" type="TextFormatAlign"
+    		use="optional">
+    	</xs:attribute>
+    	<xs:attribute name="block-indent" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="bold" type="xs:boolean" use="optional"></xs:attribute>
+    	<xs:attribute name="bullet" type="xs:boolean" use="optional"></xs:attribute>
+    	<xs:attribute name="embedded-fonts" type="xs:boolean" use="optional"></xs:attribute>
+    	<xs:attribute name="indent" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="italic" type="xs:boolean" use="optional"></xs:attribute>
+    	<xs:attribute name="left-margin" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="name" type="xs:string" use="optional"></xs:attribute>
+    	<xs:attribute name="right-margin" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="size" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="underline" type="xs:boolean" use="optional"></xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="Color">
+        <xs:attribute name="rgb" type="RGB" use="optional"/>
+        <xs:attribute name="alpha" type="xs:int" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="Point">
+        <xs:attribute name="x" type="xs:int" use="optional"/>
+        <xs:attribute name="y" type="xs:int" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="Insets">
+        <xs:attribute name="top" type="xs:int" use="optional"/>
+        <xs:attribute name="left" type="xs:int" use="optional"/>
+        <xs:attribute name="right" type="xs:int" use="optional"/>
+        <xs:attribute name="bottom" type="xs:int" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="Bounds">
+        <xs:attribute name="x" type="xs:int" use="optional"/>
+        <xs:attribute name="y" type="xs:int" use="optional"/>
+        <xs:attribute name="width" type="xs:int" use="optional"/>
+        <xs:attribute name="height" type="xs:int" use="optional"/>
+    </xs:complexType>
+    <xs:complexType name="DecorateBorder">
+        <xs:sequence minOccurs="0" maxOccurs="unbounded">
+            <xs:group ref="BorderList" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TitledBorder">
+        <xs:complexContent>
+            <xs:extension base="DecorateBorder">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="font" type="Font" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="color" type="Color" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="line-color" type="Color" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="line-light-color" type="Color"></xs:element>
+                </xs:sequence>
+                <xs:attribute name="title" type="xs:string" use="optional"></xs:attribute>
+                <xs:attribute name="position" type="TitledBorderPosition" use="optional"></xs:attribute>
+                <xs:attribute name="align" type="TitledBorderAlign"
+                	use="optional">
+                </xs:attribute>
+                <xs:attribute name="beveled" type="xs:boolean" use="optional"></xs:attribute>
+                <xs:attribute name="edge" type="xs:int" use="optional"></xs:attribute>
+                <xs:attribute name="line-thickness" type="xs:int" use="optional"></xs:attribute>
+                <xs:attribute name="round" type="xs:int" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SimpleTitledBorder">
+        <xs:complexContent>
+            <xs:extension base="DecorateBorder">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="font" type="Font" minOccurs="0" maxOccurs="1"></xs:element>
+                <xs:element name="color" type="Color" minOccurs="0" maxOccurs="1"></xs:element>
+                </xs:sequence>
+                <xs:attribute name="title" type="xs:string" use="optional"></xs:attribute>
+                <xs:attribute name="position" type="TitledBorderPosition" use="optional"></xs:attribute>
+                <xs:attribute name="align" type="TitledBorderAlign" use="optional"></xs:attribute>
+                <xs:attribute name="offset" type="xs:int" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SideLineBorder">
+        <xs:complexContent>
+            <xs:extension base="DecorateBorder">
+                <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:element name="color" type="Color" minOccurs="0" maxOccurs="1"></xs:element>
+                </xs:sequence>
+                <xs:attribute name="side" type="LineBorderSide" use="optional"></xs:attribute>
+                <xs:attribute name="thickness" type="xs:int" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LineBorder">
+        <xs:complexContent>
+            <xs:extension base="DecorateBorder">
+                <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:element name="color" type="Color" minOccurs="0" maxOccurs="1"></xs:element>
+                </xs:sequence>
+                <xs:attribute name="thickness" type="xs:int" use="optional"></xs:attribute>
+                <xs:attribute name="round" type="xs:int" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="EmptyBorder">
+        <xs:complexContent>
+            <xs:extension base="DecorateBorder">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="insets" type="Insets" minOccurs="0" maxOccurs="1"></xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BevelBorder">
+        <xs:complexContent>
+            <xs:extension base="DecorateBorder">
+                <xs:sequence minOccurs="0" maxOccurs="unbounded">
+                    <xs:element name="highlight-outer-color" type="Color" minOccurs="0" maxOccurs="1"></xs:element>
+                    <xs:element name="highlight-inner-color" type="Color" minOccurs="0" maxOccurs="1">
+                    </xs:element>
+                    <xs:element name="shadow-outer-color" type="Color" minOccurs="0"></xs:element>
+                    <xs:element name="shadow-inner-color" type="Color" minOccurs="0" maxOccurs="1">
+                    </xs:element>
+                </xs:sequence>
+                <xs:attribute name="type" type="BevelBorderType" use="optional"></xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ListItem">
+    	<xs:attribute name="value" type="xs:string" use="required"></xs:attribute>
+    	<xs:attribute name="type" type="ListItemType" use="optional" default="string"></xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="ListItems">
+    	<xs:sequence minOccurs="0" maxOccurs="unbounded">
+    		<xs:element name="list-item" type="ListItem" minOccurs="0" maxOccurs="unbounded"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Tab">
+    	<xs:sequence minOccurs="0" maxOccurs="1">
+    		<xs:group ref="ComponentList" minOccurs="0" maxOccurs="1"/>
+            <xs:group ref="IconList"></xs:group>
+    	</xs:sequence>
+    	<xs:attribute name="title" type="xs:string" use="optional"></xs:attribute>
+    	<xs:attribute name="tool-tip" type="xs:string"></xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="AttachIcon">
+    	<xs:attribute name="width" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="height" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="scale" type="xs:boolean" use="optional"></xs:attribute>
+    	<xs:attribute name="linkage" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="LoadIcon">
+    	<xs:attribute name="width" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="height" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="scale" type="xs:boolean" use="optional"></xs:attribute>
+    	<xs:attribute name="url" type="xs:string" use="required"></xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="OffsetIcon">
+		<xs:sequence minOccurs="0" maxOccurs="1">
+    		<xs:group ref="IconList" minOccurs="0" maxOccurs="1"/>
+    	</xs:sequence>    
+    	<xs:attribute name="offset-x" type="xs:int" use="optional"></xs:attribute>
+    	<xs:attribute name="offset-y" type="xs:int" use="optional"></xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="IconWrapper">
+		<xs:sequence minOccurs="0" maxOccurs="1">
+    		<xs:group ref="IconList" minOccurs="0" maxOccurs="1"/>
+    	</xs:sequence>    
+    </xs:complexType>
+    <xs:simpleType name="FrameState">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="normal"/>
+            <xs:enumeration value="iconified"/>
+            <xs:enumeration value="maximized"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FlowLayoutAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SoftBoxAxis">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="x"/>
+            <xs:enumeration value="y"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="BoxAxis">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="x"/>
+            <xs:enumeration value="y"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ComponentConstraint">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="north"/>
+            <xs:enumeration value="east"/>
+            <xs:enumeration value="west"/>
+            <xs:enumeration value="south"/>
+            <xs:enumeration value="center"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SeparatorOrientation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="horizontal"/>
+            <xs:enumeration value="vertical"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ProgressBarOrientation">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="horizontal"/>
+            <xs:enumeration value="vertical"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LabelHorizontalAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LabelVerticalAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="bottom"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ButtonHorizontalAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="left"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="right"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ButtonVerticalAlign">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="top"/>
+            <xs:enumeration value="center"/>
+            <xs:enumeration value="bottom"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RGBAlias">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="black"/>
+            <xs:enumeration value="blue"/>
+            <xs:enumeration value="cyan"/>
+            <xs:enumeration value="dark-grey"/>
+            <xs:enumeration value="gray"/>
+            <xs:enumeration value="green"/>
+            <xs:enumeration value="light-grey"/>
+            <xs:enumeration value="magenta"/>
+            <xs:enumeration value="orange"/>
+            <xs:enumeration value="pink"/>
+            <xs:enumeration value="red"/>
+            <xs:enumeration value="white"/>
+            <xs:enumeration value="yellow"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RGBCode">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9A-Fa-f]{1,6}"></xs:pattern>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RGB">
+        <xs:union memberTypes="RGBAlias RGBCode"></xs:union>
+    </xs:simpleType>
+    <xs:simpleType name="BevelBorderType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="raised"/>
+            <xs:enumeration value="lowered"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LineBorderSide">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="north"/>
+            <xs:enumeration value="south"/>
+            <xs:enumeration value="west"/>
+            <xs:enumeration value="east"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TitledBorderAlign">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="left"></xs:enumeration>
+    		<xs:enumeration value="center"></xs:enumeration>
+    		<xs:enumeration value="right"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TitledBorderPosition">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="top"></xs:enumeration>
+    		<xs:enumeration value="bottom"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TextFormatAlign">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="left"></xs:enumeration>
+    		<xs:enumeration value="center"></xs:enumeration>
+    		<xs:enumeration value="right"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ToolBarOrientation">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="horizontal"></xs:enumeration>
+    		<xs:enumeration value="vertical"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ScrollBarOrientation">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="horizontal"></xs:enumeration>
+    		<xs:enumeration value="vertical"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ListSelectedIndices">
+    	<xs:list itemType="xs:int"></xs:list>
+    </xs:simpleType>
+    <xs:simpleType name="ListSelectionMode">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="single"></xs:enumeration>
+    		<xs:enumeration value="multiple"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ListItemType">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="string"></xs:enumeration>
+    		<xs:enumeration value="number"></xs:enumeration>
+    		<xs:enumeration value="boolean"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TabPaneHorizontalAlign">
+	    <xs:restriction base="xs:string">
+	    	<xs:enumeration value="left"></xs:enumeration>
+	    	<xs:enumeration value="center"></xs:enumeration>
+	    	<xs:enumeration value="right"></xs:enumeration>
+	    </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TabPaneVerticalAlign">
+	    <xs:restriction base="xs:string">
+	    	<xs:enumeration value="top"></xs:enumeration>
+	    	<xs:enumeration value="center"></xs:enumeration>
+	    	<xs:enumeration value="bottom"></xs:enumeration>
+	    </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TabPaneVerticalTextPosition">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="top"></xs:enumeration>
+    		<xs:enumeration value="center"></xs:enumeration>
+    		<xs:enumeration value="bottom"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TabPaneHorizontalTextPosition">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="left"></xs:enumeration>
+    		<xs:enumeration value="center"></xs:enumeration>
+    		<xs:enumeration value="right"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TabPlacement">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="top"></xs:enumeration>
+    		<xs:enumeration value="bottom"></xs:enumeration>
+    		<xs:enumeration value="left"></xs:enumeration>
+    		<xs:enumeration value="right"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:group name="LayoutList">
+        <xs:choice>
+            <xs:element name="soft-box-layout" type="SoftBoxLayout" minOccurs="0"/>
+            <xs:element name="grid-layout" type="GridLayout" minOccurs="0"/>
+            <xs:element name="flow-layout" type="FlowLayout" minOccurs="0"/>
+            <xs:element name="box-layout" type="BoxLayout" minOccurs="0"/>
+            <xs:element name="border-layout" type="BorderLayout" minOccurs="0"/>
+            <xs:element name="empty-layout" type="EmptyLayout" minOccurs="0"/>
+        </xs:choice>
+    </xs:group>
+    <xs:group name="BorderList">
+        <xs:choice>
+            <xs:element name="titled-border" type="TitledBorder"/>
+            <xs:element name="simple-titled-border" type="SimpleTitledBorder"/>
+            <xs:element name="side-line-border" type="SideLineBorder"/>
+            <xs:element name="line-border" type="LineBorder"/>
+            <xs:element name="empty-border" type="EmptyBorder"/>
+            <xs:element name="bevel-border" type="BevelBorder"/>
+        </xs:choice>
+    </xs:group>    
+    <xs:group name="ComponentList">
+    	<xs:sequence>
+	         <xs:element name="text-field" type="TextField" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="text-area" type="TextArea" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="separator" type="Separator" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="progress-bar" type="ProgressBar" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="label" type="Label" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="button" type="Button" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="toggle-button" type="ToggleButton" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="check-box" type="CheckBox" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="radio-button" type="RadioButton" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="view-port" type="ViewPort" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="tool-bar" type="ToolBar" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="scroll-pane" type="ScrollPane" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="scroll-bar" type="ScrollBar" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="panel" type="Panel" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="soft-box" type="SoftBox" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="box" type="Box" minOccurs="0" maxOccurs="unbounded" />
+	         <xs:element name="list" type="List" minOccurs="0" maxOccurs="unbounded" />
+	         <xs:element name="combo-box" type="ComboBox" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="accordion" type="Accordion" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="tabbed-pane" type="TabbedPane" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="load-pane" type="LoadPane" minOccurs="0" maxOccurs="unbounded"/>
+	         <xs:element name="attach-pane" type="AttachPane" minOccurs="0" maxOccurs="unbounded"/>
+    	</xs:sequence>
+    </xs:group>
+    <xs:group name="IconList">
+    	<xs:sequence>
+    		<xs:element name="attach-icon" type="AttachIcon" minOccurs="0" maxOccurs="1"/>
+    		<xs:element name="load-icon" type="LoadIcon" minOccurs="0" maxOccurs="1"/>
+    		<xs:element name="offset-icon" type="OffsetIcon" minOccurs="0" maxOccurs="1"/>
+    	</xs:sequence>
+    </xs:group>
+    <xs:simpleType name="SoftBoxAlign">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="top"></xs:enumeration>
+    		<xs:enumeration value="bottom"></xs:enumeration>
+    		<xs:enumeration value="center"></xs:enumeration>
+    		<xs:enumeration value="left"></xs:enumeration>
+    		<xs:enumeration value="right"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FloorPaneVerticalAlign">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="top"></xs:enumeration>
+    		<xs:enumeration value="center"></xs:enumeration>
+    		<xs:enumeration value="bottom"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FloorPaneHorizontalAlign">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="left"></xs:enumeration>
+    		<xs:enumeration value="center"></xs:enumeration>
+    		<xs:enumeration value="right"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FloorPanePreferredSizeStrategy">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="both"></xs:enumeration>
+    		<xs:enumeration value="image"></xs:enumeration>
+    		<xs:enumeration value="layout"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="ScrollPaneScrollBarPolicy">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="never"></xs:enumeration>
+    		<xs:enumeration value="as-needed"></xs:enumeration>
+    		<xs:enumeration value="always"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+</xs:schema>
