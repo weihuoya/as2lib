@@ -27,7 +27,9 @@ import org.as2lib.env.except.IllegalArgumentException;
  * URI is parsed according to RFC 3986 ({@url http://www.ietf.org/rfc/rfc3986.txt})
  * 
  * @author Akira Ito
- * @version 1.0
+ * @version 1.1
+ * 
+ * TODO: check RFC compliance again
  */
 class org.as2lib.io.URL extends BasicClass {
 
@@ -42,8 +44,11 @@ class org.as2lib.io.URL extends BasicClass {
 	private static var debugStringifier:Stringifier;
 
 	/** Static array contains methods for checking is char belongs to given construct. */	
-	private static var checkChar:Array = [isCharOfScheme, isCharOfAuthority, isCharOfPath, isCharOfQuery, isCharOfFragment];
+	private static var checkChar:Array = [isCharOfScheme, isCharOfAuthority, isCharOfPath, isCharOfQuery, isCharOfFragment, isCharOfRubbish];
 
+	/** Static array contains methods for checking for preceding chars for given construct. */	
+	private static var checkPrefix:Array = [isPrefixOfScheme, isPrefixOfAuthority, isPrefixOfPath, isPrefixOfQuery, isPrefixOfFragment, isPrefixOfRubbish];
+	
 	/**
 	 * Returns the stringifier that stringifies {@code URL} for debug output.
 	 *
@@ -101,7 +106,7 @@ class org.as2lib.io.URL extends BasicClass {
  	 * (Maybe with AS3/haXe?)
  	 * 
  	 * @param uriString string to be parsed
- 	 * @return object with "scheme", "authority", "path", "query" and "fragment" fields  
+ 	 * @return object with "Scheme", "Authority", "Path", "Query", "Fragment" and "Rubbish" fields  
  	 */
 	private static function parseBasic(uriString:String):Object{
 	/*
@@ -119,21 +124,32 @@ class org.as2lib.io.URL extends BasicClass {
 	 * 	
 	 * 	below is manual parsing applied to reduce code size.
 	 */
-		var i:Number = 0; 
-		var j:Number = 0;
+		var i:Number; 
+		var j:Number;
 		var result:Object = new Object;
-		var fields:Array = ["Scheme", "Authority", "Path", "Query", "Fragment"];
-		var fieldSpaces:Array = [2, -1, 0, 0, 0];
+		var fields:Array = ["Scheme", "Authority", "Path", "Query", "Fragment", "Rubbish"];
+		var fieldPreSpaces:Array = [0, 2, 0, 1, 1, 0];
+		var fieldPostSpaces:Array = [1, 0, 0, 0, 0, 0];
 		var fieldIndex:Number = 0;
 	
-		for(i=0;i<uriString.length;i++){	 
-				j=i;	 
+		i = 0;
+		while(i<uriString.length){	 
+				// finding required construct
+				while(!checkPrefix[fieldIndex](uriString.substr(i))) { fieldIndex++ };
+				// skip some characters before string processing, if needed
+				i += fieldPreSpaces[fieldIndex];
+				// setting start point to dig data from
+				j = i;
 				while ((j < uriString.length) && 
 					   (checkChar[fieldIndex](uriString.charAt(j), j-i))
 					  ) { j++; }
-				result[fields[fieldIndex]] = uriString.substr(i,j-i);
-				i = j + fieldSpaces[fieldIndex]; 
-			 	if(fieldIndex<4)fieldIndex++;
+				if(j>i) { 
+					result[fields[fieldIndex]] = uriString.substr(i,j-i);
+				} 
+				i = j;
+				// skipping some characters after string processing, if needed
+				i += fieldPostSpaces[fieldIndex];				
+				fieldIndex++;
 		}
 		return result;
 	}
@@ -141,18 +157,42 @@ class org.as2lib.io.URL extends BasicClass {
 	/** Here's set of methods to be called thru static array {@code checkChar},
 	 *  Every method will be called with two parameters - char and its position.
 	 */
+	 
+	// scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." ) :
 	
+ 	/**
+ 	 * Parsing utility function, checks if given string contain prefix for scheme data.
+ 	 * 
+ 	 * @param str string to be tested
+ 	 * @return true, if string can be prefix of the scheme
+ 	 */
+	private static function isPrefixOfScheme(str:String):Boolean {
+		return isCharAlpha(str.charAt(0)) && str.indexOf(":")>0; 
+	}
+		
  	/**
  	 * Parsing utility function, checks if given character can belong to scheme data.
  	 * 
  	 * @param char character to be tested
 	 * @param charPos position of the character in the string 
- 	 * @return true, if character is alphabet character 
+ 	 * @return true, if character can belong to the scheme 
  	 */
 	private static function isCharOfScheme(char:String, charPos:Number):Boolean {
-		// scheme = ALPHA *( ALPHA / DIGIT / "+" / "-" / "." )
 		return ((charPos==0 && isCharAlpha(char)) || 
  				(charPos>0 && (isCharAlpha(char) || ("1234567890".indexOf(char)>-1) || ("+-.".indexOf(char)>-1)))); 
+	}
+	
+	// The authority component is preceded by a double slash ("//") and is terminated by the next slash ("/"), 
+	// question mark ("?"), or number sign ("#") character, or by the end of the URI.
+
+	/**
+ 	 * Parsing utility function, checks if given string contain prefix for authority data.
+ 	 * 
+ 	 * @param str string to be tested
+ 	 * @return true, if character can be prefix of authority 
+ 	 */
+	private static function isPrefixOfAuthority(str:String):Boolean {
+		return str.charAt(0)=="/" && str.charAt(1)=="/";
 	}
 	
 	/**
@@ -162,11 +202,21 @@ class org.as2lib.io.URL extends BasicClass {
  	 * @return true, if character can be part of authority 
  	 */
 	private static function isCharOfAuthority(char:String):Boolean {
-		//  The authority component is preceded by a double slash ("//") and is terminated by the next slash ("/"), 
-		// question mark ("?"), or number sign ("#") character, or by the end of the URI.
 		return "/#?".indexOf(char)==-1;
 	}
-		
+
+	// The path is terminated  by the first question mark ("?") or number sign ("#") character
+	
+	/**
+ 	 * Parsing utility function, checks if given string contain prefix for path data.
+ 	 * 
+ 	 * @param str string to be tested
+ 	 * @return true, if character can be prefix of path 
+ 	 */
+	private static function isPrefixOfPath(str:String):Boolean {
+		return true;
+	}
+			
  	/**
  	 * Parsing utility function, checks if given character can belong to path string.
  	 * 
@@ -174,10 +224,21 @@ class org.as2lib.io.URL extends BasicClass {
  	 * @return true, if character can be part of path  
  	 */
 	private static function isCharOfPath(char:String):Boolean {
-		// The path is terminated  by the first question mark ("?") or number sign ("#") character
 		return "#?".indexOf(char)==-1; 
 	}
 	
+	// The query component is indicated by the first question  mark ("?") character and terminated by a number sign ("#")
+	
+	/**
+ 	 * Parsing utility function, checks if given string contain prefix for query data.
+ 	 * 
+ 	 * @param str string to be tested
+ 	 * @return true, if character can be prefix of query 
+ 	 */
+	private static function isPrefixOfQuery(str:String):Boolean {
+		return str.charAt(0)=="?";
+	}
+		
  	/**
  	 * Parsing utility function, checks if given character can belong to query data.
  	 * 
@@ -185,9 +246,20 @@ class org.as2lib.io.URL extends BasicClass {
  	 * @return true, if character can be part of query 
  	 */
 	private static function isCharOfQuery(char:String):Boolean {
-		// The query component is indicated by the first question  mark ("?") character and terminated by a number sign ("#")
 		return (char != "#"); 
 	}
+
+	// Fragment component is indicated by the presence of a  number sign ("#") character and terminated by the end of the URI
+	
+	/**
+ 	 * Parsing utility function, checks if given string contain prefix for fragment.
+ 	 * 
+ 	 * @param str string to be tested
+ 	 * @return true, if character can be prefix of query 
+ 	 */
+	private static function isPrefixOfFragment(str:String):Boolean {
+		return str.charAt(0)=="#";
+	}	
 	
  	/**
  	 * Parsing utility function, checks if given character can belong to fragment data.
@@ -196,7 +268,28 @@ class org.as2lib.io.URL extends BasicClass {
  	 * @return true, if character can be part of fragment 
  	 */
 	private static function isCharOfFragment(char:String):Boolean {
-		// Fragment component is indicated by the presence of a  number sign ("#") character and terminated by the end of the URI
+		return true; 
+	}	
+	
+	// Rubbish is data can't be parsed
+	
+	/**
+ 	 * Parsing utility function, checks if given string contain prefix for rubbish.
+ 	 * 
+ 	 * @param str string to be tested
+ 	 * @return true, always
+ 	 */
+	private static function isPrefixOfRubbish(str:String):Boolean {
+		return true;
+	}	
+	
+ 	/**
+ 	 * Parsing utility function, checks if given character can belong to rubbish.
+ 	 * 
+ 	 * @param char character to be tested
+ 	 * @return true, always 
+ 	 */
+	private static function isCharOfRubbish(char:String):Boolean {
 		return true; 
 	}	
 	
@@ -244,7 +337,6 @@ class org.as2lib.io.URL extends BasicClass {
 	
 	/** Data after # anchor, optional. */
 	private var fragment:String;
-	
 	
 	/** end of Identification data, here goes Interaction data	 */
 	
@@ -483,6 +575,15 @@ class org.as2lib.io.URL extends BasicClass {
     	return data ? data.toString() : undefined;
     }      
     	    	
+    /**
+	 * Returns data map to be passed to the URL. 
+	 * 
+	 * @return data as stringified map
+	 */         
+    public function getDataMap():Map {
+    	return data ? data : undefined;
+    }     
+        	    	
 	/**
 	 * Returns the string representation of this URL.
 	 * 
@@ -549,7 +650,6 @@ class org.as2lib.io.URL extends BasicClass {
  	 */ 	
  	private function parseAndSetUserinfo(userinfoString:String):Void{
  		var j = userinfoString.indexOf(":");
- 		
  		authorityMap.put("userinfo", userinfoString);
  		if(j>=0) { 
  			authorityMap.put("_user", userinfoString.substring(0, j)); 
@@ -571,12 +671,19 @@ class org.as2lib.io.URL extends BasicClass {
      */	
  	private function parseAndSetPath(pathString:String):Void{
 		var i:Number;
+		var pString:String;
 		
  		if(pathString.indexOf("/") == 0) { pathType = (pathString.indexOf("//") ? PATH_ABEMPTY : PATH_ABSOLUTE); } 
  		else if (pathString.indexOf(":") != 0) { pathType = PATH_NOSCHEME; } 
  		else if (pathString.length = 0) { pathType = PATH_EMPTY; } 
  		else { pathType = PATH_ROOTLESS; }
- 		path = pathString.substring(1).split("/"); // getting rid of first delimiter
+ 		
+ 		// getting rid of prefixes defining path type
+ 		if(pathType == PATH_ABEMPTY) pString = pathString.substring(1);
+ 		else if(pathType == PATH_ABSOLUTE) pString = pathString.substring(2);
+ 		else pString = pathString;  
+ 		
+ 		path = pString.split("/");
  		file = String(path.pop());
  		if(path.length == 0) delete path;
  		if(file.length>0) {
