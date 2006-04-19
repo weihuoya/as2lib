@@ -1,0 +1,27 @@
+/*
+ Copyright aswing.org, see the LICENCE.txt.
+*/
+ 
+import org.aswing.*;
+import org.aswing.plaf.*;
+import org.aswing.plaf.basic.*;
+ 
+/**
+ *
+ * @author iiley
+ */
+class org.aswing.plaf.asw.ASWingCheckBoxUI extends BasicCheckBoxUI{
+	/*shared instance*/
+	private static var asWingCheckBoxUI:ASWingCheckBoxUI;
+	
+    public static function createInstance(c:Component):ComponentUI {
+    	if(asWingCheckBoxUI == null){
+    		asWingCheckBoxUI = new ASWingCheckBoxUI();
+    	}
+        return asWingCheckBoxUI;
+    }
+    
+    public function ASWingCheckBoxUI(){
+    	super();
+    }	
+}
