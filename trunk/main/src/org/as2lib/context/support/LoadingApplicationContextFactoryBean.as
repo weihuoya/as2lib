@@ -42,8 +42,9 @@ import org.as2lib.util.ClassUtil;
  * started in asynchronous mode. When this bean factory is referenced, the bean named
  * "myTargetBeanName" of the loaded application context gets returned.
  * <code>
- *   &ltbean id="myTargetBeanName" class="org.as2lib.context.support.LoadingApplicationContextFactoryBean"&gt
+ *   &ltbean id="myBean" class="org.as2lib.context.support.LoadingApplicationContextFactoryBean"&gt
  *     &ltproperty name="beanDefinitionUri"&gtmyTileView.xml&lt/property&gt
+ *     &ltproperty name="targetBeanName"&gtmyTargetBeanName&lt/property&gt
  *     &ltproperty name="applicationContextClass" type="Class"&gt
  *       org.as2lib.context.support.AsWingApplicationContext
  *     &lt/property&gt
@@ -53,7 +54,7 @@ import org.as2lib.util.ClassUtil;
  * @author Simon Wacker
  */
 class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends BasicClass implements FactoryBean,
-		ApplicationContextAware, BeanNameAware, InitializingBean, Process {
+		ApplicationContextAware, InitializingBean, Process {
 	
 	private var applicationContext:LoadingApplicationContext;
 	
@@ -65,12 +66,21 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 	
 	private var parentApplicationContext:ApplicationContext;
 	
-	private var beanName:String;
+	private var targetBeanName:String;
 	
 	/**
 	 * Constructs a new {@code LoadingApplicationContextFactoryBean} instance.
 	 */
 	public function LoadingApplicationContextFactoryBean(Void) {
+	}
+	
+	/**
+	 * Sets the name of the target bean. If you set a target bean name, not the
+	 * created application context will be returned, but the bean with the given name
+	 * managed by the created context.
+	 */
+	public function setTargetBeanName(targetBeanName:String):Void {
+		this.targetBeanName = targetBeanName;
 	}
 	
 	/**
@@ -99,10 +109,6 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 		this.parentApplicationContext = applicationContext;
 	}
 	
-	public function setBeanName(beanName:String):Void {
-		this.beanName = beanName;
-	}
-	
 	public function afterPropertiesSet(Void):Void {
 		if (beanDefinitionUri == null) {
 			throw new IllegalArgumentException("Bean definition URI is required.", this, arguments);
@@ -123,11 +129,11 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 	}
 	
 	public function getObject(Void) {
-		if (beanName == null) {
+		if (targetBeanName == null) {
 			return applicationContext;
 		}
 		else {
-			return applicationContext.getBeanByName(beanName);
+			return applicationContext.getBeanByName(targetBeanName);
 		}
 	}
 	
