@@ -15,17 +15,22 @@
  */
 
 import org.as2lib.app.exec.Process;
-import org.as2lib.bean.factory.BeanNameAware;
+import org.as2lib.bean.AbstractBeanWrapper;
+import org.as2lib.bean.BeanWrapper;
 import org.as2lib.bean.factory.FactoryBean;
 import org.as2lib.bean.factory.InitializingBean;
 import org.as2lib.bean.factory.parser.BeanDefinitionParser;
+import org.as2lib.bean.PropertyValue;
+import org.as2lib.bean.SimpleBeanWrapper;
 import org.as2lib.context.ApplicationContext;
 import org.as2lib.context.ApplicationContextAware;
 import org.as2lib.context.support.LoadingApplicationContext;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.type.Time;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ClassUtil;
+import org.as2lib.util.TextUtil;
 
 /**
  * {@code LoadingApplicationContextFactoryBean} manages the creation and loading
@@ -56,22 +61,28 @@ import org.as2lib.util.ClassUtil;
 class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends BasicClass implements FactoryBean,
 		ApplicationContextAware, InitializingBean, Process {
 	
-	private var applicationContext:LoadingApplicationContext;
+	private var applicationContext:LoadingApplicationContext = null;
 	
-	private var applicationContextClass:Function;
+	private var applicationContextClass:Function = null;
 	
-	private var beanDefinitionUri:String;
+	private var beanDefinitionUri:String = null;
 	
-	private var beanDefinitionParser:BeanDefinitionParser;
+	private var beanDefinitionParser:BeanDefinitionParser = null;
 	
-	private var parentApplicationContext:ApplicationContext;
+	private var parentApplicationContext:ApplicationContext = null;
 	
-	private var targetBeanName:String;
+	private var targetBeanName:String = null;
+	
+	private var propertyValues:Array = null;
+	
+	private var firstAccess:Boolean = null;
 	
 	/**
 	 * Constructs a new {@code LoadingApplicationContextFactoryBean} instance.
 	 */
 	public function LoadingApplicationContextFactoryBean(Void) {
+		propertyValues = new Array();
+		firstAccess = true;
 	}
 	
 	/**
@@ -117,8 +128,9 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 			applicationContextClass = LoadingApplicationContext;
 		}
 		else if (!ClassUtil.isAssignable(applicationContextClass, LoadingApplicationContext)) {
-			throw new IllegalArgumentException("Given application context class is not assignable from class" +
-					"'LoadingApplicationContext'.", this, arguments);
+			throw new IllegalArgumentException("Given application context class [" +
+					ReflectUtil.getTypeNameForType(applicationContextClass) +
+					"] is not assignable from class 'LoadingApplicationContext'.", this, arguments);
 		}
 		applicationContext = new applicationContextClass();
 		applicationContext.setBeanDefinitionUri(beanDefinitionUri);
@@ -129,12 +141,25 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 	}
 	
 	public function getObject(Void) {
+		var result;
 		if (targetBeanName == null) {
-			return applicationContext;
+			result = applicationContext;
 		}
 		else {
-			return applicationContext.getBeanByName(targetBeanName);
+			result = applicationContext.getBeanByName(targetBeanName);
 		}
+		if (propertyValues.length > 0) {
+			if (!applicationContext.isSingleton(targetBeanName) || firstAccess) {
+				var beanWrapper:BeanWrapper = new SimpleBeanWrapper(result);
+				for (var i:Number = 0; i < propertyValues.length; i++) {
+					beanWrapper.setPropertyValue(propertyValues[i]);
+				}
+			}
+		}
+		if (firstAccess) {
+			firstAccess = false;
+		}
+		return result;
 	}
 	
 	public function getObjectType(Void):Function {
@@ -227,6 +252,29 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 	
 	public function hasListener(listener):Boolean {
 		return applicationContext.hasListener(listener);
+	}
+	
+	private function addProperty(methodName:String, methodArguments:Array):Void {
+		var prefixLength:Number = AbstractBeanWrapper.SET_PROPERTY_PREFIXES[0].length;
+		var name:String = methodName.substr(prefixLength);
+		name = TextUtil.lcFirst(name);
+		for (var i:Number = 0; i < methodArguments.length - 1; i++) {
+			name += AbstractBeanWrapper.PROPERTY_KEY_PREFIX;
+			name += methodArguments[i];
+			name += AbstractBeanWrapper.PROPERTY_KEY_SUFFIX;
+		}
+		var value = methodArguments[methodArguments.length - 1];
+		var propertyValue:PropertyValue = new PropertyValue(name, value);
+		propertyValues.push(propertyValue);
+	}
+	
+	private function __resolve(methodName:String):Function {
+		if (methodName.indexOf("__as2lib__") != 0) {
+			var owner:LoadingApplicationContextFactoryBean = this;
+			return (function() {
+				owner["addProperty"](methodName, arguments);
+			});
+		}
 	}
 	
 }
