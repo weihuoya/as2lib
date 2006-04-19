@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.reflect.ClassNotFoundException;
 import org.as2lib.util.TrimUtil;
 
 /**
@@ -62,6 +63,23 @@ class org.as2lib.bean.BeanUtil extends BasicClass {
 			}
 		}
 		return destination;
+	}
+	
+	/**
+	 * Finds the class for the given class name.
+	 * 
+	 * @param className the name of the class to find
+	 * @return the found class
+	 */
+	public static function findClass(className:String):Function {
+		var clazz:Function = null;
+		if (className != null) {
+			clazz = eval("_global." + className);
+			if (clazz == null) {
+				throw new ClassNotFoundException("Class with name '" + className + "' could not be found.", eval("th" + "is"), arguments);
+			}
+		}
+		return clazz;
 	}
 	
 }
