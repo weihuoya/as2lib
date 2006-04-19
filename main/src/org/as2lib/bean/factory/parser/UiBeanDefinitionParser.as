@@ -26,7 +26,10 @@ import org.as2lib.bean.factory.config.VariableRetrievingFactoryBean;
 import org.as2lib.bean.factory.parser.XmlBeanDefinitionParser;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.PropertyValues;
+import org.as2lib.context.support.LoadingApplicationContextFactoryBean;
 import org.as2lib.env.reflect.DelegateFactoryBean;
+import org.as2lib.util.StringUtil;
+import org.as2lib.util.TextUtil;
 
 /**
  * @author Simon Wacker
@@ -48,6 +51,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	public static var VARIABLE_RETRIEVING_FACTORY_BEAN_CLASS_NAME:String = "org.as2lib.bean.factory.config.VariableRetrievingFactoryBean";
 	public static var METHOD_INVOKING_FACTORY_BEAN_CLASS_NAME:String = "org.as2lib.bean.factory.config.MethodInvokingFactoryBean";
 	public static var DELEGATE_FACTORY_BEAN_CLASS_NAME:String = "org.as2lib.env.reflect.DelegateFactoryBean";
+	public static var LOADING_APPLICATION_CONTEXT_FACTORY_BEAN_CLASS = "org.as2lib.context.support.LoadingApplicationContextFactoryBean";
 	
 	/**
 	 * Constructs a new {@code UiBeanDefinitionParser} instance with a default bean
@@ -62,11 +66,35 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		var v:Function = VariableRetrievingFactoryBean;
 		var m:Function = MethodInvokingFactoryBean;
 		var d:Function = DelegateFactoryBean;
+		var l:Function = LoadingApplicationContextFactoryBean;
 	}
 	
 	private function parseElement(element:XMLNode):Void {
+		// TODO: Mtasc is shipped with Flash 7 sources for xml.
 		if (element.nodeName != ALIAS_ELEMENT && element.nodeName != BEAN_ELEMENT) {
-			element.attributes[PARENT_ATTRIBUTE] = element.nodeName;
+			var namespace:String = element["namespaceURI"];
+			if (namespace == "" || namespace == null) {
+				element.attributes[PARENT_ATTRIBUTE] = element.nodeName;
+			}
+			else {
+				var localName:String = element["localName"];
+				if (namespace.indexOf("*") != -1) {
+					var applicationContextClass:String = element.attributes[CLASS_ATTRIBUTE];
+					var contextClassElement:XMLNode = createPropertyElement("applicationContextClass", applicationContextClass);
+					contextClassElement.attributes[TYPE_ATTRIBUTE] = CLASS_TYPE_VALUE;
+					element.appendChild(contextClassElement);
+					element.attributes[CLASS_ATTRIBUTE] = LOADING_APPLICATION_CONTEXT_FACTORY_BEAN_CLASS;
+					var beanDefinitionUri:String = StringUtil.replace(namespace, "*", localName);
+					element.appendChild(createPropertyElement("beanDefinitionUri", beanDefinitionUri));
+					var targetBeanName:String = TextUtil.lcFirst(localName);
+					element.appendChild(createPropertyElement("targetBeanName", targetBeanName));
+				}
+				else {
+					if (element.attributes[CLASS_ATTRIBUTE] == null) {
+						element.attributes[CLASS_ATTRIBUTE] = namespace + "." + localName;
+					}
+				}
+			}
 			element.nodeName = BEAN_ELEMENT;
 		}
 		super.parseElement(element);
