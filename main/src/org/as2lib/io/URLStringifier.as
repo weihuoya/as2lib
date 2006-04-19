@@ -78,21 +78,20 @@ class org.as2lib.io.URLStringifier implements Stringifier {
 		var authority:String = uri.getAuthority();
 		if(authority) {
 			result += "//";
-			var user:String = uri.getUser();
-			if(user) {
-				result += user;
-				var password:String = uri.getPassword();
-				if(password) result += ":"+password;
-				result += "@";
-			}
+			var userinfo:String = uri.getUserinfo();
+			if(userinfo) result += userinfo+"@";
 			var host:String = uri.getHost();
 			if(host) result += host;
 			var port:String = uri.getPort();
 			if(port) result += ":" + port; 
 		}
-		result += "/";
 		var path:Array = uri.getPath();
-		if(path) result += path.join(delimiter) + "/";
+		if(path) {
+			var pathType:Number = uri.getPathType();
+ 			if(pathType == URL.PATH_ABEMPTY) result += "/";
+ 			else if(pathType == URL.PATH_ABSOLUTE) result += "//";
+			result += path.join(delimiter) + "/";
+		}
 		var file:String = uri.getFile() 
 		if(file) result += file;
 		var query:String = uri.getQuery(); 
