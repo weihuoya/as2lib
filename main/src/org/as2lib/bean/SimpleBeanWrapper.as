@@ -163,25 +163,15 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	private function findMethodName(prefixes:Array, actualPropertyName:String):String {
 		var pn:String = TextUtil.ucFirst(actualPropertyName);
 		for (var i:Number = 0; i < prefixes.length; i++) {
-			try {
-				var methodName:String = prefixes[i] + pn;
-				if (wrappedBean[methodName] != null) {
-					return methodName;
-				}
-			}
-			catch (exception) {
-				// ignore exception that may be thrown by __resolve or a Flash property
-			}
-		}
-		try {
-			// The last prefix is supposed to be '__get__' or '__set__' (Flash property) which must be combined with the actual property name
-			var methodName:String = prefixes[prefixes.length - 1] + actualPropertyName;
-			if (wrappedBean[methodName] != null) {
+			var methodName:String = prefixes[i] + pn;
+			if (existsMethod(methodName)) {
 				return methodName;
 			}
 		}
-		catch (exception) {
-			// ignore exception that may be thrown by __resolve or a Flash property
+		// The last prefix is supposed to be '__get__' or '__set__' (Flash property) which must be combined with the actual property name
+		var methodName:String = prefixes[prefixes.length - 1] + actualPropertyName;
+		if (existsMethod(methodName)) {
+			return methodName;
 		}
 		try {
 			if (typeof(wrappedBean[actualPropertyName]) == "function") {
@@ -192,6 +182,18 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 			// ignore exception that may be thrown by __resolve or a Flash property
 		}
 		return null;
+	}
+	
+	private function existsMethod(methodName:String):Boolean {
+		try {
+			if (wrappedBean[methodName] != null) {
+				return true;
+			}
+		}
+		catch (exception) {
+			// ignore exception that may be thrown by __resolve or a Flash property
+		}
+		return false;
 	}
 	
 	/**
