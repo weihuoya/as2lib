@@ -385,7 +385,7 @@ public class Mtasc extends Task {
      */
     public Path createClasspath() {
         if (this.classpath == null) {
-        	this.classpath = new Path(getProject());
+            this.classpath = new Path(getProject());
         }
         return this.classpath.createPath();
     }
@@ -402,9 +402,9 @@ public class Mtasc extends Task {
      */
     public void setClasspath(Path classpath) {
         if (this.classpath == null) {
-        	this.classpath = classpath;
+            this.classpath = classpath;
         } else {
-        	this.classpath.append(classpath);
+            this.classpath.append(classpath);
         }
     }
     
@@ -414,7 +414,7 @@ public class Mtasc extends Task {
      * @return the classpath
      */
     public Path getClasspath() {
-    	return this.classpath;
+        return this.classpath;
     }
     
     /**
@@ -423,8 +423,8 @@ public class Mtasc extends Task {
      * @return the new exclude file
      */
     public Path createExcl() {
-    	if (this.exclude == null) {
-        	this.exclude = new Path(getProject());
+        if (this.exclude == null) {
+            this.exclude = new Path(getProject());
         }
         return this.exclude.createPath();
     }
@@ -435,10 +435,10 @@ public class Mtasc extends Task {
      * @param exclude the new exclude file
      */
     public void setExcl(Path exclude) {
-    	if (this.exclude == null) {
-        	this.exclude = exclude;
+        if (this.exclude == null) {
+            this.exclude = exclude;
         } else {
-        	this.exclude.append(exclude);
+            this.exclude.append(exclude);
         }
     }
     
@@ -448,7 +448,7 @@ public class Mtasc extends Task {
      * @return the exclude file path
      */
     public Path getExcl() {
-    	return this.exclude;
+        return this.exclude;
     }
     
     /**
@@ -457,7 +457,7 @@ public class Mtasc extends Task {
      * @return the new exclude file
      */
     public Path createExclude() {
-    	return createExcl();
+        return createExcl();
     }
     
     /**
@@ -466,7 +466,7 @@ public class Mtasc extends Task {
      * @param exclude the new exclude file
      */
     public void setExclude(Path exclude) {
-    	setExcl(exclude);
+        setExcl(exclude);
     }
     
     /**
@@ -475,7 +475,7 @@ public class Mtasc extends Task {
      * @return the exclude file path
      */
     public Path getExclude() {
-    	return getExcl();
+        return getExcl();
     }
     
     /**
@@ -901,8 +901,8 @@ public class Mtasc extends Task {
      */
     protected boolean checkParameters() {
         if ((this.sourceDirectory == null || this.sourceDirectory.size() == 0)
-        		&& this.sourceSets.size() == 0
-        		&& this.source == null
+                && this.sourceSets.size() == 0
+                && this.source == null
                 && this.sourceList.size() == 0
                 && (this.sourceXml == null || this.sourceXml.size() == 0)
                 && (this.pack == null || this.pack.size() == 0)) {
@@ -970,6 +970,8 @@ public class Mtasc extends Task {
         InputStream is = null;
         try {
             DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+            factory.setNamespaceAware(true);
+            factory.setIgnoringComments(true);
             DocumentBuilder builder = factory.newDocumentBuilder();
             is = new FileInputStream(xmlFile);
             Document doc = builder.parse(is);
@@ -1012,7 +1014,7 @@ public class Mtasc extends Task {
                     if (e.hasAttribute("class")){
                         clazz = e.getAttribute("class");
                     }
-                    if (e.hasAttribute("type")) {
+                    else if (e.hasAttribute("type")) {
                         clazz = e.getAttribute("type");
                         if (clazz.equals("Class")) {
                             if (e.hasAttribute("value")) {
@@ -1027,6 +1029,13 @@ public class Mtasc extends Task {
                                     clazz = tn.getNodeValue();
                                 }
                             }
+                        }
+                    }
+                    else if (e.getNamespaceURI() != null) {
+                        String namespace = e.getNamespaceURI();
+                        String localName = e.getLocalName();
+                        if (namespace.indexOf('*') == -1) {
+                            clazz = namespace + "." + localName;
                         }
                     }
                     addCompileFile(clazz);
