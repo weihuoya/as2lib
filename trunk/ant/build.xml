@@ -9,8 +9,17 @@
   <property name="samples.dir" value="samples"/>
   
   <target name="clean" description="delete all generated files">
-    <delete dir="${bin.dir}" failonerror="false"/>
-    <delete dir="${dist.dir}" failonerror="false"/>
+    <delete>
+      <fileset dir="${build.dir}">
+        <include name="**/*.class"/>
+      </fileset>
+    </delete>
+    <delete>
+      <fileset dir="${dist.dir}">
+        <include name="**/*.*"/>
+        <exclude name="**/as2ant.jar"/>
+      </fileset>
+    </delete>
   </target>
   
   <target name="compile" description="compiles the tasks">
