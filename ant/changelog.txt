@@ -1,17 +1,8 @@
 ----------
-As2ant 1.9
+As2ant 2.0
 ----------
 
 
-[!] org.as2lib.ant.Swf
-    Fixed bug with SVG clips (used '\' as path-name separator on Windows instead of '/'
-    which caused problems in Swfmill)
-
-[+] org.as2lib.ant.Swf
-    Added support for version-attribute in swfmill.
-
 [+] org.as2lib.ant.Mtasc
-    Class specified in trace-argument is automatically added as source file now.
-
-[!] org.as2lib.ant.Swfmill
-    Fixed bug with xslt-command (xsl-file was not added)
+    Added namespace support for xml source files (according to the As2lib Application
+    Context specification)
