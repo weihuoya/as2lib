@@ -57,7 +57,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	 */
 	public function UiBeanDefinitionParser(registry:BeanDefinitionRegistry) {
 		super(registry);
-		// forces classes to be included in the swf
+		// forces classes to be included in the swf 
 		var p:Function = PropertyPathFactoryBean;
 		var v:Function = VariableRetrievingFactoryBean;
 		var m:Function = MethodInvokingFactoryBean;
