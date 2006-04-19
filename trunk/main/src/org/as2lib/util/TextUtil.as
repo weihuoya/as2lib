@@ -35,7 +35,18 @@ class org.as2lib.util.TextUtil extends BasicClass {
 	public static function ucFirst(string:String):String {
 		 return string.charAt(0).toUpperCase() + string.substr(1);
 	}
-
+	
+	/**
+	 * Converts the first character of the given {@code string} to a lower case
+	 * character.
+	 * 
+	 * @param string the string to convert
+	 * @return the given {@code string} with a lower case first character
+	 */
+	public static function lcFirst(string:String):String {
+		return string.charAt(0).toLowerCase() + string.substr(1);
+	}
+	
 	/**
 	 * Capitalizes the first character of every word in the passed-in {@code string}.
 	 * 
