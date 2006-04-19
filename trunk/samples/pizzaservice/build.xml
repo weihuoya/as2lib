@@ -9,11 +9,11 @@
   <property name="build.dir" location="build"/>
   <property name="context.dir" location="context"/>
   <property name="view.dir" location="${context.dir}/aswing"/>
-  <property name="as2lib.dir" location="D:/Documents/Projects/As2lib/main/src"/>
-  <property name="debugit.dir" location="D:/Programming/Flash/DebugIt"/>
-  <property name="aswing.dir" location="D:/Programming/Flash/aswing/src"/>
-  <property name="actionstep.dir" location="D:/Programming/Flash/actionstep/src"/>
-  <property name="enflash.dir" location="D:/Programming/Flash/enflash/src/classes"/>
+  <property name="as2lib.dir" location="D:/Projects/As2lib/main/src"/>
+  <property name="debugit.dir" location="D:/Projects/As2lib/lib/debugit"/>
+  <property name="aswing.dir" location="D:/Projects/As2lib/lib/aswing/src"/>
+  <property name="actionstep.dir" location="D:/Projects/As2lib/lib/actionstep/src"/>
+  <property name="enflash.dir" location="D:/Projects/As2lib/lib/enflash/src/classes"/>
   <property name="remoting.dir" location="C:/Programme/Macromedia/Flash 8/en/First Run/Classes"/>
   
   <property name="logging.xml" location="${context.dir}/logging.xml"/>
