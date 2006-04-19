@@ -26,10 +26,11 @@ import org.as2lib.env.except.IllegalArgumentException;
  *
  * URI is parsed according to RFC 3986 ({@url http://www.ietf.org/rfc/rfc3986.txt})
  * 
+ * <p> This class performs minimal validation, checks for allowed characters won't be performed.  
+ * 
  * @author Akira Ito
  * @version 1.1
- * 
- * TODO: check RFC compliance again
+ *
  */
 class org.as2lib.io.URL extends BasicClass {
 
@@ -42,6 +43,12 @@ class org.as2lib.io.URL extends BasicClass {
 	/** Stringifiers for URL, default stringifier is {@code debugStringifier}. */
 	private static var pathStringifier:Stringifier;
 	private static var debugStringifier:Stringifier;
+
+	// Reserved characters, according to RFC 3986. 
+	// private static var genDelims:String = ":/?#[]@";
+	// private static var subDelims:String = "!$&'()*+,;=";
+	// private static var unreserved:String = "-._~";
+	// unreserved  = ALPHA / DIGIT / "-" / "." / "_" / "~"
 
 	/** Static array contains methods for checking is char belongs to given construct. */	
 	private static var checkChar:Array = [isCharOfScheme, isCharOfAuthority, isCharOfPath, isCharOfQuery, isCharOfFragment, isCharOfRubbish];
