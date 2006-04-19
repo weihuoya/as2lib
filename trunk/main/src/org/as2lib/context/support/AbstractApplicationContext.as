@@ -518,11 +518,11 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	//---------------------------------------------------------------------
 	
 	public function getBeanByName(name:String) {
-		return getBeanFactory().getBean(name);
+		return getBeanFactory().getBeanByName(name);
 	}
 	
 	public function getBeanByNameAndType(name:String, requiredType:Function) {
-		return getBeanFactory().getBean(name, requiredType);
+		return getBeanFactory().getBeanByNameAndType(name, requiredType);
 	}
 	
 	public function containsBean(name:String):Boolean {
