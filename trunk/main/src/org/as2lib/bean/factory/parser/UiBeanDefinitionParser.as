@@ -72,32 +72,36 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	private function parseElement(element:XMLNode):Void {
 		// TODO: Mtasc is shipped with Flash 7 sources for xml.
 		if (element.nodeName != ALIAS_ELEMENT && element.nodeName != BEAN_ELEMENT) {
-			var namespace:String = element["namespaceURI"];
-			if (namespace == "" || namespace == null) {
-				element.attributes[PARENT_ATTRIBUTE] = element.nodeName;
-			}
-			else {
-				var localName:String = element["localName"];
-				if (namespace.indexOf("*") != -1) {
-					var applicationContextClass:String = element.attributes[CLASS_ATTRIBUTE];
-					var contextClassElement:XMLNode = createPropertyElement("applicationContextClass", applicationContextClass);
-					contextClassElement.attributes[TYPE_ATTRIBUTE] = CLASS_TYPE_VALUE;
-					element.appendChild(contextClassElement);
-					element.attributes[CLASS_ATTRIBUTE] = LOADING_APPLICATION_CONTEXT_FACTORY_BEAN_CLASS;
-					var beanDefinitionUri:String = StringUtil.replace(namespace, "*", localName);
-					element.appendChild(createPropertyElement("beanDefinitionUri", beanDefinitionUri));
-					var targetBeanName:String = TextUtil.lcFirst(localName);
-					element.appendChild(createPropertyElement("targetBeanName", targetBeanName));
-				}
-				else {
-					if (element.attributes[CLASS_ATTRIBUTE] == null) {
-						element.attributes[CLASS_ATTRIBUTE] = namespace + "." + localName;
-					}
-				}
-			}
-			element.nodeName = BEAN_ELEMENT;
+			convertBeanElement(element);
 		}
 		super.parseElement(element);
+	}
+	
+	private function convertBeanElement(element:XMLNode):Void {
+		var namespace:String = element["namespaceURI"];
+		if (namespace == "" || namespace == null) {
+			element.attributes[PARENT_ATTRIBUTE] = element.nodeName;
+		}
+		else {
+			var localName:String = element["localName"];
+			if (namespace.indexOf("*") != -1) {
+				var applicationContextClass:String = element.attributes[CLASS_ATTRIBUTE];
+				var contextClassElement:XMLNode = createPropertyElement("applicationContextClass", applicationContextClass);
+				contextClassElement.attributes[TYPE_ATTRIBUTE] = CLASS_TYPE_VALUE;
+				element.appendChild(contextClassElement);
+				element.attributes[CLASS_ATTRIBUTE] = LOADING_APPLICATION_CONTEXT_FACTORY_BEAN_CLASS;
+				var beanDefinitionUri:String = StringUtil.replace(namespace, "*", localName);
+				element.appendChild(createPropertyElement("beanDefinitionUri", beanDefinitionUri));
+				var targetBeanName:String = TextUtil.lcFirst(localName);
+				element.appendChild(createPropertyElement("targetBeanName", targetBeanName));
+			}
+			else {
+				if (element.attributes[CLASS_ATTRIBUTE] == null) {
+					element.attributes[CLASS_ATTRIBUTE] = namespace + "." + localName;
+				}
+			}
+		}
+		element.nodeName = BEAN_ELEMENT;
 	}
 	
 	private function parseBeanDefinitionElementWithoutRegardToNameOrAliases(element:XMLNode, beanName:String):BeanDefinition {
@@ -139,27 +143,18 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		var nodes:Array = beanElement.childNodes;
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
+			var propertyElement:XMLNode = node;
 			if (node.nodeName != PROPERTY_ELEMENT && node.nodeName != CONSTRUCTOR_ARG_ELEMENT
 					&& node.nodeName != LOOKUP_METHOD_ELEMENT && node.nodeName != REPLACED_METHOD_ELEMENT
 					&& node.nodeName != CONSTRUCTOR_ARGS_ELEMENT) {
-				var propertyElement:XMLNode = new XMLNode(1, PROPERTY_ELEMENT);
+				propertyElement = new XMLNode(1, PROPERTY_ELEMENT);
 				beanElement.insertBefore(propertyElement, node);
 				node.removeNode();
-				if (isUpperCaseLetter(node.nodeName.charAt(0)) || node.nodeName == BEAN_ELEMENT) {
+				if (isUpperCaseLetter(node["localName"].charAt(0)) || node.nodeName == BEAN_ELEMENT) {
 					propertyElement.appendChild(node);
 				}
 				else {
-					var propertyName:String = node.nodeName;
-					if (propertyName.indexOf(PROPERTY_KEY_SEPARATOR) != -1) {
-						var tokens:Array = propertyName.split(PROPERTY_KEY_SEPARATOR);
-						propertyName = tokens[0];
-						for (var j:Number = 1; j < tokens.length; j++) {
-							propertyName += AbstractBeanWrapper.PROPERTY_KEY_PREFIX;
-							propertyName += tokens[j];
-							propertyName += AbstractBeanWrapper.PROPERTY_KEY_SUFFIX;
-						}
-					}
-					propertyElement.attributes[NAME_ATTRIBUTE] = propertyName;
+					propertyElement.attributes[NAME_ATTRIBUTE] = node.nodeName;
 					propertyElement.appendChild(node.firstChild);
 				}
 				if (node.attributes[TYPE_ATTRIBUTE] != null) {
@@ -168,6 +163,17 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				if (node.attributes[INDEX_ATTRIBUTE] != null) {
 					propertyElement.attributes[INDEX_ATTRIBUTE] = node.attributes[INDEX_ATTRIBUTE];
 				}
+			}
+			var propertyName:String = propertyElement.attributes[NAME_ATTRIBUTE];
+			if (propertyName.indexOf(PROPERTY_KEY_SEPARATOR) != -1) {
+				var tokens:Array = propertyName.split(PROPERTY_KEY_SEPARATOR);
+				propertyName = tokens[0];
+				for (var j:Number = 1; j < tokens.length; j++) {
+					propertyName += AbstractBeanWrapper.PROPERTY_KEY_PREFIX;
+					propertyName += tokens[j];
+					propertyName += AbstractBeanWrapper.PROPERTY_KEY_SUFFIX;
+				}
+				propertyElement.attributes[NAME_ATTRIBUTE] = propertyName;
 			}
 		}
 		return super.parsePropertyElements(beanElement, beanName);
@@ -215,8 +221,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				&& element.nodeName != IDREF_ELEMENT && element.nodeName != NULL_ELEMENT
 				&& element.nodeName != ARRAY_ELEMENT && element.nodeName != LIST_ELEMENT
 				&& element.nodeName != MAP_ELEMENT && element.nodeName != PROPS_ELEMENT) {
-			element.attributes[PARENT_ATTRIBUTE] = element.nodeName;
-			element.nodeName = BEAN_ELEMENT;
+			convertBeanElement(element);
 		}
 		var propertyValue = super.parsePropertySubElement(element, beanName);
 		// TODO: Refactor!
