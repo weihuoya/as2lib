@@ -31,6 +31,7 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.TextUtil;
+import org.as2lib.bean.factory.config.BeanPostProcessor;
 
 /**
  * {@code LoadingApplicationContextFactoryBean} manages the creation and loading
@@ -59,7 +60,7 @@ import org.as2lib.util.TextUtil;
  * @author Simon Wacker
  */
 class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends BasicClass implements FactoryBean,
-		ApplicationContextAware, InitializingBean, Process {
+		ApplicationContextAware, InitializingBean, BeanPostProcessor, Process {
 	
 	private var applicationContext:LoadingApplicationContext = null;
 	
@@ -75,14 +76,11 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 	
 	private var propertyValues:Array = null;
 	
-	private var firstAccess:Boolean = null;
-	
 	/**
 	 * Constructs a new {@code LoadingApplicationContextFactoryBean} instance.
 	 */
 	public function LoadingApplicationContextFactoryBean(Void) {
 		propertyValues = new Array();
-		firstAccess = true;
 	}
 	
 	/**
@@ -138,6 +136,7 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 			applicationContext.setBeanDefinitionParser(beanDefinitionParser);
 		}
 		applicationContext.setParent(parentApplicationContext);
+		applicationContext.getBeanFactory().addBeanPostProcessor(this);
 	}
 	
 	public function getObject(Void) {
@@ -148,17 +147,6 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 		else {
 			result = applicationContext.getBeanByName(targetBeanName);
 		}
-		if (propertyValues.length > 0) {
-			if (!applicationContext.isSingleton(targetBeanName) || firstAccess) {
-				var beanWrapper:BeanWrapper = new SimpleBeanWrapper(result);
-				for (var i:Number = 0; i < propertyValues.length; i++) {
-					beanWrapper.setPropertyValue(propertyValues[i]);
-				}
-			}
-		}
-		if (firstAccess) {
-			firstAccess = false;
-		}
 		return result;
 	}
 	
@@ -168,6 +156,22 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 	
 	public function isSingleton(Void):Boolean {
 		return false;
+	}
+	
+	public function postProcessBeforeInitialization(bean, beanName:String) {
+		if (beanName == targetBeanName) {
+			if (propertyValues.length > 0) {
+				var beanWrapper:BeanWrapper = new SimpleBeanWrapper(bean);
+				for (var i:Number = 0; i < propertyValues.length; i++) {
+					beanWrapper.setPropertyValue(propertyValues[i]);
+				}
+			}
+		}
+		return bean;
+	}
+	
+	public function postProcessAfterInitialization(bean, beanName:String) {
+		return bean;
 	}
 	
 	public function start() {
