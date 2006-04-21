@@ -91,16 +91,16 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * Constructs a new {@code Loader}.
 	 */
 	public function Loader(Void) {
-		var factory:CompositeTextFileFactory = new CompositeTextFileFactory();
-		
 		super();
+		var factory:CompositeTextFileFactory = new CompositeTextFileFactory();	
 		factory.putTextFileFactoryByExtension("xml", new XmlFileFactory());
 		textFileFactory = factory;
-
+		
 		acceptListenerType(LoadStartListener);
 		acceptListenerType(LoadCompleteListener);
 		acceptListenerType(LoadProgressListener);
 		acceptListenerType(LoadErrorListener);
+
 	}
 	
 	/**
