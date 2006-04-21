@@ -1361,16 +1361,18 @@ public class Mtasc extends Task {
      * @param pack the package to add
      */
     private void addPackage(Commandline command, String pack) {
-        String[] classpaths = this.classpath.list();
-        for (int i = 0; i < classpaths.length; i++) {
-            String cp = classpaths[i];
-            if (pack.startsWith(cp)) {
-                pack = pack.substring(cp.length() + 1);
-                break;
+        if (this.classpath != null && this.classpath.size() > 0) {
+            String[] classpaths = this.classpath.list();
+            for (int i = 0; i < classpaths.length; i++) {
+                String cp = classpaths[i];
+                if (pack.startsWith(cp)) {
+                    pack = pack.substring(cp.length() + 1);
+                    break;
+                }
             }
         }
         String bd = getProject().getBaseDir().getAbsolutePath();
-        if (pack.startsWith(bd)) {
+        if (pack.startsWith(bd) && !pack.equals(bd)) {
             pack = pack.substring(bd.length() + 1);
         }
         command.createArgument().setValue(pack);
