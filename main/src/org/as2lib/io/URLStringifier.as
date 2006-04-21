@@ -67,7 +67,7 @@ class org.as2lib.io.URLStringifier implements Stringifier {
       endif;
 
 */
-	public function execute(target:URL):String {
+	public function execute(target):String {
 		var uri:URL = target; 
 		var result:String = "";
 		var delimiter:String = "/"; 
