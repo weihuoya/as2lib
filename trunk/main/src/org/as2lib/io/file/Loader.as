@@ -92,8 +92,15 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 */
 	public function Loader(Void) {
 		var factory:CompositeTextFileFactory = new CompositeTextFileFactory();
+		
+		super();
 		factory.putTextFileFactoryByExtension("xml", new XmlFileFactory());
 		textFileFactory = factory;
+
+		acceptListenerType(LoadStartListener);
+		acceptListenerType(LoadCompleteListener);
+		acceptListenerType(LoadProgressListener);
+		acceptListenerType(LoadErrorListener);
 	}
 	
 	/**
@@ -157,7 +164,7 @@ class org.as2lib.io.file.Loader extends EventSupport
 	 * @overload #loadText
 	 */
 	public function load(url, target) {
-		var overload:Overload = new Overload();
+		var overload:Overload = new Overload(this);
 		overload.addHandler([String, MovieClip, String, Map, Executable], loadSwf);
 		overload.addHandler([String, MovieClip, String, Map], loadSwf);
 		overload.addHandler([String, MovieClip, String], loadSwf);
