@@ -23,6 +23,7 @@ import org.as2lib.data.type.*;
  * @author Christophe Herreman
  * @author Martin Heidegger
  * @author Simon Wacker
+ * @author Igor Sadovskiy
  */
 class org.as2lib.util.MathUtil extends BasicClass {
 	
@@ -168,6 +169,34 @@ class org.as2lib.util.MathUtil extends BasicClass {
 		var r:Number = Math.pow(10,c);
 		return Math.floor(n*r)/r;
 	}  
+	
+	/**
+	 * Searches all passed-in arguments for the element having maximal value and returns it.
+	 * 
+	 * @param .. any number of arguments of any type
+	 * @return element with maximal value among the passed-in arguments
+	 */
+	public static function max():Number {
+		var m:Number = arguments[0];
+		for (var i = 1; i < arguments.length; i++) {
+			if (m < arguments[i]) m = arguments[i];	
+		}	
+		return m;
+	}
+
+	/**
+	 * Searches all passed-in arguments for the element having minimal value and returns it.
+	 * 
+	 * @param .. any number of arguments of any type
+	 * @return element with minimal value among the passed-in arguments
+	 */
+	public static function min():Number {
+		var m:Number = arguments[0];
+		for (var i = 1; i < arguments.length; i++) {
+			if (m > arguments[i]) m = arguments[i];	
+		}	
+		return m;
+	}
 	
 	/**
 	 * Private constructor.
