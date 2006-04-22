@@ -1,269 +1,273 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <changelog xmlns="as2lib"
-		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
-	<release name="as2lib 0.9.4" day="14" month="11" year="2005">
-		<year value="2006">
-			<month value="4">
-				<day value="13">
-					<entry type="add" package="org.as2lib.env.log.logger" class="FlashoutLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="FludgeLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="Log4fLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="LuminicBoxLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="MusicTheoryLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="TraceLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="RichInternetLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="ZtorLog4fLogger" method="trace">MTASC -trace support is added.</entry>
-				</day>
-				<day value="11">
-					<entry type="add" package="org.as2lib.env.log.logger" class="ActionStepLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="AlconLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="AscbLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="AsdtLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="AudiofarmLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="Bit101Logger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="DebugItLogger" method="trace">MTASC -trace support is added.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="FlashDebugToolLogger" method="trace">MTASC -trace support is added.</entry>
-				</day>
-				<day value="10">
-					<entry type="enhancement" package="org.as2lib.env.log" class="LogMessage">Refined to interface</entry>
-					<entry type="add" package="org.as2lib.env.log.message" class="AbstractLogMessage"></entry>
-					<entry type="add" package="org.as2lib.env.log.message" class="SimpleLogMessage"></entry>
-					<entry type="add" package="org.as2lib.env.log.message" class="MtascLogMessage"></entry>
-				</day>
-			</month>
-			<month value="3">
-				<day value="29">
-					<entry type="remove" package="org.as2lib.env.log.logger" class="AbstractLogger" variable="MTASC_MESSAGE_PATTERN"></entry>
-					<entry type="remove" package="org.as2lib.env.log.logger" class="AbstractLogger" method="createMtascMessage"></entry>
-					<entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier" variable="MTASC_PATTERN"></entry>
-					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getMtascStringifier"></entry>
-					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="setMtascStringifier"></entry>
-					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="forMtasc">Constructs new LogMessage instance with MTASC-specified arguments.</entry>
-					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="toMtascString">Stringifies log message using MTASC stringifier.</entry>
-				</day>
-				<day value="27">
-					<entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger" variable="MTASC_MESSAGE_PATTERN">Default message stringify pattern for MTASC trace support.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger" method="createMtascMessage">Creates string message for MTASC trace support.</entry>
-					<entry type="add" package="static org.as2lib.env.log.logger" class="SosLogger" method="trace">Can be used by MTASC's trace support to log messages.</entry>
-				</day>
-				<day value="25">
-					<entry type="add" package="org.as2lib.app.exec" class="SimpleBatch">Distributes batch events on state changes or errors and forwards events of child processes.</entry>
-					<entry type="change" package="org.as2lib.app.exec" class="BatchProcess">Batch process does not distribute batch events anymore; it acts like a real process now.</entry>
-					<entry type="add" package="org.as2lib.app.exec" class="Batch">Declared some further methods needed by batches.</entry>
-				</day>
-				<day value="24">
-					<entry type="add" package="org.as2lib.context.support" class="LoadingApplicationContextFactoryBean">Enables splitting views into one main and multiple sub-views; this technique is sometimes called tiles- or composite-view.</entry>
-					<entry type="add" package="org.as2lib.bean.factory.parser" class="EnFlashApplicationContext">Parser for enFlash xml bean definitions.</entry>
-					<entry type="change" package="org.as2lib.context.support" class="EnFlashApplicationContext">Works now with bean definition files rather than with EnFlash object; as LoadingApplicationContext does.</entry>
-					<entry type="add" package="org.as2lib.context.support" class="ActionStepApplicationContext">Context for convenient ActionStep integration.</entry>
-				</day>
-				<day value="23">
-					<entry type="add" package="org.as2lib.bean.factory.parser" class="ActionStepBeanDefinitionParser">Added support for actionstep bean definitions.</entry>
-				</day>
-				<day value="4">
-					<entry type="add" package="org.as2lib.io.conn.core.event" class="ContextMethodInvocationCallback">A simple MI callback to be used within an application context.</entry>
-					<entry type="add" package="org.as2lib.context.event" class="SuccessEvent">Generic success event that holds a success code.</entry>
-					<entry type="add" package="org.as2lib.context.event" class="ErrorEvent">Generic error event that holds an error code.</entry>
-				</day>
-				<day value="3">
-					<entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added support for class name, file name and line number (old class conversion character 'c' is now 'C').</entry>
-					<entry type="add" package="org.as2lib.env.log" class="LogMessage">Added support for class name, file name and line number.</entry>
-				</day>
-			</month>
-			<month value="2">
-				<day value="27">
-					<entry type="add" package="org.as2lib.context.support" class="AsWingApplicationContext">Added support for aswing contexts.</entry>
-					<entry type="add" package="org.as2lib.bean.factory.parser" class="AsWingBeanDefinitionParser">Added support for aswing bean definitions.</entry>
-					<entry type="add" package="org.as2lib.bean.factory.parser" class="UiBeanDefinitionParser">Added generic support for UI bean definitions.</entry>
-				</day>
-				<day value="25">
-					<entry type="add" package="org.as2lib.context.support" class="ResourceBundleMessageSource">Loads messages from properties files for a given base-name.</entry>
-					<entry type="add" package="org.as2lib.bean.factory.config" class="VariableRetrievingFactoryBean">Gets a variable from a bean; mostly used to get constants.</entry>
-					<entry type="add" package="org.as2lib.bean.factory.config" class="PropertyPathFactoryBean">Gets a property from a bean given a bean and a property path.</entry>
-					<entry type="add" package="org.as2lib.bean.factory.config" class="MethodInvokingFactoryBean">Invokes a method given a target bean and a method name.</entry>
-					<entry type="add" package="org.as2lib.io.file" class="FileLoaderProcess">Added flag to specify whether error shall be ignored or not.</entry>
-					<entry type="add" package="org.as2lib.env.reflect" class="DelegateFactoryBean">Creates delegates given a target bean and method name.</entry>
-					<entry type="add" package="org.as2lib.env.log.parser" class="LogConfigurationProcess">Loads and parses a log configuration.</entry>
-				</day>
-				<day value="13">
-					<entry type="enhancement" package="org.as2lib.env.reflect" class="DelegateManager">Single internal cache for all delegates is implemented</entry>
-					<entry type="add" package="org.as2lib.env.reflect" class="DelegateManager" method="clear"></entry>
-					<entry type="add" package="org.as2lib.env.reflect" class="DelegateManager" method="remove"></entry>
-				</day>
-				<day value="6">
-					<entry type="add" package="org.as2lib.env.reflect" class="DelegateManager">Proxy class to create delegate methods with internal cache is added.</entry>
-				</day>
-				<day value="4">
-					<entry type="add" package="org.as2lib.io.conn.core.client" class="ClientServiceProxyFactoryBean">Convenient implementation of factory bean to retrieve typed service proxy in application contexts.</entry>
-					<entry type="add" package="org.as2lib.io.conn.local.client" class="LocalClientServiceProxyFactoryBean">Creates typed service proxies for local connections.</entry>
-					<entry type="add" package="org.as2lib.io.conn.webservice" class="WebServiceProxyFactoryBean">Creates typed service proxies for webservices.</entry>
-					<entry type="add" package="org.as2lib.io.conn.remoting" class="RemotingServiceProxyFactoryBean">Creates typed service proxies for remoting.</entry>
-					<entry type="add" package="org.as2lib.io.conn.webservice" class="WebServiceProxy">Proxy for web service.</entry>
-					<entry type="add" package="org.as2lib.io.conn.remoting" class="RemotingServiceProxy">Proxy for remoting service.</entry>
-				</day>
-				<day value="3">
-					<entry type="bugfix" package="static org.as2lib.util" class="MethodUtil" method="invoke">Using invoke for static method caused infinite loop.</entry>
-				</day>
-				<day value="2">
-					<entry type="add" package="org.as2lib.util" class="ClassUtil" method="isAssignable">Checks whether one class is assignable from another class.</entry>
-				</day>
-			</month>
-			<month value="1">
-				<day value="17">
-					<entry type="add" package="org.as2lib.bean.converter" class="PackageConverter">Added support for converting string values to packages.</entry>
-					<entry type="add" package="org.as2lib.bean.factory.parser" class="XmlBeanDefinitionParser">Added support for special types 'Package' and 'Class' and support for managed arrays.</entry>
-					<entry type="add" package="org.as2lib.bean.factory.support" class="ManagedArray">Added support for managed arrays that may contain bean references etc.</entry>
-				</day>
-				<day value="16">
-					<entry type="change" package="org.as2lib.util" class="ArrayUtil" method="fill"><change-returnType from="Void" to="Array"></change-returnType></entry>
-				</day>
-				<day value="15">
-					<entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added control over undefined information via asterisk (*) format modifier.</entry>
-					<entry type="add" package="org.as2lib.context.support" class="EnFlashApplication">Added context support for enflash that registers enflash-objects as singleton beans.</entry>
-					<entry type="change" package="org.as2lib.app.conf / main">Work with instances instead of classes and static methods. This for example allows configuration classes to implement interfaces.</entry>
-				</day>
-				<day value="14">
-					<entry type="bugfix" package="org.as2lib.regexp.node" class="BnM">Internal arrays creation and initialization is fixed.</entry>
-					<entry type="add" package="org.as2lib.util" class="ArrayUtil" method="fill"></entry>
-				</day>
-				<day value="13">
-					<entry type="bugfix" package="org.as2lib.regexp" class="Matcher" method="replaceFirst">Replacement and tail addition to the result string is fixed.</entry>
-					<entry type="bugfix" package="org.as2lib.regexp" class="Matcher" method="replaceAll">Replacement and tail addition to the result string is fixed.</entry>
-				</day>
-				<day value="9">
-					<entry type="add" package="org.as2lib.bean">Support for beans and bean factories.</entry>
-					<entry type="add" package="org.as2lib.context">Support for application contexts.</entry>
-				</day>
-				<day value="6">
-					<entry type="add" package="org.as2lib.data.holder" class="Properties" method="putAll">Copies all key-value pairs from the given source.</entry>
-					<entry type="add" package="org.as2lib.data.holder" class="Properties" method="clear">Removes all key-value pairs.</entry>
-				</day>
-				<day value="2">
-					<entry type="add" package="org.as2lib.env.except" class="Throwable" method="contains">Checks whether the throwable is of a given type or has a nested cause of a given type.</entry>
-				</day>
-			</month>
-		</year>
-		<year value="2005">
-			<month value="12">
-				<day value="24">
-				  <entry type="add" package="org.as2lib.env.log.logger" class="AsdtLogger">Logger class for ASDT Eclipse plugin logging console is added</entry>
-				</day>
-				<day value="23">
-				  <entry type="add" package="org.as2lib.env.log.logger" class="SosLogger">Logger class for SOS XML Socket Server is added</entry>
-				</day>
-				<day value="13">
-				  <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getSourceMethodName"></entry>
-				  <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getSourceMethod"></entry>
-				  <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getSourceObject"></entry>
-				  <entry type="change" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Is now fully pattern based.</entry>
-				</day>
-				<day value="4">
-					<entry type="add" package="org.as2lib.lang" class="NumberFormat">Class for number formatting.</entry>
-					<entry type="add" package="org.as2lib.lang" class="MessageFormat">Class for formatting strings based to locales.</entry>
-					<entry type="change"><change-rename to="org.as2lib.lang.DateFormat" from="org.as2lib.util.DateFormatter" /></entry>
-					<entry type="add" package="org.as2lib.lang.en" class="EnglishDateNames">Date entries in english.</entry>
-				</day>
-				<day value="2">
-					<entry type="add" package="org.as2lib.util" class="MathUtil" method="ceil"></entry>
-					<entry type="add" package="org.as2lib.util" class="CharSetInverser">Inverser for a certai</entry>
-					<entry type="add" package="org.as2lib.util" class="CharSet">List for accepted characters.</entry>
-					<entry type="add" package="org.as2lib.util" class="CharUtil">
-						Util to work with characters.
-					</entry>
-					<entry type="add" package="org.as2lib.util" class="TrimUtil">
-						Introduced org.as2lib.util.TrimUtil with some old StringUtil methods to reduce filesize.
-						<change-move from="StringUtil.ucFirst" to="TextUtil.ucFirst"></change-move>
-						<change-move from="StringUtil.ucWords" to="TextUtil.ucWords"></change-move>
-					</entry>
-					<entry type="add" package="org.as2lib.util" class="TextUtil">
-						Introduced org.as2lib.util.TextUtil with some old StringUtil methods to reduce filesize.
-						<change-move from="StringUtil.ucFirst" to="TextUtil.ucFirst"></change-move>
-						<change-move from="StringUtil.ucWords" to="TextUtil.ucWords"></change-move>
-					</entry>
-				</day>
-				<day value="1">
-					<entry type="add" package="org.as2lib.lang.en" class="BritishEnglish">Basic definition for english as default locale</entry>
-					<entry type="add" package="org.as2lib.lang" class="ConcreteLocale">Abstract class for extension</entry>
-					<entry type="add" package="org.as2lib.lang" class="LocaleManager">Manager to handle locales</entry>
-					<entry type="add" package="org.as2lib.lang" class="MergedLocale">Automatic merger of different locales</entry>
-					<entry type="add" package="org.as2lib.lang" class="Locale">Interface for accessing locale based properties</entry>
-					<entry type="change" package="org.as2lib.data.holder" class="Properties">
-						.setProperty was not fully compatible (problems with native .setProperty method
-						<change-rename to="setProp" from="setProperty" />
-						<change-rename to="getProp" from="getProperty" />
-					</entry>
-				</day>
-			</month>
-			<month value="11">
-				<day value="29">
-					<entry type="add" package="org.as2lib.env.log.handler" class="AsdtHandler">Log handler for ASDT Eclipse plugin logger console is added</entry>
-					<entry type="remove" package="org.as2lib.app.exec" class="Batch" method="addProcess">
-						Removed BatchProcess related method.
-					</entry>
-					<entry type="remove" package="org.as2lib.app.exec" class="Batch" method="removeProcess">
-						Removed BatchProcess related method.
-					</entry>
-					<entry type="remove" package="org.as2lib.app.exec" class="Batch" method="removeProcessById">
-						Removed BatchProcess related method.
-					</entry>
-				</day>
-				<day value="28">
-					<entry type="remove" package="org.as2lib.env.log.handler" class="XmlSocketHandler" method="convertMessage">Moved to the SosHandler class</entry>
-					<entry type="add" package="org.as2lib.env.log.handler" class="SosHandler" method="convertMessage">Overwrites parent method to add CDATA wrapping tag to the stringified message to avoid conflicts during message sending through XMLSocket to SOS Console</entry>
-				</day>
-				<day value="24">
-					<entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getSourceMethodName"></entry>
-					<entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added support for 'sourceMethodName'.</entry>
-					<entry type="add" package="org.as2lib.env.log.logger" class="SimpleHierarchicalLogger">Added support for second parameter 'sourceMethodName' for all log methods.</entry>
-					<entry type="add" package="org.as2lib.env.log.handler" class="XmlSocketHandler" method="convertMessage">Overwrites parent method to add CDATA wrapping tag to the stringified message to avoid conflicts during message sending through XMLSocket</entry>
-					<entry type="remove" package="org.as2lib.env.log.stringifier" class="SosMessageStringifier">Class was used for incorrect purposes</entry>
-					<entry type="enhancement" package="org.as2lib.env.log.handler" class="SosHandler">Message wrapping to the SOS-specified XML tags are moved from the SosMessageStringifier class</entry>
-					<entry type="add" package="org.as2lib.env.log.handler" class="SosHandler" method="getInstance">Returns the same instance of the SosHandler class</entry>
-				</day>
-				<day value="21">
-					<entry type="add" package="static org.as2lib.env.reflect" class="Delegate" method="create">Overloads to the different create methods.</entry>
-					<entry type="change" package="static org.as2lib.env.reflect" class="Delegate" method="create"><change-rename to="createByMethod"/></entry>
-					<entry type="change" package="static org.as2lib.env.reflect" class="Delegate" method="createExtendedDelegate"><change-rename to="createByMethodAndArguments"/></entry>
-					<entry type="add" package="static org.as2lib.env.reflect" class="Delegate" method="createByName"></entry>
-				</day>
-				<day value="19">
-					<entry type="add" package="org.as2lib.env.log.parser" class="PropertiesLogConfigurationParser"></entry>
-					<entry type="add" package="org.as2lib.data.holder" class="Properties" method="getValues"></entry>
-					<entry type="add" package="org.as2lib.data.holder" class="Properties" method="getKeys"></entry>
-				</day>
-				<day value="12">
-					<entry type="bugfix" package="org.as2lib.util" class="MethodUtil" method="invoke">Fixed serious bug that made 'super' work incorrectly.</entry>
-				</day>
-				<day value="2">
-					<entry package="org.as2lib.regexp" class="AcsiiUtil" type="add">Static properties with ASCII codes for all characters are added</entry>
-				</day>
-			</month>
-			<month value="10">
-				<day value="20">
-					<entry type="add" package="org.as2lib.env.log.aspect" class="TraceLoggingAspect">Logs the trace.</entry>
-				</day>
-				<day value="18">
-					<entry type="change" package="org.as2lib.aop.aspect" class="IndentedLoggingAspect"><change-move to="org.as2lib.env.log.aspect"/></entry>
-					<entry type="change" package="org.as2lib.aop.aspect" class="StackTraceAspect"><change-move to="org.as2lib.env.except"/></entry>
-					<entry type="change" package="org.as2lib.aop.aspect" class="ThrowableStackTraceFillingAspect"><change-move to="org.as2lib.env.except"/></entry>
-					<entry type="add" package="static org.as2lib.aop.joinpoint" class="AbstractJoinPoint" method="getMethod">Returns the method info for a given join point.</entry>
-				</day>
-				<day value="17">
-					<entry type="add" package="org.as2lib.aop.aspect" class="ThrowableStackTraceFillingAspect">Filles stack trace of throwables.</entry>
-					<entry type="bugfix" package="org.as2lib.aop.joinpoint" class="SetPropertyJoinPoint" method="proceed">Fixed bug with wrong arguments.</entry>
-					<entry type="bugfix" package="org.as2lib.aop.joinpoint" class="*">Fixed bugs with 'update' and 'snapshot' methods.</entry>
-					<entry type="add" package="org.as2lib.aop" class="JoinPoint" method="getArguments">General access to arguments for all advice types.</entry>
-					<entry type="bugfix" package="org.as2lib.io.file" class="TextFileLoader" method="getFile">Never-ending recursion is eliminated</entry>
-				</day>
-				<day value="16">
-					<entry type="add" package="org.as2lib.aop.aspect" class="StackTraceAspect">Maintains the stack trace to the current method.</entry>
-				</day>
-				<day value="14">
-					<entry type="add" package="org.as2lib.io.file" class="XmlFileLoader"/>
-				</day>
-			</month>
-		</year>
-	</release>
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
+    <release name="as2lib 0.9.4" day="14" month="11" year="2005">
+        <year value="2006">
+            <month value="4">
+                <day value="22">
+                    <entry type="add" package="org.as2lib.util" class="MathUtil" method="max">Searches for element having maximal value</entry>
+                    <entry type="add" package="org.as2lib.util" class="MathUtil" method="min">Searches for element having minimal value</entry>
+                </day>
+                <day value="13">
+                    <entry type="add" package="org.as2lib.env.log.logger" class="FlashoutLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="FludgeLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="Log4fLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="LuminicBoxLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="MusicTheoryLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="TraceLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="RichInternetLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="ZtorLog4fLogger" method="trace">MTASC -trace support is added.</entry>
+                </day>
+                <day value="11">
+                    <entry type="add" package="org.as2lib.env.log.logger" class="ActionStepLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="AlconLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="AscbLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="AsdtLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="AudiofarmLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="Bit101Logger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="DebugItLogger" method="trace">MTASC -trace support is added.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="FlashDebugToolLogger" method="trace">MTASC -trace support is added.</entry>
+                </day>
+                <day value="10">
+                    <entry type="enhancement" package="org.as2lib.env.log" class="LogMessage">Refined to interface</entry>
+                    <entry type="add" package="org.as2lib.env.log.message" class="AbstractLogMessage"></entry>
+                    <entry type="add" package="org.as2lib.env.log.message" class="SimpleLogMessage"></entry>
+                    <entry type="add" package="org.as2lib.env.log.message" class="MtascLogMessage"></entry>
+                </day>
+            </month>
+            <month value="3">
+                <day value="29">
+                    <entry type="remove" package="org.as2lib.env.log.logger" class="AbstractLogger" variable="MTASC_MESSAGE_PATTERN"></entry>
+                    <entry type="remove" package="org.as2lib.env.log.logger" class="AbstractLogger" method="createMtascMessage"></entry>
+                    <entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier" variable="MTASC_PATTERN"></entry>
+                    <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getMtascStringifier"></entry>
+                    <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="setMtascStringifier"></entry>
+                    <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="forMtasc">Constructs new LogMessage instance with MTASC-specified arguments.</entry>
+                    <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="toMtascString">Stringifies log message using MTASC stringifier.</entry>
+                </day>
+                <day value="27">
+                    <entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger" variable="MTASC_MESSAGE_PATTERN">Default message stringify pattern for MTASC trace support.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="AbstractLogger" method="createMtascMessage">Creates string message for MTASC trace support.</entry>
+                    <entry type="add" package="static org.as2lib.env.log.logger" class="SosLogger" method="trace">Can be used by MTASC's trace support to log messages.</entry>
+                </day>
+                <day value="25">
+                    <entry type="add" package="org.as2lib.app.exec" class="SimpleBatch">Distributes batch events on state changes or errors and forwards events of child processes.</entry>
+                    <entry type="change" package="org.as2lib.app.exec" class="BatchProcess">Batch process does not distribute batch events anymore; it acts like a real process now.</entry>
+                    <entry type="add" package="org.as2lib.app.exec" class="Batch">Declared some further methods needed by batches.</entry>
+                </day>
+                <day value="24">
+                    <entry type="add" package="org.as2lib.context.support" class="LoadingApplicationContextFactoryBean">Enables splitting views into one main and multiple sub-views; this technique is sometimes called tiles- or composite-view.</entry>
+                    <entry type="add" package="org.as2lib.bean.factory.parser" class="EnFlashApplicationContext">Parser for enFlash xml bean definitions.</entry>
+                    <entry type="change" package="org.as2lib.context.support" class="EnFlashApplicationContext">Works now with bean definition files rather than with EnFlash object; as LoadingApplicationContext does.</entry>
+                    <entry type="add" package="org.as2lib.context.support" class="ActionStepApplicationContext">Context for convenient ActionStep integration.</entry>
+                </day>
+                <day value="23">
+                    <entry type="add" package="org.as2lib.bean.factory.parser" class="ActionStepBeanDefinitionParser">Added support for actionstep bean definitions.</entry>
+                </day>
+                <day value="4">
+                    <entry type="add" package="org.as2lib.io.conn.core.event" class="ContextMethodInvocationCallback">A simple MI callback to be used within an application context.</entry>
+                    <entry type="add" package="org.as2lib.context.event" class="SuccessEvent">Generic success event that holds a success code.</entry>
+                    <entry type="add" package="org.as2lib.context.event" class="ErrorEvent">Generic error event that holds an error code.</entry>
+                </day>
+                <day value="3">
+                    <entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added support for class name, file name and line number (old class conversion character 'c' is now 'C').</entry>
+                    <entry type="add" package="org.as2lib.env.log" class="LogMessage">Added support for class name, file name and line number.</entry>
+                </day>
+            </month>
+            <month value="2">
+                <day value="27">
+                    <entry type="add" package="org.as2lib.context.support" class="AsWingApplicationContext">Added support for aswing contexts.</entry>
+                    <entry type="add" package="org.as2lib.bean.factory.parser" class="AsWingBeanDefinitionParser">Added support for aswing bean definitions.</entry>
+                    <entry type="add" package="org.as2lib.bean.factory.parser" class="UiBeanDefinitionParser">Added generic support for UI bean definitions.</entry>
+                </day>
+                <day value="25">
+                    <entry type="add" package="org.as2lib.context.support" class="ResourceBundleMessageSource">Loads messages from properties files for a given base-name.</entry>
+                    <entry type="add" package="org.as2lib.bean.factory.config" class="VariableRetrievingFactoryBean">Gets a variable from a bean; mostly used to get constants.</entry>
+                    <entry type="add" package="org.as2lib.bean.factory.config" class="PropertyPathFactoryBean">Gets a property from a bean given a bean and a property path.</entry>
+                    <entry type="add" package="org.as2lib.bean.factory.config" class="MethodInvokingFactoryBean">Invokes a method given a target bean and a method name.</entry>
+                    <entry type="add" package="org.as2lib.io.file" class="FileLoaderProcess">Added flag to specify whether error shall be ignored or not.</entry>
+                    <entry type="add" package="org.as2lib.env.reflect" class="DelegateFactoryBean">Creates delegates given a target bean and method name.</entry>
+                    <entry type="add" package="org.as2lib.env.log.parser" class="LogConfigurationProcess">Loads and parses a log configuration.</entry>
+                </day>
+                <day value="13">
+                    <entry type="enhancement" package="org.as2lib.env.reflect" class="DelegateManager">Single internal cache for all delegates is implemented</entry>
+                    <entry type="add" package="org.as2lib.env.reflect" class="DelegateManager" method="clear"></entry>
+                    <entry type="add" package="org.as2lib.env.reflect" class="DelegateManager" method="remove"></entry>
+                </day>
+                <day value="6">
+                    <entry type="add" package="org.as2lib.env.reflect" class="DelegateManager">Proxy class to create delegate methods with internal cache is added.</entry>
+                </day>
+                <day value="4">
+                    <entry type="add" package="org.as2lib.io.conn.core.client" class="ClientServiceProxyFactoryBean">Convenient implementation of factory bean to retrieve typed service proxy in application contexts.</entry>
+                    <entry type="add" package="org.as2lib.io.conn.local.client" class="LocalClientServiceProxyFactoryBean">Creates typed service proxies for local connections.</entry>
+                    <entry type="add" package="org.as2lib.io.conn.webservice" class="WebServiceProxyFactoryBean">Creates typed service proxies for webservices.</entry>
+                    <entry type="add" package="org.as2lib.io.conn.remoting" class="RemotingServiceProxyFactoryBean">Creates typed service proxies for remoting.</entry>
+                    <entry type="add" package="org.as2lib.io.conn.webservice" class="WebServiceProxy">Proxy for web service.</entry>
+                    <entry type="add" package="org.as2lib.io.conn.remoting" class="RemotingServiceProxy">Proxy for remoting service.</entry>
+                </day>
+                <day value="3">
+                    <entry type="bugfix" package="static org.as2lib.util" class="MethodUtil" method="invoke">Using invoke for static method caused infinite loop.</entry>
+                </day>
+                <day value="2">
+                    <entry type="add" package="org.as2lib.util" class="ClassUtil" method="isAssignable">Checks whether one class is assignable from another class.</entry>
+                </day>
+            </month>
+            <month value="1">
+                <day value="17">
+                    <entry type="add" package="org.as2lib.bean.converter" class="PackageConverter">Added support for converting string values to packages.</entry>
+                    <entry type="add" package="org.as2lib.bean.factory.parser" class="XmlBeanDefinitionParser">Added support for special types 'Package' and 'Class' and support for managed arrays.</entry>
+                    <entry type="add" package="org.as2lib.bean.factory.support" class="ManagedArray">Added support for managed arrays that may contain bean references etc.</entry>
+                </day>
+                <day value="16">
+                    <entry type="change" package="org.as2lib.util" class="ArrayUtil" method="fill"><change-returnType from="Void" to="Array"></change-returnType></entry>
+                </day>
+                <day value="15">
+                    <entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added control over undefined information via asterisk (*) format modifier.</entry>
+                    <entry type="add" package="org.as2lib.context.support" class="EnFlashApplication">Added context support for enflash that registers enflash-objects as singleton beans.</entry>
+                    <entry type="change" package="org.as2lib.app.conf / main">Work with instances instead of classes and static methods. This for example allows configuration classes to implement interfaces.</entry>
+                </day>
+                <day value="14">
+                    <entry type="bugfix" package="org.as2lib.regexp.node" class="BnM">Internal arrays creation and initialization is fixed.</entry>
+                    <entry type="add" package="org.as2lib.util" class="ArrayUtil" method="fill"></entry>
+                </day>
+                <day value="13">
+                    <entry type="bugfix" package="org.as2lib.regexp" class="Matcher" method="replaceFirst">Replacement and tail addition to the result string is fixed.</entry>
+                    <entry type="bugfix" package="org.as2lib.regexp" class="Matcher" method="replaceAll">Replacement and tail addition to the result string is fixed.</entry>
+                </day>
+                <day value="9">
+                    <entry type="add" package="org.as2lib.bean">Support for beans and bean factories.</entry>
+                    <entry type="add" package="org.as2lib.context">Support for application contexts.</entry>
+                </day>
+                <day value="6">
+                    <entry type="add" package="org.as2lib.data.holder" class="Properties" method="putAll">Copies all key-value pairs from the given source.</entry>
+                    <entry type="add" package="org.as2lib.data.holder" class="Properties" method="clear">Removes all key-value pairs.</entry>
+                </day>
+                <day value="2">
+                    <entry type="add" package="org.as2lib.env.except" class="Throwable" method="contains">Checks whether the throwable is of a given type or has a nested cause of a given type.</entry>
+                </day>
+            </month>
+        </year>
+        <year value="2005">
+            <month value="12">
+                <day value="24">
+                  <entry type="add" package="org.as2lib.env.log.logger" class="AsdtLogger">Logger class for ASDT Eclipse plugin logging console is added</entry>
+                </day>
+                <day value="23">
+                  <entry type="add" package="org.as2lib.env.log.logger" class="SosLogger">Logger class for SOS XML Socket Server is added</entry>
+                </day>
+                <day value="13">
+                  <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getSourceMethodName"></entry>
+                  <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getSourceMethod"></entry>
+                  <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getSourceObject"></entry>
+                  <entry type="change" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Is now fully pattern based.</entry>
+                </day>
+                <day value="4">
+                    <entry type="add" package="org.as2lib.lang" class="NumberFormat">Class for number formatting.</entry>
+                    <entry type="add" package="org.as2lib.lang" class="MessageFormat">Class for formatting strings based to locales.</entry>
+                    <entry type="change"><change-rename to="org.as2lib.lang.DateFormat" from="org.as2lib.util.DateFormatter" /></entry>
+                    <entry type="add" package="org.as2lib.lang.en" class="EnglishDateNames">Date entries in english.</entry>
+                </day>
+                <day value="2">
+                    <entry type="add" package="org.as2lib.util" class="MathUtil" method="ceil"></entry>
+                    <entry type="add" package="org.as2lib.util" class="CharSetInverser">Inverser for a certai</entry>
+                    <entry type="add" package="org.as2lib.util" class="CharSet">List for accepted characters.</entry>
+                    <entry type="add" package="org.as2lib.util" class="CharUtil">
+                        Util to work with characters.
+                    </entry>
+                    <entry type="add" package="org.as2lib.util" class="TrimUtil">
+                        Introduced org.as2lib.util.TrimUtil with some old StringUtil methods to reduce filesize.
+                        <change-move from="StringUtil.ucFirst" to="TextUtil.ucFirst"></change-move>
+                        <change-move from="StringUtil.ucWords" to="TextUtil.ucWords"></change-move>
+                    </entry>
+                    <entry type="add" package="org.as2lib.util" class="TextUtil">
+                        Introduced org.as2lib.util.TextUtil with some old StringUtil methods to reduce filesize.
+                        <change-move from="StringUtil.ucFirst" to="TextUtil.ucFirst"></change-move>
+                        <change-move from="StringUtil.ucWords" to="TextUtil.ucWords"></change-move>
+                    </entry>
+                </day>
+                <day value="1">
+                    <entry type="add" package="org.as2lib.lang.en" class="BritishEnglish">Basic definition for english as default locale</entry>
+                    <entry type="add" package="org.as2lib.lang" class="ConcreteLocale">Abstract class for extension</entry>
+                    <entry type="add" package="org.as2lib.lang" class="LocaleManager">Manager to handle locales</entry>
+                    <entry type="add" package="org.as2lib.lang" class="MergedLocale">Automatic merger of different locales</entry>
+                    <entry type="add" package="org.as2lib.lang" class="Locale">Interface for accessing locale based properties</entry>
+                    <entry type="change" package="org.as2lib.data.holder" class="Properties">
+                        .setProperty was not fully compatible (problems with native .setProperty method
+                        <change-rename to="setProp" from="setProperty" />
+                        <change-rename to="getProp" from="getProperty" />
+                    </entry>
+                </day>
+            </month>
+            <month value="11">
+                <day value="29">
+                    <entry type="add" package="org.as2lib.env.log.handler" class="AsdtHandler">Log handler for ASDT Eclipse plugin logger console is added</entry>
+                    <entry type="remove" package="org.as2lib.app.exec" class="Batch" method="addProcess">
+                        Removed BatchProcess related method.
+                    </entry>
+                    <entry type="remove" package="org.as2lib.app.exec" class="Batch" method="removeProcess">
+                        Removed BatchProcess related method.
+                    </entry>
+                    <entry type="remove" package="org.as2lib.app.exec" class="Batch" method="removeProcessById">
+                        Removed BatchProcess related method.
+                    </entry>
+                </day>
+                <day value="28">
+                    <entry type="remove" package="org.as2lib.env.log.handler" class="XmlSocketHandler" method="convertMessage">Moved to the SosHandler class</entry>
+                    <entry type="add" package="org.as2lib.env.log.handler" class="SosHandler" method="convertMessage">Overwrites parent method to add CDATA wrapping tag to the stringified message to avoid conflicts during message sending through XMLSocket to SOS Console</entry>
+                </day>
+                <day value="24">
+                    <entry type="add" package="org.as2lib.env.log" class="LogMessage" method="getSourceMethodName"></entry>
+                    <entry type="add" package="org.as2lib.env.log.stringifier" class="PatternLogMessageStringifier">Added support for 'sourceMethodName'.</entry>
+                    <entry type="add" package="org.as2lib.env.log.logger" class="SimpleHierarchicalLogger">Added support for second parameter 'sourceMethodName' for all log methods.</entry>
+                    <entry type="add" package="org.as2lib.env.log.handler" class="XmlSocketHandler" method="convertMessage">Overwrites parent method to add CDATA wrapping tag to the stringified message to avoid conflicts during message sending through XMLSocket</entry>
+                    <entry type="remove" package="org.as2lib.env.log.stringifier" class="SosMessageStringifier">Class was used for incorrect purposes</entry>
+                    <entry type="enhancement" package="org.as2lib.env.log.handler" class="SosHandler">Message wrapping to the SOS-specified XML tags are moved from the SosMessageStringifier class</entry>
+                    <entry type="add" package="org.as2lib.env.log.handler" class="SosHandler" method="getInstance">Returns the same instance of the SosHandler class</entry>
+                </day>
+                <day value="21">
+                    <entry type="add" package="static org.as2lib.env.reflect" class="Delegate" method="create">Overloads to the different create methods.</entry>
+                    <entry type="change" package="static org.as2lib.env.reflect" class="Delegate" method="create"><change-rename to="createByMethod"/></entry>
+                    <entry type="change" package="static org.as2lib.env.reflect" class="Delegate" method="createExtendedDelegate"><change-rename to="createByMethodAndArguments"/></entry>
+                    <entry type="add" package="static org.as2lib.env.reflect" class="Delegate" method="createByName"></entry>
+                </day>
+                <day value="19">
+                    <entry type="add" package="org.as2lib.env.log.parser" class="PropertiesLogConfigurationParser"></entry>
+                    <entry type="add" package="org.as2lib.data.holder" class="Properties" method="getValues"></entry>
+                    <entry type="add" package="org.as2lib.data.holder" class="Properties" method="getKeys"></entry>
+                </day>
+                <day value="12">
+                    <entry type="bugfix" package="org.as2lib.util" class="MethodUtil" method="invoke">Fixed serious bug that made 'super' work incorrectly.</entry>
+                </day>
+                <day value="2">
+                    <entry package="org.as2lib.regexp" class="AcsiiUtil" type="add">Static properties with ASCII codes for all characters are added</entry>
+                </day>
+            </month>
+            <month value="10">
+                <day value="20">
+                    <entry type="add" package="org.as2lib.env.log.aspect" class="TraceLoggingAspect">Logs the trace.</entry>
+                </day>
+                <day value="18">
+                    <entry type="change" package="org.as2lib.aop.aspect" class="IndentedLoggingAspect"><change-move to="org.as2lib.env.log.aspect"/></entry>
+                    <entry type="change" package="org.as2lib.aop.aspect" class="StackTraceAspect"><change-move to="org.as2lib.env.except"/></entry>
+                    <entry type="change" package="org.as2lib.aop.aspect" class="ThrowableStackTraceFillingAspect"><change-move to="org.as2lib.env.except"/></entry>
+                    <entry type="add" package="static org.as2lib.aop.joinpoint" class="AbstractJoinPoint" method="getMethod">Returns the method info for a given join point.</entry>
+                </day>
+                <day value="17">
+                    <entry type="add" package="org.as2lib.aop.aspect" class="ThrowableStackTraceFillingAspect">Filles stack trace of throwables.</entry>
+                    <entry type="bugfix" package="org.as2lib.aop.joinpoint" class="SetPropertyJoinPoint" method="proceed">Fixed bug with wrong arguments.</entry>
+                    <entry type="bugfix" package="org.as2lib.aop.joinpoint" class="*">Fixed bugs with 'update' and 'snapshot' methods.</entry>
+                    <entry type="add" package="org.as2lib.aop" class="JoinPoint" method="getArguments">General access to arguments for all advice types.</entry>
+                    <entry type="bugfix" package="org.as2lib.io.file" class="TextFileLoader" method="getFile">Never-ending recursion is eliminated</entry>
+                </day>
+                <day value="16">
+                    <entry type="add" package="org.as2lib.aop.aspect" class="StackTraceAspect">Maintains the stack trace to the current method.</entry>
+                </day>
+                <day value="14">
+                    <entry type="add" package="org.as2lib.io.file" class="XmlFileLoader"/>
+                </day>
+            </month>
+        </year>
+    </release>
 </changelog>
