@@ -18,6 +18,9 @@ import org.as2lib.bean.Mergeable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.List;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code ManagedList} represents a list that may include run-time bean references
@@ -73,10 +76,15 @@ class org.as2lib.bean.factory.support.ManagedList extends BasicClass implements 
 	}
 	
 	public function merge(parent):Void {
-		if (parent instanceof List) {
-			var temp:Array = List(parent).toArray();
-			values = temp.concat(values);
+		if (!mergeEnabled) {
+			throw new IllegalStateException("Merging is not enabled for this managed list.", this, arguments);
 		}
+		if (!(parent instanceof List)) {
+			throw new IllegalArgumentException("Cannot merge with instance of type [" +
+					ReflectUtil.getTypeNameForInstance(parent) + "].", this, arguments);
+		}
+		var temp:Array = List(parent).toArray();
+		values = temp.concat(values);
 	}
 	
 	public function insertByValue(value):Void {

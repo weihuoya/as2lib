@@ -18,6 +18,9 @@ import org.as2lib.bean.Mergeable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.Map;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code ManagedMap} represents a map that may contain run-time bean references and
@@ -98,11 +101,16 @@ class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements M
 	}
 	
 	public function merge(parent):Void {
-		if (parent instanceof Map) {
-			var parentMap:Map = parent;
-			keys = parentMap.getKeys().concat(keys);
-			values = parentMap.getValues().concat(values);
+		if (!mergeEnabled) {
+			throw new IllegalStateException("Merging is not enabled for this managed map.", this, arguments);
 		}
+		if (!(parent instanceof Map)) {
+			throw new IllegalArgumentException("Cannot merge with instance of type [" +
+					ReflectUtil.getTypeNameForInstance(parent) + "].", this, arguments);
+		}
+		var parentMap:Map = parent;
+		keys = parentMap.getKeys().concat(keys);
+		values = parentMap.getValues().concat(values);
 	}
 	
 	public function put(key, value) {

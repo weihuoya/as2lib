@@ -17,6 +17,9 @@
 import org.as2lib.bean.Mergeable;
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.Properties;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code ManagedProperties} represents a properties that may be merged with a parent
@@ -55,11 +58,16 @@ class org.as2lib.bean.factory.support.ManagedProperties extends BasicClass imple
 	}
 	
 	public function merge(parent):Void {
-		if (parent instanceof Properties) {
-			var parentProperties:Properties = parent;
-			keys = parentProperties.getKeys().concat(keys);
-			values = parentProperties.getValues().concat(values);
+		if (!mergeEnabled) {
+			throw new IllegalStateException("Merging is not enabled for this managed properties.", this, arguments);
 		}
+		if (!(parent instanceof Properties)) {
+			throw new IllegalArgumentException("Cannot merge with instance of type [" +
+					ReflectUtil.getTypeNameForInstance(parent) + "].", this, arguments);
+		}
+		var parentProperties:Properties = parent;
+		keys = parentProperties.getKeys().concat(keys);
+		values = parentProperties.getValues().concat(values);
 	}
 	
 	public function setProp(key:String, value:String):Void {

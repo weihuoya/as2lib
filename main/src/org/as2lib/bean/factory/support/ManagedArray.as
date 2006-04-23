@@ -63,9 +63,14 @@ class org.as2lib.bean.factory.support.ManagedArray extends Array implements Merg
 	}
 	
 	public function merge(parent):Void {
-		if (parent instanceof Array) {
-			unshift.apply(this, parent);
+		if (!mergeEnabled) {
+			throw new IllegalStateException("Merging is not enabled for this managed array.", this, arguments);
 		}
+		if (!(parent instanceof Array)) {
+			throw new IllegalArgumentException("Cannot merge with instance of type [" +
+					ReflectUtil.getTypeNameForInstance(parent) + "].", this, arguments);
+		}
+		unshift.apply(this, parent);
 	}
 	
 }
