@@ -1140,7 +1140,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			bean = singletonCache.get(beanName);
 			if (bean != null) {
 				if (bean instanceof FactoryBean && !isFactoryDereference(name)) {
-					var factoryBean:FactoryBean = FactoryBean(getBean(FACTORY_BEAN_PREFIX + beanName));
+					var factoryBean:FactoryBean = FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName));
 					return factoryBean.isSingleton();
 				}
 				singleton = true;
@@ -1149,7 +1149,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				var bd:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
 				if (bd.hasBeanClass()) {
 					if (ClassUtil.isImplementationOf(bd.getBeanClass(), FactoryBean) && !isFactoryDereference(name)) {
-						var factoryBean:FactoryBean = FactoryBean(getBean(FACTORY_BEAN_PREFIX + beanName));
+						var factoryBean:FactoryBean = FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName));
 						return factoryBean.isSingleton();
 					}
 				}
@@ -1185,7 +1185,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				beanClass = mergedBeanDefinition.getBeanClass();
 			}
 			if (ClassUtil.isImplementationOf(beanClass, FactoryBean) && !isFactoryDereference(name)) {
-				var factoryBean:FactoryBean = FactoryBean(getBean(FACTORY_BEAN_PREFIX + beanName));
+				var factoryBean:FactoryBean = FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName));
 				return factoryBean.getObjectType();
 			}
 			return beanClass;
@@ -1217,7 +1217,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	private function getTypeForFactoryMethod(beanName:String, mergedBeanDefinition:RootBeanDefinition):Function {
 		if (mergedBeanDefinition.getFactoryBeanName() != null &&
 				mergedBeanDefinition.isSingleton() && !mergedBeanDefinition.isLazyInit()) {
-			return eval("_global." + ReflectUtil.getTypeName(getBean(beanName)));
+			return eval("_global." + ReflectUtil.getTypeName(getBeanByName(beanName)));
 		}
 		return null;
 	}
