@@ -426,21 +426,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	/**
-	 * Returns whether the local bean factory of this context contains a bean of the
-	 * given {@code beanName}, ignoring beans defined in ancestor contexts.
-	 * 
-	 * <p>Needs to check both bean definitions and manually registered singletons.
-	 * We cannot use {@code containsBean} here, as we do not want a bean from an
-	 * ancestor bean factory.
-	 * 
-	 * @param beanName the name of the bean to check whether it is contained
-	 * @return {@code true} if this context contains such a bean else {@code false}
-	 */
-	private function containsLocalBean(beanName:String):Boolean {
-		return (containsBeanDefinition(beanName) || getBeanFactory().containsSingleton(beanName));
-	}
-	
-	/**
 	 * Refreshes this context.
 	 * 
 	 * <p>This method is a template method which can be overridden to add
@@ -575,6 +560,10 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	public function getParentBeanFactory(Void):BeanFactory {
 		return getParent();
+	}
+	
+	public function containsLocalBean(name:String):Boolean {
+		return getBeanFactory().containsLocalBean(name);
 	}
 	
 	/**
