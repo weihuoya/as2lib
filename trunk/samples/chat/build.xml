@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+
+<project name="As2lib Chat" default="build">
+    
+    <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../ant/dist/as2ant.jar"/>
+    
+    <property name="src.dir" location="src"/>
+    <property name="lib.dir" location="lib"/>
+    <property name="build.dir" location="build"/>
+    <property name="context.dir" location="context"/>
+    <property name="as2lib.dir" location="D:/Projects/As2lib/main/src"/>
+    <property name="debugit.dir" location="D:/Projects/As2lib/lib/debugit"/>
+    <property name="aswing.dir" location="D:/Projects/As2lib/lib/aswing/src"/>
+    
+    <property name="chat.swf" location="${build.dir}/chat.swf"/>
+    
+    <property name="player.exe" location="C:/Programme/Macromedia/Flash 8/Players/SAFlashPlayer.exe"/>
+    
+    <target name="build">
+        <mkdir dir="${build.dir}"/>
+        <copy todir="${build.dir}">
+            <fileset dir="${context.dir}">
+                <include name="**/*.xml"/>
+                <include name="**/*.properties"/>
+            </fileset>
+        </copy>
+        <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${chat.swf}"
+                header="800:600:31" version="8" trace="org.as2lib.env.log.logger.DebugItLogger.trace">
+            <classpath>
+                <pathelement path="${lib.dir}"/>
+                <pathelement path="${aswing.dir}"/>
+                <pathelement path="${debugit.dir}"/>
+                <pathelement path="${as2lib.dir}"/>
+                <pathelement path="${src.dir}"/>
+            </classpath>
+            <srcxml>
+                <pathelement path="${context.dir}/applicationContext.xml"/>
+                <pathelement path="${context.dir}/Login.xml"/>
+                <pathelement path="${context.dir}/Chat.xml"/>
+                <pathelement path="${context.dir}/NewRoomWindow.xml"/>
+                <pathelement path="${context.dir}/EnterPasswordWindow.xml"/>
+                <pathelement path="${context.dir}/SendPrivateMessageWindow.xml"/>
+                <pathelement path="${context.dir}/ErrorWindow.xml"/>
+            </srcxml>
+        </swf>
+        <exec executable="${player.exe}" spawn="yes"><arg value="${chat.swf}"/></exec>
+    </target>
+    
+</project>
+

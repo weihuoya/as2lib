@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+
+<beans xmlns:aw="org.aswing" xmlns="*.xml">
+	
+	<bean id="title" abstract="true">
+		<foreground><aw:ASColor>0xDDDDDD</aw:ASColor></foreground>
+		<font><aw:ASFont>Arial Black, 20, false</aw:ASFont></font>
+	</bean>
+	
+	<bean id="subtitle" horizontalAlignment="v{org.aswing.JLabel.LEFT}" abstract="true">
+		<foreground><aw:ASColor>0x444444</aw:ASColor></foreground>
+		<font><aw:ASFont>Arial, 14, false</aw:ASFont></font>
+	</bean>
+	
+	<bean id="smartFoxClient" class="it.gotoandplay.smartfoxserver.SmartFoxClient"/>
+	
+	<Login id="login" width="800" height="600" ip="127.0.0.1" port="9339" zone="simpleChat"
+			class="org.as2lib.context.support.AsWingApplicationContext">
+		<property name="smartFoxClient"><ref local="smartFoxClient"/></property>
+		<property name="chat"><ref local="chat"/></property>
+	</Login>
+	
+	<Chat id="chat" width="800" height="600" visible="true"
+			class="org.as2lib.context.support.AsWingApplicationContext">
+		<property name="smartFoxClient"><ref local="smartFoxClient"/></property>
+		<!--<property name="login"><ref local="login"/></property>-->
+	</Chat>
+	
+	<bean id="localeManager" class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
+		<property name="defaultLocale">en</property>
+		<property name="locales">
+			<array>
+				<bean class="org.as2lib.lang.GermanLocale"/>
+				<bean class="org.as2lib.lang.EnglishLocale"/>
+			</array>
+		</property>
+	</bean>
+	
+	<bean id="messageSource" class="org.as2lib.context.support.StaticMessageSource" depends-on="localeManager">
+		<property name="messages[de]" type="org.as2lib.data.holder.properties.SimpleProperties">
+			<props>
+				<prop key="text.welcome">Willkommen zum As2lib Chat</prop>
+				<prop key="title.chat">As2lib Chat</prop>
+				<prop key="title.users">Benutzer</prop>
+				<prop key="title.rooms">Räume</prop>
+				<prop key="title.newRoom">Neuer Raum</prop>
+				<prop key="title.enterPassword">Passwort Eingeben</prop>
+				<prop key="title.sendPrivateMessage">Private Nachricht Senden</prop>
+				<prop key="title.error">Fehler</prop>
+				<prop key="status.connecting">Verbinden...</prop>
+				<prop key="status.connected">Verbunden, bitte anmelden:</prop>
+				<prop key="status.cantConnect">Kann keine Verbindung aufbauen!</prop>
+				<prop key="label.username">Benutzername</prop>
+				<prop key="label.name">Name</prop>
+				<prop key="label.password">Passwort (optional)</prop>
+				<prop key="label.maxUsers">Maximale Benutzer</prop>
+				<prop key="button.submit">Anmelden</prop>
+				<prop key="button.clear">Löschen</prop>
+				<prop key="button.send">Senden</prop>
+				<prop key="button.new">Neu</prop>
+				<prop key="button.exit">Aussteigen</prop>
+				<prop key="button.ok">Ok</prop>
+				<prop key="button.cancel">Abbrechen</prop>
+				<prop key="tooltip.submit">Am Chat-Server anmelden.</prop>
+				<prop key="tooltip.clear">Den eingetragenen Benutzernamen löschen.</prop>
+				<prop key="tooltip.new">Einen neuen Raum erstellen.</prop>
+				<prop key="tooltip.exit">Vom Chat-Server abmelden.</prop>
+				<prop key="error.login">Den eingetragenen Benutzernamen löschen.</prop>
+				<prop key="error.login">Anmeldung schlug fehl: {0}</prop>
+				<prop key="message.public">&lt;b&gt;[{0}]:&lt;/b&gt; {1}</prop>
+				<prop key="message.private">&lt;b&gt;&lt;font color='#009900'&gt;[PM &gt; {0}]:&lt;/font&gt;&lt;/b&gt; {1}</prop>
+				<prop key="message.joinedRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Raum [{0}] eingetreten&lt;/font&gt;</prop>
+				<prop key="message.userEnteredRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Benutzer [{0}] hat den Raum betreten&lt;/font&gt;</prop>
+				<prop key="message.userLeftRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Benutzer [{0}] hat den Raum verlassen&lt;/font&gt;</prop>
+			</props>
+		</property>
+		<property name="messages[en]" type="org.as2lib.data.holder.properties.SimpleProperties">
+			<props>
+				<prop key="text.welcome">Welcome to the As2lib Chat</prop>
+				<prop key="title.chat">As2lib Chat</prop>
+				<prop key="title.users">Users</prop>
+				<prop key="title.rooms">Rooms</prop>
+				<prop key="title.newRoom">New Room</prop>
+				<prop key="title.enterPassword">Enter Password</prop>
+				<prop key="title.sendPrivateMessage">Send Private Message</prop>
+				<prop key="title.error">Error</prop>
+				<prop key="status.connecting">Connecting...</prop>
+				<prop key="status.connected">Connected, please login:</prop>
+				<prop key="status.cantConnect">Can't connect!</prop>
+				<prop key="label.username">Username</prop>
+				<prop key="label.name">Name</prop>
+				<prop key="label.password">Password (optional)</prop>
+				<prop key="label.maxUsers">Max Users</prop>
+				<prop key="button.submit">Submit</prop>
+				<prop key="button.clear">Clear</prop>
+				<prop key="button.send">Send</prop>
+				<prop key="button.new">New</prop>
+				<prop key="button.exit">Exit</prop>
+				<prop key="button.ok">Ok</prop>
+				<prop key="button.cancel">Cancel</prop>
+				<prop key="tooltip.submit">Log on to the chat server.</prop>
+				<prop key="tooltip.clear">Clear the entered username.</prop>
+				<prop key="tooltip.new">Create a new room.</prop>
+				<prop key="tooltip.exit">Log out of the chat server.</prop>
+				<prop key="error.login">Login failed: {0}</prop>
+				<prop key="message.public">&lt;b&gt;[{0}]:&lt;/b&gt; {1}</prop>
+				<prop key="message.private">&lt;b&gt;&lt;font color='#009900'&gt;[PM &gt; {0}]:&lt;/font&gt;&lt;/b&gt; {1}</prop>
+				<prop key="message.joinedRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Room [{0}] joined&lt;/font&gt;</prop>
+				<prop key="message.userEnteredRoom">&lt;font color='#cc0000'&gt;&gt;&gt; User [{0}] entered the room&lt;/font&gt;</prop>
+				<prop key="message.userLeftRoom">&lt;font color='#cc0000'&gt;&gt;&gt; User [{0}] left the room&lt;/font&gt;</prop>
+			</props>
+		</property>
+	</bean>
+	
+</beans>

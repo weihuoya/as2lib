@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+
+<beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing" xmlns:ab="org.aswing.border">
+	
+	<chat:Login id="login" init-method="init">
+		<loginPanel>b{loginPanel}</loginPanel>
+		<userNameTextField>b{userNameTextField}</userNameTextField>
+		<statusTextField>b{statusTextField}</statusTextField>
+		<submitButton>b{submitButton}</submitButton>
+		<clearButton>b{clearButton}</clearButton>
+		<contentPane>
+			<aw:Container>
+				<layout><aw:BorderLayout vgap="5"/></layout>
+				<aw:JPanel preferredHeight="200" opaque="true" constraints="v{org.aswing.BorderLayout.NORTH}">
+					<layout><aw:BorderLayout/></layout>
+					<background><aw:ASColor>0x444444</aw:ASColor></background>
+					<aw:JLabel id="statusTextField" horizontalAlignment="v{org.aswing.JLabel.LEFT}"
+							constraints="v{org.aswing.BorderLayout.SOUTH}" parent="title">
+						<text>{messageSource.message[status.connecting]}</text>
+					</aw:JLabel>
+				</aw:JPanel>
+				<aw:JPanel id="loginPanel" constraints="v{org.aswing.BorderLayout.CENTER}" visible="false">
+					<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="5"/></layout>
+					<border>
+						<ab:EmptyBorder><insets><aw:Insets bottom="5" left="2" right="5" top="0"/></insets></ab:EmptyBorder>
+					</border>
+					<aw:JLabel parent="subtitle">
+						<text>{messageSource.message[label.username]}</text>
+					</aw:JLabel>
+					<aw:JTextField id="userNameTextField" columns="30" maximumWidth="165" maximumHeight="22"
+							eventListener-onTextChanged="d{login.onUserNameChanged}" eventListener-onKeyDown="d{login.submitOnEnter}"/>
+					<aw:JPanel>
+						<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.X_AXIS}" gap="5"/></layout>
+						<aw:JButton id="submitButton" preferredWidth="80" preferredHeight="22" enabled="false"
+								eventListener-onClicked="d{login.submit}">
+							<text>{messageSource.message[button.submit]}</text>
+							<toolTipText>{messageSource.message[tooltip.submit]}</toolTipText>
+						</aw:JButton>
+						<aw:JButton id="clearButton" preferredWidth="80" preferredHeight="22" enabled="false"
+								eventListener-onClicked="d{login.clear}">
+							<text>{messageSource.message[button.clear]}</text>
+							<toolTipText>{messageSource.message[tooltip.clear]}</toolTipText>
+						</aw:JButton>
+					</aw:JPanel>
+				</aw:JPanel>
+				<aw:JPanel preferredHeight="200" opaque="true" constraints="v{org.aswing.BorderLayout.SOUTH}">
+					<background><aw:ASColor>0x444444</aw:ASColor></background>
+				</aw:JPanel>
+			</aw:Container>
+		</contentPane>
+	</chat:Login>
+	
+</beans>

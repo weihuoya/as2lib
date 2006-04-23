@@ -1,0 +1,121 @@
+<?xml version="1.0"?>
+
+<beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing" xmlns:ab="org.aswing.border" xmlns="*.xml">
+	
+	<bean id="window" x="200" y="150" width="400" height="110" resizable="false" modal="true" abstract="true"/>
+	
+	<chat:Chat id="chat" init-method="init">
+		<chatTextArea>b{chatTextArea}</chatTextArea>
+		<messageTextField>b{messageTextField}</messageTextField>
+		<roomList>b{roomList}</roomList>
+		<roomVectorListModel>b{roomVectorListModel}</roomVectorListModel>
+		<userList>b{userList}</userList>
+		<userVectorListModel>b{userVectorListModel}</userVectorListModel>
+		<newRoomWindow>b{newRoomWindow}</newRoomWindow>
+		<enterPasswordWindow>b{enterPasswordWindow}</enterPasswordWindow>
+		<sendPrivateMessageWindow>b{sendPrivateMessageWindow}</sendPrivateMessageWindow>
+		<errorWindow>b{errorWindow}</errorWindow>
+		<contentPane>
+			<aw:Container>
+				<layout><aw:BorderLayout hgap="5" vgap="5"/></layout>
+				<aw:JPanel preferredHeight="100" opaque="true" constraints="v{org.aswing.BorderLayout.NORTH}">
+					<layout><aw:BorderLayout/></layout>
+					<background><aw:ASColor>0x444444</aw:ASColor></background>
+					<aw:JLabel horizontalAlignment="v{org.aswing.JLabel.LEFT}"
+							constraints="v{org.aswing.BorderLayout.SOUTH}" parent="title">
+						<text>{messageSource.message[title.chat]}</text>
+					</aw:JLabel>
+				</aw:JPanel>
+				<aw:JPanel constraints="v{org.aswing.BorderLayout.CENTER}">
+					<layout><aw:BorderLayout hgap="5" vgap="5"/></layout>
+					<aw:JScrollPane verticalScrollBarPolicy="v{org.aswing.JScrollPane.SCROLLBAR_AS_NEEDED}"
+							constraints="v{org.aswing.BorderLayout.CENTER}">
+						<border><ab:EmptyBorder><insets><aw:Insets>0, 0, 0, 0</aw:Insets></insets></ab:EmptyBorder></border>
+						<view>
+							<aw:JTextArea id="chatTextArea" rows="100" columns="100" editable="false" html="true"
+									wordWrap="true">
+								<text>{messageSource.message[text.welcome]}</text>
+								<font><aw:ASFont>Arial, 12, false</aw:ASFont></font>
+							</aw:JTextArea>
+						</view>
+					</aw:JScrollPane>
+					<aw:JPanel constraints="v{org.aswing.BorderLayout.SOUTH}">
+						<layout><aw:BorderLayout hgap="5" vgap="5"/></layout>
+						<aw:JTextField id="messageTextField" eventListener-onKeyDown="d{chat.sendMessageOnEnter}"
+								constraints="v{org.aswing.BorderLayout.CENTER}"/>
+						<aw:JButton preferredWidth="100" preferredHeight="22" constraints="v{org.aswing.BorderLayout.EAST}"
+								eventListener-onClicked="d{chat.sendMessage}">
+							<text>{messageSource.message[button.send]}</text>
+						</aw:JButton>
+					</aw:JPanel>
+				</aw:JPanel>
+				<aw:JPanel constraints="v{org.aswing.BorderLayout.EAST}">
+					<layout><aw:BorderLayout hgap="0" vgap="10"/></layout>
+					<aw:JPanel preferredHeight="185" constraints="v{org.aswing.BorderLayout.NORTH}">
+						<layout><aw:BorderLayout vgap="5"/></layout>
+						<aw:JLabel horizontalAlignment="v{org.aswing.JLabel.LEFT}"
+								constraints="v{org.aswing.BorderLayout.NORTH}" parent="subtitle">
+							<text>{messageSource.message[title.rooms]}</text>
+						</aw:JLabel>
+						<aw:JScrollPane verticalScrollBarPolicy="v{org.aswing.JScrollPane.SCROLLBAR_AS_NEEDED}"
+								constraints="v{org.aswing.BorderLayout.CENTER}">
+							<view>
+								<aw:JList id="roomList" selectionListener="d{chat.changeRoom}">
+									<model><aw:VectorListModel id="roomVectorListModel"/></model>
+									<cellFactory>
+										<aw:GeneralListCellFactory>
+											<constructor-arg type="Class">org.as2lib.sample.chat.RoomListCell</constructor-arg>
+										</aw:GeneralListCellFactory>
+									</cellFactory>
+								</aw:JList>
+							</view>
+						</aw:JScrollPane>
+						<aw:JPanel constraints="v{org.aswing.BorderLayout.SOUTH}">
+							<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.X_AXIS}" gap="5"/></layout>
+							<aw:JButton preferredWidth="100" preferredHeight="22" actionListener="d{chat.createRoom}">
+								<text>{messageSource.message[button.new]}</text>
+								<toolTipText>{messageSource.message[tooltip.new]}</toolTipText>
+							</aw:JButton>
+							<aw:JButton preferredWidth="100" preferredHeight="22" actionListener="d{chat.exit}">
+								<text>{messageSource.message[button.exit]}</text>
+								<toolTipText>{messageSource.message[tooltip.exit]}</toolTipText>
+							</aw:JButton>
+						</aw:JPanel>
+					</aw:JPanel>
+					<aw:JPanel constraints="v{org.aswing.BorderLayout.CENTER}">
+						<layout><aw:BorderLayout vgap="5"/></layout>
+						<aw:JLabel horizontalAlignment="v{org.aswing.JLabel.LEFT}"
+								constraints="v{org.aswing.BorderLayout.NORTH}" parent="subtitle">
+							<text>{messageSource.message[title.users]}</text>
+						</aw:JLabel>
+						<aw:JScrollPane verticalScrollBarPolicy="v{org.aswing.JScrollPane.SCROLLBAR_AS_NEEDED}"
+								constraints="v{org.aswing.BorderLayout.CENTER}">
+							<view>
+								<aw:JList id="userList" eventListener-onItemClicked="d{chat.selectUser}">
+									<model><aw:VectorListModel id="userVectorListModel"/></model>
+									<cellFactory>
+										<aw:GeneralListCellFactory>
+											<constructor-arg type="Class">org.as2lib.sample.chat.UserListCell</constructor-arg>
+										</aw:GeneralListCellFactory>
+									</cellFactory>
+								</aw:JList>
+							</view>
+						</aw:JScrollPane>
+					</aw:JPanel>
+				</aw:JPanel>
+			</aw:Container>
+		</contentPane>
+	</chat:Chat>
+	
+	<NewRoomWindow id="newRoomWindow" smartFoxClient="b{smartFoxClient}"
+			class="org.as2lib.context.support.AsWingApplicationContext"/>
+	
+	<EnterPasswordWindow id="enterPasswordWindow" smartFoxClient="b{smartFoxClient}"
+			class="org.as2lib.context.support.AsWingApplicationContext"/>
+	
+	<SendPrivateMessageWindow id="sendPrivateMessageWindow" smartFoxClient="b{smartFoxClient}"
+			class="org.as2lib.context.support.AsWingApplicationContext"/>
+	
+	<ErrorWindow id="errorWindow" class="org.as2lib.context.support.AsWingApplicationContext"/>
+	
+</beans>
