@@ -127,6 +127,8 @@ interface org.as2lib.bean.BeanWrapper extends BasicInterface {
 	/**
 	 * Sets the bean to wrap.
 	 * 
+	 * <p>Note that all bean specific information will be reset.
+	 * 
 	 * @param wrappedBean the bean to wrap
 	 */
 	public function setWrappedBean(wrappedBean):Void;
