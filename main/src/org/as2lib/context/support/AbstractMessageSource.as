@@ -397,7 +397,7 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass implem
 	
 	/**
 	 * Subclasses can override this method to resolve a message without arguments in
-	 * an optimized fashion, i.e. to resolve a message without involving a message
+	 * an optimized fashion, that is to resolve a message without involving a message
 	 * format.
 	 * 
 	 * <p>This default implementation <i>does</i> use message format, through delegating
