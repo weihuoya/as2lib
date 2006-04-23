@@ -31,4 +31,13 @@ interface org.as2lib.bean.factory.HierarchicalBeanFactory extends BeanFactory {
 	 */
 	public function getParentBeanFactory(Void):BeanFactory;
 	
+	/**
+	 * Returns whether the local bean factory contains a bean of the given name,
+	 * ignoring beans defined in ancestor contexts.
+	 * 
+	 * @param name the name of the bean to query
+	 * @return whether a bean with the given name is defined in the local factory
+	 */
+	public function containsLocalBean(name:String):Boolean;
+	
 }
