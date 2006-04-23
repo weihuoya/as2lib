@@ -1518,16 +1518,18 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var beanDefinitionNames:Array = beanDefinitionMap.getKeys();
 		for (var i:Number = 0; i < beanDefinitionNames.length; i++) {
 			var beanName:String = beanDefinitionNames[i];
-			var beanDefinition:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
-			if (!beanDefinition.isAbstract() && beanDefinition.isSingleton() && !beanDefinition.isLazyInit()) {
-				if (ClassUtil.isImplementationOf(beanDefinition.getBeanClass(), FactoryBean)) {
-					var factory:FactoryBean = FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName));
-					if (factory.isSingleton()) {
-						getBeanByName(beanName);
+			if (!containsSingleton(beanName) && containsBeanDefinition(beanName)) {
+				var beanDefinition:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
+				if (!beanDefinition.isAbstract() && beanDefinition.isSingleton() && !beanDefinition.isLazyInit()) {
+					if (ClassUtil.isImplementationOf(beanDefinition.getBeanClass(), FactoryBean)) {
+						var factory:FactoryBean = FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName));
+						if (factory.isSingleton()) {
+							getBeanByName(beanName);
+						}
+						return;
 					}
-					return;
+					getBeanByName(beanName);
 				}
-				getBeanByName(beanName);
 			}
 		}
 	}
