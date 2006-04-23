@@ -848,6 +848,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * @param beanName the name of the bean
 	 */
 	private function destroyDisposableBean(beanName:String):Void {
+		singletonCache.remove(beanName);
 		var disposableBean = disposableBeans.remove(beanName);
 		destroyBean(beanName, disposableBean);
 	}
@@ -890,14 +891,15 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 */
 	private function getMergedBeanDefinition(beanName:String, includingAncestors:Boolean, beanDefinition:BeanDefinition):RootBeanDefinition {
 		if (beanDefinition == null) {
-			try {
-				beanDefinition = getBeanDefinition(transformBeanName(beanName));
-			} catch (exception:org.as2lib.bean.factory.NoSuchBeanDefinitionException) {
-				if (includingAncestors && parentBeanFactory instanceof DefaultBeanFactory) {
-					return DefaultBeanFactory(parentBeanFactory).getMergedBeanDefinition(beanName, true);
+			beanName = transformBeanName(beanName);
+			if (includingAncestors) {
+				if (!containsBeanDefinition(beanName)) {
+					if (parentBeanFactory instanceof DefaultBeanFactory) {
+						return DefaultBeanFactory(parentBeanFactory).getMergedBeanDefinition(beanName, true);
+					}
 				}
-				throw exception;
 			}
+			beanDefinition = getBeanDefinition(beanName);
 		}
 		if (beanDefinition instanceof RootBeanDefinition) {
 			return RootBeanDefinition(beanDefinition);
@@ -1073,16 +1075,12 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		if (isSingletonCurrentlyInCreation(beanName)) {
 			throw new BeanCurrentlyInCreationException(beanName, null, this, arguments);
 		}
-		var beanDefinition:RootBeanDefinition;
-		try {
-			beanDefinition = getMergedBeanDefinition(beanName, false);
+		// Check if bean definition exists in this factory.
+		if (getParentBeanFactory() != null && !containsBeanDefinition(beanName)) {
+			// Not found -> check parent.
+			return getParentBeanFactory().getBeanByName(name);
 		}
-		catch (exception:org.as2lib.bean.factory.NoSuchBeanDefinitionException) {
-			if (parentBeanFactory != null) {
-				return getParentBeanFactory().getBeanByName(name);
-			}
-			throw exception;
-		}
+		var beanDefinition:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
 		if (beanDefinition.isSingleton()) {
 			currentlyInCreation[beanName] = true;
 			var bean;
@@ -1094,7 +1092,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				// Explicitly remove instance from singleton cache:
 				// It might have been put there eagerly by the creation process,
 				// to allow for circular reference resolution.
-				singletonCache.remove(beanName);
+				destroyDisposableBean(beanName);
 				throw exception;
 			}
 			finally {
@@ -1134,35 +1132,31 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	
 	public function isSingleton(name:String):Boolean {
 		var beanName:String = transformBeanName(name);
-		try {
-			var singleton:Boolean = true;
-			var bean;
-			bean = singletonCache.get(beanName);
-			if (bean != null) {
-				if (bean instanceof FactoryBean && !isFactoryDereference(name)) {
+		var singleton:Boolean = true;
+		var bean = singletonCache.get(beanName);
+		if (bean != null) {
+			if (bean instanceof FactoryBean && !isFactoryDereference(name)) {
+				var factoryBean:FactoryBean = FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName));
+				return factoryBean.isSingleton();
+			}
+			singleton = true;
+		}
+		else {
+			// No singleton instance found -> check bean definition.
+			if (getParentBeanFactory() != null && !containsBeanDefinition(beanName)) {
+				// No bean definition found in this factory -> delegate to parent.
+				return getParentBeanFactory().isSingleton(name);
+			}
+			var bd:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
+			if (bd.hasBeanClass()) {
+				if (ClassUtil.isImplementationOf(bd.getBeanClass(), FactoryBean) && !isFactoryDereference(name)) {
 					var factoryBean:FactoryBean = FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName));
 					return factoryBean.isSingleton();
 				}
-				singleton = true;
 			}
-			else {
-				var bd:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
-				if (bd.hasBeanClass()) {
-					if (ClassUtil.isImplementationOf(bd.getBeanClass(), FactoryBean) && !isFactoryDereference(name)) {
-						var factoryBean:FactoryBean = FactoryBean(getBeanByName(FACTORY_BEAN_PREFIX + beanName));
-						return factoryBean.isSingleton();
-					}
-				}
-				singleton = bd.isSingleton();
-			}
-			return singleton;
+			singleton = bd.isSingleton();
 		}
-		catch (exception:org.as2lib.bean.factory.NoSuchBeanDefinitionException) {
-			if (parentBeanFactory != null) {
-				return parentBeanFactory.isSingleton(name);
-			}
-			throw exception;
-		}
+		return singleton;
 	}
 	
 	public function getType(name:String):Function {
@@ -1175,6 +1169,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				beanClass = eval("_global." + ReflectUtil.getTypeName(bean));
 			}
 			else {
+				// No singleton instance found -> check bean definition.
+				if (getParentBeanFactory() != null && !containsBeanDefinition(beanName)) {
+					// No bean definition found in this factory -> delegate to parent.
+					return getParentBeanFactory().getType(name);
+				}
 				var mergedBeanDefinition:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
 				if (mergedBeanDefinition.getFactoryMethodName() != null) {
 					return getTypeForFactoryMethod(name, mergedBeanDefinition);
@@ -1189,12 +1188,6 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				return factoryBean.getObjectType();
 			}
 			return beanClass;
-		}
-		catch (exception:org.as2lib.bean.factory.NoSuchBeanDefinitionException) {
-			if (parentBeanFactory != null) {
-				return parentBeanFactory.getType(name);
-			}
-			throw exception;
 		}
 		catch (exception:org.as2lib.bean.factory.BeanCreationException) {
 			if (exception.contains(BeanCurrentlyInCreationException) ||
@@ -1255,16 +1248,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	}
 	
 	public function destroySingletons(Void):Void {
-		try {
-			singletonCache.clear();
-			var dbs:Array = disposableBeans.getKeys();
-			for (var i:Number = 0; i < dbs.length; i++) {
-				destroyDisposableBean(dbs[i]);
-			}
+		var dbs:Array = disposableBeans.getKeys();
+		for (var i:Number = 0; i < dbs.length; i++) {
+			destroyDisposableBean(dbs[i]);
 		}
-		catch (exception) {
-			//logger.error("Unexpected failure during bean destruction", ex);
-		}
+		singletonCache.clear();
 	}
 	
 	public function getSingletonNames(Void):Array {
@@ -1446,23 +1434,18 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 */
 	public function isFactoryBean(name:String):Boolean {
 		var beanName:String = transformBeanName(name);
-		try {
-			var bean;
-			bean = singletonCache.get(beanName);
-			if (bean != null) {
-				return (bean instanceof FactoryBean);
-			}
-			else {
-				var bd:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
-				return (bd.hasBeanClass() && ClassUtil.isImplementationOf(bd.getBeanClass(), FactoryBean));
-			}
+		var bean = singletonCache.get(beanName);
+		if (bean != null) {
+			return (bean instanceof FactoryBean);
 		}
-		catch (exception:org.as2lib.bean.factory.NoSuchBeanDefinitionException) {
-			// Not found -> check parent.
-			if (parentBeanFactory != null) {
-				return parentBeanFactory.isSingleton(name);
+		else {
+			if (!containsBeanDefinition(beanName)) {
+				if (parentBeanFactory instanceof DefaultBeanFactory) {
+					return DefaultBeanFactory(parentBeanFactory).isFactoryBean(name);
+				}
 			}
-			throw exception;
+			var bd:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
+			return (bd.hasBeanClass() && ClassUtil.isImplementationOf(bd.getBeanClass(), FactoryBean));
 		}
 	}
 	
