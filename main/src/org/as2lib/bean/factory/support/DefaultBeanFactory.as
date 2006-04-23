@@ -1310,6 +1310,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		return parentBeanFactory;
 	}
 	
+	public function containsLocalBean(name:String):Boolean {
+		var beanName:String = transformBeanName(name);
+		return (containsSingleton(beanName) || containsBeanDefinition(beanName));
+	}
+	
 	//---------------------------------------------------------------------
 	// Implementation of ListableBeanFactory interface
 	//---------------------------------------------------------------------
