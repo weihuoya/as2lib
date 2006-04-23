@@ -758,6 +758,7 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	
 	public function setWrappedBean(wrappedBean):Void {
 		this.wrappedBean = wrappedBean;
+		nestedBeanWrappers.clear();
 	}
 	
 }
