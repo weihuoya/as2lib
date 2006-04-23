@@ -158,6 +158,10 @@ interface org.as2lib.bean.factory.config.ConfigurableListableBeanFactory extends
 	 * Pre-instantiates all non-lazy-init singletons, also considering {@code FactoryBean}
 	 * instances. Typically invoked at the end of factory setup, if desired.
 	 * 
+	 * <p>Note that if an exception is thrown, this may have left the factory with some
+	 * beans already initialized! Call {@link #destroySingletons} for full clean-up in
+	 * this case.
+	 * 
 	 * @throws BeanException if one of the singleton beans could not be created
 	 */
 	public function preInstantiateSingletons(Void):Void;
