@@ -15,6 +15,9 @@
  */
 
 import org.as2lib.bean.Mergeable;
+import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code ManagedArray} represents an array which may include run-time bean references
