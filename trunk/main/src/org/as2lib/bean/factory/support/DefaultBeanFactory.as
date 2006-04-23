@@ -118,6 +118,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	/** Names of beans that are currently in creation */
 	private var currentlyInCreation:Array;
 	
+	/** The bean wrapper used by this factory to resolve constructor arguments. */
+	private var beanWrapper:SimpleBeanWrapper;
+	
 	//---------------------------------------------------------------------
 	// Constructors
 	//---------------------------------------------------------------------
@@ -139,6 +142,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		beanPostProcessors = new Array();
 		currentlyInCreation = new Array();
 		allowCircularReferences = true;
+		beanWrapper = new SimpleBeanWrapper();
 	}
 	
 	//---------------------------------------------------------------------
@@ -231,9 +235,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var classes:Array = propertyValueConverters.getKeys();
 		var converters:Array = propertyValueConverters.getValues();
 		for (var i:Number = 0; i < classes.length; i++) {
-			var clazz:Function = classes[i];
-			var converter:PropertyValueConverter = converters[i];
-			beanWrapper.registerPropertyValueConverter(clazz, converter);
+			beanWrapper.registerPropertyValueConverterForType(classes[i], converters[i]);
 		}
 	}
 	
@@ -495,8 +497,6 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 */
 	private function resolveConstructorArguments(constructorArgumentValues:ConstructorArgumentValues):Array {
 		var result:Array = new Array();
-		var beanWrapper:SimpleBeanWrapper = new SimpleBeanWrapper();
-		initBeanWrapper(beanWrapper);
 		var avs:Array = constructorArgumentValues.getArgumentValues();
 		for (var i:Number = 0; i < avs.length; i++) {
 			var argument:ConstructorArgumentValue = avs[i];
@@ -1298,6 +1298,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	
 	public function registerPropertyValueConverter(requiredType:Function, propertyValueConverter:PropertyValueConverter):Void {
 		propertyValueConverters.put(requiredType, propertyValueConverter);
+		beanWrapper.registerPropertyValueConverterForType(requiredType, propertyValueConverter);
 	}
 	
 	public function setParentBeanFactory(parentBeanFactory:BeanFactory):Void {
