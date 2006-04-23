@@ -64,6 +64,26 @@ import org.as2lib.util.TextUtil;
  */
 class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements BeanWrapper {
 	
+	/** The default {@link PropertyValueConverter} instances supported by this bean wrapper. */
+	private static var defaultPropertyValueConverters:Map;
+	
+	/**
+	 * Creates the default {@link PropertyValueConverter} instances and stores them in
+	 * a map with the type they convert-to as keys.
+	 */
+	public static function getDefaultPropertyValueConverters(Void):Map {
+		if (defaultPropertyValueConverters == null) {
+			defaultPropertyValueConverters = new HashMap();
+			defaultPropertyValueConverters.put(Number, new NumberConverter());
+			defaultPropertyValueConverters.put(Boolean, new BooleanConverter());
+			defaultPropertyValueConverters.put(Function, new ClassConverter());
+			defaultPropertyValueConverters.put(PACKAGE_TYPE, new PackageConverter());
+			defaultPropertyValueConverters.put(Array, new StringArrayConverter());
+			defaultPropertyValueConverters.put(Object, new InstanceConverter());
+		}
+		return defaultPropertyValueConverters;
+	}
+	
 	/** The wrapped bean. */
 	private var wrappedBean;
 	
@@ -94,13 +114,7 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		this.wrappedBean = wrappedBean;
 		this.nestedPath = (nestedPath != null ? nestedPath : "");
 		this.rootBean = (nestedPath != null ? rootBean : wrappedBean);
-		defaultConverters = new HashMap();
-		defaultConverters.put(Number, new NumberConverter());
-		defaultConverters.put(Boolean, new BooleanConverter());
-		defaultConverters.put(Function, new ClassConverter());
-		defaultConverters.put(PACKAGE_TYPE, new PackageConverter());
-		defaultConverters.put(Array, new StringArrayConverter());
-		defaultConverters.put(Object, new InstanceConverter());
+		defaultConverters = getDefaultPropertyValueConverters();
 	}
 	
 	public function isWritableProperty(propertyName:String):Boolean {
@@ -758,6 +772,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	
 	public function setWrappedBean(wrappedBean):Void {
 		this.wrappedBean = wrappedBean;
+		nestedPath = "";
+		rootBean = wrappedBean;
 		nestedBeanWrappers.clear();
 	}
 	
