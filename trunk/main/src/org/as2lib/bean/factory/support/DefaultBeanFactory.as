@@ -364,6 +364,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * existing bean instance, invoking their {@code postProcessBeforeInstantiation}
 	 * methods. The returned bean instance may be a wrapper around the original.
 	 * 
+	 * <p>Any returned object will be used as the bean instead of actually instantiating
+	 * the target bean. A {@code null} return value from the post-processor will result
+	 * in the target bean being instantiated.
+	 * 
 	 * @param beanClass the class of the bean to instantiate
 	 * @param beanName the name of the bean
 	 * @return the bean instance to use instead of a default instance of the target bean
