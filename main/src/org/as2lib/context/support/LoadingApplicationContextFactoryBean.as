@@ -14,9 +14,12 @@
  * limitations under the License.
  */
 
+import org.as2lib.app.exec.Batch;
+import org.as2lib.app.exec.BatchFinishListener;
 import org.as2lib.app.exec.Process;
 import org.as2lib.bean.AbstractBeanWrapper;
 import org.as2lib.bean.BeanWrapper;
+import org.as2lib.bean.factory.config.BeanPostProcessor;
 import org.as2lib.bean.factory.FactoryBean;
 import org.as2lib.bean.factory.InitializingBean;
 import org.as2lib.bean.factory.parser.BeanDefinitionParser;
@@ -31,7 +34,6 @@ import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.TextUtil;
-import org.as2lib.bean.factory.config.BeanPostProcessor;
 
 /**
  * {@code LoadingApplicationContextFactoryBean} manages the creation and loading
@@ -60,7 +62,7 @@ import org.as2lib.bean.factory.config.BeanPostProcessor;
  * @author Simon Wacker
  */
 class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends BasicClass implements FactoryBean,
-		ApplicationContextAware, InitializingBean, BeanPostProcessor, Process {
+		ApplicationContextAware, InitializingBean, BeanPostProcessor, Process, BatchFinishListener {
 	
 	private var applicationContext:LoadingApplicationContext = null;
 	
@@ -76,11 +78,14 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 	
 	private var propertyValues:Array = null;
 	
+	private var proxies:Array = null;
+	
 	/**
 	 * Constructs a new {@code LoadingApplicationContextFactoryBean} instance.
 	 */
 	public function LoadingApplicationContextFactoryBean(Void) {
 		propertyValues = new Array();
+		proxies = new Array();
 	}
 	
 	/**
@@ -131,6 +136,7 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 					"] is not assignable from class 'LoadingApplicationContext'.", this, arguments);
 		}
 		applicationContext = new applicationContextClass();
+		applicationContext.addListener(this);
 		applicationContext.setBeanDefinitionUri(beanDefinitionUri);
 		if (beanDefinitionParser != null) {
 			applicationContext.setBeanDefinitionParser(beanDefinitionParser);
@@ -145,7 +151,14 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 			result = applicationContext;
 		}
 		else {
-			result = applicationContext.getBeanByName(targetBeanName);
+			if (hasFinished()) {
+				result = applicationContext.getBeanByName(targetBeanName);
+			}
+			else {
+				var proxy:Object = new Object();
+				proxies.push(proxy);
+				result = proxy;
+			}
 		}
 		return result;
 	}
@@ -172,6 +185,13 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 	
 	public function postProcessAfterInitialization(bean, beanName:String) {
 		return bean;
+	}
+	
+	public function onBatchFinish(batch:Batch):Void {
+		for (var i:Number = 0; i < proxies.length; i++) {
+			var proxy:Object = proxies[i];
+			proxy.__proto__ = getObject();
+		}
 	}
 	
 	public function start() {
