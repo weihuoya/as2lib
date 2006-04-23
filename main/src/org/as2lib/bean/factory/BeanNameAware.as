@@ -20,6 +20,10 @@ import org.as2lib.core.BasicInterface;
  * {@code BeanNameAware} can be implemented by beans that want to be aware of their
  * bean name in a bean factory.
  * 
+ * <p>Note that it is not usually recommended that an object depends on its bean name,
+ * as this represents a potentially brittle dependence on external configuration, as
+ * well as a possibly unnecessary dependence on an As2lib API.
+ * 
  * <p>For a list of all bean lifecycle methods, see the {@link BeanFactory}
  * documentation.
  * 
