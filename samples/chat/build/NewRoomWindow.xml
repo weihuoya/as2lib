@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing" xmlns:ab="org.aswing.border">
+	
+	<chat:NewRoomWindow id="newRoomWindow" height="235" parent="window">
+		<nameTextField>b{nameTextField}</nameTextField>
+		<passwordTextField>b{passwordTextField}</passwordTextField>
+		<maxUsersTextField>b{maxUsersTextField}</maxUsersTextField>
+		<aw:JPanel preferredHeight="35" opaque="true" constraints="v{org.aswing.WindowLayout.TITLE}">
+			<layout><aw:BorderLayout hgap="0" vgap="0"/></layout>
+			<background><aw:ASColor>0x444444</aw:ASColor></background>
+			<aw:JLabel text="{messageSource.message[title.newRoom]}"
+					constraints="v{org.aswing.BorderLayout.SOUTH}" parent="title"/>
+		</aw:JPanel>
+		<aw:Container constraints="v{org.aswing.WindowLayout.CONTENT}">
+			<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="5"/></layout>
+			<border><ab:EmptyBorder><insets><aw:Insets>5, 5, 5, 5</aw:Insets></insets></ab:EmptyBorder></border>
+			<aw:JLabel text="{messageSource.message[label.name]}" parent="subtitle"/>
+			<aw:JTextField id="nameTextField"></aw:JTextField>
+			<aw:JLabel text="{messageSource.message[label.password]}" parent="subtitle"/>
+			<aw:JTextField id="passwordTextField" passwordField="true"/>
+			<aw:JLabel text="{messageSource.message[label.maxUsers]}" parent="subtitle"/>
+			<aw:JTextField id="maxUsersTextField" restrict="1234567890" maxChars="2">
+				<text>v{org.as2lib.sample.chat.NewRoomWindow.DEFAULT_MAX_USERS}</text>
+			</aw:JTextField>
+			<aw:JPanel>
+				<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.X_AXIS}" gap="5"/></layout>
+				<aw:JButton actionListener="d{newRoomWindow.createRoom}" preferredWidth="100" preferredHeight="22">
+					<text>{messageSource.message[button.ok]}</text>
+				</aw:JButton>
+				<aw:JButton actionListener="d{newRoomWindow.cancel}" preferredWidth="100" preferredHeight="22">
+					<text>{messageSource.message[button.cancel]}</text>
+				</aw:JButton>
+			</aw:JPanel>
+		</aw:Container>
+	</chat:NewRoomWindow>
+	
+</beans>
