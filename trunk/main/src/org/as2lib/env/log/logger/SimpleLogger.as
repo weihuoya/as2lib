@@ -319,7 +319,7 @@ class org.as2lib.env.log.logger.SimpleLogger extends AbstractLogger implements C
 	 */
 	public function log(message, level:LogLevel):Void {
 		if (isEnabled(level)) {
-			var logMessage:LogMessage = new SimpleLogMessage(message, level, name, null, arguments[3]);
+			var logMessage:SimpleLogMessage = new SimpleLogMessage(message, level, name, null, arguments[3]);
 			if (typeof(arguments[2]) == "string") {
 				logMessage.setSourceMethodName(arguments[2]);
 			} else {

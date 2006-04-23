@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
             <month value="4">
+            	<day value="23">
+            		<entry type="remove" package="org.as2lib.env.log" class="LogMessage" method="set*">Removed setter methods from interface.</entry>
+            	</day>
                 <day value="22">
                     <entry type="add" package="org.as2lib.util" class="MathUtil" method="max">Searches for element having maximal value</entry>
                     <entry type="add" package="org.as2lib.util" class="MathUtil" method="min">Searches for element having minimal value</entry>

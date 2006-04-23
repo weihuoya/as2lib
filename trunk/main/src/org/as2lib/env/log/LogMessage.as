@@ -64,25 +64,11 @@ interface org.as2lib.env.log.LogMessage extends BasicInterface {
 	public function getSourceClassName(Void):String;
 	
 	/**
-	 * Sets the name of the source class.
-	 * 
-	 * @param sourceClassName the name of the source class
-	 */
-	public function setSourceClassName(sourceClassName:String):Void;
-	
-	/**
 	 * Returns the name of the source method of this message.
 	 * 
 	 * @return the name of the source method of this message
 	 */
 	public function getSourceMethodName(Void):String;
-	
-	/**
-	 * Sets the name of the source method.
-	 * 
-	 * @param sourceMethodName the name of the source method
-	 */
-	public function setSourceMethodName(sourceMethodName:String):Void;
 	
 	/**
 	 * Returns the method that logs this message.
@@ -99,13 +85,6 @@ interface org.as2lib.env.log.LogMessage extends BasicInterface {
 	public function getSourceObject(Void);
 	
 	/**
-	 * Sets the source object.
-	 * 
-	 * @param sourceObject the source object
-	 */
-	public function setSourceObject(sourceObject):Void;
-	
-	/**
 	 * Returns the name of the file containing the class that logs this message.
 	 * 
 	 * @return thre file name
@@ -113,24 +92,10 @@ interface org.as2lib.env.log.LogMessage extends BasicInterface {
 	public function getFileName(Void):String;
 	
 	/**
-	 * Sets the name of the file containing the class that logs this message.
-	 * 
-	 * @param fileName the file name
-	 */
-	public function setFileName(fileName:String):Void;
-	
-	/**
 	 * Returns the line number at which the log is being made.
 	 * 
 	 * @return the line number
 	 */
 	public function getLineNumber(Void):Number;
-	
-	/**
-	 * Sets the line number at which the log is being made.
-	 * 
-	 * @param lineNumber the line number
-	 */
-	public function setLineNumber(lineNumber:Number):Void;
 	
 }
