@@ -292,17 +292,19 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					target.registerPropertyValueConverterForType(requiredType, converter);
 					return;
 				}
-				if ((keys[i] instanceof String || typeof(keys[i]) == "string") && nestedProperty != null) {
-					var converterPath:String = keys[i];
-					var position:Number = getNestedPropertySeparatorIndex(converterPath);
-					if (position != -1) {
-						var converterNestedProperty = converterPath.substring(0, position);
-						var converterNestedPath:String = converterPath.substring(position + 1);
-						if (converterNestedProperty == nestedProperty ||
-								converterNestedProperty == actualPropertyName) {
-							var converterHolder:PropertyValueConverterHolder = values[i];
-							target.registerPropertyValueConverterForProperty(converterHolder.getRegisteredType(),
-									converterNestedPath, converterHolder.getPropertyValueConverter());
+				if (nestedProperty != null) {
+					if (keys[i] instanceof String || typeof(keys[i]) == "string") {
+						var converterPath:String = keys[i];
+						var position:Number = getNestedPropertySeparatorIndex(converterPath);
+						if (position != -1) {
+							var converterNestedProperty = converterPath.substring(0, position);
+							var converterNestedPath:String = converterPath.substring(position + 1);
+							if (converterNestedProperty == nestedProperty ||
+									converterNestedProperty == actualPropertyName) {
+								var converterHolder:PropertyValueConverterHolder = values[i];
+								target.registerPropertyValueConverterForProperty(converterHolder.getRegisteredType(),
+										converterNestedPath, converterHolder.getPropertyValueConverter());
+							}
 						}
 					}
 				}
