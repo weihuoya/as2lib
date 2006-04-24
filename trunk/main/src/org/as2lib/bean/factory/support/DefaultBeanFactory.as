@@ -656,7 +656,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return getBeanForSingleton(innerBeanName, innerBean);
 	}
-
+	
 	/**
 	 * Resolves a reference to another bean in this factory.
 	 * 
@@ -679,7 +679,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				if (beanDefinition.isSingleton()) {
 					registerDependentBean(reference.getBeanName(), beanName);
 				}
-				return getBean(reference.getBeanName());
+				return getBeanByName(reference.getBeanName());
 			}
 		}
 		catch (exception:org.as2lib.bean.BeanException) {
