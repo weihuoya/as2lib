@@ -693,18 +693,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			return beanRef;
 		}
 		if (element.nodeName == VALUE_ELEMENT) {
-			// It's a literal value.
-			if (element.firstChild.nodeValue == null) {
-				return "";
-			}
-			return element.firstChild.nodeValue;
+			return parseLiteralValue(element.firstChild.nodeValue);
 		}
 		if (element.nodeType == 3) {
-			// It's a literal value.
-			if (element.nodeValue == null) {
-				return "";
-			}
-			return element.nodeValue;
+			return parseLiteralValue(element.nodeValue);
 		}
 		if (element.nodeName == NULL_ELEMENT) {
 			// It's a distinguished null value.
@@ -713,18 +705,23 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		if (element.nodeName == ARRAY_ELEMENT) {
 			return parseArrayElement(element, beanName);
 		}
-		if (element.nodeName == LIST_ELEMENT || element.nodeName == MAP_ELEMENT || element.nodeName == PROPS_ELEMENT) {
-			if (element.nodeName == LIST_ELEMENT) {
-				return parseListElement(element, beanName);
-			}
-			if (element.nodeName == MAP_ELEMENT) {
-				return parseMapElement(element, beanName);
-			}
-			if (element.nodeName == PROPS_ELEMENT) {
-				return parsePropsElement(element, beanName);
-			}
+		if (element.nodeName == LIST_ELEMENT) {
+			return parseListElement(element, beanName);
+		}
+		if (element.nodeName == MAP_ELEMENT) {
+			return parseMapElement(element, beanName);
+		}
+		if (element.nodeName == PROPS_ELEMENT) {
+			return parsePropsElement(element, beanName);
 		}
 		throw new BeanDefinitionStoreException(beanName, "Unknown property sub-element: <" + element.nodeName + ">.", this, arguments);
+	}
+	
+	private function parseLiteralValue(value:String) {
+		if (value == null) {
+			return "";
+		}
+		return value;
 	}
 	
 	private function parseBeanReferenceElement(element:XMLNode, beanName:String):RuntimeBeanReference {
