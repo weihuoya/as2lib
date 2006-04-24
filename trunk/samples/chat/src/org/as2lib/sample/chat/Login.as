@@ -61,6 +61,7 @@ class org.as2lib.sample.chat.Login extends JWindow implements MessageSourceAware
 	private function onConnection(success:Boolean):Void {
 		if (success) {
 			statusTextField.setText(messageSource.getMessage("status.connected"));
+			userNameTextField.setEnabled(true);
 			loginPanel.setVisible(true);
 		}
 		else {
