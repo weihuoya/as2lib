@@ -56,6 +56,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	/** The delimiters to delimit multiple bean names. */
 	public static var BEAN_NAME_DELIMITERS:String = ",; ";
 	
+	/** The separator to separate multiple constructor arguments. */
+	public static var CONSTRUCTOR_ARGS_SEPARATOR:String = ",";
+	
 	/**
 	 * Value of a boolean attribute that represents {@code true}.
 	 * Anything else represents {@code false}. Case sensitive.
@@ -523,8 +526,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 */
 	private function parseConstructorArgsElement(element:XMLNode, beanName:String, argumentValues:ConstructorArgumentValues):Void {
 		var value:String = element.firstChild.nodeValue;
-		// TODO: Shall an exception be thrown if value is an empty string.
-		if (value != "") {
+		if (value != null && value != "") {
 			var typeName:String = element.attributes[TYPE_ATTRIBUTE];
 			var type:Function;
 			if (typeName != null && typeName != "") {
@@ -533,8 +535,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 					throw new BeanDefinitionStoreException(beanName, "Type '" + typeName + "' for constructor arguments not found.", this, arguments);
 				}
 			}
-			// TODO: Do not hard-code separator.
-			var args:Array = value.split(",");
+			var args:Array = value.split(CONSTRUCTOR_ARGS_SEPARATOR);
 			BeanUtil.trimAndConvertValues(args);
 			for (var i:Number = 0; i < args.length; i++) {
 				var argument:ConstructorArgumentValue = new ConstructorArgumentValue(args[i], type);
