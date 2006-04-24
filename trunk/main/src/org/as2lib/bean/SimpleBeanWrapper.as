@@ -289,7 +289,7 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				if (keys[i] instanceof Function) {
 					var requiredType:Function = keys[i];
 					var converter:PropertyValueConverter = values[i];
-					target.registerPropertyValueConverter(requiredType, converter);
+					target.registerPropertyValueConverterForType(requiredType, converter);
 					return;
 				}
 				if ((keys[i] instanceof String || typeof(keys[i]) == "string") && nestedProperty != null) {
@@ -298,9 +298,11 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					if (position != -1) {
 						var converterNestedProperty = converterPath.substring(0, position);
 						var converterNestedPath:String = converterPath.substring(position + 1);
-						if (converterNestedProperty == nestedProperty || converterNestedProperty == actualPropertyName) {
+						if (converterNestedProperty == nestedProperty ||
+								converterNestedProperty == actualPropertyName) {
 							var converterHolder:PropertyValueConverterHolder = values[i];
-							target.registerPropertyValueConverter(converterHolder.getRegisteredType(), converterNestedPath, converterHolder.getPropertyValueConverter());
+							target.registerPropertyValueConverterForProperty(converterHolder.getRegisteredType(),
+									converterNestedPath, converterHolder.getPropertyValueConverter());
 						}
 					}
 				}
