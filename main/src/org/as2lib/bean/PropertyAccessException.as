@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.bean.BeanException;
+import org.as2lib.env.reflect.ReflectUtil;
 
 /**
  * {@code PropertyAccessException} is the super-class for exceptions related to
@@ -24,21 +25,35 @@ import org.as2lib.bean.BeanException;
  */
 class org.as2lib.bean.PropertyAccessException extends BeanException {
 	
+	/** The bean the property was tried to be accessed on. */
+	private var bean;
+	
 	/** The name of the property that could not be accessed. */
 	private var propertyName:String;
 	
 	/**
 	 * Constructs a new {@code PropertyAccessException} instance.
 	 * 
+	 * @param bean the bean the property was tried to be accessed on
 	 * @param propertyName the name of the property that could not be accessed
 	 * @param message the message describing this exception in detail
 	 * @param scope the {@code this}-scope of the method throwing this exception
 	 * @param args the arguments passed to the method that throws this exception
 	 */
-	public function PropertyAccessException(propertyName:String, message:String, scope, args:Array) {
-		// TODO: Add 'bean' as additional parameter.
-		super(message, scope, args);
+	public function PropertyAccessException(bean, propertyName:String, message:String, scope, args:Array) {
+		super("Property access of property '" + propertyName + "' on bean class [" +
+				ReflectUtil.getTypeName(bean) + "] failed: " + message, scope, args);
+		this.bean = bean;
 		this.propertyName = propertyName;
+	}
+	
+	/**
+	 * Returns the bean the property was tried to be accessed on.
+	 * 
+	 * @return the bean the property was tried to be accessed on
+	 */
+	public function getBean(Void) {
+		return bean;
 	}
 	
 	/**

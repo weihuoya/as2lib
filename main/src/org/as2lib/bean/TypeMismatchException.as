@@ -28,6 +28,7 @@ class org.as2lib.bean.TypeMismatchException extends PropertyAccessException {
 	/**
 	 * Constructs a new {@code TypeMismatchException} instance.
 	 * 
+	 * @param bean the bean the property was tried to be accessed on
 	 * @param propertyName the name of the property that was about to be set
 	 * @param propertyValue the value to set for the property
 	 * @param requiredType the type the value was expected to have or be converted to
@@ -35,9 +36,8 @@ class org.as2lib.bean.TypeMismatchException extends PropertyAccessException {
 	 * @param scope the {@code this}-scope of the method that throws this exception
 	 * @param args the arguments that were passed-to the throwing method
 	 */
-	public function TypeMismatchException(propertyName:String, propertyValue, requiredType:Function, message:String, scope, args:Array) {
-		super(propertyName, 
-				"Failed to convert property value of type [" +
+	public function TypeMismatchException(bean, propertyName:String, propertyValue, requiredType:Function, message:String, scope, args:Array) {
+		super(bean, propertyName, "Failed to convert property value of type [" +
 				(propertyValue != null ? ReflectUtil.getTypeName(propertyValue) : null) + "]" +
 				(requiredType != null ? " to required type [" + ReflectUtil.getTypeNameForType(requiredType) + "]" : "") +
 				(propertyName != null ? " for property '" + propertyName + "'" : "") +

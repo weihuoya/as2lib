@@ -450,8 +450,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 			}
 			catch (exception) {
-				throw (new MethodInvocationException(propertyName, "Method invocation of method '" + methodName +
-						"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+				throw (new MethodInvocationException(wrappedBean, propertyName, "Method invocation " +
+						"of method '" + methodName + "' failed.", this, arguments)).initCause(exception);
 			}
 		}
 		else {
@@ -464,8 +464,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 			}
 			catch (exception) {
-				throw (new PropertyAccessException(propertyName, "Variable access to variable '" + tokens.actualName +
-						"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+				throw (new PropertyAccessException(wrappedBean, propertyName, "Variable access to " +
+						"variable '" + tokens.actualName + "' failed.", this, arguments)).initCause(exception);
 			}
 		}
 		if (keys != null) {
@@ -552,8 +552,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 			}
 			catch (exception) {
-				throw (new MethodInvocationException(propertyName, "Method invocation of method '" + methodName +
-						"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+				throw (new MethodInvocationException(wrappedBean, propertyName, "Method invocation " +
+						"of method '" + methodName + "' failed.", this, arguments)).initCause(exception);
 			}
 		}
 		else {
@@ -567,8 +567,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 			}
 			catch (exception) {
-				throw (new PropertyAccessException(propertyName, "Variable access to variable '" + tokens.actualName +
-						"' on wrapped bean [" + wrappedBean + "] failed.", this, arguments)).initCause(exception);
+				throw (new PropertyAccessException(wrappedBean, propertyName, "Variable access to " +
+						"variable '" + tokens.actualName + "' failed.", this, arguments)).initCause(exception);
 			}
 		}
 	}
@@ -608,7 +608,9 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					}
 					else {
 						if (!ClassUtil.isAssignable(type, Array)) {
-							throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Array) + "].", this, arguments);
+							throw new TypeMismatchException(wrappedBean, name, value, type,
+									"Required type is not assignable from [" +
+									ReflectUtil.getTypeNameForType(Array) + "].", this, arguments);
 						}
 						result = new type();
 					}
@@ -622,10 +624,15 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 				if (value instanceof ManagedList) {
 					if (type == null) {
-						throw new TypeMismatchException(name, value, List, "Supplied list implementation is 'null'. Note that the type of a managed list (the list implementation to instantiate) must be declared.", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, List,
+								"Supplied list implementation is 'null'. Note that the type of a " +
+								"managed list (the list implementation to instantiate) must be declared.",
+								this, arguments);
 					}
 					if (!ClassUtil.isAssignable(type, List)) {
-						throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(List) + "].", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, type, "Required " +
+								"type is not assignable from [" + ReflectUtil.getTypeNameForType(List) +
+								"].", this, arguments);
 					}
 					var result:List = new type();
 					var list:ManagedList = value;
@@ -639,10 +646,14 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 				if (value instanceof ManagedMap) {
 					if (type == null) {
-						throw new TypeMismatchException(name, value, Map, "Supplied map implementation is 'null'. Note that the type of a managed map (the map implementation to instantiate) must be declared.", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, Map, "Supplied map " +
+								"implementation is 'null'. Note that the type of a managed map (the " +
+								"map implementation to instantiate) must be declared.", this, arguments);
 					}
 					if (!ClassUtil.isAssignable(type, Map)) {
-						throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Map) + "].", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, type, "Required " +
+								"type is not assignable from [" + ReflectUtil.getTypeNameForType(Map) +
+								"].", this, arguments);
 					}
 					var result:Map = new type();
 					var map:ManagedMap = value;
@@ -659,10 +670,15 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 				if (value instanceof ManagedProperties) {
 					if (type == null) {
-						throw new TypeMismatchException(name, value, Properties, "Supplied properties implementation is 'null'. Note that the type of a managed properties (the properties implementation to instantiate) must be declared.", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, Properties,
+								"Supplied properties implementation is 'null'. Note that the type of " +
+								"a managed properties (the properties implementation to instantiate) " +
+								"must be declared.", this, arguments);
 					}
 					if (!ClassUtil.isAssignable(type, Properties)) {
-						throw new TypeMismatchException(name, value, type, "Required type is not assignable from [" + ReflectUtil.getTypeNameForType(Properties) + "].", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, type, "Required " +
+								"type is not assignable from [" + ReflectUtil.getTypeNameForType(Properties) +
+								"].", this, arguments);
 					}
 					var result:Properties = new type();
 					var properties:ManagedProperties = value;

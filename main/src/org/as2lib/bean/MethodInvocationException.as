@@ -27,13 +27,14 @@ class org.as2lib.bean.MethodInvocationException extends PropertyAccessException 
 	/**
 	 * Constructs a new {@code MethodInvocationException} instance.
 	 * 
+	 * @param bean the bean the property was tried to be accessed on
 	 * @param propertyName the name of the property that threw an exception on access
 	 * @param message the message describing this exception in further detail
 	 * @param scope the {@code this}-scope of the method throwing this exception
 	 * @param args the arguments passed to the throwing method
 	 */
-	public function MethodInvocationException(propertyName:String, message:String, scope, args:Array) {
-		super(propertyName, message, scope, args);
+	public function MethodInvocationException(bean, propertyName:String, message:String, scope, args:Array) {
+		super(bean, propertyName, message, scope, args);
 	}
-
+	
 }
