@@ -936,7 +936,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				throw (new BeanDefinitionStoreException(beanName, "Could not resolve parent bean definition '" +
 						cbd.getParentName() + "'.", this, arguments)).initCause(exception);
 			}
-			rbd = new RootBeanDefinition(pbd);
+			rbd = pbd.clone();
 			rbd.override(cbd);
 			try {
 				rbd.validate();
