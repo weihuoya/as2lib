@@ -70,7 +70,6 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	}
 	
 	private function parseElement(element:XMLNode):Void {
-		// TODO: Mtasc is shipped with Flash 7 sources for xml.
 		if (element.nodeName != ALIAS_ELEMENT && element.nodeName != BEAN_ELEMENT) {
 			convertBeanElement(element);
 		}
@@ -78,6 +77,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	}
 	
 	private function convertBeanElement(element:XMLNode):Void {
+		// Mtasc ships with Flash 7 sources for xml.
 		var namespace:String = element["namespaceURI"];
 		if (namespace == "" || namespace == null) {
 			element.attributes[PARENT_ATTRIBUTE] = element.nodeName;
