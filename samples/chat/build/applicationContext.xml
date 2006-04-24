@@ -69,9 +69,9 @@
 				<prop key="error.login">Anmeldung schlug fehl: {0}</prop>
 				<prop key="message.public">&lt;b&gt;[{0}]:&lt;/b&gt; {1}</prop>
 				<prop key="message.private">&lt;b&gt;&lt;font color='#009900'&gt;[PM &gt; {0}]:&lt;/font&gt;&lt;/b&gt; {1}</prop>
-				<prop key="message.joinedRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Raum [{0}] beigetreten&lt;/font&gt;</prop>
-				<prop key="message.userEnteredRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Raum [{0}] hat den Raum betreten&lt;/font&gt;</prop>
-				<prop key="message.userLeftRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Raum [{0}] hat den Raum verlassen&lt;/font&gt;</prop>
+				<prop key="message.joinedRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Raum [{0}] eingetreten&lt;/font&gt;</prop>
+				<prop key="message.userEnteredRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Benutzer [{0}] hat den Raum betreten&lt;/font&gt;</prop>
+				<prop key="message.userLeftRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Benutzer [{0}] hat den Raum verlassen&lt;/font&gt;</prop>
 			</props>
 		</property>
 		<property name="messages[en]" type="org.as2lib.data.holder.properties.SimpleProperties">
@@ -106,8 +106,8 @@
 				<prop key="message.public">&lt;b&gt;[{0}]:&lt;/b&gt; {1}</prop>
 				<prop key="message.private">&lt;b&gt;&lt;font color='#009900'&gt;[PM &gt; {0}]:&lt;/font&gt;&lt;/b&gt; {1}</prop>
 				<prop key="message.joinedRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Room [{0}] joined&lt;/font&gt;</prop>
-				<prop key="message.userEnteredRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Room [{0}] entered the room&lt;/font&gt;</prop>
-				<prop key="message.userLeftRoom">&lt;font color='#cc0000'&gt;&gt;&gt; Room [{0}] left the room&lt;/font&gt;</prop>
+				<prop key="message.userEnteredRoom">&lt;font color='#cc0000'&gt;&gt;&gt; User [{0}] entered the room&lt;/font&gt;</prop>
+				<prop key="message.userLeftRoom">&lt;font color='#cc0000'&gt;&gt;&gt; User [{0}] left the room&lt;/font&gt;</prop>
 			</props>
 		</property>
 	</bean>
