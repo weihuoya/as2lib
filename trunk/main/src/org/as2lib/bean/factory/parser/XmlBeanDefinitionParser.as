@@ -263,21 +263,23 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	private function parseElement(element:XMLNode):Void {
-		if (ALIAS_ELEMENT == element.nodeName) {
+		if (element.nodeName == ALIAS_ELEMENT) {
 			var name:String = element.attributes[NAME_ATTRIBUTE];
 			var alias:String = element.attributes[ALIAS_ATTRIBUTE];
 			registry.registerAlias(name, alias);
 			return;
 		}
-		if (BEAN_ELEMENT == element.nodeName) {
+		if (element.nodeName == BEAN_ELEMENT) {
 			var holder:BeanDefinitionHolder = parseBeanDefinitionElement(element);
-			registry.registerBeanDefinition(holder.getBeanName(), holder.getBeanDefinition());
+			var beanName:String = holder.getBeanName();
+			registry.registerBeanDefinition(beanName, holder.getBeanDefinition());
 			var aliases:Array = holder.getAliases();
 			for (var i:Number = 0; i < aliases.length; i++) {
-				registry.registerAlias(holder.getBeanName(), aliases[i]);
+				registry.registerAlias(beanName, aliases[i]);
 			}
 			return;
 		}
+		
 		throw new BeanDefinitionStoreException(null, "Element [" + element + "] has an unknown name.", this, arguments);
 	}
 	
@@ -331,12 +333,12 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 				bd.setFactoryBeanName(factoryBean);
 			}
 			var dependencyCheck:String = element.attributes[DEPENDENCY_CHECK_ATTRIBUTE];
-			if (DEFAULT_VALUE == dependencyCheck) {
+			if (dependencyCheck == DEFAULT_VALUE) {
 				dependencyCheck = defaultDependencyCheck;
 			}
 			bd.setDependencyCheck(getDependencyCheck(dependencyCheck));
 			var autowire:String = element.attributes[AUTOWIRE_ATTRIBUTE];
-			if (DEFAULT_VALUE == autowire) {
+			if (autowire == DEFAULT_VALUE) {
 				autowire = defaultAutowire;
 			}
 			bd.setAutowireMode(getAutowireMode(autowire));
@@ -368,18 +370,18 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			parseReplacedMethodSubElements(element, beanName, bd.getMethodOverrides());
 			var abstract:String = element.attributes[ABSTRACT_ATTRIBUTE];
 			if (abstract != null) {
-				bd.setAbstract(TRUE_VALUE == abstract);
+				bd.setAbstract(abstract == TRUE_VALUE);
 			}
 			var singleton:String = element.attributes[SINGLETON_ATTRIBUTE];
 			if (singleton != null) {
-				bd.setSingleton(TRUE_VALUE == singleton);
+				bd.setSingleton(singleton == TRUE_VALUE);
 			}
 			var lazyInit:String = element.attributes[LAZY_INIT_ATTRIBUTE];
-			if (DEFAULT_VALUE == lazyInit && bd.isSingleton()) {
+			if (lazyInit == DEFAULT_VALUE && bd.isSingleton()) {
 				// Just apply default to singletons, as lazy-init has no meaning for prototypes.
 				lazyInit = defaultLazyInit;
 			}
-			bd.setLazyInit(TRUE_VALUE == lazyInit);
+			bd.setLazyInit(lazyInit == TRUE_VALUE);
 			var defaultProperty:String = element.attributes[DEFAULT_PROPERTY_ATTRIBUTE];
 			if (defaultProperty != null) {
 				if (defaultProperty != "") {
@@ -399,10 +401,12 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			throw exception;
 		}
 		catch (exception:org.as2lib.env.reflect.ClassNotFoundException) {
-			throw (new BeanDefinitionStoreException(beanName, "Bean class [" + className + "] not found.", this, arguments)).initCause(exception);
+			throw (new BeanDefinitionStoreException(beanName, "Bean class [" + className +
+					"] not found.", this, arguments)).initCause(exception);
 		}
 		catch (exception) {
-			throw (new BeanDefinitionStoreException(beanName, "Unexpected failure during bean definition parsing.", this, arguments)).initCause(exception);
+			throw (new BeanDefinitionStoreException(beanName, "Unexpected failure during bean " +
+					"definition parsing.", this, arguments)).initCause(exception);
 		}
 	}
 	
@@ -417,10 +421,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		var nodes:Array = beanElement.childNodes;
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
-			if (CONSTRUCTOR_ARG_ELEMENT == node.nodeName) {
+			if (node.nodeName == CONSTRUCTOR_ARG_ELEMENT) {
 				parseConstructorArgElement(node, beanName, result);
 			}
-			else if (CONSTRUCTOR_ARGS_ELEMENT == node.nodeName) {
+			else if (node.nodeName == CONSTRUCTOR_ARGS_ELEMENT) {
 				parseConstructorArgsElement(node, beanName, result);
 			}
 		}
@@ -438,7 +442,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		var nodes:Array = beanElement.childNodes;
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
-			if (PROPERTY_ELEMENT == node.nodeName) {
+			if (node.nodeName == PROPERTY_ELEMENT) {
 				parsePropertyElement(node, beanName, result);
 			}
 		}
@@ -456,7 +460,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		var nodes = beanElement.childNodes;
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
-			if (LOOKUP_METHOD_ELEMENT == node.nodeName) {
+			if (node.nodeName == LOOKUP_METHOD_ELEMENT) {
 				var methodName:String = node.attributes[NAME_ATTRIBUTE];
 				var beanReference:String = node.attributes[BEAN_ELEMENT];
 				overrides.addOverride(new LookupOverride(methodName, beanReference));
@@ -475,7 +479,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		var nodes:Array = beanElement.childNodes;
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var node:XMLNode = nodes[i];
-			if (REPLACED_METHOD_ELEMENT == node.nodeName) {
+			if (node.nodeName == REPLACED_METHOD_ELEMENT) {
 				var name:String = node.attributes[NAME_ATTRIBUTE];
 				var callback:String = node.attributes[REPLACER_ATTRIBUTE];
 				var replaceOverride:ReplaceOverride = new ReplaceOverride(name, callback);
@@ -632,7 +636,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		var subElement:XMLNode;
 		for (var i:Number = 0; i < nodes.length; i++) {
 			var candidateElement:XMLNode = nodes[i];
-			if (DESCRIPTION_ELEMENT != candidateElement.nodeName) {
+			if (candidateElement.nodeName != DESCRIPTION_ELEMENT) {
 				if (subElement != null) {
 					throw new BeanDefinitionStoreException(beanName, propertyName + " must not contain more than one sub-element.", this, arguments);
 				}
@@ -990,13 +994,13 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * @return the dependency check constant of the given attribute
 	 */
 	private function getDependencyCheck(attribute:String):Number {
-		if (DEPENDENCY_CHECK_ALL_ATTRIBUTE_VALUE == attribute) {
+		if (attribute == DEPENDENCY_CHECK_ALL_ATTRIBUTE_VALUE) {
 			return AbstractBeanDefinition.DEPENDENCY_CHECK_ALL;
 		}
-		if (DEPENDENCY_CHECK_SIMPLE_ATTRIBUTE_VALUE == attribute) {
+		if (attribute == DEPENDENCY_CHECK_SIMPLE_ATTRIBUTE_VALUE) {
 			return AbstractBeanDefinition.DEPENDENCY_CHECK_SIMPLE;
 		}
-		if (DEPENDENCY_CHECK_OBJECTS_ATTRIBUTE_VALUE == attribute) {
+		if (attribute == DEPENDENCY_CHECK_OBJECTS_ATTRIBUTE_VALUE) {
 			return AbstractBeanDefinition.DEPENDENCY_CHECK_OBJECTS;
 		}
 		return AbstractBeanDefinition.DEPENDENCY_CHECK_NONE;
@@ -1009,7 +1013,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * @return the autowire mode corresponding to the given attribute
 	 */
 	private function getAutowireMode(attribute:String):Number {
-		if (AUTOWIRE_BY_NAME_VALUE == attribute) {
+		if (attribute == AUTOWIRE_BY_NAME_VALUE) {
 			return AbstractBeanDefinition.AUTOWIRE_BY_NAME;
 		}
 		return AbstractBeanDefinition.AUTOWIRE_NO;
@@ -1058,8 +1062,9 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	private function generateBeanName(beanDefinition:BeanDefinition):String {
 		var generatedId:String = beanDefinition.getBeanClassName();
 		if (generatedId == null) {
-			if (beanDefinition instanceof ChildBeanDefinition) {
-				generatedId = ChildBeanDefinition(beanDefinition).getParentName() + "$child";
+			var childBeanDefinition:ChildBeanDefinition = ChildBeanDefinition(beanDefinition);
+			if (childBeanDefinition != null) {
+				generatedId = childBeanDefinition.getParentName() + "$child";
 			}
 			else if (beanDefinition.getFactoryBeanName() != null) {
 				generatedId = beanDefinition.getFactoryBeanName() + "$created";
