@@ -37,54 +37,38 @@ import org.as2lib.env.overload.Overload;
 class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDefinition implements BeanDefinition {
 	
 	/**
-	 * @overload RootBeanDefinitionByValues
-	 * @overload RootBeanDefinitionBySource
-	 */
-	public function RootBeanDefinition() {
-		var o:Overload = new Overload(this);
-		o.addHandler([ConstructorArgumentValues, PropertyValues], RootBeanDefinitionByValues);
-		o.addHandler([AbstractBeanDefinition], RootBeanDefinitionBySource);
-		o.forward(arguments);
-	}
-	
-	/**
 	 * Constructs a new {@code RootBeanDefinition} with the given constructor argument
 	 * and property values.
 	 * 
 	 * @param constructorArgumentValues the constructor argument values
 	 * @param propertyValues the property values
 	 */
-	private function RootBeanDefinitionByValues(constructorArgumentValues:ConstructorArgumentValues, propertyValues:PropertyValues):Void {
+	public function RootBeanDefinition(constructorArgumentValues:ConstructorArgumentValues, propertyValues:PropertyValues) {
 		setConstructorArgumentValues(constructorArgumentValues);
 		setPropertyValues(propertyValues);
 	}
 	
-	/**
-	 * Constructs a new {@code RootBeanDefinition} by copying the given source bean
-	 * definition.
-	 * 
-	 * @param source the bean definition to copy
-	 */
-	private function RootBeanDefinitionBySource(source:AbstractBeanDefinition):Void {
-		if (source.hasBeanClass()) {
-			setBeanClass(source.getBeanClass());
-		}
-		abstract = source.isAbstract();
-		singleton = source.isSingleton();
-		lazyInit = source.isLazyInit();
-		autowireMode = source.getAutowireMode();
-		dependencyCheck = source.getDependencyCheck();
-		dependsOn = source.getDependsOn();
-		constructorArgumentValues = new ConstructorArgumentValues(source.getConstructorArgumentValues());
-		propertyValues = new PropertyValues(source.getPropertyValues());
-		methodOverrides = new MethodOverrides(source.getMethodOverrides());
-		factoryBeanName = source.getFactoryBeanName();
-		factoryMethodName = source.getFactoryMethodName();
-		initMethodName = source.getInitMethodName();
-		enforceInitMethod = source.isEnforceInitMethod();
-		destroyMethodName = source.getDestroyMethodName();
-		enforceDestroyMethod = source.isEnforceDestroyMethod();
-		defaultPropertyName = source.getDefaultPropertyName();
+	public function clone(Void):RootBeanDefinition {
+		var cav:ConstructorArgumentValues = new ConstructorArgumentValues(constructorArgumentValues);
+		var pv:PropertyValues = new PropertyValues(propertyValues);
+		var result:RootBeanDefinition = new RootBeanDefinition(cav, pv);
+		result.beanClass = beanClass;
+		result.beanClassName = beanClassName;
+		result.abstract = abstract;
+		result.singleton = singleton;
+		result.lazyInit = lazyInit;
+		result.autowireMode = autowireMode;
+		result.dependencyCheck = dependencyCheck;
+		result.dependsOn = dependsOn;
+		result.methodOverrides = new MethodOverrides(methodOverrides);
+		result.factoryBeanName = factoryBeanName;
+		result.factoryMethodName = factoryMethodName;
+		result.initMethodName = initMethodName;
+		result.enforceInitMethod = enforceInitMethod;
+		result.destroyMethodName = destroyMethodName;
+		result.enforceDestroyMethod = enforceDestroyMethod;
+		result.defaultPropertyName = defaultPropertyName;
+		return result;
 	}
 	
 	public function validate(Void):Void {
