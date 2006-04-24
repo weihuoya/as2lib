@@ -693,10 +693,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			return beanRef;
 		}
 		if (element.nodeName == VALUE_ELEMENT) {
-			return parseLiteralValue(element.firstChild.nodeValue);
+			return parseLiteralValue(element.firstChild.nodeValue, beanName);
 		}
 		if (element.nodeType == 3) {
-			return parseLiteralValue(element.nodeValue);
+			return parseLiteralValue(element.nodeValue, beanName);
 		}
 		if (element.nodeName == NULL_ELEMENT) {
 			// It's a distinguished null value.
@@ -717,7 +717,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		throw new BeanDefinitionStoreException(beanName, "Unknown property sub-element: <" + element.nodeName + ">.", this, arguments);
 	}
 	
-	private function parseLiteralValue(value:String) {
+	private function parseLiteralValue(value:String, beanName:String) {
 		if (value == null) {
 			return "";
 		}
