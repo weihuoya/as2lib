@@ -274,16 +274,26 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		}
 		if (element.nodeName == BEAN_ELEMENT) {
 			var holder:BeanDefinitionHolder = parseBeanDefinitionElement(element);
-			var beanName:String = holder.getBeanName();
-			registry.registerBeanDefinition(beanName, holder.getBeanDefinition());
-			var aliases:Array = holder.getAliases();
-			for (var i:Number = 0; i < aliases.length; i++) {
-				registry.registerAlias(beanName, aliases[i]);
-			}
+			registerBeanDefinition(holder);
 			return;
 		}
-		
 		throw new BeanDefinitionStoreException(null, "Element [" + element + "] has an unknown name.", this, arguments);
+	}
+	
+	/**
+	 * Registers the bean definition associated with the given bean definition holder
+	 * and its aliases at the bean definition registry.
+	 * 
+	 * @param holder the holder containing the bean definition and its aliases to
+	 * register
+	 */
+	private function registerBeanDefinition(holder:BeanDefinitionHolder):Void {
+		var beanName:String = holder.getBeanName();
+		registry.registerBeanDefinition(beanName, holder.getBeanDefinition());
+		var aliases:Array = holder.getAliases();
+		for (var i:Number = 0; i < aliases.length; i++) {
+			registry.registerAlias(beanName, aliases[i]);
+		}
 	}
 	
 	/**
