@@ -179,34 +179,12 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		return super.parsePropertyElements(beanElement, beanName);
 	}
 	
-	private function parsePropertyValue(element:XMLNode, beanName:String, propertyName:String) {
-		var propertyValue = super.parsePropertyValue(element, beanName, propertyName);
-		var value:String = element.attributes[VALUE_ATTRIBUTE];
-		if (value != null && value == propertyValue) {
-			if (isDataBinding(value)) {
-				return parseDataBindingValue(value, beanName);
-			}
-		}
-		return propertyValue;
-	}
-	
 	private function parsePropertySubElement(element:XMLNode, beanName:String) {
-		if (element.nodeType == 3 || element.nodeName == VALUE_ELEMENT) {
-			var value:String;
-			if (element.nodeType == 3) {
-				value = element.nodeValue;
-			}
-			else {
-				value = element.firstChild.nodeValue;
-			}
-			if (isDataBinding(value)) {
-				return parseDataBindingValue(value, beanName);
-			}
-		}
-		else if (element.nodeName != BEAN_ELEMENT && element.nodeName != REF_ELEMENT
+		if (element.nodeName != BEAN_ELEMENT && element.nodeName != REF_ELEMENT
 				&& element.nodeName != IDREF_ELEMENT && element.nodeName != NULL_ELEMENT
 				&& element.nodeName != ARRAY_ELEMENT && element.nodeName != LIST_ELEMENT
-				&& element.nodeName != MAP_ELEMENT && element.nodeName != PROPS_ELEMENT) {
+				&& element.nodeName != MAP_ELEMENT && element.nodeName != PROPS_ELEMENT
+				&& element.nodeName != VALUE_ELEMENT && element.nodeType != 3) {
 			convertBeanElement(element);
 		}
 		var propertyValue = super.parsePropertySubElement(element, beanName);
@@ -225,6 +203,13 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		return propertyValue;
 	}
 	
+	private function parseLiteralValue(value:String, beanName:String) {
+		if (isDataBinding(value)) {
+			return parseDataBindingValue(value, beanName);
+		}
+		return super.parseLiteralValue(value, beanName);
+	}
+	
 	private function isDataBinding(value:String):Boolean {
 		return ((value.charAt(0) == DATA_BINDING_PREFIX || value.charAt(1) == DATA_BINDING_PREFIX)
 				&& value.charAt(value.length - 1) == DATA_BINDING_SUFFIX);
@@ -236,16 +221,16 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				|| value.charAt(0) == DATA_BINDING_PREFIX) {
 			return parsePropertyPathValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		else if (value.indexOf(VARIABLE_RETRIEVAL + DATA_BINDING_PREFIX) == 0) {
+		if (value.indexOf(VARIABLE_RETRIEVAL + DATA_BINDING_PREFIX) == 0) {
 			return parseVariableRetrievalValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		else if (value.indexOf(DELEGATE + DATA_BINDING_PREFIX) == 0) {
+		if (value.indexOf(DELEGATE + DATA_BINDING_PREFIX) == 0) {
 			return parseDelegateValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		else if (value.indexOf(METHOD_INVOCATION + DATA_BINDING_PREFIX) == 0) {
+		if (value.indexOf(METHOD_INVOCATION + DATA_BINDING_PREFIX) == 0) {
 			return parseMethodInvocationValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		else if (value.indexOf(RUNTIME_BEAN_REFERENCE + DATA_BINDING_PREFIX) == 0) {
+		if (value.indexOf(RUNTIME_BEAN_REFERENCE + DATA_BINDING_PREFIX) == 0) {
 			return parseRuntimeBeanReferenceValue(tokens[3], beanName);
 		}
 		throw new BeanDefinitionStoreException(beanName, "Unknown data binding value '" + value + "'.", this, arguments);
