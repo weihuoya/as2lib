@@ -353,7 +353,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		// Invoke BeanFactoryPostProcessors, one by one.
 		for (var i:Number = 0; i < factoryProcessorNames.length; i++) {
 			var factoryProcessorName:String = factoryProcessorNames[i];
-			var factoryProcessor:BeanFactoryPostProcessor = getBean(factoryProcessorName);
+			var factoryProcessor:BeanFactoryPostProcessor = getBeanByName(factoryProcessorName);
 			factoryProcessor.postProcessBeanFactory(getBeanFactory());
 		}
 	}
@@ -387,17 +387,17 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	private function initWeaver(Void):Void {
 		if (containsLocalBean(WEAVER_BEAN_NAME)) {
-			weaver = getBean(WEAVER_BEAN_NAME, Weaver);
+			weaver = getBeanByNameAndType(WEAVER_BEAN_NAME, Weaver);
 			weaver.weave();
 		}
 	}
-
+	
 	/**
 	 * Initializes the message source.
 	 */
 	private function initMessageSource(Void):Void {
 		if (containsLocalBean(MESSAGE_SOURCE_BEAN_NAME)) {
-			messageSource = getBean(MESSAGE_SOURCE_BEAN_NAME, MessageSource);
+			messageSource = getBeanByNameAndType(MESSAGE_SOURCE_BEAN_NAME, MessageSource);
 			// Make MessageSource aware of parent MessageSource.
 			if (parent != null && messageSource instanceof HierarchicalMessageSource) {
 				var hms:HierarchicalMessageSource = HierarchicalMessageSource(messageSource);
@@ -421,7 +421,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	private function initEventDistributorControl(Void):Void {
 		if (containsBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME)) {
-			eventDistributorControl = getBean(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME, EventDistributorControl);
+			eventDistributorControl = getBeanByNameAndType(
+					EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME, EventDistributorControl);
 		}
 	}
 	
@@ -449,7 +450,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		var listeners:Array = getBeansOfType(ApplicationListener, true, false).getValues();
 		for (var i:Number = 0; i < listeners.length; i++) {
 			getEventDistributorControl().addListener(listeners[i]);
-			// TODO: There is a collision between this context's addListener and the one of the Process interface, rename Process.addListener to Process.addProcessListener?
 			//addListener(listeners[i]);
 		}
 	}
@@ -578,7 +578,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	//---------------------------------------------------------------------
 	// Implementation of Process interface
-	// TODO: Make Process interface more light-weight
 	//---------------------------------------------------------------------
 	
 	/**
