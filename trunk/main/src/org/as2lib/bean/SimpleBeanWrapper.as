@@ -576,7 +576,6 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	public function convertPropertyValue(name:String, value, type:Function) {
 		if (typeof(value) == "string" || value instanceof String) {
 			if (type == null) {
-				// TODO: do not do type conversion directly
 				if (!isNaN(value)) {
 					//type = Number;
 					return Number(value);
@@ -586,15 +585,13 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					return true;
 				}
 				else if (value == "false") {
+					//type = Boolean;
 					return false;
 				}
 			}
-			// TODO: Remove type != null check
-			if (type != null) {
-				var propertyValueConverter:PropertyValueConverter = findPropertyValueConverter(type, name);
-				if (propertyValueConverter != null) {
-					return propertyValueConverter.convertPropertyValue(value, type);
-				}
+			var propertyValueConverter:PropertyValueConverter = findPropertyValueConverter(type, name);
+			if (propertyValueConverter != null) {
+				return propertyValueConverter.convertPropertyValue(value, type);
 			}
 		}
 		else {
@@ -717,9 +714,12 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	}
 	
 	public function findPropertyValueConverter(requiredType:Function, propertyName:String):PropertyValueConverter {
-		var result:PropertyValueConverter = findPropertyValueConverterInMap(requiredType, propertyName, customConverters);
-		if (result == null) {
-			result = findPropertyValueConverterInMap(requiredType, propertyName, defaultConverters);
+		var result:PropertyValueConverter = null;
+		if (requiredType != null || propertyName != null) {
+			result = findPropertyValueConverterInMap(requiredType, propertyName, customConverters);
+			if (result == null) {
+				result = findPropertyValueConverterInMap(requiredType, propertyName, defaultConverters);
+			}
 		}
 		return result;
 	}
