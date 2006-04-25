@@ -265,6 +265,10 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		return result;
 	}
 	
+	private function isUpperCaseLetter(letter:String):Boolean {
+		return (letter.toUpperCase() == letter);
+	}
+	
 	private function parsePropertyPathValue(targetObject:String, targetMember:String, isStatic:Boolean, beanName:String):BeanDefinitionHolder {
 		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
 		if (isStatic) {
@@ -334,10 +338,6 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		beanReference.attributes[BEAN_REF_ATTRIBUTE] = referenceBeanName;
 		result.appendChild(beanReference);
 		return result;
-	}
-	
-	private function isUpperCaseLetter(letter:String):Boolean {
-		return (letter.toUpperCase() == letter);
 	}
 	
 }
