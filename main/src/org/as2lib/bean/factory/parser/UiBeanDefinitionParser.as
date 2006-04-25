@@ -188,15 +188,10 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 			convertBeanElement(element);
 		}
 		var propertyValue = super.parsePropertySubElement(element, beanName);
-		// TODO: Refactor!
 		if (element.attributes[ID_ATTRIBUTE] != null || element.attributes[NAME_ATTRIBUTE] != null) {
 			if (propertyValue instanceof BeanDefinitionHolder) {
 				var holder:BeanDefinitionHolder = propertyValue;
-				registry.registerBeanDefinition(holder.getBeanName(), holder.getBeanDefinition());
-				var aliases:Array = holder.getAliases();
-				for (var i:Number = 0; i < aliases.length; i++) {
-					registry.registerAlias(holder.getBeanName(), aliases[i]);
-				}
+				registerBeanDefinition(holder);
 				return new RuntimeBeanReference(holder.getBeanName());
 			}
 		}
