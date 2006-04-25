@@ -163,13 +163,13 @@ class org.as2lib.context.support.AbstractMessageSource extends BasicClass implem
 	
 	public function getMessage():String {
 		var o:Overload = new Overload(this);
-		o.addHandler([MessageSourceResolvable], thiz.getMessageByResolvable);
-		o.addHandler([MessageSourceResolvable, Locale], thiz.getMessageByResolvable);
 		o.addHandler([String], thiz.getMessageByCodeAndArguments);
 		o.addHandler([String, Array], thiz.getMessageByCodeAndArguments);
 		o.addHandler([String, Array, Locale], thiz.getMessageByCodeAndArguments);
 		o.addHandler([String, Array, String], thiz.getMessageWithDefaultMessage);
 		o.addHandler([String, Array, String, Locale], thiz.getMessageWithDefaultMessage);
+		o.addHandler([MessageSourceResolvable], thiz.getMessageByResolvable);
+		o.addHandler([MessageSourceResolvable, Locale], thiz.getMessageByResolvable);
 		return o.forward(arguments);
 	}
 	
