@@ -654,10 +654,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			if (refAttribute == "") {
 				throw new BeanDefinitionStoreException(beanName, propertyName + " contains empty 'ref' attribute.", this, arguments);
 			}
-			return new RuntimeBeanReference(element.attributes[REF_ATTRIBUTE]);
+			return new RuntimeBeanReference(refAttribute);
 		}
 		if (valueAttribute != null) {
-			return element.attributes[VALUE_ATTRIBUTE];
+			return parseLiteralValue(valueAttribute);
 		}
 		if (subElement == null) {
 			// Neither child element nor "ref" or "value" attribute found.
