@@ -52,13 +52,13 @@ class org.as2lib.context.support.DelegatingMessageSource extends BasicClass impl
 	
 	public function getMessage():String {
 		var o:Overload = new Overload(this);
-		o.addHandler([MessageSourceResolvable], getMessageByResolvable);
-		o.addHandler([MessageSourceResolvable, Locale], getMessageByResolvable);
 		o.addHandler([String], getMessageByCodeAndArguments);
 		o.addHandler([String, Array], getMessageByCodeAndArguments);
 		o.addHandler([String, Array, Locale], getMessageByCodeAndArguments);
 		o.addHandler([String, Array, String], getMessageWithDefaultMessage);
 		o.addHandler([String, Array, String, Locale], getMessageWithDefaultMessage);
+		o.addHandler([MessageSourceResolvable], getMessageByResolvable);
+		o.addHandler([MessageSourceResolvable, Locale], getMessageByResolvable);
 		return o.forward(arguments);
 	}
 	
