@@ -183,15 +183,8 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		var propertyValue = super.parsePropertyValue(element, beanName, propertyName);
 		var value:String = element.attributes[VALUE_ATTRIBUTE];
 		if (value != null && value == propertyValue) {
-			// TODO: Refactor!
 			if (isDataBinding(value)) {
-				var dataBindingElement:XMLNode = parseDataBindingValue(value, beanName);
-				if (dataBindingElement.nodeName == BEAN_ELEMENT) {
-					return parseBeanDefinitionElement(dataBindingElement);
-				}
-				else if (dataBindingElement.nodeName == REF_ELEMENT) {
-					return parseBeanReferenceElement(dataBindingElement, beanName);
-				}
+				return parseDataBindingValue(value, beanName);
 			}
 		}
 		return propertyValue;
@@ -207,14 +200,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				value = element.firstChild.nodeValue;
 			}
 			if (isDataBinding(value)) {
-				var dataBindingElement:XMLNode = parseDataBindingValue(value, beanName);
-				// TODO: Refactor!
-				if (dataBindingElement.nodeName == BEAN_ELEMENT) {
-					return parseBeanDefinitionElement(dataBindingElement);
-				}
-				else if (dataBindingElement.nodeName == REF_ELEMENT) {
-					return parseBeanReferenceElement(dataBindingElement, beanName);
-				}
+				return parseDataBindingValue(value, beanName);
 			}
 		}
 		else if (element.nodeName != BEAN_ELEMENT && element.nodeName != REF_ELEMENT
@@ -244,9 +230,31 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				&& value.charAt(value.length - 1) == DATA_BINDING_SUFFIX);
 	}
 	
-	private function parseDataBindingValue(value:String, beanName:String):XMLNode {
-		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
-		var strippedValue:String = value.substring(value.indexOf(DATA_BINDING_PREFIX) + 1, value.length - 1);
+	private function parseDataBindingValue(value:String, beanName:String) {
+		var tokens:Array = getValueTokens(value, beanName);
+		if (value.indexOf(PROPERTY_PATH + DATA_BINDING_PREFIX) == 0
+				|| value.charAt(0) == DATA_BINDING_PREFIX) {
+			return parsePropertyPathValue(tokens[1], tokens[2], tokens[0], beanName);
+		}
+		else if (value.indexOf(VARIABLE_RETRIEVAL + DATA_BINDING_PREFIX) == 0) {
+			return parseVariableRetrievalValue(tokens[1], tokens[2], tokens[0], beanName);
+		}
+		else if (value.indexOf(DELEGATE + DATA_BINDING_PREFIX) == 0) {
+			return parseDelegateValue(tokens[1], tokens[2], tokens[0], beanName);
+		}
+		else if (value.indexOf(METHOD_INVOCATION + DATA_BINDING_PREFIX) == 0) {
+			return parseMethodInvocationValue(tokens[1], tokens[2], tokens[0], beanName);
+		}
+		else if (value.indexOf(RUNTIME_BEAN_REFERENCE + DATA_BINDING_PREFIX) == 0) {
+			return parseRuntimeBeanReferenceValue(tokens[3], beanName);
+		}
+		throw new BeanDefinitionStoreException(beanName, "Unknown data binding value '" + value + "'.", this, arguments);
+	}
+	
+	private function getValueTokens(value:String, beanName:String):Array {
+		var result:Array = new Array();
+		var prefixIndex:Number = value.indexOf(DATA_BINDING_PREFIX);
+		var strippedValue:String = value.substring(prefixIndex + 1, value.length - 1);
 		var isStatic:Boolean = false;
 		var targetObject:String;
 		var targetMember:String;
@@ -265,57 +273,70 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		else {
 			targetObject = strippedValue.substring(0, dotIndex);
 			targetMember = strippedValue.substring(dotIndex + 1);
-			if (isUpperCaseLetter(targetObject.charAt(targetObject.lastIndexOf(".") + 1))) {
+			var lc:String = targetObject.charAt(targetObject.lastIndexOf(".") + 1);
+			if (isUpperCaseLetter(lc)) {
 				isStatic = true;
 			}
 		}
-		if (value.indexOf(PROPERTY_PATH + DATA_BINDING_PREFIX) == 0
-				|| value.charAt(0) == DATA_BINDING_PREFIX) {
-			if (isStatic) {
-				throw new BeanDefinitionStoreException(beanName, "Property path data binding cannot be used for static properties.", this, arguments);
-			}
-			result.attributes[CLASS_ATTRIBUTE] = PROPERTY_PATH_FACTORY_BEAN_CLASS_NAME;
-			result.appendChild(createPropertyElement("targetBeanName", targetObject));
-			result.appendChild(createPropertyElement("propertyPath", targetMember));
+		result.push(isStatic);
+		result.push(targetObject);
+		result.push(targetMember);
+		result.push(strippedValue);
+		return result;
+	}
+	
+	private function parsePropertyPathValue(targetObject:String, targetMember:String, isStatic:Boolean, beanName:String):BeanDefinitionHolder {
+		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
+		if (isStatic) {
+			throw new BeanDefinitionStoreException(beanName, "Property path data binding cannot be used for static properties.", this, arguments);
 		}
-		else if (value.indexOf(VARIABLE_RETRIEVAL + DATA_BINDING_PREFIX) == 0) {
-			result.attributes[CLASS_ATTRIBUTE] = VARIABLE_RETRIEVING_FACTORY_BEAN_CLASS_NAME;
-			if (isStatic) {
-				result.appendChild(createPropertyElement("staticVariable", strippedValue));
-			}
-			else {
-				result.appendChild(createBeanReferencePropertyElement("targetBean", targetObject));
-				result.appendChild(createPropertyElement("targetVariable", targetMember));
-			}
-		}
-		else if (value.indexOf(DELEGATE + DATA_BINDING_PREFIX) == 0) {
-			if (isStatic) {
-				throw new BeanDefinitionStoreException(beanName, "Delegate data binding cannot be used for static methods.", this, arguments);
-			}
-			result.attributes[CLASS_ATTRIBUTE] = DELEGATE_FACTORY_BEAN_CLASS_NAME;
-			result.appendChild(createPropertyElement("targetBeanName", targetObject));
-			result.appendChild(createPropertyElement("methodName", targetMember));
-		}
-		else if (value.indexOf(METHOD_INVOCATION + DATA_BINDING_PREFIX) == 0) {
-			result.attributes[CLASS_ATTRIBUTE] = METHOD_INVOKING_FACTORY_BEAN_CLASS_NAME;
-			if (isStatic) {
-				result.appendChild(createPropertyElement("staticMethod", strippedValue));
-			}
-			else {
-				result.appendChild(createBeanReferencePropertyElement("targetBean", targetObject));
-				result.appendChild(createPropertyElement("targetVariable", targetMember));
-			}
-		}
-		else if (value.indexOf(RUNTIME_BEAN_REFERENCE + DATA_BINDING_PREFIX) == 0) {
-			// TODO: Refactor: result node does not have to be created.
-			var beanReference:XMLNode = new XMLNode(1, REF_ELEMENT);
-			beanReference.attributes[BEAN_REF_ATTRIBUTE] = strippedValue;
-			return beanReference;
+		result.attributes[CLASS_ATTRIBUTE] = PROPERTY_PATH_FACTORY_BEAN_CLASS_NAME;
+		result.appendChild(createPropertyElement("targetBeanName", targetObject));
+		result.appendChild(createPropertyElement("propertyPath", targetMember));
+		return parseBeanDefinitionElement(result);
+	}
+	
+	private function parseVariableRetrievalValue(targetObject:String, targetMember:String, isStatic:Boolean, beanName:String):BeanDefinitionHolder {
+		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
+		result.attributes[CLASS_ATTRIBUTE] = VARIABLE_RETRIEVING_FACTORY_BEAN_CLASS_NAME;
+		if (isStatic) {
+			result.appendChild(createPropertyElement("staticVariable", targetObject + "." + targetMember));
 		}
 		else {
-			throw new BeanDefinitionStoreException(beanName, "Data binding value '" + value + "' has an unknown pattern.", this, arguments);
+			result.appendChild(createBeanReferencePropertyElement("targetBean", targetObject));
+			result.appendChild(createPropertyElement("targetVariable", targetMember));
 		}
-		return result;
+		return parseBeanDefinitionElement(result);
+	}
+	
+	private function parseDelegateValue(targetObject:String, targetMember:String, isStatic:Boolean, beanName:String):BeanDefinitionHolder {
+		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
+		if (isStatic) {
+			throw new BeanDefinitionStoreException(beanName, "Delegate data binding cannot be used for static methods.", this, arguments);
+		}
+		result.attributes[CLASS_ATTRIBUTE] = DELEGATE_FACTORY_BEAN_CLASS_NAME;
+		result.appendChild(createPropertyElement("targetBeanName", targetObject));
+		result.appendChild(createPropertyElement("methodName", targetMember));
+		return parseBeanDefinitionElement(result);
+	}
+	
+	private function parseMethodInvocationValue(targetObject:String, targetMember:String, isStatic:Boolean, beanName:String):BeanDefinitionHolder {
+		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
+		result.attributes[CLASS_ATTRIBUTE] = METHOD_INVOKING_FACTORY_BEAN_CLASS_NAME;
+		if (isStatic) {
+			result.appendChild(createPropertyElement("staticMethod", targetObject + "." + targetMember));
+		}
+		else {
+			result.appendChild(createBeanReferencePropertyElement("targetBean", targetObject));
+			result.appendChild(createPropertyElement("targetVariable", targetMember));
+		}
+		return parseBeanDefinitionElement(result);
+	}
+	
+	private function parseRuntimeBeanReferenceValue(referenceBeanName:String, beanName:String):RuntimeBeanReference {
+		var beanReference:XMLNode = new XMLNode(1, REF_ELEMENT);
+		beanReference.attributes[BEAN_REF_ATTRIBUTE] = referenceBeanName;
+		return parseBeanReferenceElement(beanReference, beanName);
 	}
 	
 	private function createPropertyElement(name:String, value:String):XMLNode {
