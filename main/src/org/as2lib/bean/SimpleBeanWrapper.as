@@ -596,7 +596,6 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		}
 		else {
 			// TODO: Convert not only managed arrays, lists, ... but also normal arrays, lists, ... (type conversion of sub-elements is not possible there)
-			// TODO: Missuse of Mergeable interface.
 			if (value instanceof Mergeable) {
 				if (value instanceof ManagedArray) {
 					var result:Array;
