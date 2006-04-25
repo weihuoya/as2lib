@@ -29,18 +29,14 @@ import org.aswing.geom.Point;
  */
 class org.as2lib.bean.factory.parser.EnFlashBeanDefinitionParser extends UiBeanDefinitionParser {
 	
-	public static var DEFAULT_PROPERTY:String = "add";
-	
 	/**
 	 * Constructs a new {@code XmlBeanDefinitionParser} instance.
 	 * 
-	 * @param registry the registry to use if none is passed-to in the {@code parse}
+	 * @param registry the registry to use if none is passed-to the {@code parse}
 	 * method
 	 */
 	public function EnFlashBeanDefinitionParser(registry:BeanDefinitionRegistry) {
 		super(registry);
-		// TODO: Is there a default method name for this purpose in enFlash?
-		setDefaultProperty(DEFAULT_PROPERTY);
 	}
 	
 }
