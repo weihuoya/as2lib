@@ -88,7 +88,6 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 			// finish the loading process after possible process beans have been added
 			// otherwise the batch process distributes a finish event before possible
 			// processes in the bean factory have been run
-			// TODO: Shall onLoadComplete event even be published if an exception was thrown?
 			this.__proto__.onLoadComplete.apply(this, [fl]);
 		};
 		getBatchProcess().addProcess(fileLoaderProcess);
