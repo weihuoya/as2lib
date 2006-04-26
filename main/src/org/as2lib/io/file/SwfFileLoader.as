@@ -106,6 +106,9 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	/** Loaded {@code File}. */
 	private var result:File;
 	
+    /** Holding former file size for progress event */
+    private var formerLoaded:Number;
+	
 	/**
 	 * Constructs a new {@code SwfFileLoader} instance.
 	 * 
@@ -221,15 +224,22 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 * 
 	 * @return {@code true} if the {@code .swf} finished loading
 	 */
-	private function checkFinished():Boolean {
-		movieClip = eval("" + movieClip._target);
-		if (movieClip.getBytesTotal() > 10 
-				&& movieClip.getBytesTotal() - movieClip.getBytesLoaded() < 10) { 
-			return true;
-		}
-		return false;
-	}
-	
+    private function checkFinished():Boolean {
+            movieClip = eval("" + movieClip._target);
+            var total:Number = movieClip.getBytesTotal();
+            var loaded:Number = movieClip.getBytesLoaded();
+            if (total > 10 && total - loaded < 10) {
+                    formerLoaded = loaded;
+                    return true;
+            }
+            if (loaded != formerLoaded) {
+                if (loaded > 0) {
+                    sendProgressEvent();
+                }
+                formerLoaded = loaded;
+            }
+            return false;
+    }	
 	/**
 	 * Checks if the {@code TIMEOUT} has been exceeded by the durating.
 	 * 
