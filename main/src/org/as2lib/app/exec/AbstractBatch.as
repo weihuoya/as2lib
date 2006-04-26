@@ -26,8 +26,8 @@ import org.as2lib.env.except.IllegalArgumentException;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch, ProcessFinishListener,
-		BatchFinishListener, BatchUpdateListener, BatchErrorListener {
+class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch,
+		ProcessFinishListener, BatchFinishListener, BatchUpdateListener, BatchErrorListener {
 	
 	/** All added processes. */
 	private var processes:Array;
@@ -115,7 +115,8 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 		this.parent = parentProcess;
 		do {
 			if (parentProcess == this) {
-				throw new IllegalArgumentException("A process may not be the parent of its parent process.", this, arguments);
+				throw new IllegalArgumentException("A process may not be the parent of its " +
+						"parent process.", this, arguments);
 			}
 			parentProcess = parentProcess.getParentProcess();
 		}
@@ -148,7 +149,8 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 			while(--i-(-1)) {
 				if (processes[i] == process) {
 					if (i == currentProcess) {
-						throw new IllegalArgumentException("Process [" + process + "] is currently running and can thus not be removed.", this, arguments);
+						throw new IllegalArgumentException("Process [" + process + "] is " +
+								"currently running and can thus not be removed.", this, arguments);
 					}
 					if (i < currentProcess) {
 						currentProcess--;
