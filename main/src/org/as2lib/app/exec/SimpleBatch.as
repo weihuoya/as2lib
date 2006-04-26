@@ -71,8 +71,8 @@ import org.as2lib.env.except.IllegalArgumentException;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.app.exec.SimpleBatch extends AbstractBatch implements ProcessStartListener, ProcessUpdateListener,
-		ProcessPauseListener, ProcessResumeListener, ProcessErrorListener {
+class org.as2lib.app.exec.SimpleBatch extends AbstractBatch implements ProcessStartListener,
+		ProcessUpdateListener, ProcessPauseListener, ProcessResumeListener, ProcessErrorListener {
 	
 	/**
 	 * Constructs a new {@code SimpleBatch} instance.
@@ -131,16 +131,15 @@ class org.as2lib.app.exec.SimpleBatch extends AbstractBatch implements ProcessSt
 	 * @param process the process that raised the error
 	 */
 	public function onProcessError(process:Process, error):Boolean {
-		// TODO: 'result' is always 'null' because distributers do not return values!
 		var result:Boolean = super.distributeErrorEvent(error, process);
 		if (getParentProcess() == null) {
-			distributeErrorEvent(error);
+			result = distributeErrorEvent(error, result);
 		}
 		else {
 			addError(error);
-		}
-		if (!result && !hasFinished()) {
-			finish();
+			if (!result && !hasFinished()) {
+				finish();
+			}
 		}
 		return result;
 	}
@@ -212,18 +211,18 @@ class org.as2lib.app.exec.SimpleBatch extends AbstractBatch implements ProcessSt
 	 * Distributes a batch error event with the given error.
 	 * 
 	 * @param error the error that occurred
+	 * @param consumed whether the error has already been consumed by another error
+	 * listener
 	 * @return {@code true} to consume the event
 	 */
-	private function distributeErrorEvent(error):Boolean {
+	private function distributeErrorEvent(error, consumed:Boolean):Boolean {
 		addError(error);
-		// TODO: 'result' does not work as expected!
-		var result:Boolean = false;
 		var errorDistributor:BatchErrorListener = distributorControl.getDistributor(BatchErrorListener);
-		result = errorDistributor.onBatchError(this, error);
-		if (!result && !hasFinished()) {
+		var co:Boolean = errorDistributor.onBatchError(this, error);
+		if (!co && !consumed && !hasFinished()) {
 			finish();
 		}
-		return result;
+		return (co || consumed);
 	}
 	
 	/**
