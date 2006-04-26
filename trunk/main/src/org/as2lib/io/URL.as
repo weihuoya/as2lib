@@ -142,7 +142,7 @@ class org.as2lib.io.URL extends BasicClass {
 		i = 0;
 		while(i<uriString.length){	 
 				// finding required construct
-				while(!checkPrefix[fieldIndex](uriString.substr(i))) { fieldIndex++ };
+				while(!checkPrefix[fieldIndex](uriString.substr(i))) { fieldIndex++; }
 				// skip some characters before string processing, if needed
 				i += fieldPreSpaces[fieldIndex];
 				// setting start point to dig data from
