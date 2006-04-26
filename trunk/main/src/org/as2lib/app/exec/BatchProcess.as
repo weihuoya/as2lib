@@ -45,8 +45,9 @@ import org.as2lib.env.except.IllegalArgumentException;
  * @author Simon Wacker
  * @version 2.0
  */
-class org.as2lib.app.exec.BatchProcess extends AbstractProcess implements Batch, ProcessFinishListener,
-		BatchFinishListener, BatchUpdateListener, BatchErrorListener, ProcessUpdateListener, ProcessErrorListener {
+class org.as2lib.app.exec.BatchProcess extends AbstractProcess implements Batch,
+		BatchFinishListener, BatchUpdateListener, BatchErrorListener, ProcessFinishListener,
+		ProcessUpdateListener, ProcessErrorListener {
 	
 	/** All added processes. */
 	private var processes:Array;
