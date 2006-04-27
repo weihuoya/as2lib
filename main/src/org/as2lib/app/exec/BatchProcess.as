@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.app.exec.AbstractProcess;
+import org.as2lib.app.exec.AbstractBatch;
 import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.BatchErrorListener;
 import org.as2lib.app.exec.BatchFinishListener;
@@ -22,8 +22,13 @@ import org.as2lib.app.exec.BatchUpdateListener;
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.ProcessErrorListener;
 import org.as2lib.app.exec.ProcessFinishListener;
+import org.as2lib.app.exec.ProcessPauseListener;
+import org.as2lib.app.exec.ProcessResumeListener;
+import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.ProcessUpdateListener;
-import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.data.type.Time;
+import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
 
 /**
  * {@code BatchProcess} is a batch that acts to the outside like a process. Use this
@@ -45,7 +50,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  * @author Simon Wacker
  * @version 2.0
  */
-class org.as2lib.app.exec.BatchProcess extends AbstractProcess implements Batch,
+class org.as2lib.app.exec.BatchProcess extends AbstractBatch implements Batch,
 		BatchFinishListener, BatchUpdateListener, BatchErrorListener, ProcessFinishListener,
 		ProcessUpdateListener, ProcessErrorListener {
 	
@@ -62,10 +67,37 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess implements Batch,
 	 * Constructs a new {@code BatchProcess} instance.
 	 */
 	public function BatchProcess(Void) {
-		processes = new Array();
-		percentage = 0;
-		started = false;
-		finished = false;
+		// There is a class initialization error in Mtasc (note that this error does not occur in
+		// Flash) that prevents BatchProcess from inheriting from AbstractBatch.
+		if (BatchProcess.prototype.__proto__ != AbstractBatch.prototype) {
+			BatchProcess.prototype.__proto__ = AbstractBatch.prototype;
+			// LogSupport Constructor
+			addProperty("logger", getLogger, null);
+			// EventSupport Constructor
+			distributorControl = new SimpleConsumableCompositeEventDistributorControl();
+			// AbstractTimeConsumer Constructor
+			duration = new Time(0);
+			totalTime = new Time(0);
+			restTime = new Time(0);
+			started = false;
+			finished = false;
+			// AbstractProcess Constructor
+			errors = new Array();
+			subProcesses = new HashMap();
+			paused = false;
+			working = false;
+			acceptListenerType(ProcessStartListener);
+			acceptListenerType(ProcessErrorListener);
+			acceptListenerType(ProcessUpdateListener);
+			acceptListenerType(ProcessPauseListener);
+			acceptListenerType(ProcessResumeListener);
+			acceptListenerType(ProcessFinishListener);
+			// AbstractBatch Constructor
+			processes = new Array();
+			percentage = 0;
+			started = false;
+			finished = false;
+		}
 	}
 	
 	/**
@@ -102,215 +134,6 @@ class org.as2lib.app.exec.BatchProcess extends AbstractProcess implements Batch,
 			finish();
 		}
 		return result;
-	}
-	
-	// TODO: There is a class initialization order error when working with the testing framework I could not track down. Thus all methods from AbstractBatch are copied to this class.
-	
-	/**
-	 * Starts the execution of this batch.
-	 */
-    public function start() {
-    	if (!started) {
-			currentProcess = -1;
-			finished = false;
-			working = true;
-			percentage = 0;
-			delete endTime;
-			startTime = getTimer();
-			started = true;
-			distributeStartEvent();
-			nextProcess();
-    	}
-	}
-	
-	public function getName(Void):String {
-		var result:String = super.getName();
-		if (result == null) {
-			result = getCurrentProcess().getName();
-		}
-		return result;
-	}
-	
-	public function getPercentage(Void):Number {
-		return percentage;
-	}
-	
-	/**
-	 * Updates the loading progress percentage.
-	 * 
-	 * @param percentage the progress percentage of the current process
-	 */
-	private function updatePercentage(percentage:Number):Void {
-		this.percentage = 100 / getProcessCount() * (currentProcess + (1 / 100 * percentage));
-	}
-	
-	public function getProcessCount(Void):Number {
-		var result:Number = 0;
-		for (var i:Number = 0; i < processes.length; i++) {
-			var batch:Batch = Batch(processes[i]);
-			if (batch != null) {
-				result += batch.getProcessCount();
-			}
-			else {
-				result++;
-			}
-		}
-		return result;
-	}
-	
-	public function getParentProcess(Void):Process {
-		return parent;
-	}
-	
-	/**
-	 * Sets the parent of this process.
-	 * 
-	 * @throws IllegalArgumentException if this process is a itself a parent of the
-	 * given process (to prevent infinite recursion)
-	 * @param parentProcess the new parent process of this process
-	 */
-	public function setParentProcess(parentProcess:Process):Void {
-		this.parent = parentProcess;
-		do {
-			if (parentProcess == this) {
-				throw new IllegalArgumentException("A process may not be the parent of its parent process.", this, arguments);
-			}
-			parentProcess = parentProcess.getParentProcess();
-		}
-		while (parentProcess != null);
-	}
-	
-	/**
-	 * Adds the given process to execute to this batch.
-	 * 
-	 * <p>It is possible to add the same process more than once. It will be executed
-	 * as often as you add it.
-	 * 
-	 * @param process the process to add
-	 */
-	public function addProcess(process:Process):Void {
-		if (process != null && process != this) {
-			processes.push(process);
-			updatePercentage(100);
-		}
-	}
-	
-	/**
-	 * Removes all occurrences of the given process.
-	 * 
-	 * @param process the process to remove
-	 */
-	public function removeProcess(process:Process):Void {
-		if (process != null) {
-			var i:Number = processes.length;
-			while(--i-(-1)) {
-				if (processes[i] == process) {
-					if (i == currentProcess) {
-						throw new IllegalArgumentException("Process [" + process + "] is currently running and can thus not be removed.", this, arguments);
-					}
-					if (i < currentProcess) {
-						currentProcess--;
-					}
-					processes.slice(i, i);
-				}
-			}
-		}
-	}
-	
-	/**
-	 * Gives the given process highest priority: the given process will be started
-	 * as soon as the currently running process finishes.
-	 * 
-	 * @param process the process to run next
-	 */
-	public function moveProcess(process:Process):Void {
-		if (process != null) {
-			var i:Number = processes.length;
-			while(--i-(-1)) {
-				if (processes[i] == process) {
-					if (i != currentProcess) {
-						if (i < currentProcess) {
-							currentProcess--;
-						}
-						processes.slice(i, i);
-						processes.splice(currentProcess + 1, 0, process);
-					}
-				}
-			}
-		}
-	}
-	
-	public function getCurrentProcess(Void):Process {
-		return processes[currentProcess];
-	}
-	
-	public function getAllProcesses(Void):Array {
-		return processes.concat();
-	}
-	
-	/**
-	 * Executes the next process if the current process has finished.
-	 * 
-	 * @param process the finished process
-	 * @see #nextProcess
-	 */
-	public function onProcessFinish(process:Process):Void {
-		if (getCurrentProcess().hasFinished()) {
-			nextProcess();
-		}
-	}
-	
-	/**
-	 * Executes the next process.
-	 * 
-	 * @param batch the finished batch
-	 * @see #nextProcess
-	 */
-	public function onBatchFinish(batch:Batch):Void {
-		batch.removeListener(this);
-		nextProcess();
-	}
-	
-	/**
-	 * Starts the next process and distributes an update event, or finishes this
-	 * batch and distributes a finished event if there is no next process.
-	 * 
-	 * @see #distributeUpdateEvent
-	 * @see #finish
-	 */
-	private function nextProcess(Void):Void {
-		getCurrentProcess().removeListener(this);
-		if (currentProcess < processes.length - 1) {
-			updatePercentage(100);
-			currentProcess++;
-			var process:Process = processes[currentProcess];
-			process.setParentProcess(this);
-			process.addListener(this);
-			process.start();
-			distributeUpdateEvent();
-		}
-		else {
-			finish();
-		}
-	}
-	
-	/**
-	 * Distributes an update event.
-	 * 
-	 * @param batch the batch that was updated
-	 */
-	public function onBatchUpdate(batch:Batch):Void {
-		distributeUpdateEvent();
-	}
-	
-	/**
-	 * Distributes an error event with the given error.
-	 * 
-	 * @param batch the batch that raised the error
-	 * @param error the raised error
-	 */
-	public function onBatchError(batch:Batch, error):Boolean {
-		return distributeErrorEvent(error);
 	}
 	
 }
