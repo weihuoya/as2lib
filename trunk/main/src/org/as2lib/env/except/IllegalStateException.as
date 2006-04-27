@@ -43,13 +43,16 @@ class org.as2lib.env.except.IllegalStateException extends FatalException {
 	 * @param args the arguments of the throwing method
 	 */
 	public function IllegalStateException(message:String, thrower, args:Array) {
+		super(message, thrower, args);
 		// extending does not work if IllegalArgumentException is also imported,
 		// because it is loaded first and needs IllegalStateException itself, which
 		// also needs IllegalArgumentException. You see the cycle, don't you?
-		this.__proto__.__proto__ = FatalException.prototype;
-		this.message = message;
-		this.stackTrace = new Array();
-		addStackTraceElement(thrower, args.callee, args);
+		if (IllegalStateException.prototype.__proto__ != FatalException.prototype) {
+			IllegalStateException.prototype.__proto__ = FatalException.prototype;
+			this.message = message;
+			this.stackTrace = new Array();
+			addStackTraceElement(thrower, args.callee, args);
+		}
 	}
 	
 }
