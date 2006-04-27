@@ -28,6 +28,8 @@ import org.as2lib.io.request.RequestSetLoadProgressListener;
 import org.as2lib.io.request.RequestSetLoadCompleteListener;
 import org.as2lib.io.request.RequestSetLoadErrorListener;
 import org.as2lib.io.request.RequestSetFocusListener;
+import org.as2lib.io.request.NoRequestHandlerFoundException;
+import org.as2lib.io.request.RequestManagerBusyException;
 import org.as2lib.app.exec.Executable; 
 import org.as2lib.app.exec.AbstractTimeConsumer;
 import org.as2lib.data.type.Byte;
@@ -59,16 +61,16 @@ import org.as2lib.data.holder.Iterator;
  * <p>Example for using {@code RequestListManager}:
  * <code>
  *   import org.as2lib.io.request.RequestListManager;
- *   import org.as2lib.io.request.SWFRequestHandler;
- *   import org.as2lib.io.request.SWFRequest;
+ *   import org.as2lib.io.request.SwfRequestHandler;
+ *   import org.as2lib.io.request.SwfRequest;
  *   import org.as2lib.io.URL;   
  *  
  *	 loader = new RequestListManager();
- *	 swfHandler = new SWFRequestHandler();
- *	 loader.setRequestHandler(SWFRequest, swfHandler);
+ *	 swfHandler = new SwfRequestHandler();
+ *	 loader.setRequestHandler(SwfRequest, swfHandler);
  *		
- *	 loader.add(new SWFRequest(new URL("test_1.swf"), swfTarget, 554));
- *	 loader.add(new SWFRequest(new URL("test_2.swf"), swfTarget2, 2338681));
+ *	 loader.add(new SwfRequest(new URL("test_1.swf"), swfTarget, 554));
+ *	 loader.add(new SwfRequest(new URL("test_2.swf"), swfTarget2, 2338681));
  *	 loader.load();
  * </code>
  * 
@@ -203,7 +205,7 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 			handler.addListener(this);
 			handler.handleRequest(request);
 		} else {
-			//TODO: throw an exception, no appropriate hadler found
+			throw new NoRequestHandlerFoundException("No appropriate handler found for request [" + request + "].", this, arguments);
 		}
 	}
 	
@@ -216,7 +218,7 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 			onRequestSetFocusChange(this);
 			handleRequest(request);
 		} else {
-			//TODO: throw an exception here, resource is being loaded
+			throw new RequestManagerBusyException("RequestManager is busy now, and can't handle next request.", this, arguments);
 		}
 	}
 
