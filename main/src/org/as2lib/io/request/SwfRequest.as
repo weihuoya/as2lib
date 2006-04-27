@@ -48,7 +48,7 @@ class org.as2lib.io.request.SwfRequest extends BasicClass implements Request {
 	 * @param {@code MovieClip} to be loaded into
 	 * @param {@code Number} size as Number (optional)
 	 */		
-	public function SWFRequest(url:URL, container:MovieClip, size:Number) {
+	public function SwfRequest(url:URL, container:MovieClip, size:Number) {
 		this.url = url;
 		this.container = container;
 		supposedSize = new Byte(size);		

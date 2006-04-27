@@ -27,7 +27,7 @@ import org.as2lib.io.file.LoadProgressListener;
 import org.as2lib.io.file.LoadStartListener;
 
 /**
- * {@code SWFRequestHandler} is built to handle {@code SWFRequest}s, implements {@code RequestHandler}.
+ * {@code SwfRequestHandler} is built to handle {@code SwfRequest}s, implements {@code RequestHandler}.
  * 
  * <p>A {@code RequestHandler} instantiates loader for {@code Request}, and 
  * allows to return it. {@code RequestHandler} also can distribute events,
@@ -46,9 +46,9 @@ class org.as2lib.io.request.SwfRequestHandler extends EventSupport implements Re
 	private var fileLoader:SwfFileLoader;
 	
 	/**
-	 * Constructs a new {@code SWFRequestHandler} instance.
+	 * Constructs a new {@code SwfRequestHandler} instance.
 	 */		
-	public function SWFRequestHandler() {
+	public function SwfRequestHandler() {
 		acceptListenerType(LoadStartListener);
 		acceptListenerType(LoadCompleteListener);
 		acceptListenerType(LoadProgressListener);

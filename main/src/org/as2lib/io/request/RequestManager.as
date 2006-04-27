@@ -24,7 +24,7 @@ import org.as2lib.data.type.Byte;
  * <p>Example to handle the loading of a resource:
  * <code>
  *   import org.as2lib.io.URL;
- *   import org.as2lib.io.request.SWFRequest;    
+ *   import org.as2lib.io.request.SwfRequest;    
  *   import org.as2lib.io.request.RequestSetLoadStartListener;
  *   import org.as2lib.io.request.RequestSetLoadCompleteListener;
  *   import org.as2lib.io.request.RequestSetLoadProgressListener;
@@ -38,8 +38,8 @@ import org.as2lib.data.type.Byte;
  *   	RequestSetLoadProgressListener {
  *   
  *     public function main(loader:RequestManager):Void {
- *		 loader.add(new SWFRequest(new URL("test_1.swf"), swfTarget, 554));
- *	     loader.add(new SWFRequest(new URL("test_2.swf"), swfTarget2, 2338681));
+ *		 loader.add(new SwfRequest(new URL("test_1.swf"), swfTarget, 554));
+ *	     loader.add(new SwfRequest(new URL("test_2.swf"), swfTarget2, 2338681));
  *	     loader.load();
  *     }
  *     
