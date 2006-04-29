@@ -111,7 +111,8 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 					&& i != DEPENDENCY_CHECK_ATTRIBUTE && i != AUTOWIRE_ATTRIBUTE
 					&& i != INIT_METHOD_ATTRIBUTE && i != DESTROY_METHOD_ATTRIBUTE
 					&& i != ABSTRACT_ATTRIBUTE && i != SINGLETON_ATTRIBUTE
-					&& i != LAZY_INIT_ATTRIBUTE && i != DEFAULT_PROPERTY_ATTRIBUTE) {
+					&& i != LAZY_INIT_ATTRIBUTE && i != DEFAULT_PROPERTY_ATTRIBUTE
+					&& i != STYLE_ATTRIBUTE) {
 				convertAttributeToPropertyElement(i, element);
 			}
 		}

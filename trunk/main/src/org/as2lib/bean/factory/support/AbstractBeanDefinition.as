@@ -133,6 +133,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	/** Is the execution of the destroy method enforced? */
 	private var enforceDestroyMethod:Boolean;
 	
+	/** The name of the style to format this bean with. */
+	private var styleName:String;
+	
 	/** The element that was the source of this definition in the configuration. */
 	private var source:XMLNode;
 	
@@ -163,7 +166,8 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 * Overrides settings in this bean definition from the given bean definition.
 	 * 
 	 * <ul>
-	 *   <li>Will override beanClass if specified in the given bean definition.
+	 *   <li>Will override beanClass and beanClassName if specified in the given bean
+	 *       definition.
 	 *   <li>Will always take abstract, singleton, lazyInit from the given bean definition.
 	 *   <li>Will add argumentValues, propertyValues, methodOverrides to
 	 *       existing ones.
@@ -171,6 +175,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 *       and defaultPropertyName if specified.
 	 *   <li>Will always take dependsOn, autowireMode, dependencyCheck from the
 	 *       given bean definition.
+	 *   <li>Will always take styleName and source from the given bean definition.
 	 * </ul>
 	 * 
 	 * @param beanDefinition the bean definition holding settings to override in this
@@ -179,6 +184,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	public function override(beanDefinition:AbstractBeanDefinition):Void {
 		if (beanDefinition.hasBeanClass()) {
 			beanClass = beanDefinition.getBeanClass();
+			beanClassName = beanDefinition.getBeanClassName();
 		}
 		abstract = beanDefinition.isAbstract();
 		singleton = beanDefinition.isSingleton();
@@ -186,6 +192,8 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		autowireMode = beanDefinition.getAutowireMode();
 		dependencyCheck = beanDefinition.getDependencyCheck();
 		dependsOn = beanDefinition.getDependsOn();
+		styleName = beanDefinition.getStyleName();
+		source = beanDefinition.getSource();
 		constructorArgumentValues.addArgumentValues(beanDefinition.getConstructorArgumentValues());
 		propertyValues.addPropertyValues(beanDefinition.getPropertyValues());
 		methodOverrides.addOverrides(beanDefinition.getMethodOverrides());
@@ -498,6 +506,24 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		return enforceDestroyMethod;
 	}
 	
+	/**
+	 * Sets the name of the style. This property is normally used by UI bean
+	 * definitions to format beans with a specific style of style sheet.
+	 * 
+	 * @param styleName the name of the style
+	 */
+	public function setStyleName(styleName:String):Void {
+		this.styleName = styleName;
+	}
+	
+	public function getStyleName(Void):String {
+		return styleName;
+	}
+	
+	/**
+	 * Sets the element that was the source of this bean definition in the
+	 * configuration.
+	 */
 	public function setSource(source:XMLNode):Void {
 		this.source = source;
 	}

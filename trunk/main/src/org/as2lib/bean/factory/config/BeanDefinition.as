@@ -173,6 +173,14 @@ interface org.as2lib.bean.factory.config.BeanDefinition extends BasicInterface {
 	public function isAbstract(Void):Boolean;
 	
 	/**
+	 * Returns the name of the style. This property is normally used by UI bean
+	 * definitions to format beans with a specific style of style sheet.
+	 * 
+	 * @return the style of this bean definition
+	 */
+	public function getStyleName(Void):String;
+	
+	/**
 	 * Returns the element that was the source of this bean definition in the
 	 * configuration.
 	 * 

@@ -138,6 +138,8 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var PROP_ELEMENT:String = "prop";
 	public static var MERGE_ATTRIBUTE:String = "merge";
 	
+	public static var STYLE_ATTRIBUTE:String = "style";
+	
 	/**
 	 * Separator for generated bean names. If a class name or parent name is not
 	 * unique, "#1", "#2" etc will be appended, until the name becomes unique.
@@ -419,6 +421,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 						bd.setDefaultPropertyName(this.defaultProperty);
 					}
 				}
+			}
+			var style:String = element.attributes[STYLE_ATTRIBUTE];
+			if (style != null) {
+				bd.setStyleName(style);
 			}
 			bd.setSource(element);
 			return BeanDefinition(bd);
