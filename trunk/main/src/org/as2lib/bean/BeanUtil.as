@@ -49,20 +49,33 @@ class org.as2lib.bean.BeanUtil extends BasicClass {
 		}
 		for (var i:Number = 0; i < source.length; i++) {
 			var arg:String = TrimUtil.trim(source[i]);
-			if (!isNaN(arg)) {
-				destination[i] = Number(arg);
-			}
-			else if (arg == "true") {
-				destination[i] = true;
-			}
-			else if (arg == "false") {
-				destination[i] = false;
-			}
-			else {
-				destination[i] = arg;
-			}
+			destination[i] = convertValue(arg);
 		}
 		return destination;
+	}
+	
+	/**
+	 * Converts the given value.
+	 * 
+	 * <p>Values which are converted:
+	 * <ul>
+	 *   <li>Numbers are converted to primitive numbers.</li>
+	 *   <li>"true" values are converted to {@code true}.</li>
+	 *   <li>"false" values are converted to {@code false}.</li>
+	 *   <li>All other values are not converted.</li>
+	 * </ul>
+	 */
+	public static function convertValue(value:String) {
+		if (!isNaN(value)) {
+			return Number(value);
+		}
+		if (value == "true") {
+			return true;
+		}
+		if (value == "false") {
+			return false;
+		}
+		return value;
 	}
 	
 	/**
