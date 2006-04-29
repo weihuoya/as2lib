@@ -57,6 +57,9 @@ class org.as2lib.bean.BeanUtil extends BasicClass {
 	 *   <li>"false" values are converted to {@code false}.</li>
 	 *   <li>All other values are not converted.</li>
 	 * </ul>
+	 * 
+	 * @param value the value to convert
+	 * @return the result of the conversion
 	 */
 	public static function convertValue(value:String) {
 		if (!isNaN(value)) {
