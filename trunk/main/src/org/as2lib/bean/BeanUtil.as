@@ -28,20 +28,13 @@ class org.as2lib.bean.BeanUtil extends BasicClass {
 	/**
 	 * Trims and converts the given string values.
 	 * 
-	 * <p>Values which are converted:
-	 * <ul>
-	 *   <li>Numbers are converted to primitive numbers.</li>
-	 *   <li>"true"-values are converted to {@code true}.</li>
-	 *   <li>"false"-values are converted to {@code false}.</li>
-	 *   <li>All other values are not converted.</li>
-	 * </ul>
-	 * 
 	 * <p>If the given destination is {@code null} or {@code undefined}, the given
 	 * source itself will be used as destination.
 	 * 
 	 * @param source the values to trim and convert and copy to the destination
 	 * @param destination the destination to put the values on
 	 * @return the destination
+	 * @see #convertValue
 	 */
 	public static function trimAndConvertValues(source:Array, destination:Array):Array {
 		if (destination == null) {
