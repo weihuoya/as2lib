@@ -277,6 +277,18 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			registerBeanDefinition(holder);
 			return;
 		}
+		parseUnknownElement(element);
+	}
+	
+	/**
+	 * Throws a {@link BeanDefinitionStoreException}.
+	 * 
+	 * <p>This method may be overridden by subclasses that support other elements than
+	 * alias- and bean-elements.
+	 * 
+	 * @param element the element with the unknown node name
+	 */
+	private function parseUnknownElement(element:XMLNode):Void {
 		throw new BeanDefinitionStoreException(null, "Element [" + element + "] has an unknown name.", this, arguments);
 	}
 	
@@ -725,6 +737,19 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		if (element.nodeName == PROPS_ELEMENT) {
 			return parsePropsElement(element, beanName);
 		}
+		return parseUnknownPropertySubElement(element, beanName);
+	}
+	
+	/**
+	 * Throws a {@link BeanDefinitionStoreException}.
+	 * 
+	 * <p>This method may be overridden by subclasses that support further property
+	 * sub-elements.
+	 * 
+	 * @param element the element with the unknown node name
+	 * @param beanName the name of the bean with the unknown property sub-element
+	 */
+	private function parseUnknownPropertySubElement(element:XMLNode, beanName:String) {
 		throw new BeanDefinitionStoreException(beanName, "Unknown property sub-element: <" + element.nodeName + ">.", this, arguments);
 	}
 	

@@ -69,11 +69,10 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		var l:Function = LoadingApplicationContextFactoryBean;
 	}
 	
-	private function parseElement(element:XMLNode):Void {
-		if (element.nodeName != ALIAS_ELEMENT && element.nodeName != BEAN_ELEMENT) {
-			convertBeanElement(element);
-		}
-		super.parseElement(element);
+	private function parseUnknownElement(element:XMLNode):Void {
+		convertBeanElement(element);
+		var holder:BeanDefinitionHolder = parseBeanDefinitionElement(element);
+		registerBeanDefinition(holder);
 	}
 	
 	private function convertBeanElement(element:XMLNode):Void {
@@ -101,7 +100,6 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				}
 			}
 		}
-		element.nodeName = BEAN_ELEMENT;
 	}
 	
 	private function parseBeanDefinitionElementWithoutRegardToNameOrAliases(element:XMLNode, beanName:String):BeanDefinition {
@@ -180,13 +178,6 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	}
 	
 	private function parsePropertySubElement(element:XMLNode, beanName:String) {
-		if (element.nodeName != BEAN_ELEMENT && element.nodeName != REF_ELEMENT
-				&& element.nodeName != IDREF_ELEMENT && element.nodeName != NULL_ELEMENT
-				&& element.nodeName != ARRAY_ELEMENT && element.nodeName != LIST_ELEMENT
-				&& element.nodeName != MAP_ELEMENT && element.nodeName != PROPS_ELEMENT
-				&& element.nodeName != VALUE_ELEMENT && element.nodeType != 3) {
-			convertBeanElement(element);
-		}
 		var propertyValue = super.parsePropertySubElement(element, beanName);
 		if (element.attributes[ID_ATTRIBUTE] != null || element.attributes[NAME_ATTRIBUTE] != null) {
 			if (propertyValue instanceof BeanDefinitionHolder) {
@@ -196,6 +187,11 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 			}
 		}
 		return propertyValue;
+	}
+	
+	private function parseUnknownPropertySubElement(element:XMLNode, beanName:String) {
+		convertBeanElement(element);
+		return parseBeanDefinitionElement(element);
 	}
 	
 	private function parseLiteralValue(value:String, beanName:String) {
