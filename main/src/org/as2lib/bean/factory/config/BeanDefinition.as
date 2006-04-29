@@ -173,6 +173,14 @@ interface org.as2lib.bean.factory.config.BeanDefinition extends BasicInterface {
 	public function isAbstract(Void):Boolean;
 	
 	/**
+	 * Returns the element that was the source of this bean definition in the
+	 * configuration.
+	 * 
+	 * @return the source element of this bean definition
+	 */
+	public function getSource(Void):XMLNode;
+	
+	/**
 	 * Validates this bean definition.
 	 * 
 	 * @throws BeanDefinitionValidationException in case of validation failure

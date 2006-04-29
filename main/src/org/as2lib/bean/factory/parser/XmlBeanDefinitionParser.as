@@ -420,6 +420,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 					}
 				}
 			}
+			bd.setSource(element);
 			return BeanDefinition(bd);
 		}
 		catch (exception:org.as2lib.bean.factory.BeanDefinitionStoreException) {

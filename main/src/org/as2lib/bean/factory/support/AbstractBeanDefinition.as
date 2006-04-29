@@ -133,6 +133,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	/** Is the execution of the destroy method enforced? */
 	private var enforceDestroyMethod:Boolean;
 	
+	/** The element that was the source of this definition in the configuration. */
+	private var source:XMLNode;
+	
 	/**
 	 * Constructs a new {@code AbstractBeanDefinition} instance.
 	 * 
@@ -493,6 +496,14 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	
 	public function isEnforceDestroyMethod(Void):Boolean {
 		return enforceDestroyMethod;
+	}
+	
+	public function setSource(source:XMLNode):Void {
+		this.source = source;
+	}
+	
+	public function getSource(Void):XMLNode {
+		return source;
 	}
 	
 	public function validate(Void):Void {
