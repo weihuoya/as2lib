@@ -68,6 +68,8 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 		result.destroyMethodName = destroyMethodName;
 		result.enforceDestroyMethod = enforceDestroyMethod;
 		result.defaultPropertyName = defaultPropertyName;
+		result.styleName = styleName;
+		result.source = source;
 		return result;
 	}
 	
