@@ -4,5 +4,12 @@ As2ant 2.0
 
 
 [+] org.as2lib.ant.Mtasc
+    Added new argument: 'packset'. This argument can be used to include multiple
+    packages based on name patterns (analogous to 'srcset').
+
+[+] org.as2lib.ant.Mtasc
+    Added support for wimp-flag (turns warnings for unused imports on)
+
+[+] org.as2lib.ant.Mtasc
     Added namespace support for xml source files (according to the As2lib Application
     Context specification)
