@@ -22,6 +22,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -33,6 +34,7 @@ import org.apache.tools.ant.DirectoryScanner;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Execute;
 import org.apache.tools.ant.types.Commandline;
+import org.apache.tools.ant.types.DirSet;
 import org.apache.tools.ant.types.FileSet;
 import org.apache.tools.ant.types.Path;
 import org.w3c.dom.Document;
@@ -76,6 +78,8 @@ import org.xml.sax.SAXException;
  *   <li>srcdir</li>
  *   <li>srcset</li>
  *   <li>srcxml</li>
+ *   <li>pack or package</li>
+ *   <li>packset</li>
  *   <li>classpath</li>
  *   <li>verbose</li>
  *   <li>strict</li>
@@ -96,12 +100,12 @@ import org.xml.sax.SAXException;
  *   <li>help</li>
  *   <li>mtasc</li>
  *   <li>split</li>
- *   <li>package</li>
  *   <li>infer</li>
+ *   <li>wimp</li>
  *   <li>argument</li>
  * </ul>
  * 
- * <p>You must either provide "src", "srcdir", "srcset" or "srcxml".
+ * <p>You must either provide "src", "srcdir", "srcset", "srcxml", "pack" or "packset".
  * 
  * @author Simon Wacker
  * @since 28.04.2005
@@ -131,15 +135,17 @@ public class Mtasc extends Task {
     public static final String FLASH6 = "-flash6";
     public static final String PACKAGE = "-pack";
     public static final String INFER = "-infer";
+    public static final String WIMP = "-wimp";
     
     private String mtasc;
     private List compileFiles;
     private Path sourceDirectory;
     private File source;
-    private Path pack;
-    private ArrayList arguments;
     private ArrayList sourceSets;
     private ArrayList sourceList;
+    private Path pack;
+    private ArrayList packSets;
+    private ArrayList arguments;
     private Path sourceXml;
     private Path classpath;
     private Path exclude;
@@ -161,6 +167,7 @@ public class Mtasc extends Task {
     private boolean group = false;
     private boolean main = false;
     private boolean infer = false;
+    private boolean wimp = false;
     
     /**
      * Constructs a new {@code Mtasc} instance.
@@ -172,6 +179,7 @@ public class Mtasc extends Task {
         this.sourceSets = new ArrayList();
         this.sourceList = new ArrayList();
         this.arguments = new ArrayList();
+        this.packSets = new ArrayList();
     }
     
     /**
@@ -356,6 +364,15 @@ public class Mtasc extends Task {
      * 
      * @param pack the new source package
      */
+    public void setPack(Path pack) {
+        setPackage(pack);
+    }
+    
+    /**
+     * Sets the new source package.
+     * 
+     * @param pack the new source package
+     */
     public void setPackage(Path pack) {
         if (this.pack == null) {
             this.pack = pack;
@@ -371,6 +388,35 @@ public class Mtasc extends Task {
      */
     public Path getPack() {
         return this.pack;
+    }
+    
+    /**
+     * Creates and returns a new package set.
+     * 
+     * @return a new package set
+     */
+    public DirSet createPackSet() {
+        DirSet packSet = new DirSet();
+        this.packSets.add(packSet);
+        return packSet;
+    }
+    
+    /**
+     * Returns all package sets.
+     * 
+     * @return all package file sets
+     */
+    public DirSet[] getPackSet() {
+        return (DirSet[]) this.packSets.toArray(new DirSet[]{});
+    }
+    
+    /**
+     * Sets a new package set.
+     * 
+     * @param packSet the new package set
+     */
+    public void setPackSet(DirSet packSet) {
+        this.packSets.add(packSet);
     }
     
     /**
@@ -814,12 +860,26 @@ public class Mtasc extends Task {
     }
     
     /**
-     * Turns local variables inference on.
+     * Turns local variables inference on or off.
      * 
      * @param infer determines whether to turn local variables inference on or off
      */
     public void setInfer(boolean infer) {
         this.infer = infer;
+    }
+    
+    /**
+     * Returns whether warnings for unused imports are turned on or off.
+     */
+    public boolean getWimp() {
+        return this.wimp;
+    }
+    
+    /**
+     * Turns warnings for unused imports on or off.
+     */
+    public void setWimp(boolean wimp) {
+        this.wimp = wimp;
     }
     
     /**
@@ -865,15 +925,7 @@ public class Mtasc extends Task {
      * @return true if this mtasc task has any sources else false
      */
     public boolean hasSources() {
-        if ((this.sourceDirectory == null || this.sourceDirectory.size() == 0)
-                && this.sourceSets.size() == 0
-                && this.source == null
-                && this.sourceList.size() == 0
-                && (this.pack == null || this.pack.size() == 0)
-                && (this.sourceXml == null || this.sourceXml.size() == 0)) {
-            return false;
-        }
-        return true;
+        return checkParameters();
     }
     
     /**
@@ -894,10 +946,10 @@ public class Mtasc extends Task {
     
     /**
      * Checks whether the required parameters are set. This is either source directory,
-     * source set, source file, source xml or pack.
+     * source set, source file, source xml, package or package set.
      * 
      * @return {@code true} if either source directory or source set or source file
-     * or source xml or package is specified (all necessary data)
+     * or source xml or package or package set is specified (all necessary data)
      */
     protected boolean checkParameters() {
         if ((this.sourceDirectory == null || this.sourceDirectory.size() == 0)
@@ -905,7 +957,8 @@ public class Mtasc extends Task {
                 && this.source == null
                 && this.sourceList.size() == 0
                 && (this.sourceXml == null || this.sourceXml.size() == 0)
-                && (this.pack == null || this.pack.size() == 0)) {
+                && (this.pack == null || this.pack.size() == 0)
+                && this.packSets.size() == 0) {
             return false;
         }
         return true;
@@ -1290,6 +1343,7 @@ public class Mtasc extends Task {
         if (this.separate) command.createArgument().setValue(SEPARATE);
         if (this.flash6) command.createArgument().setValue(FLASH6);
         if (this.infer) command.createArgument().setValue(INFER);
+        if (this.wimp) command.createArgument().setValue(WIMP);
         for (int i = 0; i < arguments.size(); i++) {
             Argument ar = (Argument) arguments.get(i);
             if (ar.getName() != null) {
@@ -1346,9 +1400,19 @@ public class Mtasc extends Task {
         if (this.pack != null && this.pack.size() > 0) {
             String[] a = this.pack.list();
             for (int i = 0; i < a.length; i++) {
-                String p = a[i];
-                command.createArgument().setValue(PACKAGE);
-                addPackage(command, p);
+                addPackage(command, a[i]);
+            }
+        }
+        if (packSets.size() > 0) {
+            Iterator it = packSets.iterator();
+            while (it.hasNext()) {
+                DirSet ps = (DirSet) it.next();
+                DirectoryScanner ds = ps.getDirectoryScanner(getProject());
+                ds.setCaseSensitive(true);
+                String[] pn = ds.getIncludedDirectories();
+                for (int k = 0; k < pn.length; k++) {
+                    addPackage(command, ds.getBasedir() + "/" + pn[k]);
+                }
             }
         }
     }
@@ -1361,21 +1425,29 @@ public class Mtasc extends Task {
      * @param pack the package to add
      */
     private void addPackage(Commandline command, String pack) {
-        if (this.classpath != null && this.classpath.size() > 0) {
-            String[] classpaths = this.classpath.list();
-            for (int i = 0; i < classpaths.length; i++) {
-                String cp = classpaths[i];
-                if (pack.startsWith(cp)) {
-                    pack = pack.substring(cp.length() + 1);
-                    break;
+        DirectoryScanner ds = new DirectoryScanner();
+        ds.setBasedir(pack);
+        ds.setCaseSensitive(true);
+        ds.setIncludes(new String[] {"*.as"});
+        ds.scan();
+        if (ds.getIncludedFilesCount() > 0) {
+            if (this.classpath != null && this.classpath.size() > 0) {
+                String[] classpaths = this.classpath.list();
+                for (int i = 0; i < classpaths.length; i++) {
+                    String cp = classpaths[i];
+                    if (pack.startsWith(cp)) {
+                        pack = pack.substring(cp.length() + 1);
+                        break;
+                    }
                 }
             }
+            String bd = getProject().getBaseDir().getAbsolutePath();
+            if (pack.startsWith(bd) && !pack.equals(bd)) {
+                pack = pack.substring(bd.length() + 1);
+            }
+            command.createArgument().setValue(PACKAGE);
+            command.createArgument().setValue(pack);
         }
-        String bd = getProject().getBaseDir().getAbsolutePath();
-        if (pack.startsWith(bd) && !pack.equals(bd)) {
-            pack = pack.substring(bd.length() + 1);
-        }
-        command.createArgument().setValue(pack);
     }
     
     /**
