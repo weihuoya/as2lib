@@ -18,11 +18,11 @@ import org.as2lib.aop.Weaver;
 import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.BatchFinishListener;
 import org.as2lib.app.exec.Process;
-import org.as2lib.bean.converter.ClassConverter;
 import org.as2lib.bean.factory.BeanFactory;
 import org.as2lib.bean.factory.config.BeanFactoryPostProcessor;
 import org.as2lib.bean.factory.config.BeanPostProcessor;
 import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
+import org.as2lib.bean.factory.ListableBeanFactory;
 import org.as2lib.bean.factory.support.AbstractBeanFactory;
 import org.as2lib.context.ApplicationContext;
 import org.as2lib.context.ApplicationEvent;
@@ -43,6 +43,7 @@ import org.as2lib.env.except.IllegalStateException;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogManager;
 import org.as2lib.env.reflect.ReflectUtil;
+import org.as2lib.util.ClassUtil;
 
 /**
  * {@code AbstractApplicationContext} provides implementations of methods that are
@@ -115,6 +116,12 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	/** {@link BeanFactoryPostProcessor} instances to apply on refresh. */
 	private var beanFactoryPostProcessors:Array;
 	
+	/**
+	 * {@link BeanFactoryPostProcessor} instances which also implement the
+	 * {@link Process} interface and must thus be processed before they can be applied.
+	 */
+	private var beanFactoryPostProcessorProcesses:Array;
+	
 	/** Message source to look-up localized messages. */
 	private var messageSource:MessageSource;
 	
@@ -136,6 +143,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		this.parent = parent;
 		active = true;
 		beanFactoryPostProcessors = new Array();
+		beanFactoryPostProcessorProcesses = new Array();
 	}
 	
 	/**
@@ -284,8 +292,14 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		postProcessBeanFactory(beanFactory);
 		// invokes factory processors registered with the context instance
 		for (var i:Number = 0; i < beanFactoryPostProcessors.length; i++) {
+			// TODO Refactor!
 			var factoryProcessor:BeanFactoryPostProcessor = beanFactoryPostProcessors[i];
-			factoryProcessor.postProcessBeanFactory(beanFactory);
+			if (factoryProcessor instanceof Process) {
+				beanFactoryPostProcessorProcesses.push(factoryProcessor);
+			}
+			else {
+				factoryProcessor.postProcessBeanFactory(beanFactory);
+			}
 		}
 		try {
 			// invokes factory processors registered as beans in the context
@@ -347,6 +361,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * before singleton instantiation.
 	 */
 	private function invokeBeanFactoryPostProcessors(Void):Void {
+		// TODO Refactor!
 		// Do not initialize FactoryBeans here: We need to leave all regular beans
 		// uninitialized to let the bean factory post-processors apply to them!
 		var factoryProcessorNames:Array = getBeanNamesForType(BeanFactoryPostProcessor, true, false);
@@ -354,7 +369,22 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		for (var i:Number = 0; i < factoryProcessorNames.length; i++) {
 			var factoryProcessorName:String = factoryProcessorNames[i];
 			var factoryProcessor:BeanFactoryPostProcessor = getBeanByName(factoryProcessorName);
-			factoryProcessor.postProcessBeanFactory(getBeanFactory());
+			if (factoryProcessor instanceof Process) {
+				beanFactoryPostProcessorProcesses.push(factoryProcessor);
+			}
+			else {
+				factoryProcessor.postProcessBeanFactory(getBeanFactory());
+			}
+		}
+		var parentFactory:ListableBeanFactory = ListableBeanFactory(getInternalParentBeanFactory());
+		if (parentFactory != null) {
+			var parentFactoryProcessorNames:Array = parentFactory.getBeanNamesForType(
+					BeanFactoryPostProcessor, true, false, true);
+			for (var i:Number = 0; i < parentFactoryProcessorNames.length; i++) {
+				var factoryProcessorName:String = parentFactoryProcessorNames[i];
+				var factoryProcessor:BeanFactoryPostProcessor = parentFactory.getBeanByName(factoryProcessorName);
+				factoryProcessor.postProcessBeanFactory(getBeanFactory());
+			}
 		}
 	}
 	
@@ -611,10 +641,24 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	private function registerProcessBeans(Void):Void {
 		var batchProcess:Batch = getBatchProcess();
+		for (var i:Number = 0; i < beanFactoryPostProcessorProcesses.length; i++) {
+			var process:Process = beanFactoryPostProcessorProcesses[i];
+			// TODO Problem: It is unknown whether 'process' behaves like a batch or like a process.
+			var listener:BatchFinishListener = ClassUtil.createCleanInstance(BatchFinishListener);
+			var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
+			listener.onBatchFinish = function(batch:Batch):Void {
+				var factoryProcessor:BeanFactoryPostProcessor = BeanFactoryPostProcessor(process);
+				factoryProcessor.postProcessBeanFactory(beanFactory);
+			};
+			process.addListener(listener);
+			batchProcess.addProcess(process);
+		}
 		var processes:Array = getProcessBeans();
 		for (var i:Number = 0; i < processes.length; i++) {
 			var process:Process = processes[i];
-			batchProcess.addProcess(process);
+			if (!(process instanceof BeanFactoryPostProcessor)) {
+				batchProcess.addProcess(process);
+			}
 		}
 	}
 	
@@ -625,6 +669,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * @return all singleton lifecycle beans
 	 */
 	private function getProcessBeans(Void):Array {
+		// TODO Problem: 'beanProcess' will also be part of the result, exclude it!
 		return getBeanFactory().getBeansOfType(Process, false, false).getValues();
 	}
 	
