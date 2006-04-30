@@ -148,6 +148,8 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	
 	private var registry:BeanDefinitionRegistry;
 	
+	private var defaultRegistry:BeanDefinitionRegistry;
+	
 	private var defaultLazyInit:String;
 
 	private var defaultAutowire:String;
@@ -165,11 +167,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	/**
 	 * Constructs a new {@code XmlBeanDefinitionParser} instance.
 	 * 
-	 * @param registry the registry to use if none is passed-to in the {@code parse}
-	 * method
+	 * @param defaultRegistry the default registry to use if none is passed-to the
+	 * {@code parse} method
 	 */
-	public function XmlBeanDefinitionParser(registry:BeanDefinitionRegistry) {
-		this.registry = registry;
+	public function XmlBeanDefinitionParser(defaultRegistry:BeanDefinitionRegistry) {
+		this.defaultRegistry = defaultRegistry;
 	}
 	
 	/**
@@ -185,14 +187,19 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * 
 	 * @param beanDefinitions the bean definition(s) to parse
 	 * @param registry the registry to add bean definitions to
-	 * @throws IllegalArgumentException if both the given registry and the one given on
-	 * instantiation is {@code null}
+	 * @throws IllegalArgumentException if both the given registry and the default
+	 * registry given on instantiation is {@code null}
 	 */
 	public function parse(beanDefinitions:String, registry:BeanDefinitionRegistry):Void {
-		if (this.registry == null) {
-			if (registry == null) {
-				throw new IllegalArgumentException("Argument 'registry' must not be 'null' nor 'undefined' if you did not specify a registry on construction of this instance.", this, arguments);
+		if (registry == null) {
+			if (defaultRegistry == null) {
+				throw new IllegalArgumentException("Argument 'registry' must not be 'null' nor " +
+						"'undefined' if you did not specify a default registry on construction " +
+						"of this bean definition parser.", this, arguments);
 			}
+			this.registry = defaultRegistry;
+		}
+		else {
 			this.registry = registry;
 		}
 		var root:XMLNode = parseXml(beanDefinitions);
