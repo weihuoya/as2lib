@@ -87,7 +87,7 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 	 * @author Martin Heidegger
 	 * @author Ralf Bokelberg (www.qlod.com)
 	 */
-	public static function createCleanInstance(clazz:Function):Object {
+	public static function createCleanInstance(clazz:Function) {
 		var result:Object = new Object();
 		result.__proto__ = clazz.prototype;
 		result.__constructor__ = clazz;
@@ -113,4 +113,5 @@ class org.as2lib.util.ClassUtil extends BasicClass {
 		clazz.apply(result, args);
 		return result;
 	}
+	
 }
