@@ -21,6 +21,7 @@
         <copy todir="${build.dir}">
             <fileset dir="${context.dir}">
                 <include name="**/*.xml"/>
+                <include name="**/*.css"/>
                 <include name="**/*.properties"/>
             </fileset>
         </copy>
