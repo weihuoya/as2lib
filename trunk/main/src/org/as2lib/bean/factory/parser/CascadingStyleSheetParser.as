@@ -21,12 +21,14 @@ import org.as2lib.bean.factory.config.BeanDefinitionHolder;
 import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.bean.factory.config.ConstructorArgumentValue;
 import org.as2lib.bean.factory.config.ConstructorArgumentValues;
+import org.as2lib.bean.factory.config.RuntimeBeanReference;
 import org.as2lib.bean.factory.parser.StyleSheetParser;
 import org.as2lib.bean.factory.support.RootBeanDefinition;
 import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValues;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.util.StringUtil;
 import org.as2lib.util.TrimUtil;
 
 import TextField.StyleSheet;
@@ -64,7 +66,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 	
 	private var defaultFactory:ConfigurableListableBeanFactory;
 	
-	private var styleSheet:StyleSheet;
+	private var styles:Array;
 	
 	private var namespaces;
 	
@@ -99,58 +101,112 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		else {
 			this.factory = factory;
 		}
-		styleSheet = parseStyleSheet(cascadingStyleSheet);
-		initNamespaces();
+		parseStyleSheet(cascadingStyleSheet);
 		var beanNames:Array = factory.getBeanDefinitionNames();
 		for (var i:Number = 0; i < beanNames.length; i++) {
 			var beanName:String = beanNames[i];
 			var beanDefinition:BeanDefinition = factory.getBeanDefinition(beanName);
-			parseStyles(beanDefinition, beanName);
+			applyStyleSheet(beanDefinition, beanName, new Array());
 		}
 	}
 	
-	private function parseStyleSheet(styleSheet:String):StyleSheet {
-		var result:StyleSheet = new StyleSheet();
-		if (!result.parseCSS(styleSheet)) {
+	private function parseStyleSheet(styleSheet:String):Void {
+		var sheet:StyleSheet = new StyleSheet();
+		// TODO Find a less error-prone and faster algorithm.
+		var ss:String = "";
+		var oi:Number = styleSheet.indexOf("{");
+		var ci:Number = -1;
+		while (oi != -1) {
+			var selectors:Array = styleSheet.substring(ci + 1, oi).split(",");
+			for (var i:Number = 0; i < selectors.length; i++) {
+				if (i != 0) {
+					ss += ",";
+				}
+				ss += StringUtil.replace(TrimUtil.trim(selectors[i]), " ", "+");
+			}
+			ci = styleSheet.indexOf("}", oi);
+			ss += styleSheet.substring(oi, ci + 1);
+			oi = styleSheet.indexOf("{", ci);
+		}
+		if (!sheet.parseCSS(ss)) {
 			throw new BeanDefinitionStoreException(null, "Cascading style sheet [" + styleSheet +
 					"] is syntactically malformed.", this, arguments);
 		}
-		return result;
+		styles = new Array();
+		var styleNames:Array = sheet.getStyleNames();
+		for (var i:Number = 0; i < styleNames.length; i++) {
+			var styleName:String = styleNames[i];
+			if (styleName == NAMESPACE_SELECTOR) {
+				namespaces = sheet.getStyle(NAMESPACE_SELECTOR);
+			}
+			else {
+				var nameTokens:Array = styleName.split("+");
+				var lastToken:String = nameTokens.pop().toString();
+				if (styles[lastToken] == null) {
+					styles[lastToken] = new Array();
+				}
+				var nameStyles:Array = styles[lastToken];
+				if (nameTokens.length == 0) {
+					nameStyles.unshift({name: null, style: sheet.getStyle(styleName)});
+				}
+				else {
+					var tokenCount:Number = nameTokens.length;
+					if (nameStyles.length == 0) {
+						nameStyles.push({name: nameTokens, style: sheet.getStyle(styleName)});
+					}
+					else {
+						for (var j:Number = nameStyles.length - 1; j >= 0; j--) {
+							var nameStyle = nameStyles[j];
+							if (nameStyle.name.length <= tokenCount || nameStyle.name == null) {
+								nameStyles.splice(j + 1, 0, {name: nameTokens, style: sheet.getStyle(styleName)});
+								break;
+							}
+						}
+					}
+				}
+			}
+		}
 	}
 	
-	private function initNamespaces(Void):Void {
-		namespaces = styleSheet.getStyle(NAMESPACE_SELECTOR);
-	}
-	
-	private function parseStyles(beanDefinition:BeanDefinition, beanName:String):Void {
-		parseTypeStyle(beanDefinition);
-		parseClassStyle(beanDefinition);
+	private function applyStyleSheet(beanDefinition:BeanDefinition, beanName:String, parentBeanDefinitions:Array):Void {
+		applyTypeStyle(beanDefinition, parentBeanDefinitions);
+		applyClassStyle(beanDefinition, parentBeanDefinitions);
 		if (beanName != null) {
-			parseIdStyle(beanDefinition, beanName, factory.getAliases(beanName));
+			applyIdStyle(beanDefinition, beanName, factory.getAliases(beanName), parentBeanDefinitions);
 		}
 		var values:Array = beanDefinition.getPropertyValues().getPropertyValues();
 		for (var i:Number = 0; i < values.length; i++) {
 			var propertyValue:PropertyValue = values[i];
 			var holder:BeanDefinitionHolder = BeanDefinitionHolder(propertyValue.getValue());
 			if (holder != null) {
-				parseStyles(holder.getBeanDefinition());
+				var pbd:Array = addParentBeanDefinition(parentBeanDefinitions, beanName, beanDefinition);
+				applyStyleSheet(holder.getBeanDefinition(), null, pbd);
+				continue;
+			}
+			var reference:RuntimeBeanReference = RuntimeBeanReference(propertyValue.getValue());
+			if (reference != null) {
+				var pbd:Array = addParentBeanDefinition(parentBeanDefinitions, beanName, beanDefinition);
+				var rn:String = reference.getBeanName();
+				var rb:BeanDefinition = factory.getBeanDefinition(rn, true);
+				applyStyleSheet(rb, rn, pbd);
 			}
 		}
 	}
 	
-	private function parseTypeStyle(beanDefinition:BeanDefinition):Void {
-		var source:XMLNode = beanDefinition.getSource();
-		if (source != null) {
-			var styleName:String;
-			var namespace:String = source["namespaceURI"];
-			if (namespace == "" || namespace == null) {
-				styleName = source.nodeName;
-			}
-			else {
-				styleName = source["localName"];
-			}
-			parseStyle(beanDefinition, styleSheet.getStyle(styleName));
+	private function addParentBeanDefinition(parentBeanDefinitions:Array, beanName:String, beanDefinition:BeanDefinition):Array {
+		var result:Array = parentBeanDefinitions.concat();
+		if (beanName == null) {
+			result.push(beanDefinition);
 		}
+		else {
+			result.push(beanName);
+		}
+		return result;
+	}
+	
+	private function applyTypeStyle(beanDefinition:BeanDefinition, parentBeanDefinitions:Array):Void {
+		var styleName:String = getTypeStyleName(beanDefinition);
+		applyStyles(beanDefinition, resolveStyles(styleName, parentBeanDefinitions));
 		/*
 		var className:String = beanDefinition.getBeanClassName();
 		if (className == null) {
@@ -164,25 +220,148 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		*/
 	}
 	
-	private function parseClassStyle(beanDefinition:BeanDefinition):Void {
-		var styleName:String = beanDefinition.getStyleName();
-		parseStyle(beanDefinition, styleSheet.getStyle(CLASS_SELECTOR_PREFIX + styleName));
+	private function getTypeStyleName(beanDefinition:BeanDefinition):String {
+		var source:XMLNode = beanDefinition.getSource();
+		if (source != null) {
+			var namespace:String = source["namespaceURI"];
+			if (namespace == "" || namespace == null) {
+				return source.nodeName;
+			}
+			else {
+				return source["localName"];
+			}
+		}
+		return null;
 	}
 	
-	private function parseIdStyle(beanDefinition:BeanDefinition, beanName:String, aliases:Array):Void {
-		parseStyle(beanDefinition, styleSheet.getStyle(ID_SELECTOR_PREFIX + beanName));
+	private function applyClassStyle(beanDefinition:BeanDefinition, parentBeanDefinitions:Array):Void {
+		var styleName:String = getClassStyleName(beanDefinition);
+		applyStyles(beanDefinition, resolveStyles(styleName, parentBeanDefinitions));
+	}
+	
+	private function getClassStyleName(beanDefinition:BeanDefinition):String {
+		var styleName:String = beanDefinition.getStyleName();
+		if (styleName != null) {
+			return (CLASS_SELECTOR_PREFIX + styleName);
+		}
+		return null;
+	}
+	
+	private function applyIdStyle(beanDefinition:BeanDefinition, beanName:String, aliases:Array, parentBeanDefinitions:Array):Void {
+		applyStyles(beanDefinition, resolveStyles(ID_SELECTOR_PREFIX + beanName, parentBeanDefinitions));
 		for (var i:Number = 0; i < aliases.length; i++) {
-			parseStyle(beanDefinition, styleSheet.getStyle(ID_SELECTOR_PREFIX + aliases[i]));
+			applyStyles(beanDefinition, resolveStyles(ID_SELECTOR_PREFIX + aliases[i], parentBeanDefinitions));
 		}
 	}
 	
-	private function parseStyle(beanDefinition:BeanDefinition, style:Object):Void {
+	private function resolveStyles(styleName:String, parentBeanDefinitions:Array):Array {
+		var result:Array = new Array();
+		var sa:Array = styles[styleName];
+		if (sa != null) {
+			for (var i:Number = sa.length - 1; i >= 0; i--) {
+				var na:Array = sa[i].name;
+				if (na == null) {
+					result.push(sa[i].style);
+				}
+				else {
+					if (matches(na, parentBeanDefinitions)) {
+						result.push(sa[i].style);
+					}
+				}
+			}
+		}
+		return result;
+	}
+	
+	private function matches(na:Array, parentBeanDefinitions:Array):Boolean {
+		var nl:Number = na.length;
+		var pl:Number = parentBeanDefinitions.length;
+		if (nl <= pl) {
+			// TODO Parent must not be direct parent but just a parent!
+			for (var i:Number = nl - 1, j:Number = pl - 1; i >= 0, j >= 0; i--, j--) {
+				var n:String = na[i];
+				var success:Boolean = false;
+				do {
+					var pbd = parentBeanDefinitions[j];
+					var parentBeanName:String;
+					var parentBeanDefinition:BeanDefinition;
+					if (typeof(pbd) == "string") {
+						parentBeanName = pbd;
+						parentBeanDefinition = factory.getBeanDefinition(pbd, true);
+					}
+					else {
+						parentBeanDefinition = pbd;
+					}
+					if (matchesBeanDefinition(n, parentBeanDefinition, parentBeanName)) {
+						success = true;
+						break;
+					}
+					j--;
+				}
+				while (j >= 0);
+				if (!success) {
+					return false;
+				}
+			}
+		}
+		else {
+			return false;
+		}
+		return true;
+	}
+	
+	private function matchesBeanDefinition(styleName:String, beanDefinition:BeanDefinition, beanName:String):Boolean {
+		var fc:String = styleName.charAt(0);
+		if (fc == ".") {
+			var csn:String = getClassStyleName(beanDefinition);
+			if (styleName != csn) {
+				return false;
+			}
+		}
+		else if (fc == "#") {
+			if (beanName != null) {
+				if (ID_SELECTOR_PREFIX + beanName != styleName) {
+					var success:Boolean = false;
+					var aliases:Array = factory.getAliases(beanName);
+					if (aliases != null) {
+						for (var i:Number = 0; i < aliases.length; i++) {
+							if (ID_SELECTOR_PREFIX + aliases[i] == beanName) {
+								success = true;
+								break;
+							}
+						}
+					}
+					if (!success) {
+						return false;
+					}
+				}
+			}
+			else {
+				return false;
+			}
+		}
+		else {
+			var tsn:String = getTypeStyleName(beanDefinition);
+			if (styleName != tsn) {
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	private function applyStyles(beanDefinition, styles:Array):Void {
+		for (var i:Number = 0; i < styles.length; i++) {
+			applyStyle(beanDefinition, styles[i]);
+		}
+	}
+	
+	private function applyStyle(beanDefinition:BeanDefinition, style:Object):Void {
 		if (style != null) {
 			var pv:PropertyValues = beanDefinition.getPropertyValues();
 			for (var i:String in style) {
 				if (!pv.contains(i)) {
 					var value:String = parsePropertyValue(style[i]);
-					pv.addPropertyValueByNameAndValueAndType(i, value);
+					pv.addPropertyValueByIndexAndPropertyValue(0, new PropertyValue(i, value));
 				}
 			}
 		}
@@ -219,11 +398,18 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 	private function parseBeanDefinitionValue(value:String, prefixIndex:Number, suffixIndex:Number):BeanDefinitionHolder {
 		var className:String = parseClassName(value.substring(0, prefixIndex));
 		var clazz:Function = findClass(className);
+		// TODO There may be a sub-property which may also use value delimiters.
 		var values:Array = value.substring(prefixIndex + 1, suffixIndex).split(VALUE_DELIMITER);
 		var cav:ConstructorArgumentValues = new ConstructorArgumentValues();
 		var pv:PropertyValues = new PropertyValues();
 		for (var i:Number = 0; i < values.length; i++) {
 			var va:String = TrimUtil.trim(values[i]);
+			// TODO No clean solution. Does not work for more than 2-level wrapping.
+			if (va.indexOf("(") != -1) {
+				while (values[i].indexOf(")") == -1) {
+					va += VALUE_DELIMITER + values[++i];
+				}
+			}
 			var separatorIndex:Number = va.indexOf(NAME_VALUE_SEPARATOR);
 			if (separatorIndex == -1) {
 				parseConstructorArg(va, cav);
