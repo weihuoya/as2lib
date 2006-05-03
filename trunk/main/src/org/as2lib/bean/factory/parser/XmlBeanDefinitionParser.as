@@ -574,7 +574,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			var args:Array = value.split(CONSTRUCTOR_ARGS_SEPARATOR);
 			BeanUtil.trimAndConvertValues(args);
 			for (var i:Number = 0; i < args.length; i++) {
-				var argument:ConstructorArgumentValue = new ConstructorArgumentValue(args[i], type);
+				var arg = args[i];
+				if (typeof(arg) == "string") {
+					arg = parseLiteralValue(arg, beanName);
+				}
+				var argument:ConstructorArgumentValue = new ConstructorArgumentValue(arg, type);
 				argumentValues.addArgumentValueByValue(argument);
 			}
 		}
