@@ -1,20 +1,15 @@
 <?xml version="1.0"?>
 
-<beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing" xmlns:ab="org.aswing.border">
+<beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing">
 	
-	<chat:ErrorWindow id="errorWindow" parent="window">
+	<chat:ErrorWindow id="errorWindow" style="window">
 		<messageLabel>b{messageLabel}</messageLabel>
-		<aw:JPanel preferredHeight="35" opaque="true" constraints="v{org.aswing.WindowLayout.TITLE}">
-			<layout><aw:BorderLayout hgap="0" vgap="0"/></layout>
-			<background><aw:ASColor>0x444444</aw:ASColor></background>
-			<aw:JLabel text="{messageSource.message[title.error]}"
-					constraints="v{org.aswing.BorderLayout.SOUTH}" parent="title"/>
+		<aw:JPanel style="title">
+			<aw:JLabel>{messageSource.message[title.error]}</aw:JLabel>
 		</aw:JPanel>
-		<aw:Container constraints="v{org.aswing.WindowLayout.CONTENT}">
-			<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="5"/></layout>
-			<border><ab:EmptyBorder><insets><aw:Insets>5, 5, 5, 5</aw:Insets></insets></ab:EmptyBorder></border>
-			<aw:JLabel id="messageLabel" parent="subtitle"/>
-			<aw:JButton actionListener="d{errorWindow.hide}" maximumWidth="100" maximumHeight="22">
+		<aw:Container style="content">
+			<aw:JLabel id="messageLabel"/>
+			<aw:JButton actionListener="d{errorWindow.hide}">
 				<text>{messageSource.message[button.ok]}</text>
 			</aw:JButton>
 		</aw:Container>
