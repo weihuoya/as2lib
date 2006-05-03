@@ -1,0 +1,136 @@
+@namespace {
+	aw: org.aswing;
+	ab: org.aswing.border;
+}
+
+.title {
+	layout: aw|BorderLayout(hgap=0, vgap=0);
+	background: aw|ASColor(0x444444);
+	preferredHeight: 35;
+	opaque: true;
+	constraints: v[org.aswing.WindowLayout.TITLE];
+}
+.title JLabel {
+	foreground: aw|ASColor(0xDDDDDD);
+	font: aw|ASFont(Arial Black, 20, false);
+	constraints: v[org.aswing.BorderLayout.SOUTH];
+}
+
+.content {
+	constraints: v[org.aswing.WindowLayout.CONTENT];
+}
+.content JLabel {
+	foreground: aw|ASColor(0x444444);
+	font: aw|ASFont(Arial, 14, false);
+	horizontalAlignment: v[org.aswing.JLabel.LEFT];
+}
+.content JButton {
+	preferredWidth: 100;
+	preferredHeight: 22;
+}
+
+.frame .title JLabel {
+	horizontalAlignment: v[org.aswing.JLabel.LEFT];
+}
+.frame .content {
+	layout: aw|BorderLayout(hgap=5, vgap=5);
+}
+
+#login .title {
+	preferredHeight: 200;
+}
+#login #loginPanel {
+	layout: aw|SoftBoxLayout(axis=v[org.aswing.SoftBoxLayout.Y_AXIS], gap=5);
+	border: ab|EmptyBorder(insets=aw|Insets(0, 2, 5, 5));
+	constraints: v[org.aswing.BorderLayout.CENTER];
+	visible: false;
+}
+#login #loginPanel #userNameTextField {
+	columns: 30;
+	maximumWidth: 165;
+	maximumHeight: 22;
+}
+#login #loginPanel JButton {
+	preferredWidth: 80;
+	preferredHeight: 22;
+	enabled: false;
+}
+#login #loginPanel JPanel {
+	layout: aw|SoftBoxLayout(axis=v[org.aswing.SoftBoxLayout.X_AXIS], gap=5);
+}
+#login .footer {
+	preferredHeight: 200;
+	opaque: true;
+	constraints: v[org.aswing.BorderLayout.SOUTH];
+	background: aw|ASColor(0x444444);
+}
+
+#chat .title {
+	preferredHeight: 100;
+}
+#chat JScrollPane {
+	verticalScrollBarPolicy: v[org.aswing.JScrollPane.SCROLLBAR_AS_NEEDED];
+	constraints: v[org.aswing.BorderLayout.CENTER];
+}
+#chat JTextArea {
+	rows: 100;
+	columns: 100;
+	editable: false;
+	html: true;
+	wordWrap: true;
+	font: aw|ASFont(Arial, 12, false);
+}
+#chat .chatArea {
+	layout: aw|BorderLayout(hgap=5, vgap=5);
+	constraints: v[org.aswing.BorderLayout.CENTER];
+}
+#chat .chatArea JPanel {
+	layout: aw|BorderLayout(hgap=5, vgap=5);
+	constraints: v[org.aswing.BorderLayout.SOUTH];
+}
+#chat .chatArea JTextField {
+	constraints: v[org.aswing.BorderLayout.CENTER];
+}
+#chat .chatArea JButton {
+	constraints: v[org.aswing.BorderLayout.EAST];
+}
+#chat .chatDetails {
+	layout: aw|BorderLayout(hgap=0, vgap=10);
+	constraints: v[org.aswing.BorderLayout.EAST];
+}
+#chat .rooms {
+	preferredHeight: 185;
+	preferredWidth: 205;
+	layout: aw|BorderLayout(vgap=5);
+	constraints: v[org.aswing.BorderLayout.NORTH];
+}
+#chat .rooms JLabel {
+	constraints: v[org.aswing.BorderLayout.NORTH];
+}
+#chat .rooms JPanel {
+	layout: aw|SoftBoxLayout(axis=v[org.aswing.SoftBoxLayout.X_AXIS], gap=5);
+	constraints: v[org.aswing.BorderLayout.SOUTH];
+}
+#chat .users {
+	layout: aw|BorderLayout(vgap=5);
+	constraints: v[org.aswing.BorderLayout.CENTER];
+}
+#chat .users JLabel {
+	constraints: v[org.aswing.BorderLayout.NORTH];
+}
+
+.window {
+	x: 200;
+	y: 150;
+	width: 400;
+	height: 110;
+	resizable: false;
+	modal: true;
+}
+.window .content {
+	layout: aw|SoftBoxLayout(axis=v[org.aswing.SoftBoxLayout.Y_AXIS], gap=5);
+	border: ab|EmptyBorder(insets=aw|Insets(5, 5, 5, 5));
+}
+.window .content JPanel {
+	layout: aw|SoftBoxLayout(axis=v[org.aswing.SoftBoxLayout.X_AXIS], gap=5);
+}
