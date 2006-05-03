@@ -2,14 +2,8 @@
 
 <beans xmlns:aw="org.aswing" xmlns="*.xml">
 	
-	<bean id="title" abstract="true">
-		<foreground><aw:ASColor>0xDDDDDD</aw:ASColor></foreground>
-		<font><aw:ASFont>Arial Black, 20, false</aw:ASFont></font>
-	</bean>
-	
-	<bean id="subtitle" horizontalAlignment="v{org.aswing.JLabel.LEFT}" abstract="true">
-		<foreground><aw:ASColor>0x444444</aw:ASColor></foreground>
-		<font><aw:ASFont>Arial, 14, false</aw:ASFont></font>
+	<bean class="org.as2lib.bean.factory.config.StyleSheetConfigurer">
+		<property name="styleSheetUri">style.css</property>
 	</bean>
 	
 	<bean id="smartFoxClient" class="it.gotoandplay.smartfoxserver.SmartFoxClient"/>
