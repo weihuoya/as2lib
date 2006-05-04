@@ -429,7 +429,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			if (char == "(") {
 				braceCount++;
 			}
-			else if (char == "(") {
+			else if (char == ")") {
 				braceCount--;
 			}
 			else if (char == NAME_VALUE_SEPARATOR && braceCount == 0) {
@@ -440,6 +440,14 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 				delimiterIndex = i;
 				separatorIndex = -1;
 			}
+		}
+		if (braceCount < 0) {
+			throw new BeanDefinitionStoreException(null, "There are more left parentheses ')' than " +
+					"right parentheses '(' in bean definition value '" + value + "'.", this, arguments);
+		}
+		else if (braceCount > 0) {
+			throw new BeanDefinitionStoreException(null, "There are more right parentheses ')' than " +
+					"left parentheses '(' in bean definition value '" + value + "'.", this, arguments);
 		}
 		parseUnknownValue(values.substring(delimiterIndex + 1), separatorIndex, cav, pv);
 		var beanDefinition:RootBeanDefinition = new RootBeanDefinition(cav, pv);
