@@ -56,6 +56,9 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 	public static var CLASS_SELECTOR_PREFIX:String = ".";
 	public static var ID_SELECTOR_PREFIX:String = "#";
 	
+	public static var STATIC_VARIABLE_RETRIEVAL_PREFIX:String = "v[";
+	public static var STATIC_VARIABLE_RETRIEVAL_SUFFIX:String = "]";
+	
 	/**
 	 * Separator for generated bean names. If a class name is not unique, "#1", "#2"
 	 * etc. will be appended, until the name becomes unique.
@@ -127,7 +130,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			else {
 				var selectors:Array = styleName.split("+");
 				var specificity:Number = computeSpecificity(selectors);
-				var style:Object = {name: selectors, style: sheet.getStyle(styleName), specificity: specificity};
+				var style:Object = {selectors: selectors, style: sheet.getStyle(styleName), specificity: specificity};
 				addStyle(String(selectors.pop()), style, specificity);
 			}
 		}
@@ -277,92 +280,89 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 	
 	private function resolveStyles(styleName:String, parentBeanDefinitions:Array):Array {
 		var result:Array = new Array();
-		var sa:Array = styles[styleName];
-		if (sa != null) {
-			for (var i:Number = 0; i < sa.length; i++) {
-				var na:Array = sa[i].name;
-				if (na.length == 0) {
-					result.push(sa[i].style);
-				}
-				else {
-					if (matches(na, parentBeanDefinitions)) {
-						result.push(sa[i].style);
-					}
+		var styles:Array = styles[styleName];
+		if (styles != null) {
+			for (var i:Number = 0; i < styles.length; i++) {
+				if (matchesBeanDefinitions(styles[i].selectors, parentBeanDefinitions)) {
+					result.push(styles[i].style);
 				}
 			}
 		}
 		return result;
 	}
 	
-	private function matches(na:Array, parentBeanDefinitions:Array):Boolean {
-		var nl:Number = na.length;
-		var pl:Number = parentBeanDefinitions.length;
-		if (nl <= pl) {
-			for (var i:Number = nl - 1, j:Number = pl - 1; i >= 0, j >= 0; i--, j--) {
-				var n:String = na[i];
-				var success:Boolean = false;
-				do {
-					var pbd = parentBeanDefinitions[j];
-					var parentBeanName:String;
-					var parentBeanDefinition:BeanDefinition;
-					if (typeof(pbd) == "string") {
-						parentBeanName = pbd;
-						parentBeanDefinition = factory.getBeanDefinition(pbd, true);
-					}
-					else {
-						parentBeanDefinition = pbd;
-					}
-					if (matchesBeanDefinition(n, parentBeanDefinition, parentBeanName)) {
-						success = true;
-						break;
-					}
-					j--;
+	private function matchesBeanDefinitions(selectors:Array, parentBeanDefinitions:Array):Boolean {
+		if (selectors.length == 0) {
+			return true;
+		}
+		if (selectors.length > parentBeanDefinitions.length) {
+			return false;
+		}
+		var i:Number;
+		var j:Number;
+		for (i = selectors.length - 1, j = parentBeanDefinitions.length - 1;
+				i >= 0, j >= 0; i--, j--) {
+			var selector:String = selectors[i];
+			var foundMatch:Boolean = false;
+			do {
+				var parent = parentBeanDefinitions[j];
+				var parentBeanName:String;
+				var parentBeanDefinition:BeanDefinition;
+				if (typeof(parent) == "string") {
+					parentBeanName = parent;
+					parentBeanDefinition = factory.getBeanDefinition(parent, true);
 				}
-				while (j >= 0);
-				if (!success) {
-					return false;
+				else {
+					parentBeanDefinition = parent;
 				}
+				if (matchesBeanDefinition(selector, parentBeanDefinition, parentBeanName)) {
+					foundMatch = true;
+					break;
+				}
+				j--;
+			}
+			while (j >= 0);
+			if (!foundMatch) {
+				return false;
 			}
 		}
-		else {
+		if (i > 0) {
 			return false;
 		}
 		return true;
 	}
 	
 	private function matchesBeanDefinition(styleName:String, beanDefinition:BeanDefinition, beanName:String):Boolean {
-		var fc:String = styleName.charAt(0);
-		if (fc == CLASS_SELECTOR_PREFIX) {
-			var csn:String = getClassStyleName(beanDefinition);
-			if (styleName != csn) {
+		var firstChar:String = styleName.charAt(0);
+		if (firstChar == ID_SELECTOR_PREFIX) {
+			if (beanName == null) {
 				return false;
 			}
-		}
-		else if (fc == ID_SELECTOR_PREFIX) {
-			if (beanName != null) {
-				if (ID_SELECTOR_PREFIX + beanName != styleName) {
-					var success:Boolean = false;
-					var aliases:Array = factory.getAliases(beanName);
-					if (aliases != null) {
-						for (var i:Number = 0; i < aliases.length; i++) {
-							if (ID_SELECTOR_PREFIX + aliases[i] == beanName) {
-								success = true;
-								break;
-							}
+			if (ID_SELECTOR_PREFIX + beanName != styleName) {
+				var foundMatch:Boolean = false;
+				var aliases:Array = factory.getAliases(beanName);
+				if (aliases != null) {
+					for (var i:Number = 0; i < aliases.length; i++) {
+						if (ID_SELECTOR_PREFIX + aliases[i] == beanName) {
+							foundMatch = true;
+							break;
 						}
 					}
-					if (!success) {
-						return false;
-					}
+				}
+				if (!foundMatch) {
+					return false;
 				}
 			}
-			else {
+		}
+		else if (firstChar == CLASS_SELECTOR_PREFIX) {
+			var classStyleName:String = getClassStyleName(beanDefinition);
+			if (classStyleName != styleName) {
 				return false;
 			}
 		}
 		else {
-			var tsn:String = getTypeStyleName(beanDefinition);
-			if (styleName != tsn) {
+			var typeStyleName:String = getTypeStyleName(beanDefinition);
+			if (typeStyleName != styleName) {
 				return false;
 			}
 		}
@@ -388,9 +388,9 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 	}
 	
 	private function parsePropertyValue(value:String) {
-		var variablePrefix:Number = value.indexOf("v[");
+		var variablePrefix:Number = value.indexOf(STATIC_VARIABLE_RETRIEVAL_PREFIX);
 		if (variablePrefix == 0) {
-			var variableSuffix:Number = value.lastIndexOf("]");
+			var variableSuffix:Number = value.lastIndexOf(STATIC_VARIABLE_RETRIEVAL_SUFFIX);
 			if (variableSuffix == value.length - 1) {
 				return parseStaticVariableValue(value, variablePrefix, variableSuffix);
 			}
