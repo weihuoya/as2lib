@@ -189,11 +189,11 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 	}
 	
 	private function applyStyleSheet(beanDefinition:BeanDefinition, beanName:String, parentBeanDefinitions:Array):Void {
-		applyTypeStyle(beanDefinition, parentBeanDefinitions);
-		applyClassStyle(beanDefinition, parentBeanDefinitions);
 		if (beanName != null) {
-			applyIdStyle(beanDefinition, beanName, factory.getAliases(beanName), parentBeanDefinitions);
+			applyIdStyles(beanDefinition, beanName, parentBeanDefinitions);
 		}
+		applyClassStyles(beanDefinition, parentBeanDefinitions);
+		applyTypeStyles(beanDefinition, parentBeanDefinitions);
 		var values:Array = beanDefinition.getPropertyValues().getPropertyValues();
 		for (var i:Number = 0; i < values.length; i++) {
 			var propertyValue:PropertyValue = values[i];
@@ -224,7 +224,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		return result;
 	}
 	
-	private function applyTypeStyle(beanDefinition:BeanDefinition, parentBeanDefinitions:Array):Void {
+	private function applyTypeStyles(beanDefinition:BeanDefinition, parentBeanDefinitions:Array):Void {
 		var styleName:String = getTypeStyleName(beanDefinition);
 		applyStyles(beanDefinition, resolveStyles(styleName, parentBeanDefinitions));
 		/*
@@ -254,7 +254,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		return null;
 	}
 	
-	private function applyClassStyle(beanDefinition:BeanDefinition, parentBeanDefinitions:Array):Void {
+	private function applyClassStyles(beanDefinition:BeanDefinition, parentBeanDefinitions:Array):Void {
 		var styleName:String = getClassStyleName(beanDefinition);
 		applyStyles(beanDefinition, resolveStyles(styleName, parentBeanDefinitions));
 	}
@@ -267,8 +267,9 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		return null;
 	}
 	
-	private function applyIdStyle(beanDefinition:BeanDefinition, beanName:String, aliases:Array, parentBeanDefinitions:Array):Void {
+	private function applyIdStyles(beanDefinition:BeanDefinition, beanName:String, parentBeanDefinitions:Array):Void {
 		applyStyles(beanDefinition, resolveStyles(ID_SELECTOR_PREFIX + beanName, parentBeanDefinitions));
+		var aliases:Array = factory.getAliases(beanName);
 		for (var i:Number = 0; i < aliases.length; i++) {
 			applyStyles(beanDefinition, resolveStyles(ID_SELECTOR_PREFIX + aliases[i], parentBeanDefinitions));
 		}
