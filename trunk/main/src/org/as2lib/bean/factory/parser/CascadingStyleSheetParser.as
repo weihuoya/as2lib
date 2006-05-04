@@ -141,31 +141,47 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			}
 			else {
 				var nameTokens:Array = styleName.split("+");
+				var specificity:Number = computeSpecificity(nameTokens);
 				var lastToken:String = nameTokens.pop().toString();
 				if (styles[lastToken] == null) {
 					styles[lastToken] = new Array();
 				}
 				var nameStyles:Array = styles[lastToken];
-				if (nameTokens.length == 0) {
-					nameStyles.unshift({name: null, style: sheet.getStyle(styleName)});
+				if (nameStyles.length == 0) {
+					nameStyles.push({name: nameTokens, style: sheet.getStyle(styleName), specificity: specificity});
 				}
 				else {
-					var tokenCount:Number = nameTokens.length;
-					if (nameStyles.length == 0) {
-						nameStyles.push({name: nameTokens, style: sheet.getStyle(styleName)});
-					}
-					else {
-						for (var j:Number = nameStyles.length - 1; j >= 0; j--) {
-							var nameStyle = nameStyles[j];
-							if (nameStyle.name.length <= tokenCount || nameStyle.name == null) {
-								nameStyles.splice(j + 1, 0, {name: nameTokens, style: sheet.getStyle(styleName)});
-								break;
-							}
+					for (var j:Number = nameStyles.length - 1; j >= 0; j--) {
+						var nameStyle = nameStyles[j];
+						if (nameStyle.specificity <= specificity) {
+							nameStyles.splice(j + 1, 0, {name: nameTokens, style: sheet.getStyle(styleName), specificity: specificity});
+							break;
+						}
+						else if (j == 0) {
+							nameStyles.push({name: nameTokens, style: sheet.getStyle(styleName), specificity: specificity});
 						}
 					}
 				}
 			}
 		}
+	}
+	
+	private function computeSpecificity(selectors:Array):Number {
+		var result:Number = 0;
+		for (var i:Number = 0; i < selectors.length; i++) {
+			var selector:String = selectors[i];
+			var firstChar:String = selector.charAt(0);
+			if (firstChar == ID_SELECTOR_PREFIX) {
+				result += 100;
+			}
+			else if (firstChar == CLASS_SELECTOR_PREFIX) {
+				result += 10;
+			}
+			else {
+				result += 1;
+			}
+		}
+		return result;
 	}
 	
 	private function applyStyleSheet(beanDefinition:BeanDefinition, beanName:String, parentBeanDefinitions:Array):Void {
@@ -260,7 +276,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		if (sa != null) {
 			for (var i:Number = sa.length - 1; i >= 0; i--) {
 				var na:Array = sa[i].name;
-				if (na == null) {
+				if (na.length == 0) {
 					result.push(sa[i].style);
 				}
 				else {
@@ -277,7 +293,6 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		var nl:Number = na.length;
 		var pl:Number = parentBeanDefinitions.length;
 		if (nl <= pl) {
-			// TODO Parent must not be direct parent but just a parent!
 			for (var i:Number = nl - 1, j:Number = pl - 1; i >= 0, j >= 0; i--, j--) {
 				var n:String = na[i];
 				var success:Boolean = false;
