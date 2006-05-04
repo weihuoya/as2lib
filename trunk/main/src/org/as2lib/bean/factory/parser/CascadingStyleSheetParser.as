@@ -418,26 +418,30 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 	private function parseBeanDefinitionValue(value:String, prefixIndex:Number, suffixIndex:Number):BeanDefinitionHolder {
 		var className:String = parseClassName(value.substring(0, prefixIndex));
 		var clazz:Function = findClass(className);
-		// TODO There may be a sub-property which may also use value delimiters.
-		var values:Array = value.substring(prefixIndex + 1, suffixIndex).split(VALUE_DELIMITER);
 		var cav:ConstructorArgumentValues = new ConstructorArgumentValues();
 		var pv:PropertyValues = new PropertyValues();
+		var values:String = value.substring(prefixIndex + 1, suffixIndex);
+		var delimiterIndex:Number = -1;
+		var separatorIndex:Number = -1;
+		var braceCount:Number = 0;
 		for (var i:Number = 0; i < values.length; i++) {
-			var va:String = TrimUtil.trim(values[i]);
-			// TODO No clean solution. Does not work for more than 2-level wrapping.
-			if (va.indexOf("(") != -1) {
-				while (values[i].indexOf(")") == -1) {
-					va += VALUE_DELIMITER + values[++i];
-				}
+			var char:String = values.charAt(i);
+			if (char == "(") {
+				braceCount++;
 			}
-			var separatorIndex:Number = va.indexOf(NAME_VALUE_SEPARATOR);
-			if (separatorIndex == -1) {
-				parseConstructorArg(va, cav);
+			else if (char == "(") {
+				braceCount--;
 			}
-			else {
-				parseProperty(va, separatorIndex, pv);
+			else if (char == NAME_VALUE_SEPARATOR && braceCount == 0) {
+				separatorIndex = i - delimiterIndex - 1;
+			}
+			else if (char == VALUE_DELIMITER && braceCount == 0) {
+				parseUnknownValue(values.substring(delimiterIndex + 1, i), separatorIndex, cav, pv);
+				delimiterIndex = i;
+				separatorIndex = -1;
 			}
 		}
+		parseUnknownValue(values.substring(delimiterIndex + 1), separatorIndex, cav, pv);
 		var beanDefinition:RootBeanDefinition = new RootBeanDefinition(cav, pv);
 		beanDefinition.setBeanClass(clazz);
 		beanDefinition.setBeanClassName(className);
@@ -470,8 +474,19 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 	}
 	
+	private function parseUnknownValue(value:String, separatorIndex:Number,
+			argumentValues:ConstructorArgumentValues, propertyValues:PropertyValues):Void {
+		if (separatorIndex == -1) {
+			parseConstructorArg(value, argumentValues);
+		}
+		else {
+			parseProperty(value, separatorIndex, propertyValues);
+		}
+	}
+	
 	private function parseConstructorArg(value:String, argumentValues:ConstructorArgumentValues):Void {
-		var av:ConstructorArgumentValue = new ConstructorArgumentValue(parsePropertyValue(value));
+		var trimmedValue:String = TrimUtil.trim(value);
+		var av:ConstructorArgumentValue = new ConstructorArgumentValue(parsePropertyValue(trimmedValue));
 		argumentValues.addArgumentValueByValue(av);
 	}
 	
