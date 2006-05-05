@@ -583,6 +583,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		result += "; factoryMethodName=" + factoryMethodName;
 		result += "; initMethodName=" + initMethodName;
 		result += "; destroyMethodName=" + destroyMethodName;
+		result += "; styleName=" + styleName;
 		return result;
 	}
 	
