@@ -27,11 +27,10 @@ import org.as2lib.io.file.TextFileLoader;
 
 /**
  * {@code LoadingApplicationContext} loads a bean definition file and parses it. The
- * parsed ben definition file may not define its own {@code "batchProcess"} bean.
+ * parsed ben definition file may not define its own {@code "batch"} bean.
  * 
  * <p>Note that after the loaded bean definition file has been parsed, this context
- * will automatically add all {@link Process} beans to the batch process and start
- * it.
+ * will automatically add all {@link Process} beans to the batch and start it.
  * 
  * @author Simon Wacker
  * TODO: Enable multiple refreshes for this context!
@@ -61,16 +60,16 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 		// TODO: Add support for specifying multiple URIs for the same application context!
 		this.beanDefinitionUri = beanDefinitionUri;
 		this.beanDefinitionParser = beanDefitionParser;
-		setBatchProcess(new SimpleBatch());
+		setBatch(new SimpleBatch());
 	}
 	
 	public function start() {
 		initFileLoaderProcess();
-		getBatchProcess().start();
+		getBatch().start();
 	}
 	
 	/**
-	 * Initializes the file loader process; creates and adds it to the batch process.
+	 * Initializes the file loader process; creates and adds it to the batch.
 	 */
 	private function initFileLoaderProcess(Void):Void {
 		var fileLoader:FileLoader = new TextFileLoader();
@@ -86,19 +85,19 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 				this.distributeErrorEvent(exception);
 			}
 			// finish the loading process after possible process beans have been added
-			// otherwise the batch process distributes a finish event before possible
+			// otherwise the batch distributes a finish event before possible
 			// processes in the bean factory have been run
 			this.__proto__.onLoadComplete.apply(this, [fl]);
 		};
-		getBatchProcess().addProcess(fileLoaderProcess);
+		getBatch().addProcess(fileLoaderProcess);
 	}
 	
 	/**
 	 * Gets invoked when the bean definition file was successfully loaded.
 	 * 
 	 * <p>It parses the file loaded by the given file loader with the parser
-	 * specified on construction and registers the {@link Process} beans with
-	 * the batch process of this context, that is currently running.
+	 * specified on construction and registers the {@link Process} beans at
+	 * the batch of this context, that is currently running.
 	 * 
 	 * @param fileLoader the file laoder that loaded the bean definition file
 	 */
