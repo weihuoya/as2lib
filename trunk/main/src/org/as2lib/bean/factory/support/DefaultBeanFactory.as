@@ -1394,7 +1394,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			var beanName:String = beanDefinitionNames[i];
 			var rootBeanDefinition:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
 			if (!rootBeanDefinition.isAbstract()) {
-				var isFactoryBean:Boolean = ClassUtil.isImplementationOf(rootBeanDefinition.getBeanClass(), FactoryBean);
+				var isFactoryBean:Boolean = rootBeanDefinition.hasBeanClass() &&
+						ClassUtil.isImplementationOf(rootBeanDefinition.getBeanClass(), FactoryBean);
 				if (isFactoryBean || rootBeanDefinition.getFactoryBeanName() != null) {
 					if (includeFactoryBeans && (includePrototypes || isSingleton(beanName))
 							&& isBeanTypeMatch(beanName, type)) {
@@ -1531,7 +1532,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			if (!containsSingleton(beanName) && containsBeanDefinition(beanName)) {
 				var beanDefinition:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
 				if (!beanDefinition.isAbstract() && beanDefinition.isSingleton() && !beanDefinition.isLazyInit()) {
-					if (ClassUtil.isImplementationOf(beanDefinition.getBeanClass(), FactoryBean)) {
+					if (ClassUtil.isImplementationOf(beanDefinition.getBeanClass(), FactoryBean) &&
+							beanDefinition.hasBeanClass()) {
 						var factory:FactoryBean = getBeanByName(FACTORY_BEAN_PREFIX + beanName);
 						if (factory.isSingleton()) {
 							getBeanByName(beanName);
