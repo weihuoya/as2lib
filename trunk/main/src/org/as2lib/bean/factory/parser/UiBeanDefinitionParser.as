@@ -180,7 +180,8 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	
 	private function parsePropertySubElement(element:XMLNode, beanName:String) {
 		var propertyValue = super.parsePropertySubElement(element, beanName);
-		if (element.attributes[ID_ATTRIBUTE] != null || element.attributes[NAME_ATTRIBUTE] != null) {
+		if (element.attributes[ID_ATTRIBUTE] != null || element.attributes[NAME_ATTRIBUTE] != null ||
+				element.attributes[CLASS_ATTRIBUTE] == LOADING_APPLICATION_CONTEXT_FACTORY_BEAN_CLASS) {
 			if (propertyValue instanceof BeanDefinitionHolder) {
 				var holder:BeanDefinitionHolder = propertyValue;
 				registerBeanDefinition(holder);
