@@ -114,7 +114,7 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 			var code:String = locale.getLanguageCode();
 			var languageProcess:FileLoaderProcess = createFileLoaderProcess(baseName, locale.getLanguageCode());
 			getBatch().addProcess(languageProcess);
-			var countryProcess:FileLoaderProcess = createFileLoaderProcess(baseName, locale.getLanguageCode() + "_" + locale.getCountryCode());
+			var countryProcess:FileLoaderProcess = createFileLoaderProcess(baseName, locale.getCode());
 			getBatch().addProcess(countryProcess);
 		}
 	}
@@ -255,7 +255,7 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 	private function getResourceBundle(baseName:String, locale:Locale):Properties {
 		var result:Properties = null;
 		var rbs:Array = resourceBundles[baseName];
-		result = rbs[locale.getLanguageCode() + "_" + locale.getCountryCode()];
+		result = rbs[locale.getCode()];
 		if (result == null) {
 			result = rbs[locale.getLanguageCode()];
 		}
@@ -278,7 +278,7 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 		if (codes != null) {
 			locales = codes[code];
 			if (locales != null) {
-				var result:MessageFormat = locales[locale.getLanguageCode() + "_" + locale.getCountryCode()];
+				var result:MessageFormat = locales[locale.getCode()];
 				if (result == null) {
 					result = locales[locale.getLanguageCode()];
 				}
@@ -298,7 +298,7 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 				codes[code] = locales;
 			}
 			var result:MessageFormat = createMessageFormat(message, locale);
-			locales[locale.getLanguageCode() + locale.getCountryCode()] = result;
+			locales[locale.getCode()] = result;
 			return result;
 		}
 		return null;
@@ -386,7 +386,7 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 	
 	public function setName(name:String):Void {
 		if (batch == null) {
-			batch = new Batch();
+			batch = new BatchProcess();
 		}
 		getBatch().setName(name);
 	}
