@@ -641,8 +641,34 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	private function registerProcessBeans(Void):Void {
 		var batchProcess:Batch = getBatchProcess();
-		for (var i:Number = 0; i < beanFactoryPostProcessorProcesses.length; i++) {
-			var process:Process = beanFactoryPostProcessorProcesses[i];
+		var processes:Map = getProcessBeans();
+		addSpecialFunctionProcesses(processes);
+		addBeanFactoryPostProcessorProcesses(beanFactoryPostProcessorProcesses);
+		addCustomProcesses(processes.getValues());
+	}
+	
+	private function addSpecialFunctionProcesses(processes:Map):Void {
+		processes.remove(BATCH_PROCESS_BEAN_NAME);
+		var messageSourceProcess:Process = processes.get(MESSAGE_SOURCE_BEAN_NAME);
+		if (messageSourceProcess != null) {
+			batchProcess.addProcess(messageSourceProcess);
+			processes.remove(MESSAGE_SOURCE_BEAN_NAME);
+		}
+		var eventDistributorControlProcess:Process = processes.get(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME);
+		if (eventDistributorControlProcess != null) {
+			batchProcess.addProcess(eventDistributorControlProcess);
+			processes.remove(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME);
+		}
+		var weaverProcess:Process = processes.get(WEAVER_BEAN_NAME);
+		if (weaverProcess != null) {
+			batchProcess.addProcess(weaverProcess);
+			processes.remove(WEAVER_BEAN_NAME);
+		}
+	}
+	
+	private function addBeanFactoryPostProcessorProcesses(processes:Array):Void {
+		for (var i:Number = 0; i < processes.length; i++) {
+			var process:Process = processes[i];
 			// TODO Problem: It is unknown whether 'process' behaves like a batch or like a process.
 			var listener:BatchFinishListener = ClassUtil.createCleanInstance(BatchFinishListener);
 			var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
@@ -653,7 +679,9 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			process.addListener(listener);
 			batchProcess.addProcess(process);
 		}
-		var processes:Array = getProcessBeans();
+	}
+	
+	private function addCustomProcesses(processes:Array):Void {
 		for (var i:Number = 0; i < processes.length; i++) {
 			var process:Process = processes[i];
 			if (!(process instanceof BeanFactoryPostProcessor)) {
@@ -663,14 +691,15 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	/**
-	 * Returns a collection of all singleton beans that implement the {@link Process}
-	 * interface in this context.
+	 * Returns a map of all singleton beans that implement the {@link Process}
+	 * interface in this context with the bean names as keys and the bean instances
+	 * as values.
 	 * 
-	 * @return all singleton lifecycle beans
+	 * @return all singleton process beans
 	 */
-	private function getProcessBeans(Void):Array {
-		// TODO Problem: 'beanProcess' will also be part of the result, exclude it!
-		return getBeanFactory().getBeansOfType(Process, false, false).getValues();
+	private function getProcessBeans(Void):Map {
+		// TODO Problem: 'batchProcess' will also be part of the result, exclude it!
+		return getBeanFactory().getBeansOfType(Process, false, false);
 	}
 	
 	/**
