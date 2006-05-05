@@ -68,8 +68,9 @@ import org.as2lib.util.ClassUtil;
  * <p>You may also supply a {@link Weaver} implementation as "weaver" whose {@code weave}
  * method will be invoked automatically when this context gets refreshed.
  * 
- * <p>If you want {@link Process} beans to be executed by a batch process, you may supply
- * a {@link Batch} implementation as "batchProcess".
+ * <p>If you want {@link Process} beans to be executed before this context is post-refreshed
+ * and all singleton beans are initialized, you may supply a {@link Batch} implementation as
+ * "batch".
  * 
  * @author Simon Wacker
  */
@@ -86,15 +87,17 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	/**
 	 * Name of the {@link EventDistributorControl} bean in this factory.
-	 * If none is supplied, publishing application events is not possible and will raise errors.
+	 * If none is supplied, publishing application events is not possible and will
+	 * raise errors.
 	 */
 	public static var EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME:String = "eventDistributorControl";
 	
 	/**
 	 * Name of the {@link Batch} bean in this factory.
-	 * If none is supplied, 
+	 * If none is supplied, processing processes is not supported and specifying
+	 * processes will raise errors.
 	 */
-	public static var BATCH_PROCESS_BEAN_NAME:String = "batchProcess";
+	public static var BATCH_BEAN_NAME:String = "batch";
 	
 	/**
 	 * Name of the {@link Weaver} bean in this factory.
@@ -128,8 +131,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	/** Event distributor control to distribute events. */
 	private var eventDistributorControl:EventDistributorControl;
 	
-	/** The batch process used internally to delegate to. */
-	private var batchProcess:Batch;
+	/** The batch used internally to delegate to. */
+	private var batch:Batch;
 	
 	/** Weaver to weave-in cross-cutting concerns code. */
 	private var weaver:Weaver;
@@ -312,8 +315,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			initMessageSource();
 			// initializes event distributor control for this context
 			initEventDistributorControl();
-			// initializes batch process for this context
-			initBatchProcess();
+			// initializes batch for this context
+			initBatch();
 			// initializes other special beans in specific context subclasses
 			onRefresh();
 		}
@@ -404,11 +407,11 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	/**
-	 * Initializes the batch process if it exists.
+	 * Initializes the batch if it exists.
 	 */
-	private function initBatchProcess(Void):Void {
-		if (containsLocalBean(BATCH_PROCESS_BEAN_NAME)) {
-			setBatchProcess(getBean(BATCH_PROCESS_BEAN_NAME, Batch));
+	private function initBatch(Void):Void {
+		if (containsLocalBean(BATCH_BEAN_NAME)) {
+			setBatch(getBean(BATCH_BEAN_NAME, Batch));
 		}
 	}
 	
@@ -628,19 +631,18 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	public function start() {
 		preRefresh();
-		var batchProcess:Batch = getBatchProcess();
+		var batch:Batch = getBatch();
 		registerProcessBeans();
-		if (!batchProcess.hasStarted()) {
-			batchProcess.start();
+		if (!batch.hasStarted()) {
+			batch.start();
 		}
 	}
 	
 	/**
-	 * Registers all singleton beans that implement the {@code Process} interface with
-	 * the batch process of this context.
+	 * Registers all singleton beans that implement the {@code Process} interface at
+	 * the batch of this context.
 	 */
 	private function registerProcessBeans(Void):Void {
-		var batchProcess:Batch = getBatchProcess();
 		var processes:Map = getProcessBeans();
 		addSpecialFunctionProcesses(processes);
 		addBeanFactoryPostProcessorProcesses(beanFactoryPostProcessorProcesses);
@@ -648,44 +650,47 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	private function addSpecialFunctionProcesses(processes:Map):Void {
-		processes.remove(BATCH_PROCESS_BEAN_NAME);
+		var batch:Batch = getBatch();
+		processes.remove(BATCH_BEAN_NAME);
 		var messageSourceProcess:Process = processes.get(MESSAGE_SOURCE_BEAN_NAME);
 		if (messageSourceProcess != null) {
-			batchProcess.addProcess(messageSourceProcess);
+			batch.addProcess(messageSourceProcess);
 			processes.remove(MESSAGE_SOURCE_BEAN_NAME);
 		}
 		var eventDistributorControlProcess:Process = processes.get(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME);
 		if (eventDistributorControlProcess != null) {
-			batchProcess.addProcess(eventDistributorControlProcess);
+			batch.addProcess(eventDistributorControlProcess);
 			processes.remove(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME);
 		}
 		var weaverProcess:Process = processes.get(WEAVER_BEAN_NAME);
 		if (weaverProcess != null) {
-			batchProcess.addProcess(weaverProcess);
+			batch.addProcess(weaverProcess);
 			processes.remove(WEAVER_BEAN_NAME);
 		}
 	}
 	
 	private function addBeanFactoryPostProcessorProcesses(processes:Array):Void {
+		var batch:Batch = getBatch();
 		for (var i:Number = 0; i < processes.length; i++) {
 			var process:Process = processes[i];
 			// TODO Problem: It is unknown whether 'process' behaves like a batch or like a process.
 			var listener:BatchFinishListener = ClassUtil.createCleanInstance(BatchFinishListener);
 			var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
-			listener.onBatchFinish = function(batch:Batch):Void {
+			listener.onBatchFinish = function(b:Batch):Void {
 				var factoryProcessor:BeanFactoryPostProcessor = BeanFactoryPostProcessor(process);
 				factoryProcessor.postProcessBeanFactory(beanFactory);
 			};
 			process.addListener(listener);
-			batchProcess.addProcess(process);
+			batch.addProcess(process);
 		}
 	}
 	
 	private function addCustomProcesses(processes:Array):Void {
+		var batch:Batch = getBatch();
 		for (var i:Number = 0; i < processes.length; i++) {
 			var process:Process = processes[i];
 			if (!(process instanceof BeanFactoryPostProcessor)) {
-				batchProcess.addProcess(process);
+				batch.addProcess(process);
 			}
 		}
 	}
@@ -698,13 +703,12 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * @return all singleton process beans
 	 */
 	private function getProcessBeans(Void):Map {
-		// TODO Problem: 'batchProcess' will also be part of the result, exclude it!
 		return getBeanFactory().getBeansOfType(Process, false, false);
 	}
 	
 	/**
-	 * Post-refreshes this application context after the internal batch process has
-	 * finished its run.
+	 * Post-refreshes this application context after the internal batch has finished
+	 * its run.
 	 * 
 	 * @param batch the internal batch that finished its run
 	 */
@@ -713,114 +717,115 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	public function hasStarted(Void):Boolean {
-		return getBatchProcess().hasStarted();
+		return getBatch().hasStarted();
 	}
 	
 	public function hasFinished(Void):Boolean {
-		return getBatchProcess().hasFinished();
+		return getBatch().hasFinished();
 	}
 	
 	public function isPaused(Void):Boolean {
-		return getBatchProcess().isPaused();
+		return getBatch().isPaused();
 	}
 	
 	public function isRunning(Void):Boolean {
-		return getBatchProcess().isPaused();
+		return getBatch().isPaused();
 	}
 	
 	public function getPercentage(Void):Number {
-		return getBatchProcess().getPercentage();
+		return getBatch().getPercentage();
 	}
 	
 	public function setParentProcess(process:Process):Void {
-		getBatchProcess().setParentProcess(process);
+		getBatch().setParentProcess(process);
 	}
 	
 	public function getParentProcess(Void):Process {
-		return getBatchProcess().getParentProcess();
+		return getBatch().getParentProcess();
 	}
 	
 	public function getErrors(Void):Array {
-		return getBatchProcess().getErrors();
+		return getBatch().getErrors();
 	}
 	
 	public function hasError(Void):Boolean {
-		return getBatchProcess().hasError();
+		return getBatch().hasError();
 	}
 	
 	public function getDuration(Void):Time {
-		return getBatchProcess().getDuration();
+		return getBatch().getDuration();
 	}
 	
 	public function getEstimatedTotalTime(Void):Time {
-		return getBatchProcess().getEstimatedTotalTime();
+		return getBatch().getEstimatedTotalTime();
 	}
 	
 	public function getEstimatedRestTime(Void):Time {
-		return getBatchProcess().getEstimatedRestTime();
+		return getBatch().getEstimatedRestTime();
 	}
 	
 	public function addListener(listener):Void {
-		getBatchProcess().addListener(listener);
+		getBatch().addListener(listener);
 	}
 	
 	public function addAllListeners(listeners:Array):Void {
-		getBatchProcess().addAllListeners(listeners);
+		getBatch().addAllListeners(listeners);
 	}
 	
 	public function removeListener(listener):Void {
-		getBatchProcess().removeListener(listener);
+		getBatch().removeListener(listener);
 	}
 	
 	public function removeAllListeners(Void):Void {
-		getBatchProcess().removeAllListeners();
+		getBatch().removeAllListeners();
 	}
 	
 	public function getAllListeners(Void):Array {
-		return getBatchProcess().getAllListeners();
+		return getBatch().getAllListeners();
 	}
 	
 	public function hasListener(listener):Boolean {
-		return getBatchProcess().hasListener(listener);
+		return getBatch().hasListener(listener);
 	}
 	
 	public function getName(Void):String {
-		return getBatchProcess().getName();
+		return getBatch().getName();
 	}
 	
 	public function setName(name:String):Void {
-		getBatchProcess().setName(name);
+		getBatch().setName(name);
 	}
 	
 	/**
-	 * Returns the batch process to add asynchronous processes to.
+	 * Returns the batch to add asynchronous processes to.
 	 * 
-	 * <p>Note that there is no default batch process.
+	 * <p>Note that there is no default batch.
 	 * 
-	 * @return the batch process
-	 * @throws IllegalStateException if either there is no batch process or it has not
-	 * been initialized yet
+	 * @return the batch
+	 * @throws IllegalStateException if either there is no batch or it has not been
+	 * initialized yet
 	 */
-	public function getBatchProcess(Void):Batch {
-		if (batchProcess == null) {
-			throw new IllegalStateException("Batch process not initialized: " +
-					"Declare a batch process or call 'refresh' before starting processes with this context [" + this + "].", this, arguments);
+	public function getBatch(Void):Batch {
+		if (batch == null) {
+			throw new IllegalStateException("Batch not initialized: Declare a batch or " +
+					"call 'refresh' before starting processes with this context [" + this + "].",
+					this, arguments);
 		}
-		return batchProcess;
+		return batch;
 	}
 	
 	/**
-	 * Sets the batch process to add asynchronous processes to.
+	 * Sets the batch to add asynchronous processes to.
 	 * 
-	 * <p>Do not set the batch process instance variable directly, but use this method
-	 * to set it, because this context must be registered as listener at the batch
-	 * process; this method takes care of this.
+	 * <p>Do not set the batch instance variable directly, but use this method
+	 * to set it, because this context must be registered as listener at the batch;
+	 * this method takes care of this.
 	 * 
-	 * @param batchProcess the new batch process
+	 * @param batch the new batch
 	 */
-	public function setBatchProcess(batchProcess:Batch):Void {
-		this.batchProcess = batchProcess;
-		batchProcess.addListener(this);
+	public function setBatch(batch:Batch):Void {
+		this.batch = batch;
+		batch.addListener(this);
 	}
 	
 	//---------------------------------------------------------------------
