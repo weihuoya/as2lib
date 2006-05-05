@@ -36,6 +36,7 @@ class main.Mtasc extends BasicClass implements BatchStartListener,
 	private var applicationContext:LoadingApplicationContext;
 	
 	public function Mtasc(Void) {
+		System.useCodepage = true;
 	}
 	
 	public function init(Void):Void {
