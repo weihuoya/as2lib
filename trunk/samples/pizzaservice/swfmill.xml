@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="iso-8859-1" ?>
 
-<movie width="445" height="360" framerate="31">
+<movie width="445" height="360" framerate="31" version="8">
   <background color='#FFFFFF'/>
   <frame>
   </frame>
