@@ -50,15 +50,16 @@ interface org.as2lib.bean.factory.config.InstantiationAwareBeanPostProcessor ext
 	public function postProcessBeforeInstantiation(beanClass:Function, beanName:String);
 	
 	/**
-	 * Perform operations after the bean has been instantiated, via a constructor or factory method,
-	 * but before Spring property population (from explicit properties or autowiring) occurs.
-	 * @param bean bean instance created, but whose properties have not yet been set
+	 * Performs operations after the bean has been instantiated, via a constructor or factory
+	 * method, but before property population (from explicit properties or autowiring) occurs.
+	 * 
+	 * @param bean the bean instance created, but whose properties have not yet been set
 	 * @param beanName the name of the bean
-	 * @return true if properties should be set on the bean; false if property population
-	 * should be skipped. Normal implementations should return true. Returning false will
-	 * also prevent any subsequent InstantiationAwareBeanPostProcessor instances
-	 * being invoked on this bean instance.
-	 * @throws BeanException in the case of errors
+	 * @return {@code true} if properties shall be set on the bean; {@code false} if property
+	 * population shall be skipped. Normal implementations should return {@code true}. Returning
+	 * {@code false} will also prevent any subsequent {@code InstantiationAwareBeanPostProcessor}
+	 * instances being invoked on this bean instance.
+	 * @throws BeanException in case of errors
 	 */
 	public function postProcessAfterInstantiation(bean, beanName:String):Boolean;
 	
