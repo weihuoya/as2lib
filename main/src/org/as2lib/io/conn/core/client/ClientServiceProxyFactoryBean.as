@@ -16,6 +16,7 @@
 
 import org.as2lib.bean.factory.FactoryBean;
 import org.as2lib.bean.factory.InitializingBean;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.InterfaceProxyFactory;
@@ -27,7 +28,8 @@ import org.as2lib.io.conn.core.event.MethodInvocationCallback;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.io.conn.core.client.ClientServiceProxyFactoryBean extends BasicClass implements FactoryBean, InvocationHandler, InitializingBean {
+class org.as2lib.io.conn.core.client.ClientServiceProxyFactoryBean extends BasicClass implements
+		FactoryBean, InvocationHandler, InitializingBean {
 	
 	private var serviceProxy:ClientServiceProxy;
 	private var typedServiceProxy;
@@ -63,7 +65,7 @@ class org.as2lib.io.conn.core.client.ClientServiceProxyFactoryBean extends Basic
 		this.serviceInterface = serviceInterface;
 	}
 	
-	public function getObject(Void) {
+	public function getObject(property:PropertyAccess) {
 		return typedServiceProxy;
 	}
 	
