@@ -23,6 +23,7 @@ import org.as2lib.bean.factory.config.BeanPostProcessor;
 import org.as2lib.bean.factory.FactoryBean;
 import org.as2lib.bean.factory.InitializingBean;
 import org.as2lib.bean.factory.parser.BeanDefinitionParser;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.SimpleBeanWrapper;
 import org.as2lib.context.ApplicationContext;
@@ -61,8 +62,8 @@ import org.as2lib.util.TextUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends BasicClass implements FactoryBean,
-		ApplicationContextAware, InitializingBean, BeanPostProcessor, Process, BatchFinishListener {
+class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends BasicClass implements
+		FactoryBean, ApplicationContextAware, InitializingBean, BeanPostProcessor, Process, BatchFinishListener {
 	
 	private var applicationContext:LoadingApplicationContext = null;
 	
@@ -145,14 +146,14 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 		applicationContext.getBeanFactory().addBeanPostProcessor(this);
 	}
 	
-	public function getObject(Void) {
+	public function getObject(property:PropertyAccess) {
 		var result;
 		if (targetBeanName == null) {
 			result = applicationContext;
 		}
 		else {
 			if (hasFinished()) {
-				result = applicationContext.getBeanByName(targetBeanName);
+				result = applicationContext.getBeanByName(targetBeanName, property);
 			}
 			else {
 				var proxy:Object = new Object();

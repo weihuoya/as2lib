@@ -59,6 +59,7 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 		result.lazyInit = lazyInit;
 		result.autowireMode = autowireMode;
 		result.dependencyCheck = dependencyCheck;
+		result.populateMode = populateMode;
 		result.dependsOn = dependsOn;
 		result.methodOverrides = new MethodOverrides(methodOverrides);
 		result.factoryBeanName = factoryBeanName;

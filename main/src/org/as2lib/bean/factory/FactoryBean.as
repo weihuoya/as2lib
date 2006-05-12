@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicInterface;
 
 /**
@@ -40,10 +41,13 @@ interface org.as2lib.bean.factory.FactoryBean extends BasicInterface {
 	 * <p>If this method returns {@code null}, the factory will consider this factory bean
 	 * as not fully initialized and throw a corresponding {@link FactoryBeanNotInitializedException}.
 	 * 
+	 * @param property the property to initialize with the returned object if it is a bean
+	 * whose populate mode is set to 'populate afterwards'
 	 * @return an instance of the bean
 	 * @throws Error in case of creation errors
+	 * @see BeanFactory#getBean
 	 */
-	public function getObject(Void);
+	public function getObject(property:PropertyAccess);
 	
 	/**
 	 * Returns the type of the object that this factory bean creates, or {@code null}

@@ -20,6 +20,7 @@ import org.as2lib.bean.factory.BeanFactoryAware;
 import org.as2lib.bean.factory.BeanNameAware;
 import org.as2lib.bean.factory.FactoryBean;
 import org.as2lib.bean.FatalBeanException;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.bean.SimpleBeanWrapper;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -63,7 +64,8 @@ import org.as2lib.env.except.IllegalArgumentException;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.config.PropertyPathFactoryBean extends BasicClass implements FactoryBean, BeanNameAware, BeanFactoryAware {
+class org.as2lib.bean.factory.config.PropertyPathFactoryBean extends BasicClass implements
+		FactoryBean, BeanNameAware, BeanFactoryAware {
 	
 	/** The wrapper of the target bean. */
 	private var targetBeanWrapper:BeanWrapper;
@@ -147,18 +149,20 @@ class org.as2lib.bean.factory.config.PropertyPathFactoryBean extends BasicClass 
 	public function setBeanFactory(beanFactory:BeanFactory):Void {
 		this.beanFactory = beanFactory;
 		if (targetBeanWrapper != null && targetBeanName != null) {
-			throw new IllegalArgumentException("Specify either 'targetBean' or 'targetBeanName', not both.", this, arguments);
+			throw new IllegalArgumentException("Specify either 'targetBean' or 'targetBeanName', " +
+					"not both.", this, arguments);
 		}
 		if (targetBeanWrapper == null && targetBeanName == null) {
 			if (propertyPath != null) {
-				throw new IllegalArgumentException("Specify 'targetBean' or 'targetBeanName' in combination with 'propertyPath'.", this, arguments);
+				throw new IllegalArgumentException("Specify 'targetBean' or 'targetBeanName' in " +
+						"combination with 'propertyPath'.", this, arguments);
 			}
 			// No other properties specified: check bean name.
 			var dotIndex:Number = beanName.indexOf(".");
 			if (dotIndex == -1) {
 				throw new IllegalArgumentException(
-						"Neither 'targetBean' nor 'targetBeanName' specified, and bean name '" + beanName +
-						"' does not follow 'beanName.property' syntax.", this, arguments);
+						"Neither 'targetBean' nor 'targetBeanName' specified, and bean name '" +
+						beanName + "' does not follow 'beanName.property' syntax.", this, arguments);
 			}
 			targetBeanName = beanName.substring(0, dotIndex);
 			propertyPath = beanName.substring(dotIndex + 1);
@@ -174,11 +178,11 @@ class org.as2lib.bean.factory.config.PropertyPathFactoryBean extends BasicClass 
 		}
 	}
 	
-	public function getObject(Void) {
+	public function getObject(property:PropertyAccess) {
 		var target:BeanWrapper = targetBeanWrapper;
 		if (target == null) {
 			// fetch prototype target bean
-			target = new SimpleBeanWrapper(beanFactory.getBeanByName(targetBeanName));
+			target = new SimpleBeanWrapper(beanFactory.getBeanByName(targetBeanName, property));
 		}
 		var value = target.getPropertyValue(propertyPath);
 		if (value == null) {

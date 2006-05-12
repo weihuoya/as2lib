@@ -79,6 +79,24 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 */
 	public static var DEPENDENCY_CHECK_ALL:Number = 3;
 	
+	/**
+	 * Constant that indicates that the bean shall be populated before it is set as
+	 * property value. This means that if the bean is used as property value it will
+	 * be instantiated, populated and then set as property value.
+	 * 
+	 * @see #setPopulateMode
+	 */
+	public static var POPULATE_BEFORE:Number = 0;
+	
+	/**
+	 * Constant that indicates that the bean shall be populated after it is was set as
+	 * property value. This means that if the bean is used as property value it will be
+	 * instantiated, then set as property value and after that populated.
+	 * 
+	 * @see #setPopulateMode
+	 */
+	public static var POPULATE_AFTER:Number = 1;
+	
 	/** The class of the bean. */
 	private var beanClass:Function;
 	
@@ -99,6 +117,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	
 	/** The dependency check code. */
 	private var dependencyCheck:Number;
+	
+	/** The populate mode. */
+	private var populateMode:Number;
 	
 	/** The names of the beans this bean depends on. */
 	private var dependsOn:Array;
@@ -157,6 +178,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		lazyInit = false;
 		dependencyCheck = DEPENDENCY_CHECK_NONE;
 		autowireMode = AUTOWIRE_NO;
+		populateMode = POPULATE_BEFORE;
 		methodOverrides = new MethodOverrides();
 		enforceInitMethod = true;
 		enforceDestroyMethod = true;
@@ -173,8 +195,8 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 *       existing ones.
 	 *   <li>Will override initMethodName, destroyMethodName, staticFactoryMethodName
 	 *       and defaultPropertyName if specified.
-	 *   <li>Will always take dependsOn, autowireMode, dependencyCheck from the
-	 *       given bean definition.
+	 *   <li>Will always take dependsOn, autowireMode, dependencyCheck, populateMode from
+	 *       the given bean definition.
 	 *   <li>Will always take styleName and source from the given bean definition.
 	 * </ul>
 	 * 
@@ -191,6 +213,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		lazyInit = beanDefinition.isLazyInit();
 		autowireMode = beanDefinition.getAutowireMode();
 		dependencyCheck = beanDefinition.getDependencyCheck();
+		populateMode = beanDefinition.getPopulateMode();
 		dependsOn = beanDefinition.getDependsOn();
 		styleName = beanDefinition.getStyleName();
 		source = beanDefinition.getSource();
@@ -310,7 +333,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	}
 	
 	/**
-	 * Sets the autowire mode. This determines whether any automagical detection
+	 * Sets the autowire mode. This determines whether any automatical detection
 	 * and setting of bean references will happen. Default is {@code AUTOWIRE_NO},
 	 * which means there is no autowiring.
 	 * 
@@ -343,6 +366,24 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	
 	public function getDependencyCheck(Void):Number {
 		return dependencyCheck;
+	}
+	
+	/**
+	 * Sets the populate mode. This determines when this bean shall be populated, this
+	 * means when the property values shall be applied. Default is {@code POPULATE_BEFORE},
+	 * which means that the bean is populated before it is itself used as property value.
+	 * 
+	 * @param populateMode the populate mode to set; must be one of the constants defined
+	 * in this class
+	 * @see #POPULATE_BEFORE
+	 * @see #POPULATE_AFTER
+	 */
+	public function setPopulateMode(populateMode:Number):Void {
+		this.populateMode = populateMode;
+	}
+	
+	public function getPopulateMode(Void):Number {
+		return populateMode;
 	}
 	
 	/**
@@ -579,6 +620,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		result += "; lazyInit=" + lazyInit;
 		result += "; autowire=" + autowireMode;
 		result += "; dependencyCheck=" + dependencyCheck;
+		result += "; populate=" + populateMode;
 		result += "; factoryBeanName=" + factoryBeanName;
 		result += "; factoryMethodName=" + factoryMethodName;
 		result += "; initMethodName=" + initMethodName;

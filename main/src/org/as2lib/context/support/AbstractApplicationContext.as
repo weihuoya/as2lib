@@ -24,6 +24,7 @@ import org.as2lib.bean.factory.config.BeanPostProcessor;
 import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.bean.factory.ListableBeanFactory;
 import org.as2lib.bean.factory.support.AbstractBeanFactory;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.context.ApplicationContext;
 import org.as2lib.context.ApplicationEvent;
 import org.as2lib.context.ApplicationEventPublisher;
@@ -535,12 +536,12 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	// Implementation of BeanFactory interface
 	//---------------------------------------------------------------------
 	
-	public function getBeanByName(name:String) {
-		return getBeanFactory().getBeanByName(name);
+	public function getBeanByName(name:String, property:PropertyAccess) {
+		return getBeanFactory().getBeanByName(name, property);
 	}
 	
-	public function getBeanByNameAndType(name:String, requiredType:Function) {
-		return getBeanFactory().getBeanByNameAndType(name, requiredType);
+	public function getBeanByNameAndType(name:String, requiredType:Function, property:PropertyAccess) {
+		return getBeanFactory().getBeanByNameAndType(name, requiredType, property);
 	}
 	
 	public function containsBean(name:String):Boolean {

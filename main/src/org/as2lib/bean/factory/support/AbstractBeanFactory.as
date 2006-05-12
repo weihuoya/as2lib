@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.bean.factory.BeanFactory;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.overload.Overload;
 
@@ -56,13 +57,13 @@ class org.as2lib.bean.factory.support.AbstractBeanFactory extends BasicClass {
 	/**
 	 * @overload #getBeanByName
 	 * @overload #getBeanByNameAndType
-	 * @overload #getBeanByNameAndArguments
-	 * @overload #getBeanByNameAndTypeAndArguments
 	 */
 	public function getBean() {
 		var o:Overload = new Overload(this);
 		o.addHandler([String], thiz.getBeanByName);
+		o.addHandler([String, PropertyAccess], thiz.getBeanByName);
 		o.addHandler([String, Function], thiz.getBeanByNameAndType);
+		o.addHandler([String, Function, PropertyAccess], thiz.getBeanByNameAndType);
 		return o.forward(arguments);
 	}
 	

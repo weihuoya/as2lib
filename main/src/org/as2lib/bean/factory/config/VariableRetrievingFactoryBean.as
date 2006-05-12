@@ -17,6 +17,7 @@
 import org.as2lib.bean.factory.BeanNameAware;
 import org.as2lib.bean.factory.FactoryBean;
 import org.as2lib.bean.factory.InitializingBean;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ClassNotFoundException;
@@ -39,7 +40,8 @@ import org.as2lib.util.TrimUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends BasicClass implements FactoryBean, BeanNameAware, InitializingBean {
+class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends BasicClass implements
+		FactoryBean, BeanNameAware, InitializingBean {
 	
 	private var targetClass:Function;
 	
@@ -190,7 +192,7 @@ class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends Basic
 		}
 	}
 	
-	public function getObject(Void) {
+	public function getObject(property:PropertyAccess) {
 		if (targetBean != null) {
 			// instance variable
 			return targetBean[targetVariable];
