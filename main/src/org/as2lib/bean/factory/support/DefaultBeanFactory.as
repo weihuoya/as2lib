@@ -444,19 +444,21 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			var owner:BeanFactory = this;
 			if (overrides[i] instanceof LookupOverride) {
 				var lo:LookupOverride = overrides[i];
-				var bn:String = lo.getBeanName();
-				bean[lo.getMethodName()] = function() {
-					return owner.getBeanByName(bn);
+				var lm:Function = function() {
+					return owner.getBeanByName(arguments.callee.beanName);
 				};
+				lm.beanName = lo.getBeanName();
+				bean[lo.getMethodName()] = lm;
 			}
 			else if (overrides[i] instanceof ReplaceOverride) {
 				var ro:ReplaceOverride = overrides[i];
-				var bn:String = ro.getMethodReplacerBeanName();
-				var mn:String = ro.getMethodName();
-				bean[mn] = function() {
-					var mr:MethodReplacer = owner.getBeanByNameAndType(bn, MethodReplacer);
-					return mr.reimplement(this, mn, arguments);
+				var rm:Function = function() {
+					var mr:MethodReplacer = owner.getBeanByNameAndType(arguments.callee.beanName, MethodReplacer);
+					return mr.reimplement(this, arguments.callee.methodName, arguments);
 				};
+				rm.beanName = ro.getMethodReplacerBeanName();
+				rm.methodName = ro.getMethodName();
+				bean[ro.getMethodName()] = rm;
 			}
 		}
 	}
