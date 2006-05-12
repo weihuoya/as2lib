@@ -18,6 +18,7 @@ import org.as2lib.bean.factory.BeanFactory;
 import org.as2lib.bean.factory.BeanFactoryAware;
 import org.as2lib.bean.factory.BeanNameAware;
 import org.as2lib.bean.factory.FactoryBean;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.DelegateManager;
@@ -28,7 +29,8 @@ import org.as2lib.env.reflect.DelegateManager;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.env.reflect.DelegateFactoryBean extends BasicClass implements FactoryBean, BeanNameAware, BeanFactoryAware {
+class org.as2lib.env.reflect.DelegateFactoryBean extends BasicClass implements FactoryBean,
+		BeanNameAware, BeanFactoryAware {
 	
 	/** The target bean. */
 	private var targetBean;
@@ -99,18 +101,20 @@ class org.as2lib.env.reflect.DelegateFactoryBean extends BasicClass implements F
 	public function setBeanFactory(beanFactory:BeanFactory):Void {
 		this.beanFactory = beanFactory;
 		if (targetBean != null && targetBeanName != null) {
-			throw new IllegalArgumentException("Specify either 'targetBean' or 'targetBeanName', not both.", this, arguments);
+			throw new IllegalArgumentException("Specify either 'targetBean' or 'targetBeanName', " +
+					"not both.", this, arguments);
 		}
 		if (targetBean == null && targetBeanName == null) {
 			if (methodName != null) {
-				throw new IllegalArgumentException("Specify 'targetBean' or 'targetBeanName' in combination with 'methodName'.", this, arguments);
+				throw new IllegalArgumentException("Specify 'targetBean' or 'targetBeanName' in " +
+						"combination with 'methodName'.", this, arguments);
 			}
 			// No other properties specified: check bean name.
 			var dotIndex:Number = beanName.indexOf(".");
 			if (dotIndex == -1) {
 				throw new IllegalArgumentException(
-					"Neither 'targetBean' nor 'targetBeanName' specified, and bean name '" + beanName +
-					"' does not follow 'beanName.method' syntax.", this, arguments);
+					"Neither 'targetBean' nor 'targetBeanName' specified, and bean name '" +
+					beanName + "' does not follow 'beanName.method' syntax.", this, arguments);
 			}
 			targetBeanName = beanName.substring(0, dotIndex);
 			methodName = beanName.substring(dotIndex + 1);
@@ -121,17 +125,19 @@ class org.as2lib.env.reflect.DelegateFactoryBean extends BasicClass implements F
 		}
 		if (targetBean != null) {
 			if (targetBean[methodName] == null) {
-				throw new IllegalArgumentException("Target bean [" + targetBean + "] has no method named '" + methodName + "'.", this, arguments);
+				throw new IllegalArgumentException("Target bean [" + targetBean + "] has no " +
+						"method named '" + methodName + "'.", this, arguments);
 			}
 		}
 	}
 	
-	public function getObject(Void) {
+	public function getObject(property:PropertyAccess) {
 		var target = targetBean;
 		if (target == null) {
 			target = beanFactory.getBean(targetBeanName);
 			if (target[methodName] == null) {
-				throw new IllegalArgumentException("Target bean [" + target + "] has no method named '" + methodName + "'.", this, arguments);
+				throw new IllegalArgumentException("Target bean [" + target + "] has no method " +
+						"named '" + methodName + "'.", this, arguments);
 			}
 		}
 		return DelegateManager.create(target, methodName);
