@@ -39,6 +39,8 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	public static var DATA_BINDING_PREFIX:String = "{";
 	public static var DATA_BINDING_SUFFIX:String = "}";
 	
+	public static var POPULATE_PREFIX:String = "-";
+	
 	public static var PROPERTY_PATH:String = "p";
 	public static var VARIABLE_RETRIEVAL:String = "v";
 	public static var METHOD_INVOCATION:String = "m";
@@ -78,28 +80,45 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	private function convertBeanElement(element:XMLNode):Void {
 		// Mtasc ships with Flash 7 sources for xml.
 		var namespace:String = element["namespaceURI"];
+		var name:String;
 		if (namespace == "" || namespace == null) {
-			element.attributes[PARENT_ATTRIBUTE] = element.nodeName;
+			name = element.nodeName;
 		}
 		else {
-			var localName:String = element["localName"];
-			if (namespace.indexOf("*") != -1) {
-				var applicationContextClass:String = element.attributes[CLASS_ATTRIBUTE];
-				var contextClassElement:XMLNode = createPropertyElement("applicationContextClass", applicationContextClass);
-				contextClassElement.attributes[TYPE_ATTRIBUTE] = CLASS_TYPE_VALUE;
-				element.appendChild(contextClassElement);
-				element.attributes[CLASS_ATTRIBUTE] = LOADING_APPLICATION_CONTEXT_FACTORY_BEAN_CLASS;
-				var beanDefinitionUri:String = StringUtil.replace(namespace, "*", localName);
-				element.appendChild(createPropertyElement("beanDefinitionUri", beanDefinitionUri));
-				var targetBeanName:String = TextUtil.lcFirst(localName);
-				element.appendChild(createPropertyElement("targetBeanName", targetBeanName));
+			name = element["localName"];
+		}
+		if (name.charAt(0) == POPULATE_PREFIX) {
+			name = name.substring(1);
+			element.attributes[POPULATE_ATTRIBUTE] = getPopulateValue();
+		}
+		if (name != BEAN_ELEMENT) {
+			if (namespace == "" || namespace == null) {
+				element.attributes[PARENT_ATTRIBUTE] = name;
 			}
 			else {
-				if (element.attributes[CLASS_ATTRIBUTE] == null) {
-					element.attributes[CLASS_ATTRIBUTE] = namespace + "." + localName;
+				if (namespace.indexOf("*") != -1) {
+					var applicationContextClass:String = element.attributes[CLASS_ATTRIBUTE];
+					var contextClassElement:XMLNode = createPropertyElement("applicationContextClass", applicationContextClass);
+					contextClassElement.attributes[TYPE_ATTRIBUTE] = CLASS_TYPE_VALUE;
+					element.appendChild(contextClassElement);
+					element.attributes[CLASS_ATTRIBUTE] = LOADING_APPLICATION_CONTEXT_FACTORY_BEAN_CLASS;
+					element.attributes[POPULATE_ATTRIBUTE] = POPULATE_BEFORE_VALUE;
+					var beanDefinitionUri:String = StringUtil.replace(namespace, "*", name);
+					element.appendChild(createPropertyElement("beanDefinitionUri", beanDefinitionUri));
+					var targetBeanName:String = TextUtil.lcFirst(name);
+					element.appendChild(createPropertyElement("targetBeanName", targetBeanName));
+				}
+				else {
+					if (element.attributes[CLASS_ATTRIBUTE] == null) {
+						element.attributes[CLASS_ATTRIBUTE] = namespace + "." + name;
+					}
 				}
 			}
 		}
+	}
+	
+	private function getPopulateValue(Void):String {
+		return POPULATE_AFTER_VALUE;
 	}
 	
 	private function parseBeanDefinitionElementWithoutRegardToNameOrAliases(element:XMLNode, beanName:String):BeanDefinition {
@@ -112,7 +131,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 					&& i != INIT_METHOD_ATTRIBUTE && i != DESTROY_METHOD_ATTRIBUTE
 					&& i != ABSTRACT_ATTRIBUTE && i != SINGLETON_ATTRIBUTE
 					&& i != LAZY_INIT_ATTRIBUTE && i != DEFAULT_PROPERTY_ATTRIBUTE
-					&& i != STYLE_ATTRIBUTE) {
+					&& i != STYLE_ATTRIBUTE && i != POPULATE_ATTRIBUTE) {
 				convertAttributeToPropertyElement(i, element);
 			}
 		}
@@ -255,6 +274,14 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 			if (isUpperCaseLetter(lc)) {
 				isStatic = true;
 			}
+			else {
+				// TODO Don't know whether targetObject must always be just the first bean if not static.
+				dotIndex = targetObject.indexOf(".");
+				if (dotIndex != -1) {
+					targetMember = targetObject.substring(dotIndex + 1) + "." + targetMember;
+					targetObject = targetObject.substring(0, dotIndex);
+				}
+			}
 		}
 		result.push(isStatic);
 		result.push(targetObject);
@@ -273,6 +300,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 			throw new BeanDefinitionStoreException(beanName, "Property path data binding cannot be used for static properties.", this, arguments);
 		}
 		result.attributes[CLASS_ATTRIBUTE] = PROPERTY_PATH_FACTORY_BEAN_CLASS_NAME;
+		result.attributes[POPULATE_ATTRIBUTE] = POPULATE_BEFORE_VALUE;
 		result.appendChild(createPropertyElement("targetBeanName", targetObject));
 		result.appendChild(createPropertyElement("propertyPath", targetMember));
 		return parseBeanDefinitionElement(result);
@@ -281,10 +309,12 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	private function parseVariableRetrievalValue(targetObject:String, targetMember:String, isStatic:Boolean, beanName:String):BeanDefinitionHolder {
 		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
 		result.attributes[CLASS_ATTRIBUTE] = VARIABLE_RETRIEVING_FACTORY_BEAN_CLASS_NAME;
+		result.attributes[POPULATE_ATTRIBUTE] = POPULATE_BEFORE_VALUE;
 		if (isStatic) {
 			result.appendChild(createPropertyElement("staticVariable", targetObject + "." + targetMember));
 		}
 		else {
+			// TODO targetBean must not be the name of the target bean, but the target bean itself
 			result.appendChild(createBeanReferencePropertyElement("targetBean", targetObject));
 			result.appendChild(createPropertyElement("targetVariable", targetMember));
 		}
@@ -297,6 +327,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 			throw new BeanDefinitionStoreException(beanName, "Delegate data binding cannot be used for static methods.", this, arguments);
 		}
 		result.attributes[CLASS_ATTRIBUTE] = DELEGATE_FACTORY_BEAN_CLASS_NAME;
+		result.attributes[POPULATE_ATTRIBUTE] = POPULATE_BEFORE_VALUE;
 		result.appendChild(createPropertyElement("targetBeanName", targetObject));
 		result.appendChild(createPropertyElement("methodName", targetMember));
 		return parseBeanDefinitionElement(result);
@@ -305,10 +336,12 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	private function parseMethodInvocationValue(targetObject:String, targetMember:String, isStatic:Boolean, beanName:String):BeanDefinitionHolder {
 		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
 		result.attributes[CLASS_ATTRIBUTE] = METHOD_INVOKING_FACTORY_BEAN_CLASS_NAME;
+		result.attributes[POPULATE_ATTRIBUTE] = POPULATE_BEFORE_VALUE;
 		if (isStatic) {
 			result.appendChild(createPropertyElement("staticMethod", targetObject + "." + targetMember));
 		}
 		else {
+			// TODO targetBean must not be the name of the target bean, but the target bean itself
 			result.appendChild(createBeanReferencePropertyElement("targetBean", targetObject));
 			result.appendChild(createPropertyElement("targetVariable", targetMember));
 		}

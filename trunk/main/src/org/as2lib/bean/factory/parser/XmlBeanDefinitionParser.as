@@ -69,13 +69,17 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	
 	public static var AUTOWIRE_BY_NAME_VALUE:String = "byName";
 	
-	public static var DEPENDENCY_CHECK_ALL_ATTRIBUTE_VALUE:String = "all";
-	public static var DEPENDENCY_CHECK_SIMPLE_ATTRIBUTE_VALUE:String = "simple";
-	public static var DEPENDENCY_CHECK_OBJECTS_ATTRIBUTE_VALUE:String = "objects";
+	public static var DEPENDENCY_CHECK_ALL_VALUE:String = "all";
+	public static var DEPENDENCY_CHECK_SIMPLE_VALUE:String = "simple";
+	public static var DEPENDENCY_CHECK_OBJECTS_VALUE:String = "objects";
+	
+	public static var POPULATE_BEFORE_VALUE:String = "before";
+	public static var POPULATE_AFTER_VALUE:String = "after";
 	
 	public static var DEFAULT_LAZY_INIT_ATTRIBUTE:String = "default-lazy-init";
 	public static var DEFAULT_AUTOWIRE_ATTRIBUTE:String = "default-autowire";
 	public static var DEFAULT_DEPENDENCY_CHECK_ATTRIBUTE:String = "default-dependency-check";
+	public static var DEFAULT_POPULATE_ATTRIBUTE:String = "default-populate";
 	public static var DEFAULT_INIT_METHOD_ATTRIBUTE:String = "default-init-method";
 	public static var DEFAULT_DESTROY_METHOD_ATTRIBUTE:String = "default-destroy-method";
 	public static var DEFAULT_MERGE_ATTRIBUTE:String = "default-merge";
@@ -96,6 +100,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var AUTOWIRE_ATTRIBUTE:String = "autowire";
 	public static var DEPENDENCY_CHECK_ATTRIBUTE:String = "dependency-check";
 	public static var DEPENDS_ON_ATTRIBUTE:String = "depends-on";
+	public static var POPULATE_ATTRIBUTE:String = "populate";
 	public static var INIT_METHOD_ATTRIBUTE:String = "init-method";
 	public static var DESTROY_METHOD_ATTRIBUTE:String = "destroy-method";
 	public static var FACTORY_METHOD_ATTRIBUTE:String = "factory-method";
@@ -151,13 +156,15 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	private var defaultRegistry:BeanDefinitionRegistry;
 	
 	private var defaultLazyInit:String;
-
+	
 	private var defaultAutowire:String;
-
+	
 	private var defaultDependencyCheck:String;
-
+	
+	private var defaultPopulate:String;
+	
 	private var defaultInitMethod:String;
-
+	
 	private var defaultDestroyMethod:String;
 	
 	private var defaultMerge:String;
@@ -179,6 +186,14 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 */
 	private function setDefaultProperty(defaultProperty:String):Void {
 		this.defaultProperty = defaultProperty;
+	}
+	
+	/**
+	 * Sets the default populate value. Must be one of the constants:
+	 * {@link #POPULATE_BEFORE_VALUE} or {@link #POPULATE_AFTER_VALUE}.
+	 */
+	private function setDefaultPopulate(defaultPopulate:String):Void {
+		this.defaultPopulate = defaultPopulate;
 	}
 	
 	/**
@@ -228,8 +243,8 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	}
 	
 	/**
-	 * Initializes the default lazy-init, autowire and dependency check, init-method,
-	 * destroy-method, property and merge settings.
+	 * Initializes the default lazy-init, autowire, dependency check and populate,
+	 * init-method, destroy-method, property and merge settings.
 	 * 
 	 * @param root the root element
 	 */
@@ -237,6 +252,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		defaultLazyInit = root.attributes[DEFAULT_LAZY_INIT_ATTRIBUTE];
 		defaultAutowire = root.attributes[DEFAULT_AUTOWIRE_ATTRIBUTE];
 		defaultDependencyCheck = root.attributes[DEFAULT_DEPENDENCY_CHECK_ATTRIBUTE];
+		defaultMerge = root.attributes[DEFAULT_MERGE_ATTRIBUTE];
+		if (root.attributes[DEFAULT_POPULATE_ATTRIBUTE] != null) {
+			defaultPopulate = root.attributes[DEFAULT_POPULATE_ATTRIBUTE];
+		}
 		if (root.attributes[DEFAULT_INIT_METHOD_ATTRIBUTE] != null) {
 			defaultInitMethod = root.attributes[DEFAULT_INIT_METHOD_ATTRIBUTE];
 		}
@@ -246,7 +265,6 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		if (root.attributes[DEFAULT_PROPERTY_ATTRIBUTE] != null) {
 			defaultProperty = root.attributes[DEFAULT_PROPERTY_ATTRIBUTE];
 		}
-		defaultMerge = root.attributes[DEFAULT_MERGE_ATTRIBUTE];
 	}
 	
 	/**
@@ -367,15 +385,20 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 				bd.setFactoryBeanName(factoryBean);
 			}
 			var dependencyCheck:String = element.attributes[DEPENDENCY_CHECK_ATTRIBUTE];
-			if (dependencyCheck == DEFAULT_VALUE) {
+			if (dependencyCheck == DEFAULT_VALUE || dependencyCheck == null) {
 				dependencyCheck = defaultDependencyCheck;
 			}
 			bd.setDependencyCheck(getDependencyCheck(dependencyCheck));
 			var autowire:String = element.attributes[AUTOWIRE_ATTRIBUTE];
-			if (autowire == DEFAULT_VALUE) {
+			if (autowire == DEFAULT_VALUE || autowire == null) {
 				autowire = defaultAutowire;
 			}
 			bd.setAutowireMode(getAutowireMode(autowire));
+			var populate:String = element.attributes[POPULATE_ATTRIBUTE];
+			if (populate == DEFAULT_VALUE || populate == null) {
+				populate = defaultPopulate;
+			}
+			bd.setPopulateMode(getPopulateMode(populate));
 			var initMethodName:String = element.attributes[INIT_METHOD_ATTRIBUTE];
 			if (initMethodName != null) {
 				if (initMethodName != "") {
@@ -411,9 +434,21 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 				bd.setSingleton(singleton == TRUE_VALUE);
 			}
 			var lazyInit:String = element.attributes[LAZY_INIT_ATTRIBUTE];
-			if (lazyInit == DEFAULT_VALUE && bd.isSingleton()) {
-				// Just apply default to singletons, as lazy-init has no meaning for prototypes.
-				lazyInit = defaultLazyInit;
+			if (bd.isSingleton()) {
+				// lazy-init has no meaning for prototype beans.
+				if (lazyInit == null && beanName != null &&
+						bd.getPopulateMode() == AbstractBeanDefinition.POPULATE_AFTER) {
+					// Set lazy-init to true if populate mode is 'populate afterwards' and bean name
+					// is not null. This prevents that singleton beans which need to be initialized
+					// with the correct property are pre-instantiated.
+					// Beans without bean name are either inner beans or beans that are not referenced.
+					// They thus can be pre-instantiated as normal.
+					lazyInit = TRUE_VALUE;
+				}
+				else if (lazyInit == DEFAULT_VALUE) {
+					// Just apply default to singletons, as lazy-init has no meaning for prototypes.
+					lazyInit = defaultLazyInit;
+				}
 			}
 			bd.setLazyInit(lazyInit == TRUE_VALUE);
 			var defaultProperty:String = element.attributes[DEFAULT_PROPERTY_ATTRIBUTE];
@@ -1045,20 +1080,20 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	 * @return the dependency check constant of the given attribute
 	 */
 	private function getDependencyCheck(attribute:String):Number {
-		if (attribute == DEPENDENCY_CHECK_ALL_ATTRIBUTE_VALUE) {
+		if (attribute == DEPENDENCY_CHECK_ALL_VALUE) {
 			return AbstractBeanDefinition.DEPENDENCY_CHECK_ALL;
 		}
-		if (attribute == DEPENDENCY_CHECK_SIMPLE_ATTRIBUTE_VALUE) {
+		if (attribute == DEPENDENCY_CHECK_SIMPLE_VALUE) {
 			return AbstractBeanDefinition.DEPENDENCY_CHECK_SIMPLE;
 		}
-		if (attribute == DEPENDENCY_CHECK_OBJECTS_ATTRIBUTE_VALUE) {
+		if (attribute == DEPENDENCY_CHECK_OBJECTS_VALUE) {
 			return AbstractBeanDefinition.DEPENDENCY_CHECK_OBJECTS;
 		}
 		return AbstractBeanDefinition.DEPENDENCY_CHECK_NONE;
 	}
 	
 	/**
-	 * Returns the autowire mode indiecated by the given attribute.
+	 * Returns the autowire mode indicated by the given attribute.
 	 * 
 	 * @param attribute the attribute to convert to an autowire mode
 	 * @return the autowire mode corresponding to the given attribute
@@ -1068,6 +1103,19 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			return AbstractBeanDefinition.AUTOWIRE_BY_NAME;
 		}
 		return AbstractBeanDefinition.AUTOWIRE_NO;
+	}
+	
+	/**
+	 * Returns the populate mode indicated by the given attribute.
+	 * 
+	 * @param attribute the attribute to convert to a populate mode
+	 * @return the populate mode corresponding to the given attribute
+	 */
+	private function getPopulateMode(attribute:String):Number {
+		if (attribute == POPULATE_AFTER_VALUE) {
+			return AbstractBeanDefinition.POPULATE_AFTER;
+		}
+		return AbstractBeanDefinition.POPULATE_BEFORE;
 	}
 	
 	/**

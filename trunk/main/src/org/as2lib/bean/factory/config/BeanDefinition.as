@@ -86,6 +86,13 @@ interface org.as2lib.bean.factory.config.BeanDefinition extends BasicInterface {
 	public function getAutowireMode(Void):Number;
 	
 	/**
+	 * Returns the populate mode as specified in the bean definition.
+	 * 
+	 * @return the populate mode
+	 */
+	public function getPopulateMode(Void):Number;
+	
+	/**
 	 * Returns information about methods to be overridden by the IoC container. This
 	 * will be empty if there are no method overrides.
 	 * 

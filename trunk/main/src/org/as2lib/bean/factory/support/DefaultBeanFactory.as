@@ -39,6 +39,7 @@ import org.as2lib.bean.factory.FactoryBeanNotInitializedException;
 import org.as2lib.bean.factory.InitializingBean;
 import org.as2lib.bean.factory.ListableBeanFactory;
 import org.as2lib.bean.factory.NoSuchBeanDefinitionException;
+import org.as2lib.bean.factory.support.AbstractBeanDefinition;
 import org.as2lib.bean.factory.support.AbstractBeanFactory;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.factory.support.ChildBeanDefinition;
@@ -49,6 +50,7 @@ import org.as2lib.bean.factory.support.ManagedMap;
 import org.as2lib.bean.factory.support.MethodReplacer;
 import org.as2lib.bean.factory.support.ReplaceOverride;
 import org.as2lib.bean.factory.support.RootBeanDefinition;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValueConverter;
 import org.as2lib.bean.PropertyValues;
@@ -76,7 +78,8 @@ import org.as2lib.util.MethodUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFactory implements ConfigurableListableBeanFactory, BeanDefinitionRegistry {
+class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFactory implements
+		ConfigurableListableBeanFactory, BeanDefinitionRegistry {
 	
 	//---------------------------------------------------------------------
 	// Instance data
@@ -245,9 +248,12 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * 
 	 * @param name the name that may include factory dereference prefix
 	 * @param bean the shared bean instance
+	 * @param property the property to pass-to the factory bean's {@code getObject}
+	 * method if the given name corresponds to a factory bean and is not a dereference
 	 * @return the singleton instance of the bean
+	 * @see FactoryBean#getObject
 	 */
-	private function getBeanForSingleton(name:String, bean) {
+	private function getBeanForSingleton(name:String, bean, property:PropertyAccess) {
 		var beanName:String = transformBeanName(name);
 		var factoryBean:FactoryBean = FactoryBean(bean);
 		var isFactoryDereference:Boolean = isFactoryDereference(name);
@@ -257,14 +263,16 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		if (factoryBean != null) {
 			if (!isFactoryDereference) {
 				try {
-					bean = factoryBean.getObject();
+					bean = factoryBean.getObject(property);
 				}
 				catch (exception) {
-					throw (new BeanCreationException(beanName, "Factory bean threw exception on object creation.", this, arguments)).initCause(exception);
+					throw (new BeanCreationException(beanName, "Factory bean threw exception on " +
+							"object creation.", this, arguments)).initCause(exception);
 				}
 				if (bean == null) {
-					throw new FactoryBeanNotInitializedException(beanName, "Factory bean returned 'null' object: " +
-							"probably not fully initialized (maybe due to circular bean reference).", this, arguments);
+					throw new FactoryBeanNotInitializedException(beanName, "Factory bean " +
+							"returned 'null' object: probably not fully initialized (maybe due " +
+							"to circular bean reference).", this, arguments);
 				}
 			}
 		}
@@ -301,7 +309,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		return beanName;
 	}
 	
-	private function createBean(beanName:String, mergedBeanDefinition:RootBeanDefinition) {
+	private function createBean(beanName:String, mergedBeanDefinition:RootBeanDefinition, property:PropertyAccess) {
 		var result;
 		if (mergedBeanDefinition.hasBeanClass()) {
 			result = applyBeanPostProcessorsBeforeInstantiation(mergedBeanDefinition.getBeanClass(), beanName);
@@ -333,6 +341,12 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				}
 			}
 			errorMessage = "Initialization of bean failed.";
+			// Set the bean as property value now if it shall be populated after it was set.
+			if (property != null) {
+				if (mergedBeanDefinition.getPopulateMode() == AbstractBeanDefinition.POPULATE_AFTER) {
+					property.setValue(result);
+				}
+			}
 			// Give any InstantiationAwareBeanPostProcessors the opportunity to modify the state
 			// of the bean before properties are set. This can be used, for example,
 			// to support styles of field injection.
@@ -409,7 +423,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			beanClass.apply(bean, constructorArguments);
 		}
 		catch (exception) {
-			throw (new BeanDefinitionStoreException(beanName, "Could not instantiate class [" + ReflectUtil.getTypeNameForType(beanClass) + "]: Constructor threw an exception.", this, arguments)).initCause(exception);
+			throw (new BeanDefinitionStoreException(beanName, "Could not instantiate class [" +
+					ReflectUtil.getTypeNameForType(beanClass) + "]: Constructor threw an exception.",
+					this, arguments)).initCause(exception);
 		}
 		applyMethodOverrides(beanName, bean, mergedBeanDefinition);
 		return bean;
@@ -466,8 +482,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		var factoryMethodName:String = mergedBeanDefinition.getFactoryMethodName();
 		if (factory[factoryMethodName] == null) {
-			throw new BeanDefinitionStoreException(beanName, "Factory method with name '" + factoryMethodName + "' does not exist on factory " +
-					isStatic ? "class [" + ReflectUtil.getTypeNameForType(factory) : "bean named '" + mergedBeanDefinition.getFactoryBeanName(), this, arguments);
+			throw new BeanDefinitionStoreException(beanName, "Factory method with name '" +
+					factoryMethodName + "' does not exist on factory " + isStatic ? "class [" +
+					ReflectUtil.getTypeNameForType(factory) : "bean named '" +
+					mergedBeanDefinition.getFactoryBeanName(), this, arguments);
 		}
 		var bean;
 		var args:Array = resolveConstructorArguments(mergedBeanDefinition.getConstructorArgumentValues());
@@ -480,12 +498,14 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			}
 		}
 		catch (exception) {
-			throw (new BeanDefinitionStoreException(beanName, "Factory method [" + factoryMethodName + "] threw an exception", this, arguments)).initCause(exception);
+			throw (new BeanDefinitionStoreException(beanName, "Factory method [" +
+					factoryMethodName + "] threw an exception", this, arguments)).initCause(exception);
 		}
 		if (bean == null) {
 			throw new BeanCreationException(
-					beanName, "Factory method '" + mergedBeanDefinition.getFactoryMethodName() + "' on class [" +
-					ReflectUtil.getTypeNameForType(factory) + "] returned 'null'.", this, arguments);
+					beanName, "Factory method '" + mergedBeanDefinition.getFactoryMethodName() +
+					"' on class [" + ReflectUtil.getTypeNameForType(factory) + "] returned 'null'.",
+					this, arguments);
 		}
 		return bean;
 	}
@@ -580,15 +600,25 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			if (name == null) {
 				name = defaultName;
 			}
-			var resolvedValue = resolveValue(name, pv.getValue(), beanName, mergedBeanDefinition);
-			deepCopy.addPropertyValueByNameAndValueAndType(name, resolvedValue, pv.getType());
+			var value = pv.getValue();
+			var pvc:PropertyValue = new PropertyValue(name, value, pv.getType());
+			var property:PropertyAccess = new PropertyAccess(beanWrapper, pvc);
+			var resolvedValue = resolveValue(name, value, beanName, mergedBeanDefinition, property);
+			// If 'value' is a bean definition or bean reference and the bean's populate mode
+			// is 'populate after setting property', the property access has already been made
+			// and must not be done here a second time.
+			if (!property.wasSetAccessed()) {
+				pvc.setValue(resolvedValue);
+				deepCopy.addPropertyValueByPropertyValue(pvc);
+			}
 		}
 		try {
 			beanWrapper.setPropertyValues(deepCopy);
 		}
 		catch (exception:org.as2lib.bean.BeanException) {
 			// Improve the message by showing the context.
-			throw (new BeanCreationException(beanName, "Error setting property values.", this, arguments)).initCause(exception);
+			throw (new BeanCreationException(beanName, "Error setting property values.",
+					this, arguments)).initCause(exception);
 		}
 	}
 	
@@ -600,29 +630,37 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * @param value the value to resolve
 	 * @param beanName the name of the bean the value is resolved for
 	 * @param beanDefinition the bean definition of the bean
+	 * @param property the property to set the value of if the given value is a
+	 * bean definition of or a bean reference to a bean that needs to be set to a
+	 * property before its property values are applied
 	 * @see BeanDefinitionHolder
 	 * @see BeanDefinition
 	 * @see RuntimeBeanReference
 	 * @see ManagedArray
 	 * @see ManagedList
 	 * @see ManagedMap
+	 * @see BeanDefinition#getPopulateMode
+	 * @see #getBean
+	 * @see #createBean
 	 */
-	private function resolveValue(valueName:String, value, beanName:String, beanDefinition:BeanDefinition) {
+	private function resolveValue(valueName:String, value, beanName:String,
+			beanDefinition:BeanDefinition, property:PropertyAccess) {
 		// We must check each value to see whether it requires a runtime reference
 		// to another bean to be resolved.
 		if (value instanceof BeanDefinitionHolder) {
 			// Resolve BeanDefinitionHolder: contains BeanDefinition with name and aliases.
 			var bdHolder:BeanDefinitionHolder = value;
-			return resolveInnerBeanDefinition(bdHolder.getBeanName(), bdHolder.getBeanDefinition(), beanName, beanDefinition);
+			return resolveInnerBeanDefinition(bdHolder.getBeanName(), bdHolder.getBeanDefinition(),
+					beanName, beanDefinition, property);
 		}
 		if (value instanceof BeanDefinition) {
 			// Resolve plain BeanDefinition, without contained name: use dummy name.
 			var bd:BeanDefinition = value;
-			return resolveInnerBeanDefinition("(inner bean)", bd, beanName, beanDefinition);
+			return resolveInnerBeanDefinition("(inner bean)", bd, beanName, beanDefinition, property);
 		}
 		if (value instanceof RuntimeBeanReference) {
 			var ref:RuntimeBeanReference = value;
-			return resolveReference(valueName, ref, beanName, beanDefinition);
+			return resolveReference(valueName, ref, beanName, beanDefinition, property);
 		}
 		if (value instanceof ManagedArray) {
 			return resolveManagedArray(valueName, value);
@@ -647,14 +685,20 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * @param beanName the name of the bean holding the inner bean definition
 	 * @param beanDefinition the bean definition of the bean holding the inner bean
 	 * definition
+	 * @param property the property to set the value of if the given bean
+	 * definition defines a bean that needs to be set to a property before its property
+	 * values are applied
+	 * @see #createBean
+	 * @see BeanDefinition#getPopulateMode
 	 */
-	private function resolveInnerBeanDefinition(innerBeanName:String, innerBeanDefinition:BeanDefinition, beanName:String, beanDefinition:BeanDefinition) {
+	private function resolveInnerBeanDefinition(innerBeanName:String, innerBeanDefinition:BeanDefinition,
+			beanName:String, beanDefinition:BeanDefinition, property:PropertyAccess) {
 		var mergedInnerBeanDefinition:RootBeanDefinition = getMergedBeanDefinition(innerBeanName, false, innerBeanDefinition);
-		var innerBean = createBean(innerBeanName, mergedInnerBeanDefinition, null);
+		var innerBean = createBean(innerBeanName, mergedInnerBeanDefinition, property);
 		if (mergedInnerBeanDefinition.isSingleton()) {
 			registerDependentBean(innerBeanName, beanName);
 		}
-		return getBeanForSingleton(innerBeanName, innerBean);
+		return getBeanForSingleton(innerBeanName, innerBean, property);
 	}
 	
 	/**
@@ -664,8 +708,14 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * @param reference the reference to resolve
 	 * @param beanName the name of the bean the reference is resolved for
 	 * @param beanDefinition the bean definition of the bean
+	 * @param property the property to set the value of if the given bean
+	 * reference references a bean that needs to be set to a property before its
+	 * property values are applied
+	 * @see #getBeanByName
+	 * @see BeanDefinition#getPopulateMode
 	 */
-	private function resolveReference(valueName:String, reference:RuntimeBeanReference, beanName:String, beanDefinition:BeanDefinition) {
+	private function resolveReference(valueName:String, reference:RuntimeBeanReference,
+			beanName:String, beanDefinition:BeanDefinition, property:PropertyAccess) {
 		try {
 			if (reference.isToParent()) {
 				if (parentBeanFactory == null) {
@@ -673,13 +723,13 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 							beanName, "Can't resolve reference to bean '" + reference.getBeanName() +
 							"' in parent factory: no parent factory available", this, arguments);
 				}
-				return parentBeanFactory.getBean(reference.getBeanName());
+				return parentBeanFactory.getBeanByName(reference.getBeanName(), property);
 			}
 			else {
 				if (beanDefinition.isSingleton()) {
 					registerDependentBean(reference.getBeanName(), beanName);
 				}
-				return getBeanByName(reference.getBeanName());
+				return getBeanByName(reference.getBeanName(), property);
 			}
 		}
 		catch (exception:org.as2lib.bean.BeanException) {
@@ -697,7 +747,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 */
 	private function resolveManagedArray(valueName:String, managedArray:ManagedArray):Array {
 		for (var i:Number = 0; i < managedArray.length; i++) {
-			managedArray[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, managedArray[i]);
+			managedArray[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX +
+					i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, managedArray[i]);
 		}
 		return managedArray;
 	}
@@ -711,7 +762,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	private function resolveManagedList(valueName:String, managedList:ManagedList):List {
 		var values:Array = managedList.toArray();
 		for (var i:Number = 0; i < values.length; i++) {
-			values[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, values[i]);
+			values[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX +
+					i + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, values[i]);
 		}
 		return managedList;
 	}
@@ -727,7 +779,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var values:Array = managedMap.getValues();
 		for (var i:Number = 0; i < keys.length; i++) {
 			keys[i] = resolveValue(valueName, keys[i]);
-			values[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX + keys[i] + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, values[i]);
+			values[i] = resolveValue(valueName + AbstractBeanWrapper.PROPERTY_KEY_PREFIX +
+					keys[i] + AbstractBeanWrapper.PROPERTY_KEY_SUFFIX, values[i]);
 		}
 		return managedMap;
 	}
@@ -765,7 +818,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			invokeInitMethods(beanName, bean, mergedBeanDefinition);
 		}
 		catch (exception) {
-			throw (new BeanCreationException(beanName, "Invocation of init method failed.", this, arguments)).initCause(exception);
+			throw (new BeanCreationException(beanName, "Invocation of init method failed.",
+					this, arguments)).initCause(exception);
 		}
 		bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
 		return bean;
@@ -778,8 +832,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			result = beanProcessor.postProcessBeforeInitialization(result, beanName);
 			if (result == null) {
 				throw new BeanCreationException(beanName,
-						"postProcessBeforeInitialization method of BeanPostProcessor [" + beanProcessor +
-						"] returned 'null' for bean [" + result + "] with name [" + beanName + "]", this, arguments);
+						"postProcessBeforeInitialization method of BeanPostProcessor [" + 
+						beanProcessor + "] returned 'null' for bean [" + result + "] with name [" +
+						beanName + "]", this, arguments);
 			}
 		}
 		return result;
@@ -840,8 +895,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			result = beanProcessor.postProcessAfterInitialization(result, beanName);
 			if (result == null) {
 				throw new BeanCreationException(beanName,
-						"postProcessAfterInitialization method of BeanPostProcessor [" + beanProcessor +
-						"] returned 'null' for bean [" + result + "] with name [" + beanName + "]", this, arguments);
+						"postProcessAfterInitialization method of BeanPostProcessor [" +
+						beanProcessor + "] returned 'null' for bean [" + result + "] with name [" +
+						beanName + "]", this, arguments);
 			}
 		}
 		return result;
@@ -927,14 +983,15 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 					}
 					else {
 						throw new NoSuchBeanDefinitionException(cbd.getParentName(),
-								"Parent name '" + cbd.getParentName() + "' is equal to bean name '" + beanName +
-								"': cannot be resolved without a default bean factory parent.", this, arguments);
+								"Parent name '" + cbd.getParentName() + "' is equal to bean name '" +
+								beanName + "': cannot be resolved without a default bean factory parent.",
+								this, arguments);
 					}
 				}
 			}
 			catch (exception:org.as2lib.bean.factory.NoSuchBeanDefinitionException) {
-				throw (new BeanDefinitionStoreException(beanName, "Could not resolve parent bean definition '" +
-						cbd.getParentName() + "'.", this, arguments)).initCause(exception);
+				throw (new BeanDefinitionStoreException(beanName, "Could not resolve parent bean " +
+						"definition '" + cbd.getParentName() + "'.", this, arguments)).initCause(exception);
 			}
 			rbd = pbd.clone();
 			rbd.override(cbd);
@@ -947,7 +1004,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			}
 			return rbd;
 		}
-		throw new BeanDefinitionStoreException(beanName, "Definition is neither a root bean definition nor a child bean definition.", this, arguments);
+		throw new BeanDefinitionStoreException(beanName, "Definition is neither a root bean " +
+				"definition nor a child bean definition.", this, arguments);
 	}
 	
 	/**
@@ -1065,7 +1123,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		return false;
 	}
 	
-	public function getBeanByName(name:String) {
+	public function getBeanByName(name:String, property:PropertyAccess) {
 		var beanName:String = transformBeanName(name);
 		if (singletonCache.containsKey(beanName)) {
 			var singleton = singletonCache.get(beanName);
@@ -1080,7 +1138,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 					logger.debug("Returning cached instance of singleton bean '" + beanName + "'");
 				}*/
 			}
-			return getBeanForSingleton(name, singleton);
+			return getBeanForSingleton(name, singleton, property);
 		}
 		// Fail if we're already creating this singleton instance:
 		// We're assumably within a circular reference.
@@ -1097,7 +1155,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			currentlyInCreation[beanName] = true;
 			var bean;
 			try {
-				bean = createBean(beanName, beanDefinition);
+				bean = createBean(beanName, beanDefinition, property);
 				singletonCache.put(beanName, bean);
 			}
 			catch (exception:org.as2lib.bean.BeanException) {
@@ -1110,13 +1168,13 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			finally {
 				delete currentlyInCreation[beanName];
 			}
-			return getBeanForSingleton(name, bean);
+			return getBeanForSingleton(name, bean, property);
 		}
-		return createBean(beanName, beanDefinition);
+		return createBean(beanName, beanDefinition, property);
 	}
 	
-	public function getBeanByNameAndType(name:String, requiredType:Function) {
-		var bean = getBeanByName(name);
+	public function getBeanByNameAndType(name:String, requiredType:Function, property:PropertyAccess) {
+		var bean = getBeanByName(name, property);
 		if (requiredType != null) {
 			if (!(bean instanceof requiredType)) {
 				throw new BeanNotOfRequiredTypeException(name, requiredType, bean.__constructor__, this, arguments);
@@ -1246,8 +1304,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	
 	public function registerSingleton(beanName:String, singleton):Void {
 		if (singletonCache.containsKey(beanName)) {
-			throw new BeanDefinitionStoreException(null, "Could not register singleton [" + singleton +
-					"] under bean name '" + beanName + "': there is already singleton [" + 
+			throw new BeanDefinitionStoreException(null, "Could not register singleton [" +
+					singleton + "] under bean name '" + beanName + "': there is already singleton [" + 
 					singletonCache.get(beanName) + " bound.", this, arguments);
 		}
 		singletonCache.put(beanName, singleton);
@@ -1275,8 +1333,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	
 	public function registerAlias(beanName:String, alias:String):Void {
 		if (aliasMap.containsKey(alias)) {
-			throw new BeanDefinitionStoreException(null, "Cannot register alias '" + alias + "' for bean name '" +
-					beanName + "': it is already registered for bean name '" + aliasMap.get(alias) + "'.", this, arguments);
+			throw new BeanDefinitionStoreException(null, "Cannot register alias '" + alias +
+					"' for bean name '" + beanName + "': it is already registered for bean name '" +
+					aliasMap.get(alias) + "'.", this, arguments);
 		}
 		aliasMap.put(alias, beanName);
 	}
@@ -1532,8 +1591,8 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			if (!containsSingleton(beanName) && containsBeanDefinition(beanName)) {
 				var beanDefinition:RootBeanDefinition = getMergedBeanDefinition(beanName, false);
 				if (!beanDefinition.isAbstract() && beanDefinition.isSingleton() && !beanDefinition.isLazyInit()) {
-					if (ClassUtil.isImplementationOf(beanDefinition.getBeanClass(), FactoryBean) &&
-							beanDefinition.hasBeanClass()) {
+					if (beanDefinition.hasBeanClass() &&
+							ClassUtil.isImplementationOf(beanDefinition.getBeanClass(), FactoryBean)) {
 						var factory:FactoryBean = getBeanByName(FACTORY_BEAN_PREFIX + beanName);
 						if (factory.isSingleton()) {
 							getBeanByName(beanName);

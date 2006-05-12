@@ -16,6 +16,7 @@
 
 import org.as2lib.bean.factory.DisposableBean;
 import org.as2lib.bean.factory.InitializingBean;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.AbstractOperationException;
 
@@ -32,7 +33,8 @@ import org.as2lib.env.except.AbstractOperationException;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.config.AbstractFactoryBean extends BasicClass implements InitializingBean, DisposableBean {
+class org.as2lib.bean.factory.config.AbstractFactoryBean extends BasicClass implements
+		InitializingBean, DisposableBean {
 	
 	/** Is the wrapped object a singleton? */
 	private var singleton:Boolean;
@@ -68,7 +70,7 @@ class org.as2lib.bean.factory.config.AbstractFactoryBean extends BasicClass impl
 		}
 	}
 	
-	public function getObject(Void):Object {
+	public function getObject(property:PropertyAccess) {
 		if (singleton) {
 			return singletonInstance;
 		}
@@ -94,7 +96,8 @@ class org.as2lib.bean.factory.config.AbstractFactoryBean extends BasicClass impl
 	 * @throws Error if an exception occured during object creation
 	 */
 	private function createInstance(Void) {
-		throw new AbstractOperationException("This method is marked as abstract and must be overridden by sub-classes.", this, arguments);
+		throw new AbstractOperationException("This method is marked as abstract and must be " +
+				"overridden by sub-classes.", this, arguments);
 		return null;
 	}
 	

@@ -17,6 +17,7 @@
 import org.as2lib.bean.factory.BeanNameAware;
 import org.as2lib.bean.factory.FactoryBean;
 import org.as2lib.bean.factory.InitializingBean;
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.reflect.ClassNotFoundException;
@@ -69,7 +70,8 @@ import org.as2lib.util.MethodUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClass implements FactoryBean, BeanNameAware, InitializingBean {
+class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClass implements
+		FactoryBean, BeanNameAware, InitializingBean {
 	
 	/** Marks the return value as being {@code null} or {@code undefined}. */
 	public static var VOID:Object = new Object();
@@ -241,12 +243,14 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	
 	public function afterPropertiesSet(Void):Void {
 		if (targetClass != null && targetBean != null) {
-			throw new IllegalArgumentException("Specify either 'targetClass' or 'targetBean', not both.", this, arguments);
+			throw new IllegalArgumentException("Specify either 'targetClass' or 'targetBean', " +
+					"not both.", this, arguments);
 		}
 		if (targetClass == null && targetBean == null) {
 			if (targetMethod != null) {
 				throw new IllegalArgumentException(
-					"Specify 'targetClass' or 'targetBean' in combination with 'targetMethod'.", this, arguments);
+					"Specify 'targetClass' or 'targetBean' in combination with 'targetMethod'.",
+							this, arguments);
 			}
 			// If no other property specified, consider bean name as static variable expression.
 			if (staticMethod == null) {
@@ -254,14 +258,16 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 			}
 			var lastDotIndex:Number = staticMethod.lastIndexOf(".");
 			if (lastDotIndex == -1 || lastDotIndex == staticMethod.length) {
-				throw new IllegalArgumentException("'staticMethod' must be a fully qualified class plus method name: " +
-						"e.g. 'example.MyExampleClass.myExampleMethod'.", this, arguments);
+				throw new IllegalArgumentException("'staticMethod' must be a fully qualified " +
+						"class plus method name: e.g. 'example.MyExampleClass.myExampleMethod'.",
+						this, arguments);
 			}
 			var className:String = staticMethod.substring(0, lastDotIndex);
 			var methodName:String = staticMethod.substring(lastDotIndex + 1);
 			targetClass = eval("_global." + className);
 			if (targetClass == null) {
-				throw new ClassNotFoundException("Class with name '" + className + "' could not be found.", this, arguments);
+				throw new ClassNotFoundException("Class with name '" + className + "' could not " +
+						"be found.", this, arguments);
 			}
 			targetMethod = methodName;
 		}
@@ -307,9 +313,10 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	 * returns {@link #VOID} if the method returns {@code null} or has a void return type,
 	 * since factory beans must return a result.
 	 * 
+	 * @param property not used by this factory bean
 	 * @return the result of the method invocation
 	 */
-	public function getObject(Void) {
+	public function getObject(property:PropertyAccess) {
 		if (singleton) {
 			// Singleton: return shared object.
 			return singletonObject;

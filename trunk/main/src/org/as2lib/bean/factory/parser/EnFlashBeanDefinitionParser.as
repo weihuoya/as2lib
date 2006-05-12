@@ -29,6 +29,8 @@ import org.aswing.geom.Point;
  */
 class org.as2lib.bean.factory.parser.EnFlashBeanDefinitionParser extends UiBeanDefinitionParser {
 	
+	public static var DEFAULT_PROPERTY:String = "item";
+	
 	/**
 	 * Constructs a new {@code XmlBeanDefinitionParser} instance.
 	 * 
@@ -37,6 +39,12 @@ class org.as2lib.bean.factory.parser.EnFlashBeanDefinitionParser extends UiBeanD
 	 */
 	public function EnFlashBeanDefinitionParser(registry:BeanDefinitionRegistry) {
 		super(registry);
+		setDefaultProperty(DEFAULT_PROPERTY);
+		setDefaultPopulate(POPULATE_AFTER_VALUE);
+	}
+	
+	private function getPopulateValue(Void):String {
+		return POPULATE_BEFORE_VALUE;
 	}
 	
 }

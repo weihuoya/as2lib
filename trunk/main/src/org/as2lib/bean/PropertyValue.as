@@ -62,6 +62,15 @@ class org.as2lib.bean.PropertyValue extends BasicClass {
 	}
 	
 	/**
+	 * Sets the value to set for the property.
+	 * 
+	 * @param value the value to set for the property
+	 */
+	public function setValue(value):Void {
+		this.value = value;
+	}
+	
+	/**
 	 * Returns the type to convert the value to.
 	 * 
 	 * @return the type to convert the value to

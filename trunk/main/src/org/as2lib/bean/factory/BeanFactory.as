@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicInterface;
 
 /**
@@ -108,15 +109,24 @@ interface org.as2lib.bean.factory.BeanFactory extends BasicInterface {
 	 * beans.
 	 * 
 	 * <p>This method delegates to the parent factory if the bean cannot be found in
-	 * this factory. 
+	 * this factory.
+	 * 
+	 * <p>If the populate mode of the bean with the given name is set to 'populate
+	 * afterwards' and a property is given, the bean will be instantiated, then the
+	 * given property will be intialized with the bean instance and after that the
+	 * bean instance will be populated, which means that its properties will be applied
+	 * to it. 
 	 * 
 	 * @param name the name of the bean to return
+	 * @param property the property to initialize with the returned bean instance
+	 * if the bean's populate mode is set to 'populate afterwards'
 	 * @return the bean instance
 	 * @throws NoSuchBeanDefinitionException if there is no bean definition with the
 	 * specified name 
      * @throws BeanException if the bean could not be obtained
+     * @see BeanDefinition#getPopulateMode
 	 */
-	public function getBeanByName(name:String);
+	public function getBeanByName(name:String, property:PropertyAccess);
 	
 	/**
 	 * Returns an instance (possibly shared or independent) of the given bean name.
@@ -125,15 +135,24 @@ interface org.as2lib.bean.factory.BeanFactory extends BasicInterface {
 	 * safety by throwing an exception if the bean is not of the required type. This
 	 * means that class cast errors will not happen when casting the result.
 	 * 
+	 * <p>If the populate mode of the bean with the given name is set to 'populate
+	 * afterwards' and a property is given, the bean will be instantiated, then the
+	 * given property will be intialized with the bean instance and after that the
+	 * bean instance will be populated, which means that its properties will be applied
+	 * to it.
+	 * 
 	 * @param name the name of the bean to return
 	 * @param requiredType the type the bean must match or {@code null} for any match
+	 * @param property the property to initialize with the returned bean instance
+	 * if the bean's populate mode is set to 'populate afterwards'
 	 * @return an instance of the bean
 	 * @throws BeanNotOfRequiredTypeException if the bean is not of the required type
 	 * @throws NoSuchBeanDefinitionException if there is no bean definition for the
 	 * given name
 	 * @throws BeanException if the bean could not be created
+	 * @see BeanDefinition#setPopulateMode
 	 */
-	public function getBeanByNameAndType(name:String, requiredType:Function);
+	public function getBeanByNameAndType(name:String, requiredType:Function, property:PropertyAccess);
 	
 	/**
 	 * Determines the type of the bean with the given name. More specifically, checks
