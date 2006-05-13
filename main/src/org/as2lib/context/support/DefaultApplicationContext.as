@@ -59,7 +59,7 @@ class org.as2lib.context.support.DefaultApplicationContext extends AbstractAppli
 	/**
 	 * Creates the bean factory for this context.
 	 * 
-	 * <p>Default implementation creates a {@link DefaultListableBeanFactory} with the
+	 * <p>Default implementation creates a {@link DefaultBeanFactory} with the
 	 * internal bean factory of this context's parent as parent bean factory.
 	 * 
 	 * <p>Can be overridden in subclasses.
