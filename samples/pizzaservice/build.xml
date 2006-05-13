@@ -19,8 +19,8 @@
   <property name="logging.xml" location="${context.dir}/logging.xml"/>
   <property name="applicationContext.xml" location="${context.dir}/applicationContext.xml"/>
   <property name="view.xml" location="${view.dir}/view.xml"/>
-  <property name="orderForm.xml" location="${view.dir}/orderForm.xml"/>
-  <property name="viewOrdersForm.xml" location="${view.dir}/viewOrdersForm.xml"/>
+  <property name="orderForm.xml" location="${view.dir}/OrderForm.xml"/>
+  <property name="viewOrdersForm.xml" location="${view.dir}/ViewOrdersForm.xml"/>
   
   <property name="pizza.swf" location="${build.dir}/pizza.swf"/>
   
@@ -31,7 +31,9 @@
     <copy todir="${build.dir}">
       <fileset dir="${context.dir}">
         <include name="**/*.xml"/>
+        <include name="**/*.css"/>
         <include name="**/*.properties"/>
+        <include name="**/*.swf"/>
       </fileset>
     </copy>
     <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${pizza.swf}" header="445:360:31"
