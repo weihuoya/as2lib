@@ -1,0 +1,78 @@
+<?xml version="1.0"?>
+
+<beans xmlns:ef="com.asual.enflash.ui">
+	
+	<bean id="controller" class="org.as2lib.sample.pizza.view.enflash.EnFlashOrderForm">
+		<controller><ref parent="controller"/></controller>
+		<lookup-method name="getNameTextInput" bean="nameTextInput"/>
+		<lookup-method name="getQuantityTextInput" bean="quantityTextInput"/>
+		<lookup-method name="getSizeComboBox" bean="sizeComboBox"/>
+		<lookup-method name="getCrustComboBox" bean="crustComboBox"/>
+		<lookup-method name="getToppingList" bean="toppingList"/>
+		<lookup-method name="getOrderTicketList" bean="orderTicketList"/>
+		<lookup-method name="getAddButton" bean="addButton"/>
+		<lookup-method name="getRemoveButton" bean="removeButton"/>
+		<lookup-method name="getPlaceOrderButton" bean="placeOrderButton"/>
+		<lookup-method name="getProgressBar" bean="progressBar"/>
+	</bean>
+	
+	<ef:ScrollPane id="orderForm">
+		<container>
+			<ef:Container rows="53%,35%,12%" default-property="pane">
+				<ef:ScrollPane>
+					<container>
+						<ef:Container cols="30%,30%,40%" default-property="pane">
+							<ef:ScrollPane>
+								<ef:Label value="{messageSource.message[label.name]}"/>
+								<ef:TextInput id="nameTextInput" onchange="d{controller.onNameChanged}"/>
+							</ef:ScrollPane>
+							<ef:ScrollPane>
+								<ef:Label value="{messageSource.message[label.quantity]}"/>
+								<ef:TextInput id="quantityTextInput" value="1"/>
+								<ef:Label value="{messageSource.message[label.size]}"/>
+								<ef:ComboBox id="sizeComboBox">
+									<ef:ListItem value="{messageSource.message[size.small]}"/>
+									<ef:ListItem value="{messageSource.message[size.medium]}"/>
+									<ef:ListItem value="{messageSource.message[size.large]}"/>
+									<ef:ListItem value="{messageSource.message[size.family]}"/>
+								</ef:ComboBox>
+								<ef:Label value="{messageSource.message[label.crust]}"/>
+								<ef:ComboBox id="crustComboBox">
+									<ef:ListItem value="{messageSource.message[crust.thin]}"/>
+									<ef:ListItem value="{messageSource.message[crust.deepDish]}"/>
+									<ef:ListItem value="{messageSource.message[crust.stuffed]}"/>
+								</ef:ComboBox>
+							</ef:ScrollPane>
+							<ef:ScrollPane>
+								<ef:Label value="{messageSource.message[label.toppings]}"/>
+								<ef:ListBox id="toppingList" onchange="d{controller.onToppingsChanged}">
+									<ef:ListItem value="{messageSource.message[toppings.sausage]}"/>
+									<ef:ListItem value="{messageSource.message[toppings.pepperoni]}"/>
+									<ef:ListItem value="{messageSource.message[toppings.onions]}"/>
+									<ef:ListItem value="{messageSource.message[toppings.mushrooms]}"/>
+									<ef:ListItem value="{messageSource.message[toppings.tomatoes]}"/>
+									<ef:ListItem value="{messageSource.message[toppings.peppers]}"/>
+									<ef:ListItem value="{messageSource.message[toppings.olives]}"/>
+									<ef:ListItem value="{messageSource.message[toppings.garlic]}"/>
+								</ef:ListBox>
+								<ef:Button id="addButton" onrelease="d{controller.addOrderItem}"
+										value="{messageSource.message[button.add]}"/>
+							</ef:ScrollPane>
+						</ef:Container>
+					</container>
+				</ef:ScrollPane>
+				<ef:ScrollPane>
+					<ef:Label value="{messageSource.message[label.orderTicket]}"/>
+					<ef:ListBox id="orderTicketList"/>
+				</ef:ScrollPane>
+				<ef:ScrollPane>
+					<ef:Button id="removeButton" onrelease="d{controller.removeOrderItem}"
+							value="{messageSource.message[button.remove]}"/>
+					<ef:Button id="placeOrderButton" onrelease="d{controller.placeOrder}"
+							value="{messageSource.message[button.placeOrder]}"/>
+				</ef:ScrollPane>
+			</ef:Container>
+		</container>
+	</ef:ScrollPane>
+	
+</beans>

@@ -42,13 +42,12 @@
 			<Label id="statusText" selectable="false" width="200" height="25"/>
 			<ProgressBar id="progressBar" hidden="true" width="100" height="25"/>
 		</HBox>
-		<orderForm>
-			<!-- <OrderForm id="orderForm"/> -->
-			<Import id="orderForm" beanDefinitionUri="actionstep/orderForm.xml"/>
-		</orderForm>
-		<viewOrdersForm>
-			<Import id="viewOrdersForm" beanDefinitionUri="actionstep/viewOrdersForm.xml"/>
-		</viewOrdersForm>
+		<orderForm>b{orderForm}</orderForm>
+		<viewOrdersForm>b{viewOrdersForm}</viewOrdersForm>
 	</bean>
+	
+	<Import id="orderForm" targetBeanName="orderForm" beanDefinitionUri="actionstep/orderForm.xml"/>
+	
+	<Import id="viewOrdersForm" targetBeanName="viewOrdersForm" beanDefinitionUri="actionstep/viewOrdersForm.xml"/>
 	
 </beans>
