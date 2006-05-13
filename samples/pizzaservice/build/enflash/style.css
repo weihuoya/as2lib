@@ -1,0 +1,67 @@
+Label {
+	selectable: false;
+	margin: Object(bottom=-0.5);
+}
+Button {
+	w: 10;
+	h: 2;
+}
+TextInput {
+	w: 10;
+	h: 2;
+}
+ComboBox {
+	w: 10;
+	h: 2;
+}
+ListBox {
+	clear: true;
+}
+ScrollPane {
+	minWidth: 0;
+	minHeight: 0;
+	vScrollPolicy: off;
+	hScrollPolicy: off;
+}
+Container {
+	border: false;
+}
+ProgressBar {
+	w: 15.5;
+	visible: false;
+	margin: Object(left=-1);
+}
+
+#contentSplitPane {
+	rows: *,100%;
+	collapsible: 1;
+	collapsed: true;
+}
+
+#orderForm Button {
+	enabled: false;
+}
+#orderForm #toppingList {
+	w: 14;
+	h: 9;
+}
+#orderForm #orderTicketList {
+	h: 7;
+	w: 38;
+}
+#orderForm #quantityTextInput {
+	maxChars: 2;
+}
+
+#viewOrdersForm ListBox {
+	w: 38;
+}
+#viewOrdersForm #orderList {
+	h: 7.8;
+}
+#viewOrdersForm #pizzaList {
+	h: 12;
+}
+#viewOrdersForm #cancelOrderButton {
+	enabled: false;
+}

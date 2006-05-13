@@ -37,12 +37,12 @@
 			<Label id="statusLabel" foreground="v{org.aswing.ASColor.WHITE}"/>
 			<ProgressBar id="progressBar" value="110" visible="false"/>
 		</Panel>
-		<orderForm>
-			<Import id="orderForm" beanDefinitionUri="aswing/orderForm.xml"/>
-		</orderForm>
-		<viewOrdersForm>
-			<Import id="viewOrdersForm" beanDefinitionUri="aswing/viewOrdersForm.xml"/>
-		</viewOrdersForm>
+		<orderForm>b{orderForm}</orderForm>
+		<viewOrdersForm>b{viewOrdersForm}</viewOrdersForm>
 	</bean>
+	
+	<Import id="orderForm" targetBeanName="orderForm" beanDefinitionUri="aswing/orderForm.xml"/>
+	
+	<Import id="viewOrdersForm" targetBeanName="viewOrdersForm" beanDefinitionUri="aswing/viewOrdersForm.xml"/>
 	
 </beans>
