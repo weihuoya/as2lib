@@ -3,16 +3,16 @@
 <beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing" xmlns="*.xml">
 	
 	<chat:Chat id="chat" init-method="init" style="frame">
-		<chatTextArea>b{chatTextArea}</chatTextArea>
-		<messageTextField>b{messageTextField}</messageTextField>
-		<roomList>b{roomList}</roomList>
-		<roomVectorListModel>b{roomVectorListModel}</roomVectorListModel>
-		<userList>b{userList}</userList>
-		<userVectorListModel>b{userVectorListModel}</userVectorListModel>
-		<newRoomWindow>b{newRoomWindow}</newRoomWindow>
-		<enterPasswordWindow>b{enterPasswordWindow}</enterPasswordWindow>
-		<sendPrivateMessageWindow>b{sendPrivateMessageWindow}</sendPrivateMessageWindow>
-		<errorWindow>b{errorWindow}</errorWindow>
+		<chatTextArea>r{chatTextArea}</chatTextArea>
+		<messageTextField>r{messageTextField}</messageTextField>
+		<roomList>r{roomList}</roomList>
+		<roomVectorListModel>r{roomVectorListModel}</roomVectorListModel>
+		<userList>r{userList}</userList>
+		<userVectorListModel>r{userVectorListModel}</userVectorListModel>
+		<newRoomWindow>r{newRoomWindow}</newRoomWindow>
+		<enterPasswordWindow>r{enterPasswordWindow}</enterPasswordWindow>
+		<sendPrivateMessageWindow>r{sendPrivateMessageWindow}</sendPrivateMessageWindow>
+		<errorWindow>r{errorWindow}</errorWindow>
 		<aw:JPanel style="title">
 			<aw:JLabel>{messageSource.message[title.chat]}</aw:JLabel>
 		</aw:JPanel>
@@ -75,13 +75,13 @@
 		</aw:Container>
 	</chat:Chat>
 	
-	<NewRoomWindow id="newRoomWindow" smartFoxClient="b{smartFoxClient}"
+	<NewRoomWindow id="newRoomWindow" smartFoxClient="r{smartFoxClient}"
 			class="org.as2lib.context.support.AsWingApplicationContext"/>
 	
-	<EnterPasswordWindow id="enterPasswordWindow" smartFoxClient="b{smartFoxClient}"
+	<EnterPasswordWindow id="enterPasswordWindow" smartFoxClient="r{smartFoxClient}"
 			class="org.as2lib.context.support.AsWingApplicationContext"/>
 	
-	<SendPrivateMessageWindow id="sendPrivateMessageWindow" smartFoxClient="b{smartFoxClient}"
+	<SendPrivateMessageWindow id="sendPrivateMessageWindow" smartFoxClient="r{smartFoxClient}"
 			class="org.as2lib.context.support.AsWingApplicationContext"/>
 	
 	<ErrorWindow id="errorWindow" class="org.as2lib.context.support.AsWingApplicationContext"/>
