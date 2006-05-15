@@ -208,9 +208,36 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			}
 			var reference:RuntimeBeanReference = RuntimeBeanReference(propertyValue.getValue());
 			if (reference != null) {
+				// TODO Apply extract method refactoring.
 				var pbd:Array = addParentBeanDefinition(parentBeanDefinitions, beanName, beanDefinition);
 				var rn:String = reference.getBeanName();
-				var rb:BeanDefinition = factory.getBeanDefinition(rn, true);
+				var rb:BeanDefinition;
+				if (reference.isToParent()) {
+					var parent:ConfigurableListableBeanFactory = 
+							ConfigurableListableBeanFactory(factory.getParentBeanFactory());
+					if (parent != null) {
+						rb = parent.getBeanDefinition(rn, true);
+					}
+					else {
+						continue;
+					}
+				}
+				else {
+					// TODO Store parent bean definitions also by name to improve performance.
+					var backReference:Boolean = false;
+					for (var j:Number = 0; j < parentBeanDefinitions.length; j++) {
+						if (parentBeanDefinitions[j] == rn) {
+							backReference = true;
+							break;
+						}
+					}
+					if (!backReference) {
+						rb = factory.getBeanDefinition(rn, true);
+					}
+					else {
+						continue;
+					}
+				}
 				applyStyleSheet(rb, rn, pbd);
 			}
 		}
