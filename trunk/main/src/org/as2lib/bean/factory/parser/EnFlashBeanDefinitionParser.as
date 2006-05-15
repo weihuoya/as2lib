@@ -31,6 +31,8 @@ class org.as2lib.bean.factory.parser.EnFlashBeanDefinitionParser extends UiBeanD
 	
 	public static var DEFAULT_PROPERTY:String = "item";
 	
+	public static var EVENT_LISTENER_PREFIX:String = "on";
+	
 	/**
 	 * Constructs a new {@code XmlBeanDefinitionParser} instance.
 	 * 
@@ -45,6 +47,16 @@ class org.as2lib.bean.factory.parser.EnFlashBeanDefinitionParser extends UiBeanD
 	
 	private function getPopulateValue(Void):String {
 		return POPULATE_BEFORE_VALUE;
+	}
+	
+	private function parsePropertyName(propertyElement:XMLNode):String {
+		var result:String = super.parsePropertyName(propertyElement);
+		if (result.indexOf(EVENT_LISTENER_PREFIX) == 0) {
+			if (propertyElement.attributes[ENFORCE_ACCESS_ATTRIBUTE] == null) {
+				propertyElement.attributes[ENFORCE_ACCESS_ATTRIBUTE] = TRUE_VALUE;
+			}
+		}
+		return result;
 	}
 	
 }
