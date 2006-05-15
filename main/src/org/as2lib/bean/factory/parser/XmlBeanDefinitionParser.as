@@ -105,12 +105,14 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var DESTROY_METHOD_ATTRIBUTE:String = "destroy-method";
 	public static var FACTORY_METHOD_ATTRIBUTE:String = "factory-method";
 	public static var FACTORY_BEAN_ATTRIBUTE:String = "factory-bean";
+	public static var INSTANTIATE_WITH_PROPERTY_ATTRIBUTE:String = "instantiate-with-property";
 	
 	public static var CONSTRUCTOR_ARG_ELEMENT:String = "constructor-arg";
 	public static var CONSTRUCTOR_ARGS_ELEMENT:String = "constructor-args";
 	public static var INDEX_ATTRIBUTE:String = "index";
 	public static var TYPE_ATTRIBUTE:String = "type";
 	public static var PROPERTY_ELEMENT:String = "property";
+	public static var ENFORCE_ACCESS_ATTRIBUTE:String = "enforce-access";
 	public static var REF_ATTRIBUTE:String = "ref";
 	public static var VALUE_ATTRIBUTE:String = "value";
 	public static var LOOKUP_METHOD_ELEMENT:String = "lookup-method";
@@ -384,6 +386,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			if (factoryBean != null) {
 				bd.setFactoryBeanName(factoryBean);
 			}
+			var instantiateWithProperty:String = element.attributes[INSTANTIATE_WITH_PROPERTY_ATTRIBUTE];
+			if (instantiateWithProperty != null) {
+				bd.setInstantiateWithProperty(instantiateWithProperty == TRUE_VALUE);
+			}
 			var dependencyCheck:String = element.attributes[DEPENDENCY_CHECK_ATTRIBUTE];
 			if (dependencyCheck == DEFAULT_VALUE || dependencyCheck == null) {
 				dependencyCheck = defaultDependencyCheck;
@@ -642,11 +648,17 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 		if (typeName != null && typeName != "") {
 			type = resolveType(typeName);
 			if (type == null) {
-				throw new BeanDefinitionStoreException(beanName, "Type for type name '" + typeName + "' of property '" + propertyName + "' could not be found.", this, arguments);
+				throw new BeanDefinitionStoreException(beanName, "Type for type name '" + typeName +
+						"' of property '" + propertyName + "' could not be found.",
+						this, arguments);
 			}
 		}
 		var value = parsePropertyValue(element, beanName, "<property> element for property '" + propertyName + "'");
-		var property:PropertyValue = new PropertyValue(propertyName, value, type);
+		var enforceAccess:Boolean;
+		if (element.attributes[ENFORCE_ACCESS_ATTRIBUTE] != null) {
+			enforceAccess = (element.attributes[ENFORCE_ACCESS_ATTRIBUTE] == TRUE_VALUE);
+		}
+		var property:PropertyValue = new PropertyValue(propertyName, value, type, enforceAccess);
 		if (index == null) {
 			propertyValues.addPropertyValueByPropertyValue(property);
 		}
