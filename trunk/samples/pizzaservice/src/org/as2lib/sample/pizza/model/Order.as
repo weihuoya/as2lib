@@ -53,6 +53,10 @@ class org.as2lib.sample.pizza.model.Order extends BasicClass {
 		items.splice(itemIndex, 1);
 	}
 	
+	public function removeItems(Void):Void {
+		items = new Array();
+	}
+	
 	public function toString():String {
 		var result:String = "Order";
 		if (id != null) {
