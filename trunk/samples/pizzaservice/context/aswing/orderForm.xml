@@ -3,17 +3,17 @@
 <beans>
 	
 	<Form id="orderForm" constraints="v{org.aswing.WindowLayout.CONTENT}" class="org.as2lib.sample.pizza.view.aswing.AsWingOrderForm">
-		<controller>b{controller}</controller>
-		<nameTextField>b{nameTextField}</nameTextField>
-		<quantityTextField>b{quantityTextField}</quantityTextField>
-		<sizeComboBox>b{sizeComboBox}</sizeComboBox>
-		<crustComboBox>b{crustComboBox}</crustComboBox>
-		<toppingList>b{toppingList}</toppingList>
-		<orderTicketList>b{orderTicketList}</orderTicketList>
-		<addButton>b{addButton}</addButton>
-		<removeButton>b{removeButton}</removeButton>
-		<placeOrderButton>b{placeOrderButton}</placeOrderButton>
-		<progressBar>b{progressBar}</progressBar>
+		<controller>r{controller}</controller>
+		<nameTextField>r{nameTextField}</nameTextField>
+		<quantityTextField>r{quantityTextField}</quantityTextField>
+		<sizeComboBox>r{sizeComboBox}</sizeComboBox>
+		<crustComboBox>r{crustComboBox}</crustComboBox>
+		<toppingList>r{toppingList}</toppingList>
+		<orderTicketList>r{orderTicketList}</orderTicketList>
+		<addButton>r{addButton}</addButton>
+		<removeButton>r{removeButton}</removeButton>
+		<placeOrderButton>r{placeOrderButton}</placeOrderButton>
+		<progressBar>r{progressBar}</progressBar>
 		<SoftBox>
 			<layout><SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
 			<border><Border/></border>

@@ -1,22 +1,22 @@
 <beans>
 	
 	<Form id="orderForm" class="org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm">
-		<controller>b{controller}</controller>
-		<nameTextField>b{nameTextField}</nameTextField>
-		<quantityStepper>b{quantityStepper}</quantityStepper>
-		<sizeComboBox>b{sizeComboBox}</sizeComboBox>
-		<crustComboBox>b{crustComboBox}</crustComboBox>
-		<toppingList>b{toppingList}</toppingList>
-		<orderTicketList>b{orderTicketList}</orderTicketList>
-		<addButton>b{addButton}</addButton>
-		<removeButton>b{removeButton}</removeButton>
-		<placeOrderButton>b{placeOrderButton}</placeOrderButton>
-		<progressBar>b{progressBar}</progressBar>
+		<controller>r{controller}</controller>
+		<nameTextField>r{nameTextField}</nameTextField>
+		<quantityStepper>r{quantityStepper}</quantityStepper>
+		<sizeComboBox>r{sizeComboBox}</sizeComboBox>
+		<crustComboBox>r{crustComboBox}</crustComboBox>
+		<toppingList>r{toppingList}</toppingList>
+		<orderTicketList>r{orderTicketList}</orderTicketList>
+		<addButton>r{addButton}</addButton>
+		<removeButton>r{removeButton}</removeButton>
+		<placeOrderButton>r{placeOrderButton}</placeOrderButton>
+		<progressBar>r{progressBar}</progressBar>
 		<VBox>
 			<HBox>
 				<FormItem>
 					<Label stringValue="{messageSource.message[label.name]}"/>
-					<TextField id="nameTextField" target="b{orderForm}" action="onNameChanged"/>
+					<TextField id="nameTextField" target="r{orderForm}" action="onNameChanged"/>
 				</FormItem>
 				<VBox>
 					<FormItem>
@@ -52,7 +52,7 @@
 				<VBox>
 					<FormItem>
 						<Label stringValue="{messageSource.message[label.toppings]}"/>
-						<List id="toppingList" multipleSelection="true" target="b{orderForm}" action="onToppingsChanged" width="140" height="120">
+						<List id="toppingList" multipleSelection="true" target="r{orderForm}" action="onToppingsChanged" width="140" height="120">
 							<itemWithLabelData>{messageSource.message[toppings.sausage]}</itemWithLabelData>
 							<itemWithLabelData>{messageSource.message[toppings.pepperoni]}</itemWithLabelData>
 							<itemWithLabelData>{messageSource.message[toppings.onions]}</itemWithLabelData>
@@ -63,7 +63,7 @@
 							<itemWithLabelData>{messageSource.message[toppings.garlic]}</itemWithLabelData>
 						</List>
 					</FormItem>
-					<Button id="addButton" stringValue="{messageSource.message[button.add]}" target="b{orderForm}" action="addOrderItem" enabled="false"/>
+					<Button id="addButton" stringValue="{messageSource.message[button.add]}" target="r{orderForm}" action="addOrderItem" enabled="false"/>
 				</VBox>
 			</HBox>
 			<FormItem>
@@ -73,10 +73,10 @@
 		</VBox>
 		<Button id="removeButton" x="0" y="288" width="85" height="25"
 				title="{messageSource.message[button.remove]}" enabled="false"
-				target="b{orderForm}" action="removeOrderItem"/>
+				target="r{orderForm}" action="removeOrderItem"/>
 		<Button id="placeOrderButton" x="85" y="288" width="85" height="25"
 				title="{messageSource.message[button.placeOrder]}" enabled="false"
-				target="b{orderForm}" action="placeOrder"/>
+				target="r{orderForm}" action="placeOrder"/>
 	</Form>
 	
 </beans>

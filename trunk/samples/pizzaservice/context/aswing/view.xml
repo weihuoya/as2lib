@@ -28,17 +28,17 @@
 	
 	<bean id="view" width="445" height="360" resizable="false"
 			class="org.as2lib.sample.pizza.view.aswing.AsWingView" init-method="show">
-		<controller>b{controller}</controller>
-		<progressBar>b{progressBar}</progressBar>
-		<statusLabel>b{statusLabel}</statusLabel>
+		<controller>r{controller}</controller>
+		<progressBar>r{progressBar}</progressBar>
+		<statusLabel>r{statusLabel}</statusLabel>
 		<Panel constraints="v{org.aswing.WindowLayout.TITLE}" background="v{org.aswing.ASColor.BLACK}" opaque="true">
 			<Button text="{messageSource.message[button.orderForm]}" actionListener="d{view.showOrderForm}"/>
 			<Button text="{messageSource.message[button.viewOrders]}" actionListener="d{view.showViewOrdersForm}"/>
 			<Label id="statusLabel" foreground="v{org.aswing.ASColor.WHITE}"/>
 			<ProgressBar id="progressBar" value="110" visible="false"/>
 		</Panel>
-		<orderForm>b{orderForm}</orderForm>
-		<viewOrdersForm>b{viewOrdersForm}</viewOrdersForm>
+		<orderForm>r{orderForm}</orderForm>
+		<viewOrdersForm>r{viewOrdersForm}</viewOrdersForm>
 	</bean>
 	
 	<Import id="orderForm" targetBeanName="orderForm" beanDefinitionUri="aswing/orderForm.xml"/>
