@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.ConstructorArgumentValues;
 import org.as2lib.bean.factory.support.AbstractBeanFactory;
 import org.as2lib.bean.factory.support.BeanDefinitionValidationException;
@@ -34,7 +35,8 @@ import org.as2lib.env.reflect.ReflectUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass {
+class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass implements
+		BeanDefinition {
 	
 	/**
 	 * Constant that indicates no autowiring at all.
@@ -141,6 +143,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	
 	/** The name of the factory method. */
 	private var factoryMethodName:String;
+	
+	/** Shall this bean be instantiated by means of the enclosing or referencing property? */
+	private var instantiateWithProperty:Boolean;
 	
 	/** The name of the init method. */
 	private var initMethodName:String;
@@ -487,6 +492,22 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	
 	public function getFactoryMethodName(Void):String {
 		return factoryMethodName;
+	}
+	
+	/**
+	 * Sets whether this bean definition shall be instantiated by means of the property
+	 * enclosing or referencing it.
+	 * 
+	 * @param instantiateWithProperty whether this bean definition shall be instantiated
+	 * by means of the property enclosing or referencing it
+	 * @see #isInstantiateWithProperty
+	 */
+	public function setInstantiateWithProperty(instantiateWithProperty:Boolean):Void {
+		this.instantiateWithProperty = instantiateWithProperty;
+	}
+	
+	public function isInstantiateWithProperty(Void):Boolean {
+		return instantiateWithProperty;
 	}
 	
 	/**
