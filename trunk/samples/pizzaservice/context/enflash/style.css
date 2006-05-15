@@ -52,6 +52,9 @@ ProgressBar {
 #orderForm #quantityTextInput {
 	maxChars: 2;
 }
+#orderForm #addButton {
+	w: 14;
+}
 
 #viewOrdersForm ListBox {
 	w: 38;
