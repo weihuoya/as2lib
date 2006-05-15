@@ -187,6 +187,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		methodOverrides = new MethodOverrides();
 		enforceInitMethod = true;
 		enforceDestroyMethod = true;
+		instantiateWithProperty = false;
 	}
 	
 	/**
@@ -200,8 +201,8 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 *       existing ones.
 	 *   <li>Will override initMethodName, destroyMethodName, staticFactoryMethodName
 	 *       and defaultPropertyName if specified.
-	 *   <li>Will always take dependsOn, autowireMode, dependencyCheck, populateMode from
-	 *       the given bean definition.
+	 *   <li>Will always take dependsOn, autowireMode, dependencyCheck, populateMode,
+	 *       instantiateWithProperty from the given bean definition.
 	 *   <li>Will always take styleName and source from the given bean definition.
 	 * </ul>
 	 * 
@@ -216,6 +217,7 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		abstract = beanDefinition.isAbstract();
 		singleton = beanDefinition.isSingleton();
 		lazyInit = beanDefinition.isLazyInit();
+		instantiateWithProperty = beanDefinition.isInstantiateWithProperty();
 		autowireMode = beanDefinition.getAutowireMode();
 		dependencyCheck = beanDefinition.getDependencyCheck();
 		populateMode = beanDefinition.getPopulateMode();
