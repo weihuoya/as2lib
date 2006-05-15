@@ -47,7 +47,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	public static var VARIABLE_RETRIEVAL:String = "v";
 	public static var METHOD_INVOCATION:String = "m";
 	public static var DELEGATE:String = "d";
-	public static var RUNTIME_BEAN_REFERENCE:String = "b";
+	public static var RUNTIME_BEAN_REFERENCE:String = "r";
 	
 	public static var PROPERTY_KEY_SEPARATOR:String = "-";
 	
