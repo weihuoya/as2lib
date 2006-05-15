@@ -3,7 +3,7 @@
 <beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing">
 	
 	<chat:ErrorWindow id="errorWindow" style="window">
-		<messageLabel>b{messageLabel}</messageLabel>
+		<messageLabel>r{messageLabel}</messageLabel>
 		<aw:JPanel style="title">
 			<aw:JLabel>{messageSource.message[title.error]}</aw:JLabel>
 		</aw:JPanel>

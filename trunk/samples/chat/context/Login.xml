@@ -3,11 +3,11 @@
 <beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing">
 	
 	<chat:Login id="login" init-method="init" style="frame">
-		<loginPanel>b{loginPanel}</loginPanel>
-		<userNameTextField>b{userNameTextField}</userNameTextField>
-		<statusTextField>b{statusTextField}</statusTextField>
-		<submitButton>b{submitButton}</submitButton>
-		<clearButton>b{clearButton}</clearButton>
+		<loginPanel>r{loginPanel}</loginPanel>
+		<userNameTextField>r{userNameTextField}</userNameTextField>
+		<statusTextField>r{statusTextField}</statusTextField>
+		<submitButton>r{submitButton}</submitButton>
+		<clearButton>r{clearButton}</clearButton>
 		<aw:JPanel style="title">
 			<aw:JLabel id="statusTextField">{messageSource.message[status.connecting]}</aw:JLabel>
 		</aw:JPanel>

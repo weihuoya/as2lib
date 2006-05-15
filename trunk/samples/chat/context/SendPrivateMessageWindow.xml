@@ -3,7 +3,7 @@
 <beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing">
 	
 	<chat:SendPrivateMessageWindow id="sendPrivateMessageWindow" style="window">
-		<messageTextField>b{messageTextField}</messageTextField>
+		<messageTextField>r{messageTextField}</messageTextField>
 		<aw:JPanel style="title">
 			<aw:JLabel>{messageSource.message[title.sendPrivateMessage]}</aw:JLabel>
 		</aw:JPanel>
