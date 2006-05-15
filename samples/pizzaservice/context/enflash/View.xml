@@ -17,9 +17,9 @@
 	</bean>
 	
 	<bean id="enFlashController" class="org.as2lib.sample.pizza.view.enflash.EnFlashView">
-		<controller>b{controller}</controller>
-		<statusLabel>b{statusLabel}</statusLabel>
-		<progressBar>b{progressBar}</progressBar>
+		<controller>r{controller}</controller>
+		<statusLabel>r{statusLabel}</statusLabel>
+		<progressBar>r{progressBar}</progressBar>
 		<lookup-method name="getContentSplitPane" bean="contentSplitPane"/>
 	</bean>
 	

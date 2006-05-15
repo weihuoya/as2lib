@@ -3,11 +3,11 @@
 <beans>
 	
 	<Form id="viewOrdersForm" constraints="v{org.aswing.WindowLayout.CONTENT}" class="org.as2lib.sample.pizza.view.aswing.AsWingViewOrdersForm">
-		<controller>b{controller}</controller>
-		<orderList>b{orderList}</orderList>
-		<pizzaList>b{pizzaList}</pizzaList>
-		<cancelOrderButton>b{cancelOrderButton}</cancelOrderButton>
-		<progressBar>b{progressBar}</progressBar>
+		<controller>r{controller}</controller>
+		<orderList>r{orderList}</orderList>
+		<pizzaList>r{pizzaList}</pizzaList>
+		<cancelOrderButton>r{cancelOrderButton}</cancelOrderButton>
+		<progressBar>r{progressBar}</progressBar>
 		<SoftBox>
 			<layout><SoftBoxLayout axis="SoftBoxLayout.X_AXIS" gap="10"/></layout>
 			<border><Border/></border>
