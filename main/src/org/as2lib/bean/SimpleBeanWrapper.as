@@ -119,7 +119,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	
 	public function isWritableProperty(propertyName:String):Boolean {
 		if (propertyName == null) {
-			throw new IllegalArgumentException("Cannot find writability status for 'null' property.", this, arguments);
+			throw new IllegalArgumentException("Cannot find writability status for 'null' " +
+					"property.", this, arguments);
 		}
 		if (getNestedPropertySeparatorIndex(propertyName) > -1) {
 			var nestedBeanWrapper:BeanWrapper;
@@ -128,28 +129,21 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 			}
 			catch (exception:org.as2lib.bean.InvalidPropertyException) {
 				// cannot be evaluated, so can't be writable
+				return false;
 			}
 			return nestedBeanWrapper.isWritableProperty(getFinalPath(propertyName));
 		}
-		var tokens:Array = getPropertyNameTokens(propertyName);
-		var methodName:String = findMethodName(SET_PROPERTY_PREFIXES, tokens.actualName);
-		if (methodName != null) {
+		if (mayBeAssociativeArray()) {
 			return true;
 		}
-		try {
-			if (wrappedBean[tokens.actualName] !== undefined) {
-				return true;
-			}
-		}
-		catch (exception) {
-			// ignore exception that may be thrown by __resolve or a Flash property
-		}
-		return false;
+		var tokens:Array = getPropertyNameTokens(propertyName);
+		return isAccessibleProperty(SET_PROPERTY_PREFIXES, tokens.actualName);
 	}
 	
 	public function isReadableProperty(propertyName:String):Boolean {
 		if (propertyName == null) {
-			throw new IllegalArgumentException("Cannot find readability status for 'null' property.", this, arguments);
+			throw new IllegalArgumentException("Cannot find readability status for 'null' " +
+					"property.", this, arguments);
 		}
 		if (getNestedPropertySeparatorIndex(propertyName) > -1) {
 			var nestedBeanWrapper:BeanWrapper;
@@ -158,11 +152,45 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 			}
 			catch (exception:org.as2lib.bean.InvalidPropertyException) {
 				// cannot be evaluated, so can't be readable
+				return false;
 			}
 			return nestedBeanWrapper.isReadableProperty(getFinalPath(propertyName));
 		}
+		if (mayBeAssociativeArray()) {
+			return true;
+		}
 		var tokens:Array = getPropertyNameTokens(propertyName);
-		return (findMethodName(GET_PROPERTY_PREFIXES, tokens.actualName) != null);
+		return isAccessibleProperty(GET_PROPERTY_PREFIXES, tokens.actualName);
+	}
+	
+	/**
+	 * Returns whether the wrapped bean may be an associative array.
+	 * 
+	 * @return {@code true} if the wrapped bean may be an associative array else
+	 * {@code false}
+	 */
+	private function mayBeAssociativeArray(Void):Boolean {
+		return (wrappedBean.__proto__ == Object.prototype || wrappedBean instanceof Array);
+	}
+	
+	/**
+	 * Returns whether the property with the given name and prefixes is accessible on
+	 * the wrapped bean.
+	 */
+	private function isAccessibleProperty(prefixes:Array, propertyName:String):Boolean {
+		var methodName:String = findMethodName(prefixes, propertyName);
+		if (methodName != null) {
+			return true;
+		}
+		try {
+			if (wrappedBean[propertyName] !== undefined) {
+				return true;
+			}
+		}
+		catch (exception) {
+			// ignore exception that may be thrown by __resolve or a Flash property
+		}
+		return false;
 	}
 	
 	/**
@@ -262,7 +290,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		// Lookup cached sub-BeanWrapper, create new one if not found.
 		var nestedBeanWrapper:SimpleBeanWrapper = nestedBeanWrappers.get(canonicalName);
 		if (nestedBeanWrapper == null || nestedBeanWrapper.getWrappedBean() != propertyValue) {
-			nestedBeanWrapper = new SimpleBeanWrapper(propertyValue, nestedPath + canonicalName + NESTED_PROPERTY_SEPARATOR, this);
+			nestedBeanWrapper = new SimpleBeanWrapper(propertyValue,
+					nestedPath + canonicalName + NESTED_PROPERTY_SEPARATOR, this);
 			// Inherit all type-specific PropertyEditors.
 			//copyDefaultPropertyValueConverters(nestedBeanWrapper);
 			copyCustomPropertyValueConverters(nestedBeanWrapper, canonicalName);
@@ -450,8 +479,9 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 			}
 			catch (exception) {
-				throw (new MethodInvocationException(wrappedBean, propertyName, "Method invocation " +
-						"of method '" + methodName + "' failed.", this, arguments)).initCause(exception);
+				throw (new MethodInvocationException(wrappedBean, propertyName, "Method " +
+						"invocation of method '" + methodName + "' failed.",
+						this, arguments)).initCause(exception);
 			}
 		}
 		else {
@@ -459,13 +489,18 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				if (wrappedBean[tokens.actualName] !== undefined) {
 					value = wrappedBean[tokens.actualName];
 				}
+				else if (mayBeAssociativeArray()) {
+					value = wrappedBean[tokens.actualName];
+				}
 				else {
-					throw new NotReadablePropertyException(rootBean, nestedPath + propertyName, this, arguments);
+					throw new NotReadablePropertyException(rootBean, nestedPath + propertyName,
+							this, arguments);
 				}
 			}
 			catch (exception) {
-				throw (new PropertyAccessException(wrappedBean, propertyName, "Variable access to " +
-						"variable '" + tokens.actualName + "' failed.", this, arguments)).initCause(exception);
+				throw (new PropertyAccessException(wrappedBean, propertyName, "Variable access " +
+						"to variable '" + tokens.actualName + "' failed.",
+						this, arguments)).initCause(exception);
 			}
 		}
 		if (keys != null) {
@@ -477,7 +512,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					}
 					throw new NullValueInNestedPathException(rootBean, nestedPath + propertyName,
 							"Cannot access indexed value of property referenced in indexed " +
-							"property path '" + propertyName + "': returned 'null'.", this, arguments);
+							"property path '" + propertyName + "': returned 'null'.",
+							this, arguments);
 				}
 				// Array or Object may be associative arrays
 				if (value instanceof Array || value.__proto__ == Object.prototype) {
@@ -491,7 +527,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					var list:List = value;
 					if (isNaN(key)) {
 						throw new InvalidPropertyException(rootBean, nestedPath + propertyName,
-								"Invalid index in property path '" + propertyName + "'", this, arguments);
+								"Invalid index in property path '" + propertyName + "'",
+								this, arguments);
 					}
 					value = list.get(Number(key));
 				}
@@ -509,7 +546,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					}
 					throw new InvalidPropertyException(rootBean, nestedPath + propertyName,
 							"Property referenced in indexed property path '" + propertyName +
-							"' is neither an Array nor a List nor a Map; returned value was [" + value + "].", this, arguments);
+							"' is neither an Array nor a List nor a Map; returned value was [" +
+									value + "].", this, arguments);
 				}
 			}
 		}
@@ -518,7 +556,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	
 	public function setPropertyValue(propertyValue:PropertyValue):Void {
 		var propertyName:String = propertyValue.getName();
-		var value = convertPropertyValue(propertyValue.getName(), propertyValue.getValue(), propertyValue.getType());
+		var value = convertPropertyValue(propertyValue.getName(), propertyValue.getValue(),
+				propertyValue.getType());
 		if (getNestedPropertySeparatorIndex(propertyName) > -1) {
 			var nestedBeanWrapper:BeanWrapper;
 			try {
@@ -526,9 +565,11 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 			}
 			catch (exception:org.as2lib.bean.NotReadablePropertyException) {
 				throw (new NotWritablePropertyException(rootBean, nestedPath + propertyName,
-						"Nested property in path '" + propertyName + "' does not exist.", this, arguments)).initCause(exception);
+						"Nested property in path '" + propertyName + "' does not exist.",
+						this, arguments)).initCause(exception);
 			}
-			nestedBeanWrapper.setPropertyValue(new PropertyValue(getFinalPath(propertyName), value, propertyValue.getType()));
+			nestedBeanWrapper.setPropertyValue(new PropertyValue(getFinalPath(propertyName),
+					value, propertyValue.getType()));
 			return;
 		}
 		var tokens:Array = getPropertyNameTokens(propertyName);
@@ -552,23 +593,32 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				}
 			}
 			catch (exception) {
-				throw (new MethodInvocationException(wrappedBean, propertyName, "Method invocation " +
-						"of method '" + methodName + "' failed.", this, arguments)).initCause(exception);
+				throw (new MethodInvocationException(wrappedBean, propertyName, "Method " +
+						"invocation of method '" + methodName + "' failed.",
+						this, arguments)).initCause(exception);
 			}
 		}
 		else {
 			try {
-				if (wrappedBean[tokens.actualName] !== undefined) {
+				if (propertyValue.isEnforceAccess()) {
+					wrappedBean[tokens.actualName] = value; 
+				}
+				else if (wrappedBean[tokens.actualName] !== undefined) {
+					wrappedBean[tokens.actualName] = value;
+				}
+				else if (mayBeAssociativeArray()) {
 					wrappedBean[tokens.actualName] = value;
 				}
 				else {
 					throw new NotWritablePropertyException(rootBean, nestedPath + propertyName,
-							"Bean property '" + propertyName + "' is not writable.", this, arguments);
+							"Bean property '" + propertyName + "' is not writable.",
+							this, arguments);
 				}
 			}
 			catch (exception) {
-				throw (new PropertyAccessException(wrappedBean, propertyName, "Variable access to " +
-						"variable '" + tokens.actualName + "' failed.", this, arguments)).initCause(exception);
+				throw (new PropertyAccessException(wrappedBean, propertyName, "Variable access " +
+						"to variable '" + tokens.actualName + "' failed.",
+						this, arguments)).initCause(exception);
 			}
 		}
 	}
@@ -613,7 +663,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					var array:ManagedArray = value;
 					var elementType:Function = array.getElementType();
 					for (var i:Number = 0; i < array.length; i++) {
-						var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i + PROPERTY_KEY_SUFFIX, array[i], elementType);
+						var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i +
+								PROPERTY_KEY_SUFFIX, array[i], elementType);
 						result.push(element);
 					}
 					return result;
@@ -621,35 +672,37 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				if (value instanceof ManagedList) {
 					if (type == null) {
 						throw new TypeMismatchException(wrappedBean, name, value, List,
-								"Supplied list implementation is 'null'. Note that the type of a " +
-								"managed list (the list implementation to instantiate) must be declared.",
-								this, arguments);
+								"Supplied list implementation is 'null'. Note that the type of " +
+								"a managed list (the list implementation to instantiate) must " +
+								"be declared.", this, arguments);
 					}
 					if (!ClassUtil.isAssignable(type, List)) {
-						throw new TypeMismatchException(wrappedBean, name, value, type, "Required " +
-								"type is not assignable from [" + ReflectUtil.getTypeNameForType(List) +
-								"].", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, type,
+								"Required type is not assignable from [" +
+								ReflectUtil.getTypeNameForType(List) + "].", this, arguments);
 					}
 					var result:List = new type();
 					var list:ManagedList = value;
 					var array:Array = list.toArray();
 					var elementType:Function = list.getElementType();
 					for (var i:Number = 0; i < array.length; i++) {
-						var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i + PROPERTY_KEY_SUFFIX, array[i], elementType);
+						var element = convertPropertyValue(name + PROPERTY_KEY_PREFIX + i +
+								PROPERTY_KEY_SUFFIX, array[i], elementType);
 						result.insert(element);
 					}
 					return result;
 				}
 				if (value instanceof ManagedMap) {
 					if (type == null) {
-						throw new TypeMismatchException(wrappedBean, name, value, Map, "Supplied map " +
-								"implementation is 'null'. Note that the type of a managed map (the " +
-								"map implementation to instantiate) must be declared.", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, Map, "Supplied " +
+								"map implementation is 'null'. Note that the type of a managed " +
+								"map (the map implementation to instantiate) must be declared.",
+								this, arguments);
 					}
 					if (!ClassUtil.isAssignable(type, Map)) {
-						throw new TypeMismatchException(wrappedBean, name, value, type, "Required " +
-								"type is not assignable from [" + ReflectUtil.getTypeNameForType(Map) +
-								"].", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, type,
+								"Required type is not assignable from [" +
+								ReflectUtil.getTypeNameForType(Map) + "].", this, arguments);
 					}
 					var result:Map = new type();
 					var map:ManagedMap = value;
@@ -659,7 +712,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					var valueType:Function = map.getValueType();
 					for (var i:Number = 0; i < keys.length; i++) {
 						var k = convertPropertyValue(name, keys[i], keyType);
-						var v = convertPropertyValue(name + PROPERTY_KEY_PREFIX + keys[i] + PROPERTY_KEY_SUFFIX, values[i], valueType);
+						var v = convertPropertyValue(name + PROPERTY_KEY_PREFIX + keys[i] +
+								PROPERTY_KEY_SUFFIX, values[i], valueType);
 						result.put(k, v);
 					}
 					return result;
@@ -667,14 +721,14 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 				if (value instanceof ManagedProperties) {
 					if (type == null) {
 						throw new TypeMismatchException(wrappedBean, name, value, Properties,
-								"Supplied properties implementation is 'null'. Note that the type of " +
-								"a managed properties (the properties implementation to instantiate) " +
-								"must be declared.", this, arguments);
+								"Supplied properties implementation is 'null'. Note that the " +
+								"type of a managed properties (the properties implementation to " +
+								"instantiate) must be declared.", this, arguments);
 					}
 					if (!ClassUtil.isAssignable(type, Properties)) {
-						throw new TypeMismatchException(wrappedBean, name, value, type, "Required " +
-								"type is not assignable from [" + ReflectUtil.getTypeNameForType(Properties) +
-								"].", this, arguments);
+						throw new TypeMismatchException(wrappedBean, name, value, type,
+								"Required type is not assignable from [" +
+								ReflectUtil.getTypeNameForType(Properties) + "].", this, arguments);
 					}
 					var result:Properties = new type();
 					var properties:ManagedProperties = value;
@@ -731,7 +785,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 	 * @param propertyName the specific property name to find a converter for
 	 * @param converters the map of property value converters to search in
 	 */
-	private function findPropertyValueConverterInMap(requiredType:Function, propertyName:String, converters:Map):PropertyValueConverter {
+	private function findPropertyValueConverterInMap(requiredType:Function, propertyName:String,
+			converters:Map):PropertyValueConverter {
 		if (converters != null) {
 			if (propertyName != null) {
 				var holder:PropertyValueConverterHolder = converters.get(propertyName);
@@ -747,7 +802,8 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 					for (var i:Number = 0; i < keys.length; i++) {
 						var key = keys[i];
 						if (typeof(key) == "function") {
-							if (ClassUtil.isSubClassOf(requiredType, key) || ClassUtil.isImplementationOf(requiredType, key)) {
+							if (ClassUtil.isSubClassOf(requiredType, key) ||
+									ClassUtil.isImplementationOf(requiredType, key)) {
 								converter = converters.get(key);
 								break;
 							}
@@ -767,19 +823,23 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 		o.forward(arguments);
 	}
 	
-	public function registerPropertyValueConverterForType(requiredType:Function, propertyValueConverter:PropertyValueConverter):Void {
+	public function registerPropertyValueConverterForType(requiredType:Function,
+			propertyValueConverter:PropertyValueConverter):Void {
 		registerPropertyValueConverterForProperty(requiredType, null, propertyValueConverter);
 	}
 	
-	public function registerPropertyValueConverterForProperty(requiredType:Function, propertyName:String, propertyValueConverter:PropertyValueConverter):Void {
+	public function registerPropertyValueConverterForProperty(requiredType:Function,
+			propertyName:String, propertyValueConverter:PropertyValueConverter):Void {
 		if (requiredType == null && propertyName == null) {
-			throw new IllegalArgumentException("Either argument 'requiredType' or 'propertyName' is required.", this, arguments);
+			throw new IllegalArgumentException("Either argument 'requiredType' or 'propertyName' " +
+					"is required.", this, arguments);
 		}
 		if (customConverters == null) {
 			customConverters = new HashMap();
 		}
 		if (propertyName != null) {
-			customConverters.put(propertyName, new PropertyValueConverterHolder(propertyValueConverter, requiredType));
+			customConverters.put(propertyName, new PropertyValueConverterHolder(
+					propertyValueConverter, requiredType));
 		} else {
 			customConverters.put(requiredType, propertyValueConverter);
 		}
