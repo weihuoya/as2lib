@@ -81,6 +81,7 @@ class org.as2lib.sample.pizza.view.enflash.EnFlashOrderForm extends ScrollPane i
 	public function onApplicationEvent(event:ApplicationEvent):Void {
 		if (event instanceof OrderPlacedEvent) {
 			getOrderTicketList().removeAll();
+			controller.removeOrderItems();
 		}
 	}
 	
