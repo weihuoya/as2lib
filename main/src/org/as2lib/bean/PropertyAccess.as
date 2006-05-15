@@ -48,6 +48,20 @@ class org.as2lib.bean.PropertyAccess extends BasicClass {
 	}
 	
 	/**
+	 * Returns the name of the property to access.
+	 */
+	public function getName(Void):String {
+		return propertyValue.getName();
+	}
+	
+	/**
+	 * Returns the bean the property is accessed on.
+	 */
+	public function getBean(Void) {
+		return beanWrapper.getWrappedBean();
+	}
+	
+	/**
 	 * Sets the property to the given value.
 	 */
 	public function setValue(value):Void {
