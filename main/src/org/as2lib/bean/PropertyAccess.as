@@ -21,7 +21,7 @@ import org.as2lib.core.BasicClass;
 /**
  * {@code PropertyAccess} provides easy access to a property on a given bean and gives
  * information about whether set and/or get access was made.
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.bean.PropertyAccess extends BasicClass {
