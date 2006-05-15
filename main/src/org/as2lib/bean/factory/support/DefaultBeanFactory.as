@@ -327,11 +327,14 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var errorMessage:String;
 		try {
 			errorMessage = "Instantiation of bean failed.";
-			if (mergedBeanDefinition.getFactoryMethodName() == null) {
-				result = instantiateBean(beanName, mergedBeanDefinition);
+			if (mergedBeanDefinition.isInstantiateWithProperty()) {
+				result = instantiateBeanUsingProperty(beanName, property);
+			}
+			else if (mergedBeanDefinition.getFactoryMethodName() != null) {
+				result = instantiateBeanUsingFactoryMethod(beanName, mergedBeanDefinition);
 			}
 			else {
-				result = instantiateBeanUsingFactoryMethod(beanName, mergedBeanDefinition);
+				result = instantiateBean(beanName, mergedBeanDefinition);
 			}
 			// Eagerly cache singletons to be able to resolve circular references
 			// even when triggered by lifecycle interfaces like BeanFactoryAware.
@@ -439,6 +442,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * @param mergedBeanDefinition the bean definition of the bean
 	 */
 	private function applyMethodOverrides(beanName:String, bean, mergedBeanDefinition:RootBeanDefinition):Void {
+		// TODO Support and allow overrides for beans instantiated by other means than the bean class, also (see AbstractBeanDefinition.validate, instantiateBeanUsingFactoryMethod, instantiateBeanUsingProperty)!
 		var overrides:Array = mergedBeanDefinition.getMethodOverrides().getOverrides();
 		for (var i:Number = 0; i < overrides.length; i++) {
 			var owner:BeanFactory = this;
@@ -501,13 +505,13 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		catch (exception) {
 			throw (new BeanDefinitionStoreException(beanName, "Factory method [" +
-					factoryMethodName + "] threw an exception", this, arguments)).initCause(exception);
+					factoryMethodName + "] threw an exception",
+					this, arguments)).initCause(exception);
 		}
 		if (bean == null) {
-			throw new BeanCreationException(
-					beanName, "Factory method '" + mergedBeanDefinition.getFactoryMethodName() +
-					"' on class [" + ReflectUtil.getTypeNameForType(factory) + "] returned 'null'.",
-					this, arguments);
+			throw new BeanCreationException(beanName, "Factory method '" +
+					mergedBeanDefinition.getFactoryMethodName() + "' on class [" +
+					ReflectUtil.getTypeName(factory) + "] returned 'null'.", this, arguments);
 		}
 		return bean;
 	}
@@ -527,6 +531,33 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			result.push(value);
 		}
 		return result;
+	}
+	
+	/**
+	 * Instantiates the bean with the given 'factory' property.
+	 * 
+	 * @param beanName the name of the bean to instantiate
+	 * @param property the 'factory' property whose get-method instantiates the bean
+	 * @return the instantiated bean
+	 */
+	private function instantiateBeanUsingProperty(beanName:String, property:PropertyAccess) {
+		var bean;
+		try {
+			bean = property.getValue();
+		}
+		catch (exception) {
+			throw (new BeanDefinitionStoreException(beanName, "Get access to property '" +
+					property.getName() + "' on bean of type [" +
+					ReflectUtil.getTypeNameForInstance(property.getBean()) +
+					"] threw an exception", this, arguments)).initCause(exception);
+		}
+		if (bean == null) {
+			throw new BeanCreationException(beanName, "Get access to property '" +
+					property.getName() + "' on bean of type [" +
+					ReflectUtil.getTypeNameForInstance(property.getBean()) + "] returned 'null'.",
+					this, arguments);
+		}
+		return bean;
 	}
 	
 	/**
@@ -603,7 +634,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				name = defaultName;
 			}
 			var value = pv.getValue();
-			var pvc:PropertyValue = new PropertyValue(name, value, pv.getType());
+			var pvc:PropertyValue = new PropertyValue(name, value, pv.getType(), pv.isEnforceAccess());
 			var property:PropertyAccess = new PropertyAccess(beanWrapper, pvc);
 			var resolvedValue = resolveValue(name, value, beanName, mergedBeanDefinition, property);
 			// If 'value' is a bean definition or bean reference and the bean's populate mode
