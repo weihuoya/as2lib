@@ -39,7 +39,9 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	public static var DATA_BINDING_PREFIX:String = "{";
 	public static var DATA_BINDING_SUFFIX:String = "}";
 	
-	public static var POPULATE_PREFIX:String = "-";
+	public static var POPULATE_PREFIX:String = "_";
+	public static var INSTANTIATE_WITH_PROPERTY_SUFFIX:String = "_";
+	public static var ENFORCE_ACCESS_PREFIX:String = "_";
 	
 	public static var PROPERTY_PATH:String = "p";
 	public static var VARIABLE_RETRIEVAL:String = "v";
@@ -90,6 +92,10 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		if (name.charAt(0) == POPULATE_PREFIX) {
 			name = name.substring(1);
 			element.attributes[POPULATE_ATTRIBUTE] = getPopulateValue();
+		}
+		if (name.charAt(name.length - 1) == INSTANTIATE_WITH_PROPERTY_SUFFIX) {
+			name = name.substring(0, name.length - 1);
+			element.attributes[INSTANTIATE_WITH_PROPERTY_ATTRIBUTE] = TRUE_VALUE;
 		}
 		if (name != BEAN_ELEMENT) {
 			if (namespace == "" || namespace == null) {
@@ -182,19 +188,29 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 					propertyElement.attributes[INDEX_ATTRIBUTE] = node.attributes[INDEX_ATTRIBUTE];
 				}
 			}
-			var propertyName:String = propertyElement.attributes[NAME_ATTRIBUTE];
-			if (propertyName.indexOf(PROPERTY_KEY_SEPARATOR) != -1) {
-				var tokens:Array = propertyName.split(PROPERTY_KEY_SEPARATOR);
-				propertyName = tokens[0];
-				for (var j:Number = 1; j < tokens.length; j++) {
-					propertyName += AbstractBeanWrapper.PROPERTY_KEY_PREFIX;
-					propertyName += tokens[j];
-					propertyName += AbstractBeanWrapper.PROPERTY_KEY_SUFFIX;
-				}
-				propertyElement.attributes[NAME_ATTRIBUTE] = propertyName;
-			}
+			propertyElement.attributes[NAME_ATTRIBUTE] = parsePropertyName(propertyElement);
 		}
 		return super.parsePropertyElements(beanElement, beanName);
+	}
+	
+	private function parsePropertyName(propertyElement:XMLNode):String {
+		var result:String = propertyElement.attributes[NAME_ATTRIBUTE];
+		if (result.charAt(0) == ENFORCE_ACCESS_PREFIX) {
+			if (propertyElement.attributes[ENFORCE_ACCESS_ATTRIBUTE] == null) {
+				propertyElement.attributes[ENFORCE_ACCESS_ATTRIBUTE] = TRUE_VALUE;
+			}
+			result = result.substring(1);
+		}
+		if (result.indexOf(PROPERTY_KEY_SEPARATOR) != -1) {
+			var tokens:Array = result.split(PROPERTY_KEY_SEPARATOR);
+			result = tokens[0];
+			for (var j:Number = 1; j < tokens.length; j++) {
+				result += AbstractBeanWrapper.PROPERTY_KEY_PREFIX;
+				result += tokens[j];
+				result += AbstractBeanWrapper.PROPERTY_KEY_SUFFIX;
+			}
+		}
+		return result;
 	}
 	
 	private function parsePropertySubElement(element:XMLNode, beanName:String) {
@@ -291,6 +307,9 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	}
 	
 	private function isUpperCaseLetter(letter:String):Boolean {
+		if (letter == null) {
+			return false;
+		}
 		return (letter.toUpperCase() == letter);
 	}
 	
