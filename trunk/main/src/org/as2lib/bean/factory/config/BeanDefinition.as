@@ -65,6 +65,19 @@ interface org.as2lib.bean.factory.config.BeanDefinition extends BasicInterface {
 	public function getFactoryMethodName(Void):String;
 	
 	/**
+	 * Returns whether this bean shall be instantiated by means of the property
+	 * enclosing or referencing it.
+	 * 
+	 * <p>If this bean definition is for example an inner bean definition, then the
+	 * instance returned by the getter of the enclosing property will be used as bean
+	 * instance.
+	 * 
+	 * @return {@code true} if this bean shall be instantiated using the getter of the
+	 * enclosing or referencing property
+	 */
+	public function isInstantiateWithProperty(Void):Boolean;
+	
+	/**
 	 * Returns the names of the beans this bean depends on.
 	 * 
 	 * @return the names of the beans this bean depends on
