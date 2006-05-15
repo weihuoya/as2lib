@@ -18,7 +18,7 @@
   
   <property name="logging.xml" location="${context.dir}/logging.xml"/>
   <property name="applicationContext.xml" location="${context.dir}/applicationContext.xml"/>
-  <property name="view.xml" location="${view.dir}/view.xml"/>
+  <property name="view.xml" location="${view.dir}/View.xml"/>
   <property name="orderForm.xml" location="${view.dir}/OrderForm.xml"/>
   <property name="viewOrdersForm.xml" location="${view.dir}/ViewOrdersForm.xml"/>
   
