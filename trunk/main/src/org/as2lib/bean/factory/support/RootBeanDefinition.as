@@ -14,14 +14,12 @@
  * limitations under the License.
  */
 
-import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.ConstructorArgumentValues;
 import org.as2lib.bean.factory.FactoryBean;
 import org.as2lib.bean.factory.support.AbstractBeanDefinition;
 import org.as2lib.bean.factory.support.BeanDefinitionValidationException;
 import org.as2lib.bean.factory.support.MethodOverrides;
 import org.as2lib.bean.PropertyValues;
-import org.as2lib.env.overload.Overload;
 
 /**
  * {@code RootBeanDefinition} is the most common type of bean definition. Root bean
@@ -34,7 +32,7 @@ import org.as2lib.env.overload.Overload;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDefinition implements BeanDefinition {
+class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDefinition {
 	
 	/**
 	 * Constructs a new {@code RootBeanDefinition} with the given constructor argument

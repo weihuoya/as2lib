@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.bean.factory.config.ConstructorArgumentValues;
-import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.support.AbstractBeanDefinition;
 import org.as2lib.bean.factory.support.BeanDefinitionValidationException;
 import org.as2lib.bean.PropertyValues;
@@ -38,7 +37,7 @@ import org.as2lib.bean.PropertyValues;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.ChildBeanDefinition extends AbstractBeanDefinition implements BeanDefinition {
+class org.as2lib.bean.factory.support.ChildBeanDefinition extends AbstractBeanDefinition {
 	
 	/** The name of the parent bean definition. */
 	private var parentName:String;
