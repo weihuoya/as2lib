@@ -46,8 +46,8 @@
 		<viewOrdersForm>r{viewOrdersForm}</viewOrdersForm>
 	</bean>
 	
-	<Import id="orderForm" targetBeanName="orderForm" beanDefinitionUri="actionstep/orderForm.xml"/>
+	<Import id="orderForm" targetBeanName="orderForm" beanDefinitionUri="actionstep/OrderForm.xml"/>
 	
-	<Import id="viewOrdersForm" targetBeanName="viewOrdersForm" beanDefinitionUri="actionstep/viewOrdersForm.xml"/>
+	<Import id="viewOrdersForm" targetBeanName="viewOrdersForm" beanDefinitionUri="actionstep/ViewOrdersForm.xml"/>
 	
 </beans>
