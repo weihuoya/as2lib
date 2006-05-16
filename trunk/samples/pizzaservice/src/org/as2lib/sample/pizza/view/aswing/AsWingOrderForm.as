@@ -51,6 +51,7 @@ class org.as2lib.sample.pizza.view.aswing.AsWingOrderForm extends JPanel impleme
 			// TODO: Find a better solution for removing items from the list.
 			var model:VectorListModel = VectorListModel(orderTicketList.getModel());
 			model.removeRange(0, model.size() - 1);
+			controller.removeOrderItems();
 		}
 	}
 	
