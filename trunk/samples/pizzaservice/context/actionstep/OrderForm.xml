@@ -54,7 +54,8 @@
 				<VBox>
 					<FormItem>
 						<Label stringValue="{messageSource.message[label.toppings]}"/>
-						<List id="toppingList" multipleSelection="true" target="r{orderForm}" action="onToppingsChanged" width="140" height="120">
+						<List id="toppingList" multipleSelection="true" target="r{orderForm}"
+								action="onToppingsChanged" width="140" height="120">
 							<itemWithLabelData>{messageSource.message[toppings.sausage]}</itemWithLabelData>
 							<itemWithLabelData>{messageSource.message[toppings.pepperoni]}</itemWithLabelData>
 							<itemWithLabelData>{messageSource.message[toppings.onions]}</itemWithLabelData>
@@ -65,7 +66,8 @@
 							<itemWithLabelData>{messageSource.message[toppings.garlic]}</itemWithLabelData>
 						</List>
 					</FormItem>
-					<Button id="addButton" stringValue="{messageSource.message[button.add]}" target="r{orderForm}" action="addOrderItem" enabled="false"/>
+					<Button id="addButton" stringValue="{messageSource.message[button.add]}"
+							target="r{orderForm}" action="addOrderItem" enabled="false"/>
 				</VBox>
 			</HBox>
 			<FormItem>
