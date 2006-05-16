@@ -106,7 +106,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		parseStyleSheet(cascadingStyleSheet);
 		var beanNames:Array = factory.getBeanDefinitionNames();
-		for (var i:Number = 0; i < beanNames.length; i++) {
+		for (var i:Number = beanNames.length - 1; i >= 0; i--) {
 			var beanName:String = beanNames[i];
 			var beanDefinition:BeanDefinition = factory.getBeanDefinition(beanName);
 			applyStyleSheet(beanDefinition, beanName, new Array());
