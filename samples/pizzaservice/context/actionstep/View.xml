@@ -24,7 +24,8 @@
 	<bean id="Array" class="org.actionstep.NSArray"/>
 	<bean id="Rectangle" class="org.actionstep.NSRect"/>
 	
-	<bean class="org.actionstep.NSApplication" factory-method="sharedApplication" init-method="run" depends-on="window"/>
+	<bean class="org.actionstep.NSApplication" factory-method="sharedApplication" init-method="run"
+			depends-on="window"/>
 	
 	<bean id="window" class="org.actionstep.NSWindow">
 		<contentRect><Rectangle>0, 0, 445, 360</Rectangle></contentRect>
@@ -32,7 +33,8 @@
 		<contentView.subview>r{view}</contentView.subview>
 	</bean>
 	
-	<bean id="view" width="445" height="360" class="org.as2lib.sample.pizza.view.actionstep.ActionStepView" init-method="init">
+	<bean id="view" width="445" height="360" class="org.as2lib.sample.pizza.view.actionstep.ActionStepView"
+			init-method="init">
 		<controller>r{controller}</controller>
 		<progressBar>r{progressBar}</progressBar>
 		<statusText>r{statusText}</statusText>
