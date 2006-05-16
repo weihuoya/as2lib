@@ -81,14 +81,8 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	
 	private function convertBeanElement(element:XMLNode):Void {
 		// Mtasc ships with Flash 7 sources for xml.
-		var namespace:String = element["namespaceURI"];
-		var name:String;
-		if (namespace == "" || namespace == null) {
-			name = element.nodeName;
-		}
-		else {
-			name = element["localName"];
-		}
+		var namespace:String = getElementNamespace(element);
+		var name:String = getElementName(element);
 		if (name.charAt(0) == POPULATE_PREFIX) {
 			name = name.substring(1);
 			element.attributes[POPULATE_ATTRIBUTE] = getPopulateValue();
@@ -121,6 +115,24 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				}
 			}
 		}
+	}
+	
+	private function getElementName(element:XMLNode):String {
+		var namespace:String = getElementNamespace(element);
+		if (namespace == "" || namespace == null) {
+			return element.nodeName;
+		}
+		return element["localName"];
+	}
+	
+	private function getElementNamespace(element:XMLNode):String {
+		var namespace:String = element["namespaceURI"];
+		if (element.attributes.x != null) {
+			if (element.attributes.x === namespace) {
+				return null;
+			}
+		}
+		return namespace;
 	}
 	
 	private function getPopulateValue(Void):String {
@@ -174,7 +186,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				propertyElement = new XMLNode(1, PROPERTY_ELEMENT);
 				beanElement.insertBefore(propertyElement, node);
 				node.removeNode();
-				if (isUpperCaseLetter(node["localName"].charAt(0)) || node.nodeName == BEAN_ELEMENT) {
+				if (isUpperCaseLetter(getElementName(node).charAt(0)) || node.nodeName == BEAN_ELEMENT) {
 					propertyElement.appendChild(node);
 				}
 				else {
@@ -188,7 +200,9 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 					propertyElement.attributes[INDEX_ATTRIBUTE] = node.attributes[INDEX_ATTRIBUTE];
 				}
 			}
-			propertyElement.attributes[NAME_ATTRIBUTE] = parsePropertyName(propertyElement);
+			if (propertyElement.attributes[NAME_ATTRIBUTE] != null) {
+				propertyElement.attributes[NAME_ATTRIBUTE] = parsePropertyName(propertyElement);
+			}
 		}
 		return super.parsePropertyElements(beanElement, beanName);
 	}
