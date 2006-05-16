@@ -1,3 +1,5 @@
+<?xml version="1.0"?>
+
 <beans>
 	
 	<Form id="viewOrdersForm" hidden="true" class="org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm">
