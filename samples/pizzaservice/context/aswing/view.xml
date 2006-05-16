@@ -35,7 +35,7 @@
 			<Button text="{messageSource.message[button.orderForm]}" actionListener="d{view.showOrderForm}"/>
 			<Button text="{messageSource.message[button.viewOrders]}" actionListener="d{view.showViewOrdersForm}"/>
 			<Label id="statusLabel" foreground="v{org.aswing.ASColor.WHITE}"/>
-			<ProgressBar id="progressBar" value="110" visible="false"/>
+			<ProgressBar id="progressBar" value="100" preferredWidth="255" visible="false"/>
 		</Panel>
 		<orderForm>r{orderForm}</orderForm>
 		<viewOrdersForm>r{viewOrdersForm}</viewOrdersForm>
