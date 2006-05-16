@@ -323,7 +323,11 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 		}
 		else {
 			// Prototype: new object on each call.
-			return invoke();
+			var returnValue = invoke();
+			if (returnValue != null) {
+				return returnValue;
+			}
+			return VOID;
 		}
 	}
 	
