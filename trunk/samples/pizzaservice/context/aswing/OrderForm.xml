@@ -1,0 +1,103 @@
+<?xml version="1.0"?>
+
+<beans xmlns:aw="org.aswing">
+	
+	<Form id="orderForm" constraints="v{org.aswing.WindowLayout.CONTENT}"
+			class="org.as2lib.sample.pizza.view.aswing.AsWingOrderForm">
+		<controller>r{controller}</controller>
+		<nameTextField>r{nameTextField}</nameTextField>
+		<quantityTextField>r{quantityTextField}</quantityTextField>
+		<sizeComboBox>r{sizeComboBox}</sizeComboBox>
+		<crustComboBox>r{crustComboBox}</crustComboBox>
+		<toppingList>r{toppingList}</toppingList>
+		<orderTicketList>r{orderTicketList}</orderTicketList>
+		<addButton>r{addButton}</addButton>
+		<removeButton>r{removeButton}</removeButton>
+		<placeOrderButton>r{placeOrderButton}</placeOrderButton>
+		<progressBar>r{progressBar}</progressBar>
+		<aw:SoftBox>
+			<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
+			<border><Border/></border>
+			<aw:SoftBox>
+				<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.X_AXIS}" gap="20"/></layout>
+				<FormItem>
+					<aw:JLabel text="{messageSource.message[label.name]}"/>
+					<TextField id="nameTextField">
+						<property name="eventListener[onTextChanged]">d{orderForm.onNameChanged}</property>
+					</TextField>
+				</FormItem>
+				<aw:SoftBox>
+					<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
+					<FormItem>
+						<aw:JLabel text="{messageSource.message[label.quantity]}"/>
+						<TextField id="quantityTextField" text="1" restrict="1234567890"/>
+					</FormItem>
+					<FormItem>
+						<aw:JLabel text="{messageSource.message[label.size]}"/>
+						<aw:JComboBox id="sizeComboBox" selectedIndex="0">
+							<listData>
+								<array>
+									<value>{messageSource.message[size.small]}</value>
+									<value>{messageSource.message[size.medium]}</value>
+									<value>{messageSource.message[size.large]}</value>
+									<value>{messageSource.message[size.family]}</value>
+								</array>
+							</listData>
+						</aw:JComboBox>
+					</FormItem>
+					<FormItem>
+						<aw:JLabel text="{messageSource.message[label.crust]}"/>
+						<aw:JComboBox id="crustComboBox" selectedIndex="0">
+							<listData>
+								<array>
+									<value>{messageSource.message[crust.thin]}</value>
+									<value>{messageSource.message[crust.deepDish]}</value>
+									<value>{messageSource.message[crust.stuffed]}</value>
+								</array>
+							</listData>
+						</aw:JComboBox>
+					</FormItem>
+				</aw:SoftBox>
+				<aw:SoftBox>
+					<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
+					<FormItem>
+						<aw:JLabel text="{messageSource.message[label.toppings]}"/>
+						<aw:JScrollPane preferredWidth="140" preferredHeight="120">
+							<view>
+								<aw:JList id="toppingList" selectionListener="d{orderForm.onToppingsChanged}">
+									<listData>
+										<array>
+											<value>{messageSource.message[toppings.sausage]}</value>
+											<value>{messageSource.message[toppings.pepperoni]}</value>
+											<value>{messageSource.message[toppings.onions]}</value>
+											<value>{messageSource.message[toppings.mushrooms]}</value>
+											<value>{messageSource.message[toppings.tomatoes]}</value>
+											<value>{messageSource.message[toppings.peppers]}</value>
+											<value>{messageSource.message[toppings.olives]}</value>
+											<value>{messageSource.message[toppings.garlic]}</value>
+										</array>
+									</listData>
+								</aw:JList>
+							</view>
+						</aw:JScrollPane>
+					</FormItem>
+					<aw:JButton id="addButton" text="{messageSource.message[button.add]}"
+							actionListener="d{orderForm.addOrderItem}" enabled="false"/>
+				</aw:SoftBox>
+			</aw:SoftBox>
+			<FormItem>
+				<aw:JLabel text="{messageSource.message[label.orderTicket]}"/>
+				<aw:JScrollPane preferredHeight="70">
+					<view><aw:JList id="orderTicketList" opaque="true"/></view>
+				</aw:JScrollPane>
+			</FormItem>
+		</aw:SoftBox>
+		<aw:JPanel background="v{org.aswing.ASColor.BLACK}" opaque="true">
+			<aw:JButton id="removeButton" text="{messageSource.message[button.remove]}"
+					actionListener="d{orderForm.removeOrderItem}" enabled="false"/>
+			<aw:JButton id="placeOrderButton" text="{messageSource.message[button.placeOrder]}"
+					actionListener="d{orderForm.placeOrder}" enabled="false"/>
+		</aw:JPanel>
+	</Form>
+	
+</beans>
