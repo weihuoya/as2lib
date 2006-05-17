@@ -16,7 +16,6 @@
 
 import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.ConstructorArgumentValues;
-import org.as2lib.bean.factory.support.AbstractBeanFactory;
 import org.as2lib.bean.factory.support.BeanDefinitionValidationException;
 import org.as2lib.bean.factory.support.MethodOverride;
 import org.as2lib.bean.factory.support.MethodOverrides;
@@ -43,14 +42,14 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 * 
 	 * @see #setAutowireMode
 	 */
-	public static var AUTOWIRE_NO:Number = AbstractBeanFactory.AUTOWIRE_NO;
+	public static var AUTOWIRE_NO:Number = 0;
 	
 	/**
 	 * Constant that indicates autowiring bean properties by name.
 	 * 
 	 * @see #setAutowireMode
 	 */
-	public static var AUTOWIRE_BY_NAME:Number = AbstractBeanFactory.AUTOWIRE_BY_NAME;
+	public static var AUTOWIRE_BY_NAME:Number = 1;
 	
 	/**
 	 * Constant that indicates no dependency check at all.
