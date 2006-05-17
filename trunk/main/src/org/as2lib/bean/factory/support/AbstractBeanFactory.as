@@ -35,15 +35,6 @@ class org.as2lib.bean.factory.support.AbstractBeanFactory extends BasicClass {
 	 */
 	public static var FACTORY_BEAN_PREFIX:String = "&";
 	
-	/**
-	 * Constant that indicates no autowiring at all (other than callbacks such as
-	 * {@code BeanFactoryAware}).
-	 */
-	public static var AUTOWIRE_NO:Number = 0;
-	
-	/** Constant that indicates autowiring bean properties by name. */
-	public static var AUTOWIRE_BY_NAME:Number = 1;
-	
 	/** This instance properly typed. */
 	private var thiz:BeanFactory;
 	
