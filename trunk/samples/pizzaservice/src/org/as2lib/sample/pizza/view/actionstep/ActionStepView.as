@@ -15,7 +15,6 @@
  */
 
 import org.actionstep.ASLabel;
-import org.actionstep.NSFont;
 import org.actionstep.NSProgressIndicator;
 import org.actionstep.NSView;
 import org.as2lib.context.ApplicationEvent;
