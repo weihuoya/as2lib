@@ -77,7 +77,8 @@
   </target>
   
   <target name="test">
-    <mtasc src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" swf="${test.swf}" main="yes" mx="yes" version="8">
+    <mtasc src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" swf="${test.swf}" main="yes"
+            mx="yes" version="8">
       <classpath>
         <pathelement path="${debugit.dir}"/>
         <pathelement path="${as2lib.dir}"/>
