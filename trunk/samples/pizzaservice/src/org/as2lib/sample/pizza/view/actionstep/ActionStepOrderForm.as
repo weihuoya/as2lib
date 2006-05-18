@@ -50,6 +50,7 @@ class org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm extends NSView
 	public function onApplicationEvent(event:ApplicationEvent):Void {
 		if (event instanceof OrderPlacedEvent) {
 			orderTicketList.removeAllItems();
+			controller.removeOrderItems();
 		}
 	}
 	
