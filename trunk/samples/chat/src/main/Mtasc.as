@@ -53,7 +53,7 @@ class main.Mtasc extends BasicClass implements BatchStartListener,
 	}
 	
 	public function onBatchError(batch:Batch, error):Boolean {
-		trace("Batch Error:\n" + StringUtil.addSpaceIndent(error.toString(), 2));
+		trace("Batch failed:\n" + StringUtil.addSpaceIndent(error.toString(), 2));
 		return false;
 	}
 	
