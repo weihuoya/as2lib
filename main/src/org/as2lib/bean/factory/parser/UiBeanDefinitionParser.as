@@ -185,8 +185,10 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 					&& node.nodeName != CONSTRUCTOR_ARGS_ELEMENT) {
 				propertyElement = new XMLNode(1, PROPERTY_ELEMENT);
 				beanElement.insertBefore(propertyElement, node);
+				// Get element name before removing node.
+				var elementName:String = getElementName(node);
 				node.removeNode();
-				if (isUpperCaseLetter(getElementName(node).charAt(0)) || node.nodeName == BEAN_ELEMENT) {
+				if (isUpperCaseLetter(elementName.charAt(0)) || node.nodeName == BEAN_ELEMENT) {
 					propertyElement.appendChild(node);
 				}
 				else {
