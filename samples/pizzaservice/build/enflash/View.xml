@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+
+<beans xmlns:ef="com.asual.enflash.ui" xmlns:import="enflash/*.xml">
+	
+	<bean class="org.as2lib.bean.factory.config.StyleSheetConfigurer">
+		<property name="styleSheetUri">enflash/style.css</property>
+	</bean>
+	
+	<bean class="org.as2lib.bean.factory.config.EnFlashThemeLoader">
+		<themeManager>{enFlash.ui.themeManager}</themeManager>
+	</bean>
+	
+	<bean id="enFlash" class="com.asual.enflash.EnFlash">
+		<init>
+			<bean themesRepository="enflash/themes/" class="com.asual.enflash.EnFlashConfiguration"/>
+		</init>
+	</bean>
+	
+	<bean id="enFlashController" class="org.as2lib.sample.pizza.view.enflash.EnFlashView">
+		<controller>r{controller}</controller>
+		<statusLabel>r{statusLabel}</statusLabel>
+		<progressBar>r{progressBar}</progressBar>
+		<lookup-method name="getContentSplitPane" bean="contentSplitPane"/>
+	</bean>
+	
+	<bean factory-bean="enFlash" factory-method="__get__ui">
+		<bar>
+			<ef:Bar>
+				<ef:Button value="{messageSource.message[button.orderForm]}"
+						onrelease="d{enFlashController.showOrderForm}"/>
+				<ef:Button value="{messageSource.message[button.viewOrders]}"
+						onrelease="d{enFlashController.showViewOrdersForm}"/>
+				<ef:Label id="statusLabel"/>
+				<ef:ProgressBar id="progressBar" value="100"/>
+			</ef:Bar>
+		</bar>
+		<pane>
+			<ef:SplitPane id="contentSplitPane">
+				<import:OrderForm class="org.as2lib.context.support.EnFlashApplicationContext"/>
+				<import:ViewOrdersForm class="org.as2lib.context.support.EnFlashApplicationContext"/>
+			</ef:SplitPane>
+		</pane>
+	</bean>
+	
+</beans>

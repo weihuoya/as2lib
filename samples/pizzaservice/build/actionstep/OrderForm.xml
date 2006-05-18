@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+
+<beans>
+	
+	<Form id="orderForm" class="org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm">
+		<controller>r{controller}</controller>
+		<nameTextField>r{nameTextField}</nameTextField>
+		<quantityStepper>r{quantityStepper}</quantityStepper>
+		<sizeComboBox>r{sizeComboBox}</sizeComboBox>
+		<crustComboBox>r{crustComboBox}</crustComboBox>
+		<toppingList>r{toppingList}</toppingList>
+		<orderTicketList>r{orderTicketList}</orderTicketList>
+		<addButton>r{addButton}</addButton>
+		<removeButton>r{removeButton}</removeButton>
+		<placeOrderButton>r{placeOrderButton}</placeOrderButton>
+		<progressBar>r{progressBar}</progressBar>
+		<VBox>
+			<HBox>
+				<FormItem>
+					<Label stringValue="{messageSource.message[label.name]}"/>
+					<TextField id="nameTextField" target="r{orderForm}" action="onNameChanged"/>
+				</FormItem>
+				<VBox>
+					<FormItem>
+						<Label stringValue="{messageSource.message[label.quantity]}"/>
+						<Stepper id="quantityStepper" minValue="1" maxValue="10"/>
+					</FormItem>
+					<FormItem>
+						<Label stringValue="{messageSource.message[label.size]}"/>
+						<ComboBox id="sizeComboBox" selectItemAtIndex="0" editable="false">
+							<itemsWithObjectValues>
+								<Array>
+									<object>{messageSource.message[size.small]}</object>
+									<object>{messageSource.message[size.medium]}</object>
+									<object>{messageSource.message[size.large]}</object>
+									<object>{messageSource.message[size.family]}</object>
+								</Array>
+							</itemsWithObjectValues>
+						</ComboBox>
+					</FormItem>
+					<FormItem>
+						<Label stringValue="{messageSource.message[label.crust]}"/>
+						<ComboBox id="crustComboBox" selectItemAtIndex="0" editable="false">
+							<itemsWithObjectValues>
+								<Array>
+									<object>{messageSource.message[crust.thin]}</object>
+									<object>{messageSource.message[crust.deepDish]}</object>
+									<object>{messageSource.message[crust.stuffed]}</object>
+								</Array>
+							</itemsWithObjectValues>
+						</ComboBox>
+					</FormItem>
+				</VBox>
+				<VBox>
+					<FormItem>
+						<Label stringValue="{messageSource.message[label.toppings]}"/>
+						<List id="toppingList" multipleSelection="true" target="r{orderForm}"
+								action="onToppingsChanged" width="145" height="106">
+							<itemWithLabelData>{messageSource.message[toppings.sausage]}</itemWithLabelData>
+							<itemWithLabelData>{messageSource.message[toppings.pepperoni]}</itemWithLabelData>
+							<itemWithLabelData>{messageSource.message[toppings.onions]}</itemWithLabelData>
+							<itemWithLabelData>{messageSource.message[toppings.mushrooms]}</itemWithLabelData>
+							<itemWithLabelData>{messageSource.message[toppings.tomatoes]}</itemWithLabelData>
+							<itemWithLabelData>{messageSource.message[toppings.peppers]}</itemWithLabelData>
+							<itemWithLabelData>{messageSource.message[toppings.olives]}</itemWithLabelData>
+							<itemWithLabelData>{messageSource.message[toppings.garlic]}</itemWithLabelData>
+						</List>
+					</FormItem>
+					<Button id="addButton" stringValue="{messageSource.message[button.add]}"
+							target="r{orderForm}" action="addOrderItem" enabled="false"/>
+				</VBox>
+			</HBox>
+			<FormItem>
+				<Label stringValue="{messageSource.message[label.orderTicket]}"/>
+				<List id="orderTicketList" multipleSelection="true" width="425" height="85"/>
+			</FormItem>
+		</VBox>
+		<Button id="removeButton" x="0" y="283" width="100" height="25"
+				title="{messageSource.message[button.remove]}" enabled="false"
+				target="r{orderForm}" action="removeOrderItem"/>
+		<Button id="placeOrderButton" x="100" y="283" width="100" height="25"
+				title="{messageSource.message[button.placeOrder]}" enabled="false"
+				target="r{orderForm}" action="placeOrder"/>
+	</Form>
+	
+</beans>
