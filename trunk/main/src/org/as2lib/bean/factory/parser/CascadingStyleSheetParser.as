@@ -528,7 +528,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 	private function parseProperty(property:String, separatorIndex:Number, propertyValues:PropertyValues):Void {
 		var name:String = TrimUtil.trim(property.substring(0, separatorIndex));
 		var value:String = TrimUtil.trim(property.substring(separatorIndex + 1));
-		propertyValues.addPropertyValueByNameAndValueAndType(name, parsePropertyValue(value));
+		propertyValues.addPropertyValueByPropertyValue(new PropertyValue(name, parsePropertyValue(value)));
 	}
 	
 	/**

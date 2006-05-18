@@ -105,7 +105,7 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 	
 	/**
 	 * @overload #addPropertyValueByPropertyValue
-	 * @overload #addPropertyValueByNameAndValueAndType
+	 * @overload #addPropertyValueByIndexAndPropertyValue
 	 */
 	public function addPropertyValue():Void {
 		var o:Overload = new Overload(this);
@@ -113,8 +113,6 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 		o.addHandler([PropertyValue, Boolean], addPropertyValueByPropertyValue);
 		o.addHandler([Number, PropertyValue], addPropertyValueByIndexAndPropertyValue);
 		o.addHandler([Number, PropertyValues, Boolean], addPropertyValueByIndexAndPropertyValue);
-		o.addHandler([String, Object], addPropertyValueByNameAndValueAndType);
-		o.addHandler([String, Object, Function], addPropertyValueByNameAndValueAndType);
 		o.forward(arguments);
 	}
 	
@@ -210,21 +208,6 @@ class org.as2lib.bean.PropertyValues extends BasicClass {
 			}
 		}
 		return newPropertyValue;
-	}
-	
-	/**
-	 * Adds a new property value for the property with the given name.
-	 * 
-	 * <p>If there is already a property value with the given name, the given value
-	 * is merged with the current value, if the given value implements the {@link Mergeable}
-	 * interface.
-	 * 
-	 * @param propertyName the name of the property
-	 * @param propertyValue the value to set for the property
-	 * @param propertyType the type to convert the value to
-	 */
-	public function addPropertyValueByNameAndValueAndType(propertyName:String, propertyValue, propertyType:Function):Void {
-		addPropertyValueByPropertyValue(new PropertyValue(propertyName, propertyValue, propertyType));
 	}
 	
 	/**
