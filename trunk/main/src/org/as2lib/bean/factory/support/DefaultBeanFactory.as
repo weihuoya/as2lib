@@ -51,6 +51,7 @@ import org.as2lib.bean.factory.support.MethodReplacer;
 import org.as2lib.bean.factory.support.ReplaceOverride;
 import org.as2lib.bean.factory.support.RootBeanDefinition;
 import org.as2lib.bean.PropertyAccess;
+import org.as2lib.bean.PropertyAccessExceptionsException;
 import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValueConverter;
 import org.as2lib.bean.PropertyValues;
@@ -623,34 +624,31 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		var beanWrapper:BeanWrapper = new SimpleBeanWrapper(bean);
 		initBeanWrapper(beanWrapper);
-		// Create a deep copy, resolving any references for values.
-		var deepCopy:PropertyValues = new PropertyValues();
 		var pvArray:Array = propertyValues.getPropertyValues();
 		var defaultName:String = mergedBeanDefinition.getDefaultPropertyName();
-		for (var i:Number = 0; i < pvArray.length; i++) {
-			var pv:PropertyValue = pvArray[i];
-			var name:String = pv.getName();
-			if (name == null) {
-				name = defaultName;
-			}
-			var value = pv.getValue();
-			var pvc:PropertyValue = new PropertyValue(name, value, pv.getType(), pv.isEnforceAccess());
-			var property:PropertyAccess = new PropertyAccess(beanWrapper, pvc);
-			var resolvedValue = resolveValue(name, value, beanName, mergedBeanDefinition, property);
-			// If 'value' is a bean definition or bean reference and the bean's populate mode
-			// is 'populate after setting property', the property access has already been made
-			// and must not be done here a second time.
-			if (!property.wasSetAccessed()) {
-				pvc.setValue(resolvedValue);
-				deepCopy.addPropertyValueByPropertyValue(pvc);
-			}
-		}
 		try {
-			beanWrapper.setPropertyValues(deepCopy);
+			for (var i:Number = 0; i < pvArray.length; i++) {
+				var pv:PropertyValue = pvArray[i];
+				var name:String = pv.getName();
+				if (name == null) {
+					name = defaultName;
+				}
+				var value = pv.getValue();
+				var pvc:PropertyValue = new PropertyValue(name, value, pv.getType(), pv.isEnforceAccess());
+				var property:PropertyAccess = new PropertyAccess(beanWrapper, pvc);
+				var resolvedValue = resolveValue(name, value, beanName, mergedBeanDefinition, property);
+				// If 'value' is a bean definition or bean reference and the bean's populate mode
+				// is 'populate after setting property', the property access has already been made
+				// and must not be done here a second time.
+				if (!property.wasSetAccessed()) {
+					pvc.setValue(resolvedValue);
+					beanWrapper.setPropertyValue(pvc);
+				}
+			}
 		}
 		catch (exception:org.as2lib.bean.BeanException) {
 			// Improve the message by showing the context.
-			throw (new BeanCreationException(beanName, "Error setting property values.",
+			throw (new BeanCreationException(beanName, "Error setting property value.",
 					this, arguments)).initCause(exception);
 		}
 	}
