@@ -44,9 +44,16 @@ class org.as2lib.bean.factory.support.ManagedList extends BasicClass implements 
 	
 	/**
 	 * Constructs a new {@code ManagedList} instance.
+	 * 
+	 * @param values the initial values
 	 */
-	public function ManagedList(Void) {
-		values = new Array();
+	public function ManagedList(values:Array, elementType:Function, mergeEnabled:Boolean) {
+		if (values == null) {
+			values = new Array();
+		}
+		this.values = values;
+		this.elementType = elementType;
+		this.mergeEnabled = mergeEnabled;
 	}
 	
 	/**
@@ -75,16 +82,19 @@ class org.as2lib.bean.factory.support.ManagedList extends BasicClass implements 
 		this.mergeEnabled = mergeEnabled;
 	}
 	
-	public function merge(parent):Void {
+	public function merge(parent) {
 		if (!mergeEnabled) {
-			throw new IllegalStateException("Merging is not enabled for this managed list.", this, arguments);
+			throw new IllegalStateException("Merging is not enabled for this managed list.",
+					this, arguments);
 		}
-		if (!(parent instanceof List)) {
+		var parentList:List = List(parent);
+		if (parentList == null) {
 			throw new IllegalArgumentException("Cannot merge with instance of type [" +
 					ReflectUtil.getTypeNameForInstance(parent) + "].", this, arguments);
 		}
-		var temp:Array = List(parent).toArray();
-		values = temp.concat(values);
+		var temp:Array = parentList.toArray().concat();
+		temp.push.apply(temp, values);
+		return new ManagedList(temp, elementType, mergeEnabled);
 	}
 	
 	public function insertByValue(value):Void {

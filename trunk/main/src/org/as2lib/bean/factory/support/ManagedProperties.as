@@ -44,9 +44,16 @@ class org.as2lib.bean.factory.support.ManagedProperties extends BasicClass imple
 	/**
 	 * Constructs a new {@code ManagedProperties} instance.
 	 */
-	public function ManagedProperties(Void) {
-		keys = new Array();
-		values = new Array();
+	public function ManagedProperties(keys:Array, values:Array, mergeEnabled:Boolean) {
+		if (keys == null) {
+			keys = new Array();
+		}
+		this.keys = keys;
+		if (values == null) {
+			values = new Array();
+		}
+		this.values = values;
+		this.mergeEnabled = mergeEnabled;
 	}
 	
 	public function isMergeEnabled(Void):Boolean {
@@ -57,17 +64,19 @@ class org.as2lib.bean.factory.support.ManagedProperties extends BasicClass imple
 		this.mergeEnabled = mergeEnabled;
 	}
 	
-	public function merge(parent):Void {
+	public function merge(parent) {
 		if (!mergeEnabled) {
-			throw new IllegalStateException("Merging is not enabled for this managed properties.", this, arguments);
+			throw new IllegalStateException("Merging is not enabled for this managed properties.",
+					this, arguments);
 		}
-		if (!(parent instanceof Properties)) {
+		var parentProperties:Properties = Properties(parent);
+		if (parentProperties == null) {
 			throw new IllegalArgumentException("Cannot merge with instance of type [" +
 					ReflectUtil.getTypeNameForInstance(parent) + "].", this, arguments);
 		}
-		var parentProperties:Properties = parent;
-		keys = parentProperties.getKeys().concat(keys);
-		values = parentProperties.getValues().concat(values);
+		var keys = parentProperties.getKeys().concat(keys);
+		var values = parentProperties.getValues().concat(values);
+		return new ManagedProperties(keys, values, mergeEnabled);
 	}
 	
 	public function setProp(key:String, value:String):Void {
