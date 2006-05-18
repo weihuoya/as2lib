@@ -115,16 +115,24 @@ interface org.as2lib.bean.factory.BeanFactory extends BasicInterface {
 	 * afterwards' and a property is given, the bean will be instantiated, then the
 	 * given property will be intialized with the bean instance and after that the
 	 * bean instance will be populated, which means that its properties will be applied
-	 * to it. 
+	 * to it.
+	 * 
+	 * <p>If the bean with the given name shall be instantiated by means of a property,
+	 * then the given property will be used to instantiate the bean. This means that
+	 * the object returned by get-access to the given property will be used as bean
+	 * instance.
 	 * 
 	 * @param name the name of the bean to return
 	 * @param property the property to initialize with the returned bean instance
-	 * if the bean's populate mode is set to 'populate afterwards'
+	 * if the bean's populate mode is set to 'populate afterwards' or the property
+	 * to use for instantiating the bean when it shall be instantiated by means of
+	 * a property
 	 * @return the bean instance
 	 * @throws NoSuchBeanDefinitionException if there is no bean definition with the
 	 * specified name 
      * @throws BeanException if the bean could not be obtained
      * @see BeanDefinition#getPopulateMode
+     * @see BeanDefinition#isInstantiateWithProperty
 	 */
 	public function getBeanByName(name:String, property:PropertyAccess);
 	
@@ -141,10 +149,17 @@ interface org.as2lib.bean.factory.BeanFactory extends BasicInterface {
 	 * bean instance will be populated, which means that its properties will be applied
 	 * to it.
 	 * 
+	 * <p>If the bean with the given name shall be instantiated by means of a property,
+	 * then the given property will be used to instantiate the bean. This means that
+	 * the object returned by get-access to the given property will be used as bean
+	 * instance.
+	 * 
 	 * @param name the name of the bean to return
 	 * @param requiredType the type the bean must match or {@code null} for any match
 	 * @param property the property to initialize with the returned bean instance
-	 * if the bean's populate mode is set to 'populate afterwards'
+	 * if the bean's populate mode is set to 'populate afterwards' or the property
+	 * to use for instantiating the bean when it shall be instantiated by means of
+	 * a property
 	 * @return an instance of the bean
 	 * @throws BeanNotOfRequiredTypeException if the bean is not of the required type
 	 * @throws NoSuchBeanDefinitionException if there is no bean definition for the
