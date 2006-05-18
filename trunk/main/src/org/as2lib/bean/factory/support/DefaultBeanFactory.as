@@ -329,7 +329,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		try {
 			errorMessage = "Instantiation of bean failed.";
 			if (mergedBeanDefinition.isInstantiateWithProperty()) {
-				result = instantiateBeanUsingProperty(beanName, property);
+				result = instantiateBeanUsingProperty(beanName, property, mergedBeanDefinition);
 			}
 			else if (mergedBeanDefinition.getFactoryMethodName() != null) {
 				result = instantiateBeanUsingFactoryMethod(beanName, mergedBeanDefinition);
@@ -436,39 +436,6 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	}
 	
 	/**
-	 * Applies the method overrides of the given bean definition to the given bean.
-	 * 
-	 * @param beanName the name of the bean
-	 * @param bean the bean to apply method overrides to
-	 * @param mergedBeanDefinition the bean definition of the bean
-	 */
-	private function applyMethodOverrides(beanName:String, bean, mergedBeanDefinition:RootBeanDefinition):Void {
-		// TODO Support and allow overrides for beans instantiated by other means than the bean class, also (see AbstractBeanDefinition.validate, instantiateBeanUsingFactoryMethod, instantiateBeanUsingProperty)!
-		var overrides:Array = mergedBeanDefinition.getMethodOverrides().getOverrides();
-		for (var i:Number = 0; i < overrides.length; i++) {
-			var owner:BeanFactory = this;
-			if (overrides[i] instanceof LookupOverride) {
-				var lo:LookupOverride = overrides[i];
-				var lm:Function = function() {
-					return owner.getBeanByName(arguments.callee.beanName);
-				};
-				lm.beanName = lo.getBeanName();
-				bean[lo.getMethodName()] = lm;
-			}
-			else if (overrides[i] instanceof ReplaceOverride) {
-				var ro:ReplaceOverride = overrides[i];
-				var rm:Function = function() {
-					var mr:MethodReplacer = owner.getBeanByNameAndType(arguments.callee.beanName, MethodReplacer);
-					return mr.reimplement(this, arguments.callee.methodName, arguments);
-				};
-				rm.beanName = ro.getMethodReplacerBeanName();
-				rm.methodName = ro.getMethodName();
-				bean[ro.getMethodName()] = rm;
-			}
-		}
-	}
-	
-	/**
 	 * Instantiates the bean defined by the given bean definition with a factory
 	 * method.
 	 * 
@@ -514,6 +481,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 					mergedBeanDefinition.getFactoryMethodName() + "' on class [" +
 					ReflectUtil.getTypeName(factory) + "] returned 'null'.", this, arguments);
 		}
+		applyMethodOverrides(beanName, bean, mergedBeanDefinition);
 		return bean;
 	}
 	
@@ -539,9 +507,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	 * 
 	 * @param beanName the name of the bean to instantiate
 	 * @param property the 'factory' property whose get-method instantiates the bean
+	 * @param mergedBeanDefinition the merged bean definition of the bean to instantiate
 	 * @return the instantiated bean
 	 */
-	private function instantiateBeanUsingProperty(beanName:String, property:PropertyAccess) {
+	private function instantiateBeanUsingProperty(beanName:String, property:PropertyAccess, mergedBeanDefinition:RootBeanDefinition) {
 		var bean;
 		try {
 			bean = property.getValue();
@@ -558,7 +527,40 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 					ReflectUtil.getTypeNameForInstance(property.getBean()) + "] returned 'null'.",
 					this, arguments);
 		}
+		applyMethodOverrides(beanName, bean, mergedBeanDefinition);
 		return bean;
+	}
+	
+	/**
+	 * Applies the method overrides of the given bean definition to the given bean.
+	 * 
+	 * @param beanName the name of the bean
+	 * @param bean the bean to apply method overrides to
+	 * @param mergedBeanDefinition the bean definition of the bean
+	 */
+	private function applyMethodOverrides(beanName:String, bean, mergedBeanDefinition:RootBeanDefinition):Void {
+		var overrides:Array = mergedBeanDefinition.getMethodOverrides().getOverrides();
+		for (var i:Number = 0; i < overrides.length; i++) {
+			var owner:BeanFactory = this;
+			if (overrides[i] instanceof LookupOverride) {
+				var lo:LookupOverride = overrides[i];
+				var lm:Function = function() {
+					return owner.getBeanByName(arguments.callee.beanName);
+				};
+				lm.beanName = lo.getBeanName();
+				bean[lo.getMethodName()] = lm;
+			}
+			else if (overrides[i] instanceof ReplaceOverride) {
+				var ro:ReplaceOverride = overrides[i];
+				var rm:Function = function() {
+					var mr:MethodReplacer = owner.getBeanByNameAndType(arguments.callee.beanName, MethodReplacer);
+					return mr.reimplement(this, arguments.callee.methodName, arguments);
+				};
+				rm.beanName = ro.getMethodReplacerBeanName();
+				rm.methodName = ro.getMethodName();
+				bean[ro.getMethodName()] = rm;
+			}
+		}
 	}
 	
 	/**

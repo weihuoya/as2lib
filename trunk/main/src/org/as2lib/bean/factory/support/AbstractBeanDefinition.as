@@ -598,15 +598,11 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	public function validate(Void):Void {
 		// TODO: Validate whether all property values have a property name and if not whether a default property name is available.
 		if (lazyInit && !singleton) {
-			throw new BeanDefinitionValidationException("Lazy initialization is only applicable to singleton beans.", this, arguments);
-		}
-		if (!getMethodOverrides().isEmpty() && getFactoryMethodName() != null) {
-			throw new BeanDefinitionValidationException(
-					"Cannot combine static factory method with method overrides: " +
-					"the static factory method must create the instance.", this, arguments);
+			throw new BeanDefinitionValidationException("Lazy initialization is only applicable " +
+					"to singleton beans.", this, arguments);
 		}
 		if (hasBeanClass()) {
-			// Check that lookup methods exists
+			// Check that lookup methods exist
 			var overrides:Array = getMethodOverrides().getOverrides();
 			for (var i:Number = 0; i < overrides.length; i++) {
 				validateMethodOverride(overrides[i]);
@@ -624,8 +620,8 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	private function validateMethodOverride(methodOverride:MethodOverride):Void {
 		var methodName:String = methodOverride.getMethodName();
 		if (beanClass[methodName] == null && beanClass.prototype[methodName] == null) {
-			throw new BeanDefinitionValidationException(
-			    "Invalid method override: no method with name '" + methodName + "' on class [" + beanClassName + "].", this, arguments);
+			throw new BeanDefinitionValidationException("Invalid method override: no method with " +
+					"name '" + methodName + "' on class [" + beanClassName + "].", this, arguments);
 		}
 	}
 	
