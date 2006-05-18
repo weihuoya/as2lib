@@ -30,14 +30,17 @@ interface org.as2lib.bean.Mergeable extends BasicInterface {
 	 * @return {@code true} if merging is enabled else {@code false}
 	 */
 	public function isMergeEnabled(Void):Boolean;
-
+	
 	/**
 	 * Merges the current value set with that of the supplied object. The supplied
 	 * object is considered the parent, and values in the callee's value set should
 	 * override those of the supplied object.
 	 * 
 	 * @param parent the value set of the parent to merge with this one
+	 * @return the result of the merge operation
+	 * @throws IllegalArgumentException if the supplied parent is {@code null}
+	 * @throws IllegalStateException if merging is not enabled for this instance
 	 */
-	public function merge(parent):Void;
+	public function merge(parent);
 	
 }

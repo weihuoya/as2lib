@@ -51,9 +51,18 @@ class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements M
 	/**
 	 * Constructs a new {@code ManagedMap} instance.
 	 */
-	public function ManagedMap(Void) {
-		keys = new Array();
-		values = new Array();
+	public function ManagedMap(keys:Array, values:Array, keyType:Function, valueType:Function, mergeEnabled:Boolean) {
+		if (keys == null) {
+			keys = new Array();
+		}
+		this.keys = keys;
+		if (values == null) {
+			values = new Array();
+		}
+		this.values = values;
+		this.keyType = keyType;
+		this.valueType = valueType;
+		this.mergeEnabled = mergeEnabled;
 	}
 	
 	/**
@@ -100,17 +109,19 @@ class org.as2lib.bean.factory.support.ManagedMap extends BasicClass implements M
 		this.mergeEnabled = mergeEnabled;
 	}
 	
-	public function merge(parent):Void {
+	public function merge(parent) {
 		if (!mergeEnabled) {
-			throw new IllegalStateException("Merging is not enabled for this managed map.", this, arguments);
+			throw new IllegalStateException("Merging is not enabled for this managed map.",
+					this, arguments);
 		}
-		if (!(parent instanceof Map)) {
+		var parentMap:Map = Map(parent);
+		if (parentMap == null) {
 			throw new IllegalArgumentException("Cannot merge with instance of type [" +
 					ReflectUtil.getTypeNameForInstance(parent) + "].", this, arguments);
 		}
-		var parentMap:Map = parent;
-		keys = parentMap.getKeys().concat(keys);
-		values = parentMap.getValues().concat(values);
+		var keys = parentMap.getKeys().concat(keys);
+		var values = parentMap.getValues().concat(values);
+		return new ManagedMap(keys, values, keyType, valueType, mergeEnabled);
 	}
 	
 	public function put(key, value) {
