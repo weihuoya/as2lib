@@ -569,7 +569,7 @@ class org.as2lib.bean.SimpleBeanWrapper extends AbstractBeanWrapper implements B
 						this, arguments)).initCause(exception);
 			}
 			nestedBeanWrapper.setPropertyValue(new PropertyValue(getFinalPath(propertyName),
-					value, propertyValue.getType()));
+					value, propertyValue.getType(), propertyValue.isEnforceAccess()));
 			return;
 		}
 		var tokens:Array = getPropertyNameTokens(propertyName);
