@@ -43,9 +43,10 @@
 		<HBox x="5" y="5" width="445" height="30" defaultMinXMargin="0">
 			<Button title="{messageSource.message[button.orderForm]}" target="r{view}" action="showOrderForm"/>
 			<Button title="{messageSource.message[button.viewOrders]}" target="r{view}" action="showViewOrdersForm"/>
-			<Label id="statusText" selectable="false" width="200" height="25"/>
-			<ProgressBar id="progressBar" hidden="true" width="100" height="25"/>
 		</HBox>
+		<Label id="statusText" x="212" y="12" width="226" height="26" selectable="false"/>
+		<ProgressBar id="progressBar" x="210" y="10" width="226" height="26" doubleValue="100"
+				animated="true" hidden="true"/>
 		<orderForm>r{orderForm}</orderForm>
 		<viewOrdersForm>r{viewOrdersForm}</viewOrdersForm>
 	</bean>
