@@ -1,11 +1,5 @@
 <?xml version="1.0"?>
 
-<!--
-<beans xmlns="http://www.as2lib.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.as2lib.org/schema/beans http://www.as2lib.org/schema/beans/as2lib-beans.xsd">
--->
-
 <beans>
 	
 	<bean class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
