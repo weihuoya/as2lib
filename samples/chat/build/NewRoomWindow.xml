@@ -3,9 +3,9 @@
 <beans xmlns:chat="org.as2lib.sample.chat" xmlns:aw="org.aswing">
 	
 	<chat:NewRoomWindow id="newRoomWindow" height="235" style="window">
-		<nameTextField>b{nameTextField}</nameTextField>
-		<passwordTextField>b{passwordTextField}</passwordTextField>
-		<maxUsersTextField>b{maxUsersTextField}</maxUsersTextField>
+		<nameTextField>r{nameTextField}</nameTextField>
+		<passwordTextField>r{passwordTextField}</passwordTextField>
+		<maxUsersTextField>r{maxUsersTextField}</maxUsersTextField>
 		<aw:JPanel style="title">
 			<aw:JLabel>{messageSource.message[title.newRoom]}</aw:JLabel>
 		</aw:JPanel>
