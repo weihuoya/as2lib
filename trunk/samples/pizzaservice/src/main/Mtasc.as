@@ -47,9 +47,9 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateLi
 	
 	public static var LOG_CONFIGURATION_URI:String = "logging.xml";
 	public static var APPLICATION_CONTEXT_URI:String = "applicationContext.xml";
-	public static var ASWING_VIEW_URI:String = "aswing/view.xml";
-	public static var ACTIONSTEP_VIEW_URI:String = "actionstep/view.xml";
-	public static var ENFLASH_VIEW_URI:String = "enflash/view.xml";
+	public static var ASWING_VIEW_URI:String = "aswing/View.xml";
+	public static var ACTIONSTEP_VIEW_URI:String = "actionstep/View.xml";
+	public static var ENFLASH_VIEW_URI:String = "enflash/View.xml";
 	
 	private var rootApplicationContext:XmlApplicationContext;
 	private var childApplicationContext:LoadingApplicationContext;
@@ -65,8 +65,8 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateLi
 		var logConfigurationProcess:LogConfigurationProcess =
 				new LogConfigurationProcess(LOG_CONFIGURATION_URI, new XmlLogConfigurationParser());
 		rootApplicationContext = new XmlApplicationContext(APPLICATION_CONTEXT_URI);
-		childApplicationContext = new AsWingApplicationContext(ASWING_VIEW_URI, rootApplicationContext);
 		//childApplicationContext = new ActionStepApplicationContext(ACTIONSTEP_VIEW_URI, rootApplicationContext);
+		childApplicationContext = new AsWingApplicationContext(ASWING_VIEW_URI, rootApplicationContext);
 		//childApplicationContext = new EnFlashApplicationContext(ENFLASH_VIEW_URI, rootApplicationContext);
 		batchProcess.addProcess(logConfigurationProcess);
 		batchProcess.addProcess(rootApplicationContext);
