@@ -11,7 +11,8 @@
 		<HBox defaultMinXMargin="0">
 			<FormItem>
 				<Label stringValue="{messageSource.message[label.orders]}"/>
-				<List id="orderList" target="r{viewOrdersForm}" action="updatePizzas" width="120" height="251"/>
+				<List id="orderList" width="120" height="252" target="r{viewOrdersForm}"
+						action="updatePizzas"/>
 			</FormItem>
 			<FormItem>
 				<Label stringValue="{messageSource.message[label.pizzas]}"/>
