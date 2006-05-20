@@ -35,7 +35,7 @@ import org.as2lib.util.TrimUtil;
  *   &lt;/bean&gt;
  *   
  *   // convenience version that specifies a static field pattern as bean name
- *   &lt;bean id="org.aswing.BoxLayout.Y_AXIS" class="org.as2lib.bean.factory.config.VariableRetrievingFactoryBean"/&gt;</pre>
+ *   &lt;bean id="org.aswing.BoxLayout.Y_AXIS" class="org.as2lib.bean.factory.config.VariableRetrievingFactoryBean"/&gt;
  * </pre>
  * 
  * @author Simon Wacker
