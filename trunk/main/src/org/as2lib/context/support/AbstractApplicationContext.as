@@ -600,7 +600,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	/**
 	 * Returns the internal bean factory of the parent context if it implements the
-	 * {@link ConfigurableApplicationContext} class; else, returnr the parent context
+	 * {@link ConfigurableApplicationContext} class; else, returns the parent context
 	 * itself.
 	 */
 	private function getInternalParentBeanFactory(Void):BeanFactory {
