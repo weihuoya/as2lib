@@ -835,7 +835,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * Refreshes the bean factory.
 	 * 
 	 * <p>Subclasses must implement this method to perform the actual configuration load.
-	 * The method is invoked by refresh before any other initialization work.
+	 * The method is invoked by {@code refresh} before any other initialization work.
 	 * 
 	 * <p>A subclass will either create a new bean factory and hold a reference to it,
 	 * or return a single bean factory instance that it holds. In the latter case, it
@@ -848,7 +848,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * @see #refresh
 	 */
 	private function refreshBeanFactory(Void):Void {
-		throw new AbstractOperationException("This method is marked as abstract and must be overridden by sub-classes.", this, arguments);
+		throw new AbstractOperationException("This method is marked as abstract and must be " +
+				"overridden by sub-classes.", this, arguments);
 	}
 	
 	/**
@@ -864,7 +865,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * @see #refresh
 	 */
 	public function getBeanFactory(Void):ConfigurableListableBeanFactory {
-		throw new AbstractOperationException("This method is marked as abstract and must be overridden by sub-classes.", this, arguments);
+		throw new AbstractOperationException("This method is marked as abstract and must be " +
+				"overridden by sub-classes.", this, arguments);
 		return null;
 	}
 
