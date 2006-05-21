@@ -143,7 +143,7 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 			applicationContext.setBeanDefinitionParser(beanDefinitionParser);
 		}
 		applicationContext.setParent(parentApplicationContext);
-		applicationContext.getBeanFactory().addBeanPostProcessor(this);
+		applicationContext.addBeanPostProcessor(this);
 	}
 	
 	public function getObject(property:PropertyAccess) {
