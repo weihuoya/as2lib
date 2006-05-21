@@ -19,6 +19,7 @@ import org.as2lib.bean.factory.support.DefaultBeanFactory;
 import org.as2lib.context.ApplicationContext;
 import org.as2lib.context.support.AbstractApplicationContext;
 import org.as2lib.env.except.AbstractOperationException;
+import org.as2lib.env.except.IllegalStateException;
 
 /**
  * {@code AbstractRefreshableApplicationContext} the base class for application
@@ -83,8 +84,14 @@ class org.as2lib.context.support.AbstractRefreshableApplicationContext extends
 	 * Returns the single internal bean factory held by this context.
 	 * 
 	 * @return the single internal bean factory of this context
+	 * @throws IllegalStateException if this context does not hold an internal bean factory
+	 * yet (usually if {@code refresh} has never been called)
 	 */
 	public function getBeanFactory(Void):ConfigurableListableBeanFactory {
+		if (beanFactory == null) {
+			throw new IllegalStateException("Bean factory not initialized: Call 'refresh' before " +
+					"attempting to get the internal bean factory.", this, arguments);
+		}
 		return beanFactory;
 	}
 	
