@@ -307,7 +307,6 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 				isStatic = true;
 			}
 			else {
-				// TODO Don't know whether targetObject must always be just the first bean if not static.
 				dotIndex = targetObject.indexOf(".");
 				if (dotIndex != -1) {
 					targetMember = targetObject.substring(dotIndex + 1) + "." + targetMember;
@@ -349,8 +348,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 			result.appendChild(createPropertyElement("staticVariable", targetObject + "." + targetMember));
 		}
 		else {
-			// TODO targetBean must not be the name of the target bean, but the target bean itself
-			result.appendChild(createBeanReferencePropertyElement("targetBean", targetObject));
+			result.appendChild(createBeanReferencePropertyElement("targetBeanName", targetObject));
 			result.appendChild(createPropertyElement("targetVariable", targetMember));
 		}
 		return parseBeanDefinitionElement(result);
@@ -376,8 +374,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 			result.appendChild(createPropertyElement("staticMethod", targetObject + "." + targetMember));
 		}
 		else {
-			// TODO targetBean must not be the name of the target bean, but the target bean itself
-			result.appendChild(createBeanReferencePropertyElement("targetBean", targetObject));
+			result.appendChild(createBeanReferencePropertyElement("targetBeanName", targetObject));
 			result.appendChild(createPropertyElement("targetVariable", targetMember));
 		}
 		return parseBeanDefinitionElement(result);
