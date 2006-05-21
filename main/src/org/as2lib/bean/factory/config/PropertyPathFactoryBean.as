@@ -160,9 +160,9 @@ class org.as2lib.bean.factory.config.PropertyPathFactoryBean extends BasicClass 
 			// No other properties specified: check bean name.
 			var dotIndex:Number = beanName.indexOf(".");
 			if (dotIndex == -1) {
-				throw new IllegalArgumentException(
-						"Neither 'targetBean' nor 'targetBeanName' specified, and bean name '" +
-						beanName + "' does not follow 'beanName.property' syntax.", this, arguments);
+				throw new IllegalArgumentException("Neither 'targetBean' nor 'targetBeanName' " +
+						"specified, and bean name '" + beanName + "' does not follow " +
+						"'beanName.property' syntax.", this, arguments);
 			}
 			targetBeanName = beanName.substring(0, dotIndex);
 			propertyPath = beanName.substring(dotIndex + 1);
@@ -186,8 +186,8 @@ class org.as2lib.bean.factory.config.PropertyPathFactoryBean extends BasicClass 
 		}
 		var value = target.getPropertyValue(propertyPath);
 		if (value == null) {
-			throw new FatalBeanException("This factory bean is not allowed to return 'null', " +
-					"but property value for path '" + propertyPath + "' is 'null'.", this, arguments);
+			throw new FatalBeanException("This factory bean is not allowed to return 'null', but " +
+					"property value for path '" + propertyPath + "' is 'null'.", this, arguments);
 		}
 		return value;
 	}
