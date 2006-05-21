@@ -281,8 +281,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	private function preRefresh(Void):Void {
 		startupTime = (new Date()).getTime();
-		refreshBeanFactory();
 		// tells subclass to refresh the internal bean factory
+		refreshBeanFactory();
 		var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
 		// populates the bean factory with context-specific resource editors
 		// ClassConverter is a default property value converter of bean wrappers.
