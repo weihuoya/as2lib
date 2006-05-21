@@ -22,6 +22,7 @@ import org.as2lib.app.exec.BatchUpdateListener;
 import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.ProcessFinishListener;
 import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.env.except.IllegalStateException;
 
 /**
  * @author Simon Wacker
@@ -146,7 +147,7 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 	public function removeProcess(process:Process):Void {
 		if (process != null) {
 			var i:Number = processes.length;
-			while(--i-(-1)) {
+			while (--i-(-1)) {
 				if (processes[i] == process) {
 					if (i == currentProcess) {
 						throw new IllegalArgumentException("Process [" + process + "] is " +
@@ -159,6 +160,14 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 				}
 			}
 		}
+	}
+	
+	public function removeAllProcesses(Void):Void {
+		if (started) {
+			throw new IllegalStateException("All processes cannot be removed when batch is " +
+					"running.", this, arguments);
+		}
+		processes = new Array();
 	}
 	
 	/**
