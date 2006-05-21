@@ -145,7 +145,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		this.parent = parent;
 		active = true;
 		beanFactoryPostProcessors = new Array();
-		beanFactoryPostProcessorProcesses = new Array();
 	}
 	
 	/**
@@ -281,7 +280,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	private function preRefresh(Void):Void {
-		this.startupTime = (new Date()).getTime();
+		startupTime = (new Date()).getTime();
 		refreshBeanFactory();
 		// tells subclass to refresh the internal bean factory
 		var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
@@ -293,6 +292,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		// allows post-processing of the bean factory in context subclasses
 		postProcessBeanFactory(beanFactory);
 		// invokes factory processors registered with the context instance
+		beanFactoryPostProcessorProcesses = new Array();
 		for (var i:Number = 0; i < beanFactoryPostProcessors.length; i++) {
 			// TODO Refactor!
 			var factoryProcessor:BeanFactoryPostProcessor = beanFactoryPostProcessors[i];
