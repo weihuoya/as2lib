@@ -71,6 +71,11 @@ interface org.as2lib.app.exec.Batch extends Process {
 	public function removeProcess(process:Process):Void;
 	
 	/**
+	 * Removes all processes.
+	 */
+	public function removeAllProcesses(Void):Void;
+	
+	/**
 	 * Returns all added processes.
 	 * 
 	 * @return all added processes
