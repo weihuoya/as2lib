@@ -14,34 +14,36 @@
  * limitations under the License.
  */
 
+import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.SimpleBatch;
 import org.as2lib.bean.factory.parser.BeanDefinitionParser;
+import org.as2lib.bean.factory.support.DefaultBeanFactory;
 import org.as2lib.context.ApplicationContext;
-import org.as2lib.context.support.DefaultApplicationContext;
-import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogManager;
+import org.as2lib.context.support.AbstractRefreshableApplicationContext;
 import org.as2lib.io.file.FileLoader;
 import org.as2lib.io.file.FileLoaderProcess;
-import org.as2lib.io.file.TextFile;
 import org.as2lib.io.file.TextFileLoader;
 
 /**
  * {@code LoadingApplicationContext} loads a bean definition file and parses it. The
- * parsed ben definition file may not define its own {@code "batch"} bean.
+ * parsed bean definition file may not define its own {@code "batch"} bean.
  * 
  * <p>Note that after the loaded bean definition file has been parsed, this context
  * will automatically add all {@link Process} beans to the batch and start it.
  * 
  * @author Simon Wacker
- * TODO: Enable multiple refreshes for this context!
  */
-class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplicationContext {
+class org.as2lib.context.support.LoadingApplicationContext extends
+		AbstractRefreshableApplicationContext {
 	
 	/** The uri to the bean definition file. */
 	private var beanDefinitionUri:String;
 	
 	/** The bean definition parser to parse the loaded bean definitions with. */
 	private var beanDefinitionParser:BeanDefinitionParser;
+	
+	/** Content of loaded bean definition file. */
+	private var beanDefinitions:String;
 	
 	/**
 	 * Constructs a new {@code ProcessableApplicationContext} instance.
@@ -52,7 +54,8 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 	 * bean definition file
 	 * @param parent the parent of this application context
 	 */
-	public function LoadingApplicationContext(beanDefinitionUri:String, beanDefitionParser:BeanDefinitionParser, parent:ApplicationContext) {
+	public function LoadingApplicationContext(beanDefinitionUri:String,
+			beanDefitionParser:BeanDefinitionParser, parent:ApplicationContext) {
 		super(parent);
 		// TODO: Add support for specifying multiple URIs for the same application context!
 		this.beanDefinitionUri = beanDefinitionUri;
@@ -61,8 +64,10 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 	}
 	
 	public function start() {
+		var batch:Batch = getBatch();
+		batch.removeAllProcesses();
 		initFileLoaderProcess();
-		getBatch().start();
+		batch.start();
 	}
 	
 	/**
@@ -92,16 +97,23 @@ class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplic
 	/**
 	 * Gets invoked when the bean definition file was successfully loaded.
 	 * 
-	 * <p>It parses the file loaded by the given file loader with the parser
-	 * specified on construction and registers the {@link Process} beans at
-	 * the batch of this context, that is currently running.
-	 * 
 	 * @param fileLoader the file laoder that loaded the bean definition file
+	 * @see AbstractApplicationContext#start
 	 */
 	private function onLoadComplete(fileLoader:FileLoader):Void {
-		var textFile:TextFile = TextFileLoader(fileLoader).getTextFile();
-		beanDefinitionParser.parse(textFile.getContent(), beanFactory);
+		beanDefinitions = TextFileLoader(fileLoader).getTextFile().getContent();
 		super.start();
+	}
+	
+	/**
+	 * Parses the content of the loaded bean definition file with the parser specified
+	 * on construction.
+	 * 
+	 * @param beanFactory the bean factory to load bean definitions into
+	 * @throws BeanException if parsing of the bean definitions failed
+	 */
+	private function loadBeanDefinitions(beanFactory:DefaultBeanFactory):Void {
+		beanDefinitionParser.parse(beanDefinitions, beanFactory);
 	}
 	
 	/**
