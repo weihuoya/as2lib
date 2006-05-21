@@ -75,10 +75,8 @@ import org.as2lib.util.ClassUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory
-		implements ConfigurableApplicationContext, ApplicationEventPublisher, Process, BatchFinishListener {
-	
-	private static var logger:Logger = LogManager.getLogger("org.as2lib.context.support.AbstractApplicationContext");
+class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory implements
+		ConfigurableApplicationContext, ApplicationEventPublisher, Process, BatchFinishListener {
 	
 	/**
 	 * Name of the {@link MessageSource} bean in this factory.
