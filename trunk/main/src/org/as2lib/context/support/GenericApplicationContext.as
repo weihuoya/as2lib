@@ -20,7 +20,7 @@ import org.as2lib.bean.factory.DisposableBean;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
 import org.as2lib.bean.factory.support.DefaultBeanFactory;
 import org.as2lib.context.ApplicationContext;
-import org.as2lib.context.support.DefaultApplicationContext;
+import org.as2lib.context.support.AbstractApplicationContext;
 import org.as2lib.env.except.IllegalStateException;
 
 /**
@@ -30,8 +30,14 @@ import org.as2lib.env.except.IllegalStateException;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.GenericApplicationContext extends DefaultApplicationContext
+class org.as2lib.context.support.GenericApplicationContext extends AbstractApplicationContext
 		implements BeanDefinitionRegistry {
+	
+	/** The wrapped bean factory to delegate bean managing tasks to. */
+	private var beanFactory:DefaultBeanFactory;
+	
+	/** Indicates whether this application context has already been refreshed. */
+	private var refreshed:Boolean;
 	
 	/**
 	 * Constructs a new {@code GenericApplicationContext} instance.
@@ -39,7 +45,35 @@ class org.as2lib.context.support.GenericApplicationContext extends DefaultApplic
 	 * @param parent the parent of this application context
 	 */
 	public function GenericApplicationContext(parent:ApplicationContext) {
-		super(parent);
+		beanFactory = createBeanFactory();
+		refreshed = false;
+		setParent(parent);
+	}
+	
+	/**
+	 * Sets the parent of this application context, also setting the parent of the
+	 * internal bean factory accordingly.
+	 * 
+	 * @param parent the parent of this application context
+	 */
+	public function setParent(parent:ApplicationContext):Void {
+		super.setParent(parent);
+		beanFactory.setParentBeanFactory(getInternalParentBeanFactory());
+	}
+	
+	/**
+	 * Creates the bean factory for this context.
+	 * 
+	 * <p>Default implementation creates a {@link DefaultBeanFactory} with the
+	 * internal bean factory of this context's parent as parent bean factory.
+	 * 
+	 * <p>Can be overridden in subclasses.
+	 * 
+	 * @return the bean factory for this context
+	 * @see #getInternalParentBeanFactory
+	 */
+	private function createBeanFactory(Void):DefaultBeanFactory {
+		return new DefaultBeanFactory(getInternalParentBeanFactory());
 	}
 	
 	//---------------------------------------------------------------------
@@ -56,6 +90,32 @@ class org.as2lib.context.support.GenericApplicationContext extends DefaultApplic
 	
 	public function registerAlias(beanName:String, alias:String):Void {
 		beanFactory.registerAlias(beanName, alias);
+	}
+	
+	//---------------------------------------------------------------------
+	// Implementations of AbstractApplicationContext's template methods
+	//---------------------------------------------------------------------
+	
+	/**
+	 * Does nothing: We hold a single internal bean factory and rely on callers to
+	 * register beans through our public methods.
+	 * 
+	 * @see #registerBeanDefinition
+	 */
+	private function refreshBeanFactory(Void):Void {
+		if (refreshed) {
+			throw new IllegalStateException("Multiple refreshs not supported: just call 'refresh' once", this, arguments);
+		}
+		refreshed = true;
+	}
+	
+	/**
+	 * Returns the single internal bean factory held by this context.
+	 * 
+	 * @return the single internal bean factory of this context
+	 */
+	public function getBeanFactory(Void):ConfigurableListableBeanFactory {
+		return beanFactory;
 	}
 	
 }
