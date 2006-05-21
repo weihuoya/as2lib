@@ -14,9 +14,11 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.factory.BeanFactory;
+import org.as2lib.bean.factory.BeanFactoryAware;
 import org.as2lib.bean.factory.BeanNameAware;
 import org.as2lib.bean.factory.FactoryBean;
-import org.as2lib.bean.factory.InitializingBean;
+import org.as2lib.bean.FatalBeanException;
 import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -41,11 +43,13 @@ import org.as2lib.util.TrimUtil;
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends BasicClass implements
-		FactoryBean, BeanNameAware, InitializingBean {
+		FactoryBean, BeanNameAware, BeanFactoryAware {
 	
 	private var targetClass:Function;
 	
 	private var targetBean;
+	
+	private var targetBeanName:String;
 	
 	private var targetVariable:String;
 	
@@ -54,6 +58,8 @@ class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends Basic
 	private var beanName:String;
 	
 	private var resultType:Function;
+	
+	private var beanFactory:BeanFactory;
 	
 	/**
 	 * Constructs a new {@code VariableRetrievingFactoryBean} instance.
@@ -104,6 +110,26 @@ class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends Basic
 	}
 	
 	/**
+	 * Specifies the name of the target bean to retrieve the variable from.
+	 * Alternatively, specify a target bean directly.
+	 * 
+	 * @param targetBeanName the bean name to look up in the containing bean factory
+	 * @see #setTargetBean
+	 */
+	public function setTargetBeanName(targetBeanName:String):Void {
+		this.targetBeanName = targetBeanName;
+	}
+	
+	/**
+	 * Returns the name of the target bean that defines the variable to retrieve.
+	 * 
+	 * @return the target bean name
+	 */
+	public function getTargetBeanName(Void):String {
+		return targetBeanName;
+	}
+	
+	/**
 	 * Sets the name of the variable to be retrieved. Refers to either a static
 	 * variable or a non-static variable depending on whether a target bean is set.
 	 * 
@@ -149,8 +175,9 @@ class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends Basic
 	
 	/**
 	 * Sets the bean name of this bean. It will be interpreted as "staticVariable"
-	 * pattern, if neither "targetClass" nor "targetBean" nor "targetVariable" have
-	 * been specified. This allows for concise bean definitions with just an id/name.
+	 * pattern, if neither "targetClass" nor "targetBean" nor "targetBeanName" nor
+	 * "targetVariable" have been specified. This allows for concise bean definitions
+	 * with just an id/name.
 	 * 
 	 * @param beanName the name of this bean
 	 */
@@ -158,14 +185,17 @@ class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends Basic
 		this.beanName = beanName;
 	}
 	
-	public function afterPropertiesSet(Void):Void {
-		if (targetClass != null && targetBean != null) {
-			throw new IllegalArgumentException("Specify either 'targetClass' or 'targetBean', not both.", this, arguments);
+	public function setBeanFactory(beanFactory:BeanFactory):Void {
+		this.beanFactory = beanFactory;
+		if (targetClass != null && (targetBean != null || targetBeanName != null) ||
+				targetBean != null && targetBeanName != null) {
+			throw new IllegalArgumentException("Specify either 'targetClass' or 'targetBean' " +
+					"or 'targetBeanName', not all of them.", this, arguments);
 		}
-		if (targetClass == null && targetBean == null) {
+		if (targetClass == null && targetBean == null && targetBeanName == null) {
 			if (targetVariable != null) {
-				throw new IllegalArgumentException(
-					"Specify 'targetClass' or 'targetBean' in combination with 'targetVariable'.", this, arguments);
+				throw new IllegalArgumentException("Specify 'targetClass' or 'targetBean' or " +
+						"'targetBeanName' in combination with 'targetVariable'.", this, arguments);
 			}
 			// If no other property specified, consider bean name as static variable expression.
 			if (staticVariable == null) {
@@ -174,15 +204,16 @@ class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends Basic
 			// try to parse static variable into class and variable
 			var lastDotIndex:Number = staticVariable.lastIndexOf(".");
 			if (lastDotIndex == -1 || lastDotIndex == staticVariable.length) {
-				throw new IllegalArgumentException(
-						"'staticVariable' must be a fully qualified class plus method name: " +
-						"e.g. 'example.MyExampleClass.MY_EXAMPLE_VARIABLE'", this, arguments);
+				throw new IllegalArgumentException("'staticVariable' must be a fully qualified " +
+						"class plus method name: e.g. 'example.MyExampleClass.MY_EXAMPLE_VARIABLE'",
+						this, arguments);
 			}
 			var className:String = staticVariable.substring(0, lastDotIndex);
 			var variableName:String = staticVariable.substring(lastDotIndex + 1);
 			targetClass = eval("_global." + className);
 			if (targetClass == null) {
-				throw new ClassNotFoundException("Class with name '" + className + "' could not be found.", this, arguments);
+				throw new ClassNotFoundException("Class with name '" + className + "' could not " +
+						"be found.", this, arguments);
 			}
 			targetVariable = variableName;
 		}
@@ -190,17 +221,31 @@ class org.as2lib.bean.factory.config.VariableRetrievingFactoryBean extends Basic
 			// either targetClass or targetObject specified
 			throw new IllegalArgumentException("'targetVariable' is required.", this, arguments);
 		}
+		if (targetBeanName != null) {
+			if (beanFactory.isSingleton(targetBeanName)) {
+				targetBean = beanFactory.getBeanByName(targetBeanName);
+			}
+		}
 	}
 	
 	public function getObject(property:PropertyAccess) {
+		var value;
 		if (targetBean != null) {
 			// instance variable
-			return targetBean[targetVariable];
+			value = targetBean[targetVariable];
 		}
-		else{
+		else if (targetClass != null) {
 			// class variable
-			return targetClass[targetVariable];
+			value = targetClass[targetVariable];
 		}
+		else {
+			value = beanFactory.getBeanByName(targetBeanName)[targetVariable];
+		}
+		if (value == null) {
+			throw new FatalBeanException("This factory bean is not allowed to return 'null', " +
+					"but value of variable '" + targetVariable + "' is 'null'.", this, arguments);
+		}
+		return value;
 	}
 	
 	public function getObjectType(Void):Function {

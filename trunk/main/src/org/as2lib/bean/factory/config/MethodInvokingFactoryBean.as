@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
+import org.as2lib.bean.factory.BeanFactory;
+import org.as2lib.bean.factory.BeanFactoryAware;
 import org.as2lib.bean.factory.BeanNameAware;
 import org.as2lib.bean.factory.FactoryBean;
-import org.as2lib.bean.factory.InitializingBean;
 import org.as2lib.bean.PropertyAccess;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
@@ -71,7 +72,7 @@ import org.as2lib.util.MethodUtil;
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClass implements
-		FactoryBean, BeanNameAware, InitializingBean {
+		FactoryBean, BeanNameAware, BeanFactoryAware {
 	
 	/** Marks the return value as being {@code null} or {@code undefined}. */
 	public static var VOID:Object = new Object();
@@ -87,6 +88,8 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	
 	private var targetBean;
 	
+	private var targetBeanName:String;
+	
 	private var targetMethod:String;
 	
 	private var staticMethod:String;
@@ -94,6 +97,8 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	private var args:Array;
 	
 	private var beanName:String;
+	
+	private var beanFactory:BeanFactory;
 	
 	/**
 	 * Constructs a new {@code MethodInvokingFactoryBean} instance.
@@ -128,6 +133,7 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	 * 
 	 * @param targetClass the target class to invke the target method on
 	 * @see #setTargetBean
+	 * @see #setTargetBeanName
 	 * @see #setTargetMethod
 	 */
 	public function setTargetClass(targetClass:Function):Void {
@@ -171,6 +177,7 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	 * @param targetMethod the name of the method to invoke
 	 * @see #setTargetClass
 	 * @see #setTargetBean
+	 * @see #setTargetBeanName
 	 */
 	public function setTargetMethod(targetMethod:String):Void {
 		this.targetMethod = targetMethod;
@@ -232,8 +239,9 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	
 	/**
 	 * Sets the bean name of this bean. It will be interpreted as "className.staticMethod"
-	 * pattern, if neither "targetClass" nor "targetBean" nor "targetVariable" have
-	 * been specified. This allows for concise bean definitions with just an id/name.
+	 * pattern, if neither "targetClass" nor "targetBean" nor "targetBeanName" nor
+	 * "targetVariable" have been specified. This allows for concise bean definitions
+	 * with just an id/name.
 	 * 
 	 * @param beanName the name of this bean
 	 */
@@ -241,16 +249,17 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 		this.beanName = beanName;
 	}
 	
-	public function afterPropertiesSet(Void):Void {
-		if (targetClass != null && targetBean != null) {
-			throw new IllegalArgumentException("Specify either 'targetClass' or 'targetBean', " +
-					"not both.", this, arguments);
+	public function setBeanFactory(beanFactory:BeanFactory):Void {
+		this.beanFactory = beanFactory;
+		if (targetClass != null && (targetBean != null || targetBeanName != null) ||
+				targetBean != null && targetBeanName != null) {
+			throw new IllegalArgumentException("Specify either 'targetClass' or 'targetBean' or " +
+					"'targetBeanName', not all of them.", this, arguments);
 		}
-		if (targetClass == null && targetBean == null) {
+		if (targetClass == null && targetBean == null && targetBeanName == null) {
 			if (targetMethod != null) {
-				throw new IllegalArgumentException(
-					"Specify 'targetClass' or 'targetBean' in combination with 'targetMethod'.",
-							this, arguments);
+				throw new IllegalArgumentException("Specify 'targetClass' or 'targetBean' or " +
+						"'targetBeanName' in combination with 'targetMethod'.", this, arguments);
 			}
 			// If no other property specified, consider bean name as static variable expression.
 			if (staticMethod == null) {
@@ -274,22 +283,30 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 		if (targetMethod == null) {
 			throw new IllegalArgumentException("'targetMethod' is required.", this, arguments);
 		}
+		if (targetBeanName != null) {
+			if (beanFactory.isSingleton(targetBeanName)) {
+				targetBean = beanFactory.getBeanByName(targetBeanName);
+			}
+		}
 		// Try to get the exact method first.
 		if (targetBean != null) {
 			if (targetBean[targetMethod] == null) {
-				throw new NoSuchMethodException(
-						"Target bean [" + targetBean.toString() + "] has no static method" +
+				throw new NoSuchMethodException("Target bean [" + targetBean.toString() + "] has " +
+						"no static method named '" + targetMethod + "'.", this, arguments);
+			}
+		}
+		else if (targetClass != null) {
+			if (targetClass[targetMethod] == null) {
+				throw new NoSuchMethodException("Target class '" +
+						ReflectUtil.getTypeNameForType(targetClass) + "' has no static method " +
 						"named '" + targetMethod + "'.", this, arguments);
 			}
 		}
-		else {
-			if (targetClass[targetMethod] == null) {
-				throw new NoSuchMethodException(
-						"Target class '" + ReflectUtil.getTypeNameForType(targetClass) +
-						"' has no static method named '" + targetMethod + "'.", this, arguments);
-			}
-		}
 		if (singleton) {
+			if (targetBean == null && targetClass == null) {
+				throw new IllegalArgumentException("Prototype bean '" + targetBeanName + "cannot " +
+						"be combined with singleton result.", this, arguments);
+			}
 			var returnValue = invoke();
 			singletonObject = (returnValue != null ? returnValue : VOID);
 		}
@@ -299,12 +316,17 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 	 * Performs the method invocation.
 	 */
 	private function invoke(Void) {
+		var targetObject;
 		if (targetBean != null) {
-			return MethodUtil.invoke(targetMethod, targetBean, args);
+			targetObject = targetBean;
+		}
+		else if (targetClass != null) {
+			targetObject = targetClass;
 		}
 		else {
-			return MethodUtil.invoke(targetMethod, targetClass, args);
+			targetObject = beanFactory.getBeanByName(targetBeanName);
 		}
+		return MethodUtil.invoke(targetMethod, targetObject, args);
 	}
 	
 	/**
@@ -324,10 +346,7 @@ class org.as2lib.bean.factory.config.MethodInvokingFactoryBean extends BasicClas
 		else {
 			// Prototype: new object on each call.
 			var returnValue = invoke();
-			if (returnValue != null) {
-				return returnValue;
-			}
-			return VOID;
+			return (returnValue != null ? returnValue : VOID);
 		}
 	}
 	
