@@ -15,6 +15,7 @@
  */
 
 import org.as2lib.bean.factory.config.BeanFactoryPostProcessor;
+import org.as2lib.bean.factory.config.BeanPostProcessor;
 import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
 import org.as2lib.context.ApplicationContext;
 
@@ -45,6 +46,15 @@ interface org.as2lib.context.ConfigurableApplicationContext extends ApplicationC
 	 * @param beanFactoryPostProcessor the factory post-processor to register
 	 */
 	public function addBeanFactoryPostProcessor(beanFactoryPostProcessor:BeanFactoryPostProcessor):Void;
+	
+	/**
+	 * Adds a new bean post processor that will be added to the internal bean factory
+	 * of this application context on refresh, before any of the bean definitions get
+	 * evaluated. This method shall be invoked during context configuration.
+	 * 
+	 * @param beanPostProcessor the bean post-processor to register
+	 */
+	public function addBeanPostProcessor(beanPostProcessor:BeanPostProcessor):Void;
 	
 	/**
 	 * Loads or refreshes the persistent representation of the configuration, which might
