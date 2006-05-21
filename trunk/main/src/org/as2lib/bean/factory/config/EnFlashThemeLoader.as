@@ -28,6 +28,9 @@ class org.as2lib.bean.factory.config.EnFlashThemeLoader extends AbstractProcess 
 	
 	private var themeManager:ThemeManager;
 	
+	public function EnFlashThemeLoader(Void) {
+	}
+	
 	public function getThemeManager(Void):ThemeManager {
 		return themeManager;
 	}
