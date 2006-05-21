@@ -202,7 +202,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	public function getMessageSource(Void):MessageSource {
 		if (messageSource == null) {
-			throw new IllegalStateException("Message source is not initialized - " +
+			throw new IllegalStateException("Message source is not initialized: " +
 					"Call 'refresh' before accessing messages via this context [" + this + "].", this, arguments);
 		}
 		return messageSource;
@@ -241,7 +241,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	public function getEventDistributorControl(Void):EventDistributorControl {
 		if (eventDistributorControl == null) {
 			throw new IllegalStateException("Event distributor control not initialized: " +
-					"Declare an event distributor control or call 'refresh' before publishing events via this context [" + this + "].", this, arguments);
+					"Declare an event distributor control or call 'refresh' before publishing " +
+					"events via this context [" + this + "].", this, arguments);
 		}
 		return eventDistributorControl;
 	}
@@ -882,7 +883,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * penalty.
 	 * 
 	 * @return this application context's internal bean factory
-	 * @throws IllegalStateException if the context does not hold an internal bean factory
+	 * @throws IllegalStateException if this context does not hold an internal bean factory
 	 * yet (usually if {@code refresh} has never been called)
 	 * @see #refresh
 	 */
