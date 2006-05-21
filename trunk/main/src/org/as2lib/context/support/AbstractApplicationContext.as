@@ -22,6 +22,7 @@ import org.as2lib.bean.factory.BeanFactory;
 import org.as2lib.bean.factory.config.BeanFactoryPostProcessor;
 import org.as2lib.bean.factory.config.BeanPostProcessor;
 import org.as2lib.bean.factory.config.ConfigurableListableBeanFactory;
+import org.as2lib.bean.factory.DisposableBean;
 import org.as2lib.bean.factory.ListableBeanFactory;
 import org.as2lib.bean.factory.support.AbstractBeanFactory;
 import org.as2lib.bean.PropertyAccess;
@@ -41,8 +42,6 @@ import org.as2lib.data.type.Time;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalStateException;
-import org.as2lib.env.log.Logger;
-import org.as2lib.env.log.LogManager;
 import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ClassUtil;
 
@@ -76,7 +75,8 @@ import org.as2lib.util.ClassUtil;
  * @author Simon Wacker
  */
 class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory implements
-		ConfigurableApplicationContext, ApplicationEventPublisher, Process, BatchFinishListener {
+		ConfigurableApplicationContext, ApplicationEventPublisher, Process, BatchFinishListener,
+		DisposableBean {
 	
 	/**
 	 * Name of the {@link MessageSource} bean in this factory.

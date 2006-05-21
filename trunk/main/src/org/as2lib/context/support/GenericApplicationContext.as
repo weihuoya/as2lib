@@ -30,7 +30,8 @@ import org.as2lib.env.except.IllegalStateException;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.context.support.GenericApplicationContext extends DefaultApplicationContext implements DisposableBean, BeanDefinitionRegistry {
+class org.as2lib.context.support.GenericApplicationContext extends DefaultApplicationContext
+		implements BeanDefinitionRegistry {
 	
 	/**
 	 * Constructs a new {@code GenericApplicationContext} instance.
