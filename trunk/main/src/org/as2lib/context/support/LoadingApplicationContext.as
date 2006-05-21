@@ -37,9 +37,6 @@ import org.as2lib.io.file.TextFileLoader;
  */
 class org.as2lib.context.support.LoadingApplicationContext extends DefaultApplicationContext {
 	
-	/** The logger for this application context. */
-	private static var logger:Logger = LogManager.getLogger("org.as2lib.context.support.LoadingApplicationContext");
-	
 	/** The uri to the bean definition file. */
 	private var beanDefinitionUri:String;
 	
