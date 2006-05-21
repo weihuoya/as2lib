@@ -124,6 +124,9 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 */
 	private var beanFactoryPostProcessorProcesses:Array;
 	
+	/** {@link BeanPostProcessor} instances to apply on refresh. */
+	private var beanPostProcessors:Array;
+	
 	/** Message source to look-up localized messages. */
 	private var messageSource:MessageSource;
 	
@@ -145,6 +148,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		this.parent = parent;
 		active = true;
 		beanFactoryPostProcessors = new Array();
+		beanPostProcessors = new Array();
 	}
 	
 	/**
@@ -264,14 +268,28 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		beanFactoryPostProcessors.push(beanFactoryPostProcessor);
 	}
 	
+	public function addBeanPostProcessor(beanPostProcessor:BeanPostProcessor):Void {
+		beanPostProcessors.push(beanPostProcessor);
+	}
+	
 	/**
-	 * Returns the list of {@link BeanPostProcessor} instances that will be applied to
-	 * beans created with this factory.
+	 * Returns the list of {@link BeanFactoryPostProcessor} instances that will be
+	 * applied to beans created with this factory.
 	 * 
-	 * @return the list of bean post processors
+	 * @return the list of bean factory post processors
 	 */
 	public function getBeanFactoryPostProcessors(Void):Array {
 		return beanFactoryPostProcessors.concat();
+	}
+	
+	/**
+	 * Returns the list of {@link BeanPostProcessor} instance to apply to beans
+	 * created by this factory.
+	 * 
+	 * @return the list of bean post processors
+	 */
+	public function getBeanPostProcessors(Void):Array {
+		return beanPostProcessors.concat();
 	}
 	
 	public function refresh(Void):Void {
@@ -396,12 +414,16 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * <p>Must be called before any instantiation of application beans.
 	 */
 	private function registerBeanPostProcessors(Void):Void {
-		// Actually fetch and register the BeanPostProcessor beans.
+		var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
+		for (var i:Number = 0; i < beanPostProcessors.length; i++) {
+			beanFactory.addBeanPostProcessor(beanPostProcessors[i]);
+		}
+		// Fetch and register the BeanPostProcessor beans.
 		// Do not initialize FactoryBeans here: We need to leave all regular beans
 		// uninitialized to let the bean post-processors apply to them!
 		var beanProcessors:Array = getBeansOfType(BeanPostProcessor, true, false).getValues();
 		for (var i:Number = 0; i < beanProcessors.length; i++) {
-			getBeanFactory().addBeanPostProcessor(beanProcessors[i]);
+			beanFactory.addBeanPostProcessor(beanProcessors[i]);
 		}
 	}
 	
@@ -869,5 +891,5 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 				"overridden by sub-classes.", this, arguments);
 		return null;
 	}
-
+	
 }
