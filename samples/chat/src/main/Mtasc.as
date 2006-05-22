@@ -18,10 +18,10 @@ import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.BatchErrorListener;
 import org.as2lib.app.exec.BatchFinishListener;
 import org.as2lib.app.exec.BatchStartListener;
+import org.as2lib.bean.factory.parser.BeanDefinitionParser;
 import org.as2lib.bean.factory.parser.UiBeanDefinitionParser;
 import org.as2lib.context.support.LoadingApplicationContext;
 import org.as2lib.core.BasicClass;
-import org.as2lib.sample.chat.Chat;
 import org.as2lib.sample.chat.Login;
 import org.as2lib.util.StringUtil;
 
@@ -41,7 +41,7 @@ class main.Mtasc extends BasicClass implements BatchStartListener,
 	
 	public function init(Void):Void {
 		trace("Initializing.");
-		var beanDefinitionParser = new UiBeanDefinitionParser();
+		var beanDefinitionParser:BeanDefinitionParser = new UiBeanDefinitionParser();
 		applicationContext = new LoadingApplicationContext(
 				APPLICATION_CONTEXT_URI, beanDefinitionParser);
 		applicationContext.addListener(this);
