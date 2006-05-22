@@ -214,8 +214,6 @@ class org.as2lib.sample.chat.Chat extends JWindow implements MessageSourceAware 
 	}
 	
 	public function sendMessage(Void):Void {
-		// TODO: Improve design of Chat.
-		// TODO: Source out common code into parent bean.
 		var message:String = messageTextField.getText();
 		if (message != "") {
 			smartFoxClient.sendPublicMessage(message);
@@ -224,7 +222,7 @@ class org.as2lib.sample.chat.Chat extends JWindow implements MessageSourceAware 
 	}
 	
 	public function sendMessageOnEnter(Void):Void {
-		if (Key.getCode() == Key.ENTER){
+		if (Key.getCode() == Key.ENTER) {
 			sendMessage();
 		}
 	}
