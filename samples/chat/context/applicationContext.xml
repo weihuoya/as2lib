@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 
-<beans xmlns:aw="org.aswing" xmlns="*.xml">
+<beans xmlns="*.xml">
 	
 	<bean class="org.as2lib.bean.factory.config.StyleSheetConfigurer">
 		<property name="styleSheetUri">style.css</property>
@@ -17,7 +17,6 @@
 	<Chat id="chat" width="800" height="600" visible="true"
 			class="org.as2lib.context.support.AsWingApplicationContext">
 		<property name="smartFoxClient"><ref local="smartFoxClient"/></property>
-		<!--<property name="login"><ref local="login"/></property>-->
 	</Chat>
 	
 	<bean id="localeManager" class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
@@ -30,7 +29,8 @@
 		</property>
 	</bean>
 	
-	<bean id="messageSource" class="org.as2lib.context.support.ResourceBundleMessageSource" depends-on="localeManager">
+	<bean id="messageSource" class="org.as2lib.context.support.ResourceBundleMessageSource"
+			depends-on="localeManager">
 		<property name="baseName">messages</property>
 	</bean>
 	
