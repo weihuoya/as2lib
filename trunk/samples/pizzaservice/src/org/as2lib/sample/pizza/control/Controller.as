@@ -84,7 +84,7 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 	public function cancelOrder(orderIndex:Number):Void {
 		var orderId:Number = Order(cachedOrders[orderIndex]).getId();
 		if (logger.isInfoEnabled()) {
-			logger.info("Cancelling order '" + orderId + "'.");
+			logger.info("Canceling order '" + orderId + "'.");
 		}
 		pizzaService.cancelOrder(orderId, cancelOrderCallback);
 	}
