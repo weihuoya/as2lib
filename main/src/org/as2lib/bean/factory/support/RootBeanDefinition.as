@@ -42,8 +42,7 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 	 * @param propertyValues the property values
 	 */
 	public function RootBeanDefinition(constructorArgumentValues:ConstructorArgumentValues, propertyValues:PropertyValues) {
-		setConstructorArgumentValues(constructorArgumentValues);
-		setPropertyValues(propertyValues);
+		super(constructorArgumentValues, propertyValues);
 	}
 	
 	public function clone(Void):RootBeanDefinition {
