@@ -18,13 +18,14 @@ import org.as2lib.bean.AbstractBeanWrapper;
 import org.as2lib.bean.factory.BeanDefinitionStoreException;
 import org.as2lib.bean.factory.config.BeanDefinition;
 import org.as2lib.bean.factory.config.BeanDefinitionHolder;
-import org.as2lib.bean.factory.config.ConstructorArgumentValues;
 import org.as2lib.bean.factory.config.MethodInvokingFactoryBean;
 import org.as2lib.bean.factory.config.PropertyPathFactoryBean;
 import org.as2lib.bean.factory.config.RuntimeBeanReference;
 import org.as2lib.bean.factory.config.VariableRetrievingFactoryBean;
 import org.as2lib.bean.factory.parser.XmlBeanDefinitionParser;
+import org.as2lib.bean.factory.support.AbstractBeanDefinition;
 import org.as2lib.bean.factory.support.BeanDefinitionRegistry;
+import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValues;
 import org.as2lib.context.support.LoadingApplicationContextFactoryBean;
 import org.as2lib.env.reflect.DelegateFactoryBean;
@@ -161,52 +162,36 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		delete element.attributes[attribute];
 	}
 	
-	private function parseConstructorArgElements(beanElement:XMLNode, beanName:String):ConstructorArgumentValues {
-		var node:XMLNode = beanElement.firstChild;
-		if (node.nodeType == 3) {
-			if (node.nodeValue != "") {
+	private function parseUnknownBeanDefinitionSubElement(element:XMLNode, beanName:String,
+			beanDefinition:AbstractBeanDefinition):Void {
+		if (element.nodeType == 3) {
+			if (element.nodeValue != "") {
 				var constructorArgsElement:XMLNode = new XMLNode(1, CONSTRUCTOR_ARGS_ELEMENT);
-				beanElement.insertBefore(constructorArgsElement, node);
-				node.removeNode();
-				constructorArgsElement.appendChild(node);
+				constructorArgsElement.appendChild(element);
+				parseConstructorArgsElement(constructorArgsElement, beanName, beanDefinition.getConstructorArgumentValues());
 			}
 		}
-		return super.parseConstructorArgElements(beanElement, beanName);
+		else {
+			var elementName:String = getElementName(element);
+			if (isUpperCaseLetter(elementName.charAt(0)) || element.nodeName == BEAN_ELEMENT) {
+				var pvs:PropertyValues = beanDefinition.getPropertyValues();
+				var value = parsePropertySubElement(element, beanName);
+				pvs.addPropertyValueByPropertyValue(new PropertyValue(null, value));
+			}
+			else {
+				if (element.attributes[NAME_ATTRIBUTE] == null) {
+					element.attributes[NAME_ATTRIBUTE] = elementName;
+				}
+				parsePropertyElement(element, beanName, beanDefinition.getPropertyValues());
+			}
+		}
 	}
 	
-	private function parsePropertyElements(beanElement:XMLNode, beanName:String):PropertyValues {
-		var counter:Number = 0;
-		var nodes:Array = beanElement.childNodes;
-		for (var i:Number = 0; i < nodes.length; i++) {
-			var node:XMLNode = nodes[i];
-			var propertyElement:XMLNode = node;
-			if (node.nodeName != PROPERTY_ELEMENT && node.nodeName != CONSTRUCTOR_ARG_ELEMENT
-					&& node.nodeName != LOOKUP_METHOD_ELEMENT && node.nodeName != REPLACED_METHOD_ELEMENT
-					&& node.nodeName != CONSTRUCTOR_ARGS_ELEMENT) {
-				propertyElement = new XMLNode(1, PROPERTY_ELEMENT);
-				beanElement.insertBefore(propertyElement, node);
-				// Get element name before removing node.
-				var elementName:String = getElementName(node);
-				node.removeNode();
-				if (isUpperCaseLetter(elementName.charAt(0)) || node.nodeName == BEAN_ELEMENT) {
-					propertyElement.appendChild(node);
-				}
-				else {
-					propertyElement.attributes[NAME_ATTRIBUTE] = node.nodeName;
-					propertyElement.appendChild(node.firstChild);
-				}
-				if (node.attributes[TYPE_ATTRIBUTE] != null) {
-					propertyElement.attributes[TYPE_ATTRIBUTE] = node.attributes[TYPE_ATTRIBUTE];
-				}
-				if (node.attributes[INDEX_ATTRIBUTE] != null) {
-					propertyElement.attributes[INDEX_ATTRIBUTE] = node.attributes[INDEX_ATTRIBUTE];
-				}
-			}
-			if (propertyElement.attributes[NAME_ATTRIBUTE] != null) {
-				propertyElement.attributes[NAME_ATTRIBUTE] = parsePropertyName(propertyElement);
-			}
+	private function parsePropertyElement(element:XMLNode, beanName:String, propertyValues:PropertyValues):Void {
+		if (element.attributes[NAME_ATTRIBUTE] != null) {
+			element.attributes[NAME_ATTRIBUTE] = parsePropertyName(element);
 		}
-		return super.parsePropertyElements(beanElement, beanName);
+		super.parsePropertyElement(element, beanName, propertyValues);
 	}
 	
 	private function parsePropertyName(propertyElement:XMLNode):String {
