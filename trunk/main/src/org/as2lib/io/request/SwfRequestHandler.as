@@ -69,7 +69,7 @@ class org.as2lib.io.request.SwfRequestHandler extends EventSupport implements Re
 	 * 
 	 * @param {@code SwfRequest} to be handled
 	 */	
-	public function handleRequest(request:Request) {
+	public function handleRequest(request:Request):Void {
 		var url:URL = request.getUrl();
 		if(fileLoader) delete fileLoader;
 		fileLoader = new SwfFileLoader(request.getContainer());
