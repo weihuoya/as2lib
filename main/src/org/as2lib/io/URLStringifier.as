@@ -92,7 +92,7 @@ class org.as2lib.io.URLStringifier implements Stringifier {
  			else if(pathType == URL.PATH_ABSOLUTE) result += "//";
 			result += path.join(delimiter) + "/";
 		}
-		var file:String = uri.getFile() 
+		var file:String = uri.getFile();
 		if(file) result += file;
 		var query:String = uri.getQuery(); 
 		if(query) result += "?" + query;
