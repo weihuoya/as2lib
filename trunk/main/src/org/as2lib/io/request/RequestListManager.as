@@ -16,7 +16,6 @@
 
 import org.as2lib.env.event.EventSupport;
 import org.as2lib.io.file.FileLoader;
-import org.as2lib.io.file.LoadStartListener;
 import org.as2lib.io.file.LoadProgressListener;
 import org.as2lib.io.file.LoadCompleteListener;
 import org.as2lib.io.file.LoadErrorListener;
@@ -80,7 +79,6 @@ import org.as2lib.data.holder.Iterator;
 
 class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	implements RequestManager, 
-		LoadStartListener,
 		LoadCompleteListener,
 		LoadErrorListener,
 		LoadProgressListener,
@@ -115,7 +113,6 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	 */			
 	public function RequestListManager() {
 		super();
-		acceptListenerType(LoadStartListener);
 		acceptListenerType(LoadCompleteListener);
 		acceptListenerType(LoadProgressListener);
 		acceptListenerType(LoadErrorListener);
@@ -163,6 +160,7 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		var sizeIterator:Iterator = new ListIterator(requests);
 		var elementSize:Number;
 		var bTotal:Number = 0;
+		var startDistributor:RequestSetLoadStartListener;
 		
 		while (sizeIterator.hasNext()) {
     		elementSize = sizeIterator.next().getSupposedSize().valueOf();
@@ -180,6 +178,9 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		finished = false;
 		startTime = getTimer();
 		if(iterator == undefined) iterator = new ListIterator(requests);
+		// launch RequestSetLoadStart event
+		startDistributor =	distributorControl.getDistributor(RequestSetLoadStartListener);
+		startDistributor.onRequestSetLoadStart(this);
 		handleNext();
 	}
 	
@@ -352,20 +353,6 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		}
 	}
 
-	/**
-	 * (implementation detail) Handles the response of a {@code Request} that starts loading.
-	 * 
-	 * <p>Invokes {@code onRequestSetLoadStart} event for all listeners, if called by the first request in the list.
-	 * 
-	 * @param fileLoader {@code FileLoader} that loaded the certain resource
-	 */
-	public function onLoadStart(resourceLoader:FileLoader):Void {
-		if(getItemsLoaded()==0) { 
-			var errorDistributor:RequestSetLoadStartListener =
-				distributorControl.getDistributor(RequestSetLoadStartListener);
-			errorDistributor.onRequestSetLoadStart(this);
-		}
-	}
 
 	/**
 	 * (implementation detail) Handles the response if a {@code FileLoader} could not find a resource.
