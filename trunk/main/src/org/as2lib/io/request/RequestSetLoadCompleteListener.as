@@ -18,7 +18,7 @@ import org.as2lib.io.request.RequestManager;
 
 /**
  * {@code RequestSetLoadCompleteListener} can be implemented if its necessary to listen
- * to {@code onRequestSetLoadCompletee} events of {@link RequestManager}s.
+ * to {@code onRequestSetLoadComplete} events of {@link RequestManager}s.
  * 
  * @author Akira Ito
  * @version 1.0
