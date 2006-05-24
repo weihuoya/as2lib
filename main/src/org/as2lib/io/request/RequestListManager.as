@@ -232,7 +232,16 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	function getList(Void):List {
 		return requests;
 	}
-
+	
+    /**
+	 * Returns current {@code Request} being processed.
+	 * 
+	 * @return {@code Request}
+	 */			
+	function getCurrentRequest(Void):Request {
+		return request;
+	}
+	
 	/**
 	 * Stub implementation for the amount of bytes already loaded.
 	 * 
