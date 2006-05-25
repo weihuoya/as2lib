@@ -233,18 +233,18 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	}
 	
 	private function parseLiteralValue(value:String, beanName:String) {
-		if (isKey(value)) {
-			return parseDataBindingValue(value, beanName);
+		if (isKeyValue(value)) {
+			return parseKeyValue(value, beanName);
 		}
 		return super.parseLiteralValue(value, beanName);
 	}
 	
-	private function isKey(value:String):Boolean {
+	private function isKeyValue(value:String):Boolean {
 		return ((value.charAt(0) == KEY_PREFIX || value.charAt(1) == KEY_PREFIX)
 				&& value.charAt(value.length - 1) == KEY_SUFFIX);
 	}
 	
-	private function parseDataBindingValue(value:String, beanName:String) {
+	private function parseKeyValue(value:String, beanName:String) {
 		var tokens:Array = getValueTokens(value, beanName);
 		if (value.indexOf(PROPERTY_PATH_PREFIX + KEY_PREFIX) == 0
 				|| value.charAt(0) == KEY_PREFIX) {
