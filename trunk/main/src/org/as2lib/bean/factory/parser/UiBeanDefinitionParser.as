@@ -366,9 +366,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	}
 	
 	private function parseRuntimeBeanReferenceValue(referenceBeanName:String, beanName:String):RuntimeBeanReference {
-		var beanReference:XMLNode = new XMLNode(1, REF_ELEMENT);
-		beanReference.attributes[BEAN_REF_ATTRIBUTE] = referenceBeanName;
-		return parseBeanReferenceElement(beanReference, beanName);
+		return new RuntimeBeanReference(referenceBeanName);
 	}
 	
 	private function createPropertyElement(name:String, value:String):XMLNode {
