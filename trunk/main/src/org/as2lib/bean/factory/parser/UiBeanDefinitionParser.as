@@ -37,18 +37,18 @@ import org.as2lib.util.TextUtil;
  */
 class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefinitionParser {
 	
-	public static var DATA_BINDING_PREFIX:String = "{";
-	public static var DATA_BINDING_SUFFIX:String = "}";
+	public static var KEY_PREFIX:String = "{";
+	public static var KEY_SUFFIX:String = "}";
+	
+	public static var PROPERTY_PATH_PREFIX:String = "p";
+	public static var VARIABLE_RETRIEVAL_PREFIX:String = "v";
+	public static var METHOD_INVOCATION_PREFIX:String = "m";
+	public static var DELEGATE_PREFIX:String = "d";
+	public static var RUNTIME_BEAN_REFERENCE_PREFIX:String = "r";
 	
 	public static var POPULATE_PREFIX:String = "_";
 	public static var INSTANTIATE_WITH_PROPERTY_SUFFIX:String = "_";
 	public static var ENFORCE_ACCESS_PREFIX:String = "_";
-	
-	public static var PROPERTY_PATH:String = "p";
-	public static var VARIABLE_RETRIEVAL:String = "v";
-	public static var METHOD_INVOCATION:String = "m";
-	public static var DELEGATE:String = "d";
-	public static var RUNTIME_BEAN_REFERENCE:String = "r";
 	
 	public static var PROPERTY_KEY_SEPARATOR:String = "-";
 	
@@ -233,33 +233,33 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	}
 	
 	private function parseLiteralValue(value:String, beanName:String) {
-		if (isDataBinding(value)) {
+		if (isKey(value)) {
 			return parseDataBindingValue(value, beanName);
 		}
 		return super.parseLiteralValue(value, beanName);
 	}
 	
-	private function isDataBinding(value:String):Boolean {
-		return ((value.charAt(0) == DATA_BINDING_PREFIX || value.charAt(1) == DATA_BINDING_PREFIX)
-				&& value.charAt(value.length - 1) == DATA_BINDING_SUFFIX);
+	private function isKey(value:String):Boolean {
+		return ((value.charAt(0) == KEY_PREFIX || value.charAt(1) == KEY_PREFIX)
+				&& value.charAt(value.length - 1) == KEY_SUFFIX);
 	}
 	
 	private function parseDataBindingValue(value:String, beanName:String) {
 		var tokens:Array = getValueTokens(value, beanName);
-		if (value.indexOf(PROPERTY_PATH + DATA_BINDING_PREFIX) == 0
-				|| value.charAt(0) == DATA_BINDING_PREFIX) {
+		if (value.indexOf(PROPERTY_PATH_PREFIX + KEY_PREFIX) == 0
+				|| value.charAt(0) == KEY_PREFIX) {
 			return parsePropertyPathValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		if (value.indexOf(VARIABLE_RETRIEVAL + DATA_BINDING_PREFIX) == 0) {
+		if (value.indexOf(VARIABLE_RETRIEVAL_PREFIX + KEY_PREFIX) == 0) {
 			return parseVariableRetrievalValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		if (value.indexOf(DELEGATE + DATA_BINDING_PREFIX) == 0) {
+		if (value.indexOf(DELEGATE_PREFIX + KEY_PREFIX) == 0) {
 			return parseDelegateValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		if (value.indexOf(METHOD_INVOCATION + DATA_BINDING_PREFIX) == 0) {
+		if (value.indexOf(METHOD_INVOCATION_PREFIX + KEY_PREFIX) == 0) {
 			return parseMethodInvocationValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		if (value.indexOf(RUNTIME_BEAN_REFERENCE + DATA_BINDING_PREFIX) == 0) {
+		if (value.indexOf(RUNTIME_BEAN_REFERENCE_PREFIX + KEY_PREFIX) == 0) {
 			return parseRuntimeBeanReferenceValue(tokens[3], beanName);
 		}
 		throw new BeanDefinitionStoreException(beanName, "Unknown data binding value '" + value + "'.", this, arguments);
@@ -267,7 +267,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	
 	private function getValueTokens(value:String, beanName:String):Array {
 		var result:Array = new Array();
-		var prefixIndex:Number = value.indexOf(DATA_BINDING_PREFIX);
+		var prefixIndex:Number = value.indexOf(KEY_PREFIX);
 		var strippedValue:String = value.substring(prefixIndex + 1, value.length - 1);
 		var isStatic:Boolean = false;
 		var targetObject:String;
