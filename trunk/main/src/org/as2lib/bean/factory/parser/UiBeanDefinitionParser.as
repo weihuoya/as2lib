@@ -245,31 +245,31 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 	}
 	
 	private function parseKeyValue(value:String, beanName:String) {
-		var tokens:Array = getValueTokens(value, beanName);
-		if (value.indexOf(PROPERTY_PATH_PREFIX + KEY_PREFIX) == 0
-				|| value.charAt(0) == KEY_PREFIX) {
+		var prefixIndex:Number = value.indexOf(KEY_PREFIX);
+		var strippedValue:String = value.substring(prefixIndex + 1, value.length - 1);
+		var firstChar:String = value.charAt(0);
+		if (firstChar == RUNTIME_BEAN_REFERENCE_PREFIX) {
+			return parseRuntimeBeanReferenceValue(strippedValue, beanName);
+		}
+		var tokens:Array = getValueTokens(strippedValue, beanName);
+		if (firstChar == PROPERTY_PATH_PREFIX || firstChar == KEY_PREFIX) {
 			return parsePropertyPathValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		if (value.indexOf(VARIABLE_RETRIEVAL_PREFIX + KEY_PREFIX) == 0) {
+		if (firstChar == VARIABLE_RETRIEVAL_PREFIX) {
 			return parseVariableRetrievalValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		if (value.indexOf(DELEGATE_PREFIX + KEY_PREFIX) == 0) {
+		if (firstChar == DELEGATE_PREFIX) {
 			return parseDelegateValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		if (value.indexOf(METHOD_INVOCATION_PREFIX + KEY_PREFIX) == 0) {
+		if (firstChar == METHOD_INVOCATION_PREFIX + KEY_PREFIX) {
 			return parseMethodInvocationValue(tokens[1], tokens[2], tokens[0], beanName);
-		}
-		if (value.indexOf(RUNTIME_BEAN_REFERENCE_PREFIX + KEY_PREFIX) == 0) {
-			return parseRuntimeBeanReferenceValue(tokens[3], beanName);
 		}
 		throw new BeanDefinitionStoreException(beanName, "Unknown key value '" + value + "'.",
 				this, arguments);
 	}
 	
-	private function getValueTokens(value:String, beanName:String):Array {
+	private function getValueTokens(strippedValue:String, beanName:String):Array {
 		var result:Array = new Array();
-		var prefixIndex:Number = value.indexOf(KEY_PREFIX);
-		var strippedValue:String = value.substring(prefixIndex + 1, value.length - 1);
 		var isStatic:Boolean = false;
 		var targetObject:String;
 		var targetMember:String;
@@ -303,7 +303,6 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		result.push(isStatic);
 		result.push(targetObject);
 		result.push(targetMember);
-		result.push(strippedValue);
 		return result;
 	}
 	
