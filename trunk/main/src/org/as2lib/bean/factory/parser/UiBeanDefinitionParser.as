@@ -262,7 +262,8 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		if (value.indexOf(RUNTIME_BEAN_REFERENCE_PREFIX + KEY_PREFIX) == 0) {
 			return parseRuntimeBeanReferenceValue(tokens[3], beanName);
 		}
-		throw new BeanDefinitionStoreException(beanName, "Unknown data binding value '" + value + "'.", this, arguments);
+		throw new BeanDefinitionStoreException(beanName, "Unknown key value '" + value + "'.",
+				this, arguments);
 	}
 	
 	private function getValueTokens(value:String, beanName:String):Array {
