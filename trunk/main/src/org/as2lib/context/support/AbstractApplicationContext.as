@@ -42,6 +42,8 @@ import org.as2lib.data.type.Time;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.log.LoggerRepository;
+import org.as2lib.env.log.LogManager;
 import org.as2lib.env.reflect.ReflectUtil;
 import org.as2lib.util.ClassUtil;
 
@@ -71,6 +73,9 @@ import org.as2lib.util.ClassUtil;
  * <p>If you want {@link Process} beans to be executed before this context is post-refreshed
  * and all singleton beans are initialized, you may supply a {@link Batch} implementation as
  * "batch".
+ * 
+ * <p>To configure the {@link LogManager}, you may supply a "loggerRepository" bean. Note that
+ * the configuration of the log manager has global effect (not only context-wide).
  * 
  * @author Simon Wacker
  */
@@ -102,6 +107,12 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * Name of the {@link Weaver} bean in this factory.
 	 */
 	public static var WEAVER_BEAN_NAME:String = "weaver";
+	
+	/**
+	 * Name of the {@link LoggerRepository} bean to initialize the {@link LogManager}
+	 * with.
+	 */
+	public static var LOGGER_REPOSITORY_BEAN_NAME:String = "loggerRepository";
 	
 	/** Parent context. */
 	private var parent:ApplicationContext;
@@ -135,9 +146,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	
 	/** The batch used internally to delegate to. */
 	private var batch:Batch;
-	
-	/** Weaver to weave-in cross-cutting concerns code. */
-	private var weaver:Weaver;
 	
 	/**
 	 * Constructs a new {@code AbstractApplicationContext} instance.
@@ -329,6 +337,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			registerBeanPostProcessors();
 			// initializes weaver for this context
 			initWeaver();
+			// initializes the logger repository
+			initLoggerRepository();
 			// initializes message source for this context
 			initMessageSource();
 			// initializes event distributor control for this context
@@ -438,11 +448,22 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	}
 	
 	/**
-	 * Initializes the weaver if it exists.
+	 * Initializes the log manager with the logger repository if it exists.
+	 */
+	private function initLoggerRepository(Void):Void {
+		if (containsLocalBean(LOGGER_REPOSITORY_BEAN_NAME)) {
+			var loggerRepository:LoggerRepository =
+					getBeanByNameAndType(LOGGER_REPOSITORY_BEAN_NAME, LoggerRepository);
+			LogManager.setLoggerRepository(loggerRepository);
+		}
+	}
+	
+	/**
+	 * Initializes the weaver if it exists (executes the weaving process).
 	 */
 	private function initWeaver(Void):Void {
 		if (containsLocalBean(WEAVER_BEAN_NAME)) {
-			weaver = getBeanByNameAndType(WEAVER_BEAN_NAME, Weaver);
+			var weaver:Weaver = getBeanByNameAndType(WEAVER_BEAN_NAME, Weaver);
 			weaver.weave();
 		}
 	}
