@@ -195,7 +195,10 @@ class org.as2lib.test.speed.MethodTestCase extends AbstractTest implements Test 
 			}
 		};
 		closure.valueOf = function():Object {
-			return m;
+			return m.valueOf();
+		};
+		closure.__resolve = function(name:String) {
+			return m[name];
 		};
 		// sets class specific variables needed for closures of classes
 		closure.__proto__ = m.__proto__;
