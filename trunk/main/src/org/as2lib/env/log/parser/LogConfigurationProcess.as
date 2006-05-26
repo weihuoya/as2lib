@@ -39,13 +39,30 @@ class org.as2lib.env.log.parser.LogConfigurationProcess extends AbstractProcess 
 	/**
 	 * Constructs a new {@code LogConfigurationProcess} instance.
 	 * 
-	 * @param logConfigurationUri the uri to the log configuration to load and parse
+	 * @param logConfigurationUri the uri of the log configuration to load and parse
 	 * @param logConfigurationParser the log configuration parser to use
 	 */
 	public function LogConfigurationProcess(logConfigurationUri:String, logConfigurationParser:LogConfigurationParser) {
+		setLogConfigurationUri(logConfigurationUri);
+		setLogConfigurationParser(logConfigurationParser);
+	}
+	
+	/**
+	 * Sets the URI of the log configuration to load and parse.
+	 */
+	public function setLogConfigurationUri(logConfigurationUri:String):Void {
 		this.logConfigurationUri = logConfigurationUri;
+		if (getName() == null) {
+			setName(logConfigurationUri);
+		}
+	}
+	
+	/**
+	 * Sets the log configuration parser to parse the loaded log configuration file
+	 * with.
+	 */
+	public function setLogConfigurationParser(logConfigurationParser:LogConfigurationParser):Void {
 		this.logConfigurationParser = logConfigurationParser;
-		setName(logConfigurationUri);
 	}
 	
 	/**
