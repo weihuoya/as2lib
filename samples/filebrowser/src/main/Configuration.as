@@ -52,8 +52,8 @@ class main.Configuration extends BasicClass implements BatchStartListener, Batch
 	public function init(Void):Void {
 		var batch:SimpleBatch = new SimpleBatch();
 		batch.addListener(this);
-		batch.addProcess(applicationContext);
 		batch.addProcess(logConfigurationProcess);
+		batch.addProcess(applicationContext);
 		batch.start();
 	}
 	
