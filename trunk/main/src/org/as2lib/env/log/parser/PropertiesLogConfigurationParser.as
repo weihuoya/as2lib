@@ -130,7 +130,7 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 	 */
 	public function parse(propertiesLogConfiguration:String):Void {
 		if (propertiesLogConfiguration == null) {
-			throw new IllegalArgumentException("Argument 'propertiesLogConfiguration' [" + propertiesLogConfiguration + "] must not be 'null' nor 'undefined'", this, arguments);
+			throw new IllegalArgumentException("Argument 'propertiesLogConfiguration' [" + propertiesLogConfiguration + "] must not be 'null' nor 'undefined'.", this, arguments);
 		}
 		var parser:PropertiesParser = new PropertiesParser();
 		var props:Properties = parser.parseProperties(propertiesLogConfiguration);
