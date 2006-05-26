@@ -42,6 +42,7 @@ import org.as2lib.data.type.Time;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LoggerRepository;
 import org.as2lib.env.log.LogManager;
 import org.as2lib.env.reflect.ReflectUtil;
@@ -74,8 +75,8 @@ import org.as2lib.util.ClassUtil;
  * and all singleton beans are initialized, you may supply a {@link Batch} implementation as
  * "batch".
  * 
- * <p>To configure the {@link LogManager}, you may supply a "loggerRepository" bean. Note that
- * the configuration of the log manager has global effect (not only context-wide).
+ * <p>To configure the {@link LogManager}, you may supply either a "loggerRepository" or "logger"
+ * bean. Note that the configuration of the log manager has global effect (not only context-wide).
  * 
  * @author Simon Wacker
  */
@@ -107,6 +108,11 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * Name of the {@link Weaver} bean in this factory.
 	 */
 	public static var WEAVER_BEAN_NAME:String = "weaver";
+	
+	/**
+	 * Name of the {@link Logger} bean to initialize the {@link LogManager} with.
+	 */
+	public static var LOGGER_BEAN_NAME:String = "logger";
 	
 	/**
 	 * Name of the {@link LoggerRepository} bean to initialize the {@link LogManager}
@@ -337,6 +343,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			registerBeanPostProcessors();
 			// initializes weaver for this context
 			initWeaver();
+			// initializes the logger
+			initLogger();
 			// initializes the logger repository
 			initLoggerRepository();
 			// initializes message source for this context
@@ -444,6 +452,16 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	private function initBatch(Void):Void {
 		if (containsLocalBean(BATCH_BEAN_NAME)) {
 			setBatch(getBean(BATCH_BEAN_NAME, Batch));
+		}
+	}
+	
+	/**
+	 * Initializes the log manager with the logger if it exists.
+	 */
+	private function initLogger(Void):Void {
+		if (containsLocalBean(LOGGER_BEAN_NAME)) {
+			var logger:Logger = getBeanByNameAndType(LOGGER_BEAN_NAME, Logger);
+			LogManager.setLogger(logger);
 		}
 	}
 	
