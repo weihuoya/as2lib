@@ -77,6 +77,8 @@ import org.as2lib.util.ClassUtil;
  * 
  * <p>To configure the {@link LogManager}, you may supply either a "loggerRepository" or "logger"
  * bean. Note that the configuration of the log manager has global effect (not only context-wide).
+ * As third alternative you may also supply a "logConfiguration" process bean which is executed
+ * before general purpose process beans.
  * 
  * @author Simon Wacker
  */
@@ -119,6 +121,12 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * with.
 	 */
 	public static var LOGGER_REPOSITORY_BEAN_NAME:String = "loggerRepository";
+	
+	/**
+	 * Name of the log configuration process bean to run before general purpose
+	 * process beans.
+	 */
+	public static var LOG_CONFIGURATION_BEAN_NAME:String = "logConfiguration";
 	
 	/** Parent context. */
 	private var parent:ApplicationContext;
@@ -713,6 +721,16 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	private function addSpecialFunctionProcesses(processes:Map):Void {
 		var batch:Batch = getBatch();
 		processes.remove(BATCH_BEAN_NAME);
+		var weaverProcess:Process = processes.get(WEAVER_BEAN_NAME);
+		if (weaverProcess != null) {
+			batch.addProcess(weaverProcess);
+			processes.remove(WEAVER_BEAN_NAME);
+		}
+		var logConfigurationProcess:Process = processes.get(LOG_CONFIGURATION_BEAN_NAME);
+		if (logConfigurationProcess != null) {
+			batch.addProcess(logConfigurationProcess);
+			processes.remove(LOG_CONFIGURATION_BEAN_NAME);
+		}
 		var messageSourceProcess:Process = processes.get(MESSAGE_SOURCE_BEAN_NAME);
 		if (messageSourceProcess != null) {
 			batch.addProcess(messageSourceProcess);
@@ -722,11 +740,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		if (eventDistributorControlProcess != null) {
 			batch.addProcess(eventDistributorControlProcess);
 			processes.remove(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME);
-		}
-		var weaverProcess:Process = processes.get(WEAVER_BEAN_NAME);
-		if (weaverProcess != null) {
-			batch.addProcess(weaverProcess);
-			processes.remove(WEAVER_BEAN_NAME);
 		}
 	}
 	
