@@ -208,7 +208,6 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			}
 			var reference:RuntimeBeanReference = RuntimeBeanReference(propertyValue.getValue());
 			if (reference != null) {
-				// TODO Apply extract method refactoring.
 				var pbd:Array = addParentBeanDefinition(parentBeanDefinitions, beanName, beanDefinition);
 				var rn:String = reference.getBeanName();
 				var rb:BeanDefinition;
