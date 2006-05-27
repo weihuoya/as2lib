@@ -41,6 +41,7 @@ public class UnitTest extends Task {
 	private int port;
 	
 	public UnitTest() {
+		port = 3212;
 	}
 	
 	public void setSwf(File swf) {
@@ -163,7 +164,7 @@ public class UnitTest extends Task {
 		}
 		
 		public void startServer(int port) {
-			task.log("Starting server...");
+			//task.log("Starting server...");
 			try {
 				server = new ServerSocket(port);
 				super.start();
@@ -175,7 +176,7 @@ public class UnitTest extends Task {
 		}
 		
 		public void stopServer() {
-			task.log("Stopping server...");
+			//task.log("Stopping server...");
 			try {
 				if (server != null) {
 					server.close();
