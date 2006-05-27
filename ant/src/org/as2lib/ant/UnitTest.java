@@ -86,7 +86,7 @@ public class UnitTest extends Task {
 		receiver.startServer(port);
 		try {
 			log(command.toString());
-			Process process = Execute.launch(getProject(), command.getCommandline(), null, getProject().getBaseDir(), false);
+			Process process = Execute.launch(getProject(), command.getCommandline(), null, getProject().getBaseDir(), true);
 			receiver.setProcess(process);
 			process.waitFor();
 		}
