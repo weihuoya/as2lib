@@ -40,6 +40,25 @@ import org.xml.sax.SAXException;
 /**
  * {@code UnitTest} executes a unit test swf and writes the result to the console.
  * 
+ * <p>The unit test swf must send the result over the XML socket, with host "localhost"
+ * and port 3212 by default or the one declared in the build file. The unit test swf
+ * may register the {@code XmlSocketTestListener} at the test runner which sends the
+ * test execution information properly formatted to this task.
+ * 
+ * <p>The sent test execution information must be formatted as follows:
+ * <ul>
+ *   <li>&lt;start&gt;Start message.&lt;/start&gt;</li>
+ *   <li>&lt;update&gt;Update message.&lt;/update&gt;</li>
+ *   <li>&lt;pause&gt;Pause message.&lt;/pause&gt;</li>
+ *   <li>&lt;resume&gt;Resume message.&lt;/resume&gt;
+ *   <li>&lt;error&gt;Error message.&lt;/error&gt;</li>
+ *   <li>&lt;finish hasErrors="false/true"&gt;Finish message.&lt;/finish&gt;</li>
+ *   <li>&lt;message&gt;Arbitrary message.&lt;/message&gt;</li>
+ * </ul>
+ * 
+ * <p>As soon as the ant task receives the finish information it will close the opened
+ * unit test swf and finish its execution.
+ * 
  * @author Simon Wacker
  * @author Christophe Herreman
  */
@@ -49,6 +68,9 @@ public class UnitTest extends Task {
 	private File flashPlayer;
 	private int port;
 	
+	/**
+	 * Constructs a new {@code UnitTest} instance, with the default port 3212.
+	 */
 	public UnitTest() {
 		port = 3212;
 	}
@@ -161,29 +183,6 @@ public class UnitTest extends Task {
 						}
 					}
 				}
-				/*while (true) {
-					Socket socket = server.accept();
-					in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-					char[] charBuffer = new char[1];
-					boolean receivedResult = false;
-					while (in.read(charBuffer, 0, 1) != -1) {
-						StringBuffer stringBuffer = new StringBuffer(8192);
-						while (charBuffer[0] != '\0') {
-							stringBuffer.append(charBuffer[0]);
-							in.read(charBuffer, 0, 1);
-						}
-						if (!receivedResult) {
-							receivedResult = true;
-							task.log("-\n-");
-						}
-						task.log(stringBuffer.toString());
-					}
-					if (receivedResult) {
-						task.log("-\n-");
-						process.destroy();
-						break;
-					}
-				}*/
 			}
 			catch (IOException e) {
 				throw new BuildException("Error on reading result.", e, task.getLocation());
@@ -197,7 +196,6 @@ public class UnitTest extends Task {
 		}
 		
 		public void startServer(int port) {
-			//task.log("Starting server...");
 			try {
 				server = new ServerSocket(port);
 				super.start();
@@ -209,7 +207,6 @@ public class UnitTest extends Task {
 		}
 		
 		public void stopServer() {
-			//task.log("Stopping server...");
 			try {
 				if (server != null) {
 					server.close();
