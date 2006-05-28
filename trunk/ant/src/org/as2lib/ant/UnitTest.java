@@ -153,6 +153,9 @@ public class UnitTest extends Task {
 							process.destroy();
 							return;
 						}
+						else if (element.getNodeName().equals("error")) {
+							task.log(message, Project.MSG_ERR);
+						}
 						else {
 							task.log(message);
 						}
