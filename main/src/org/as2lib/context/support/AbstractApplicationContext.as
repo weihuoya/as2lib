@@ -124,15 +124,15 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	public static var LOGGER_REPOSITORY_BEAN_NAME:String = "loggerRepository";
 	
 	/**
+	 * Name of the {@link LogConfigurationParser} bean to execute.
+	 */
+	public static var LOG_CONFIGURATION_PARSER_BEAN_NAME:String = "logConfigurationParser";
+	
+	/**
 	 * Name of the log configuration process bean to run before general purpose
 	 * process beans.
 	 */
 	public static var LOG_CONFIGURATION_BEAN_NAME:String = "logConfiguration";
-	
-	/**
-	 * Name of the {@link LogConfigurationParser} bean to execute.
-	 */
-	public static var LOG_CONFIGURATION_PARSER_BEAN_NAME:String = "logConfigurationParser";
 	
 	/** Parent context. */
 	private var parent:ApplicationContext;
