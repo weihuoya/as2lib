@@ -334,6 +334,9 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			else if (mergedBeanDefinition.getFactoryMethodName() != null) {
 				result = instantiateBeanUsingFactoryMethod(beanName, mergedBeanDefinition);
 			}
+			else if (mergedBeanDefinition.isStatic()) {
+				result = instantiateStaticBean(beanName, mergedBeanDefinition);
+			}
 			else {
 				result = instantiateBean(beanName, mergedBeanDefinition);
 			}
@@ -433,6 +436,18 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		applyMethodOverrides(beanName, bean, mergedBeanDefinition);
 		return bean;
+	}
+	
+	/**
+	 * Instantiates the static bean defined by the given bean definition (simply returns
+	 * the bean class).
+	 * 
+	 * @param beanName the name of the bean to instantiate
+	 * @param mergedBeanDefinition the merged bean definition of the bean to instantiate
+	 * @return the bean class
+	 */
+	private function instantiateStaticBean(beanName:String, mergedBeanDefinition:RootBeanDefinition) {
+		return mergedBeanDefinition.getBeanClass();
 	}
 	
 	/**

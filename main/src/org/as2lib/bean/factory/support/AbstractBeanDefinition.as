@@ -34,8 +34,8 @@ import org.as2lib.env.reflect.ReflectUtil;
  * 
  * @author Simon Wacker
  */
-class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass implements
-		BeanDefinition {
+class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass
+		implements BeanDefinition {
 	
 	/**
 	 * Constant that indicates no autowiring at all.
@@ -146,6 +146,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	/** Shall this bean be instantiated by means of the enclosing or referencing property? */
 	private var instantiateWithProperty:Boolean;
 	
+	/** Is this bean a static bean? */
+	private var statik:Boolean;
+	
 	/** The name of the init method. */
 	private var initMethodName:String;
 	
@@ -182,11 +185,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		lazyInit = false;
 		dependencyCheck = DEPENDENCY_CHECK_NONE;
 		autowireMode = AUTOWIRE_NO;
-		populateMode = POPULATE_BEFORE;
 		methodOverrides = new MethodOverrides();
 		enforceInitMethod = true;
 		enforceDestroyMethod = true;
-		instantiateWithProperty = false;
 	}
 	
 	/**
@@ -198,10 +199,11 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 *   <li>Will always take abstract, singleton, lazyInit from the given bean definition.
 	 *   <li>Will add argumentValues, propertyValues, methodOverrides to
 	 *       existing ones.
-	 *   <li>Will override initMethodName, destroyMethodName, staticFactoryMethodName
-	 *       and defaultPropertyName if specified.
-	 *   <li>Will always take dependsOn, autowireMode, dependencyCheck, populateMode,
-	 *       instantiateWithProperty from the given bean definition.
+	 *   <li>Will override initMethodName, destroyMethodName, factoryBeanName,
+	 *       factoryMethodName, instantiateWithProperty, static, populateMode and
+	 *       defaultPropertyName if specified.
+	 *   <li>Will always take dependsOn, autowireMode and dependencyCheck from the
+	 *       given bean definition.
 	 *   <li>Will always take styleName and source from the given bean definition.
 	 * </ul>
 	 * 
@@ -210,38 +212,45 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	 */
 	public function override(beanDefinition:AbstractBeanDefinition):Void {
 		if (beanDefinition.hasBeanClass()) {
-			beanClass = beanDefinition.getBeanClass();
-			beanClassName = beanDefinition.getBeanClassName();
+			beanClass = beanDefinition.beanClass;
+			beanClassName = beanDefinition.beanClassName;
 		}
-		abstract = beanDefinition.isAbstract();
-		singleton = beanDefinition.isSingleton();
-		lazyInit = beanDefinition.isLazyInit();
-		instantiateWithProperty = beanDefinition.isInstantiateWithProperty();
-		autowireMode = beanDefinition.getAutowireMode();
-		dependencyCheck = beanDefinition.getDependencyCheck();
-		populateMode = beanDefinition.getPopulateMode();
-		dependsOn = beanDefinition.getDependsOn();
-		styleName = beanDefinition.getStyleName();
-		source = beanDefinition.getSource();
-		constructorArgumentValues.addArgumentValues(beanDefinition.getConstructorArgumentValues());
-		propertyValues.addPropertyValues(beanDefinition.getPropertyValues());
-		methodOverrides.addOverrides(beanDefinition.getMethodOverrides());
-		if (beanDefinition.getFactoryBeanName() != null) {
-			factoryBeanName = beanDefinition.getFactoryBeanName();
+		abstract = beanDefinition.abstract;
+		singleton = beanDefinition.singleton;
+		lazyInit = beanDefinition.lazyInit;
+		autowireMode = beanDefinition.autowireMode;
+		dependencyCheck = beanDefinition.dependencyCheck;
+		dependsOn = beanDefinition.dependsOn;
+		styleName = beanDefinition.styleName;
+		source = beanDefinition.source;
+		constructorArgumentValues.addArgumentValues(beanDefinition.constructorArgumentValues);
+		propertyValues.addPropertyValues(beanDefinition.propertyValues);
+		methodOverrides.addOverrides(beanDefinition.methodOverrides);
+		if (beanDefinition.factoryBeanName != null) {
+			factoryBeanName = beanDefinition.factoryBeanName;
 		}
-		if (beanDefinition.getFactoryMethodName() != null) {
-			factoryMethodName = beanDefinition.getFactoryMethodName();
+		if (beanDefinition.factoryMethodName != null) {
+			factoryMethodName = beanDefinition.factoryMethodName;
 		}
-		if (beanDefinition.getInitMethodName() != null) {
-			initMethodName = beanDefinition.getInitMethodName();
-			enforceInitMethod = beanDefinition.isEnforceInitMethod();
+		if (beanDefinition.initMethodName != null) {
+			initMethodName = beanDefinition.initMethodName;
+			enforceInitMethod = beanDefinition.enforceInitMethod;
 		}
-		if (beanDefinition.getDestroyMethodName() != null) {
-			destroyMethodName = beanDefinition.getDestroyMethodName();
-			enforceDestroyMethod = beanDefinition.isEnforceDestroyMethod();
+		if (beanDefinition.destroyMethodName != null) {
+			destroyMethodName = beanDefinition.destroyMethodName;
+			enforceDestroyMethod = beanDefinition.enforceDestroyMethod;
 		}
-		if (beanDefinition.getDefaultPropertyName() != null) {
-			defaultPropertyName = beanDefinition.getDefaultPropertyName();
+		if (beanDefinition.instantiateWithProperty != null) {
+			instantiateWithProperty = beanDefinition.instantiateWithProperty;
+		}
+		if (beanDefinition.statik != null) {
+			statik = beanDefinition.statik;
+		}
+		if (beanDefinition.populateMode != null) {
+			populateMode = beanDefinition.populateMode;
+		}
+		if (beanDefinition.defaultPropertyName != null) {
+			defaultPropertyName = beanDefinition.defaultPropertyName;
 		}
 	}
 	
@@ -260,7 +269,8 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	
 	public function getBeanClass(Void):Function {
 		if (!hasBeanClass()) {
-			throw new IllegalStateException("Bean definition [" + toString() + "] does not carry a bean class.", this, arguments);
+			throw new IllegalStateException("Bean definition [" + toString() + "] does not " +
+					"carry a bean class.", this, arguments);
 		}
 		if (beanClassName != null) {
 			// Updates the bean class if it has changed. This may happen when AOP is used.
@@ -389,6 +399,9 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	}
 	
 	public function getPopulateMode(Void):Number {
+		if (populateMode == null) {
+			return POPULATE_BEFORE;
+		}
 		return populateMode;
 	}
 	
@@ -508,7 +521,28 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	}
 	
 	public function isInstantiateWithProperty(Void):Boolean {
+		if (instantiateWithProperty == null) {
+			return false;
+		}
 		return instantiateWithProperty;
+	}
+	
+	/**
+	 * Sets whether this bean is a static bean; which means that this bean is not an
+	 * instance of the bean class, but the bean class itself (in turn a static class).
+	 * 
+	 * @param statik is this bean a static bean?
+	 * @see #isStatic
+	 */
+	public function setStatic(statik:Boolean):Void {
+		this.statik = statik;
+	}
+	
+	public function isStatic(Void):Boolean {
+		if (statik == null) {
+			return false;
+		}
+		return statik;
 	}
 	
 	/**
@@ -596,7 +630,8 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 	}
 	
 	public function validate(Void):Void {
-		// TODO: Validate whether all property values have a property name and if not whether a default property name is available.
+		// TODO Validate whether all property values have a property name and if not whether a default property name is available.
+		// TODO Validate: Are there constructor arguments and method overrides although this bean is static?
 		if (lazyInit && !singleton) {
 			throw new BeanDefinitionValidationException("Lazy initialization is only applicable " +
 					"to singleton beans.", this, arguments);
@@ -639,11 +674,14 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass 
 		result += "; autowire=" + autowireMode;
 		result += "; dependencyCheck=" + dependencyCheck;
 		result += "; populate=" + populateMode;
+		result += "; instantiateWithProperty=" + instantiateWithProperty;
 		result += "; factoryBeanName=" + factoryBeanName;
 		result += "; factoryMethodName=" + factoryMethodName;
 		result += "; initMethodName=" + initMethodName;
 		result += "; destroyMethodName=" + destroyMethodName;
+		result += "; static=" + statik;
 		result += "; styleName=" + styleName;
+		result += "; defaultPropertyName=" + defaultPropertyName;
 		return result;
 	}
 	

@@ -106,6 +106,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var FACTORY_METHOD_ATTRIBUTE:String = "factory-method";
 	public static var FACTORY_BEAN_ATTRIBUTE:String = "factory-bean";
 	public static var INSTANTIATE_WITH_PROPERTY_ATTRIBUTE:String = "instantiate-with-property";
+	public static var STATIC_ATTRIBUTE:String = "static";
 	
 	public static var CONSTRUCTOR_ARG_ELEMENT:String = "constructor-arg";
 	public static var CONSTRUCTOR_ARGS_ELEMENT:String = "constructor-args";
@@ -391,6 +392,10 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 			var instantiateWithProperty:String = element.attributes[INSTANTIATE_WITH_PROPERTY_ATTRIBUTE];
 			if (instantiateWithProperty != null) {
 				bd.setInstantiateWithProperty(instantiateWithProperty == TRUE_VALUE);
+			}
+			var statik:String = element.attributes[STATIC_ATTRIBUTE];
+			if (statik != null) {
+				bd.setStatic(statik == TRUE_VALUE);
 			}
 			var dependencyCheck:String = element.attributes[DEPENDENCY_CHECK_ATTRIBUTE];
 			if (dependencyCheck == DEFAULT_VALUE || dependencyCheck == null) {
