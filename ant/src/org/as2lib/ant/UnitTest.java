@@ -64,6 +64,13 @@ import org.xml.sax.SAXException;
  */
 public class UnitTest extends Task {
 	
+	public static final String START_ELEMENT = "start";
+	public static final String UPDATE_ELEMENT = "update";
+	public static final String PAUSE_ELEMENT = "pause";
+	public static final String RESUME_ELEMENT = "resume";
+	public static final String ERROR_ELEMENT = "error";
+	public static final String FINISH_ELEMENT = "finish";
+	
 	private File swf;
 	private File flashPlayer;
 	private int port;
@@ -149,6 +156,7 @@ public class UnitTest extends Task {
 		public void run() {
 			try {
 				task.log("-\n-");
+				String previousNodeName = "";
 				while (true) {
 					Socket socket = server.accept();
 					in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
@@ -164,7 +172,27 @@ public class UnitTest extends Task {
 						Document document = builder.parse(new ByteArrayInputStream(stringBuffer.toString().getBytes()));
 						Element element = document.getDocumentElement();
 						String message = element.getFirstChild().getNodeValue();
-						if (element.getNodeName().equals("finish")) {
+						String nodeName = element.getNodeName();
+						if (nodeName.equals(START_ELEMENT)) {
+							task.log(message + "\n-");
+						}
+						else if (nodeName.equals(UPDATE_ELEMENT)) {
+							task.log(message);
+						}
+						else if (nodeName.equals(PAUSE_ELEMENT)) {
+							task.log("-\n" + message);
+						}
+						else if (nodeName.equals(RESUME_ELEMENT)) {
+							task.log(message + "\n-");
+						}
+						else if (nodeName.equals("error")) {
+							task.log(message, Project.MSG_ERR);
+						}
+						else if (nodeName.equals("finish")) {
+							if (!previousNodeName.equals(START_ELEMENT) &&
+									!previousNodeName.equals(RESUME_ELEMENT)) {
+								task.log("-");
+							}
 							if (element.getAttribute("hasErrors").equals("true")) {
 								task.log(message, Project.MSG_ERR);
 							}
@@ -175,12 +203,10 @@ public class UnitTest extends Task {
 							process.destroy();
 							return;
 						}
-						else if (element.getNodeName().equals("error")) {
-							task.log(message, Project.MSG_ERR);
-						}
 						else {
 							task.log(message);
 						}
+						previousNodeName = nodeName;
 					}
 				}
 			}
