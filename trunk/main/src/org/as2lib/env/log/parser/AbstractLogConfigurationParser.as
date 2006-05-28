@@ -25,10 +25,26 @@ import org.as2lib.util.TextUtil;
  */
 class org.as2lib.env.log.parser.AbstractLogConfigurationParser extends BasicClass {
 	
+	private var logConfiguration:String;
+	
 	/**
 	 * Constructs a new {@code AbstractLogConfigurationParser} instance.
 	 */
 	private function AbstractLogConfigurationParser(Void) {
+	}
+	
+	/**
+	 * Returns the log configuration to parse.
+	 */
+	public function getLogConfiguration(Void):String {
+		return logConfiguration;
+	}
+	
+	/**
+	 * Sets the log configuration to parse.
+	 */
+	public function setLogConfiguration(logConfiguration:String):Void {
+		this.logConfiguration = logConfiguration;
 	}
 	
 	/**
