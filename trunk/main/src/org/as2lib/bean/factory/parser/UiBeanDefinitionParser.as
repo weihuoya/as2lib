@@ -261,7 +261,7 @@ class org.as2lib.bean.factory.parser.UiBeanDefinitionParser extends XmlBeanDefin
 		if (firstChar == DELEGATE_PREFIX) {
 			return parseDelegateValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
-		if (firstChar == METHOD_INVOCATION_PREFIX + KEY_PREFIX) {
+		if (firstChar == METHOD_INVOCATION_PREFIX) {
 			return parseMethodInvocationValue(tokens[1], tokens[2], tokens[0], beanName);
 		}
 		throw new BeanDefinitionStoreException(beanName, "Unknown key value '" + value + "'.",
