@@ -67,6 +67,7 @@ class org.as2lib.bean.factory.support.RootBeanDefinition extends AbstractBeanDef
 		result.enforceDestroyMethod = enforceDestroyMethod;
 		result.defaultPropertyName = defaultPropertyName;
 		result.instantiateWithProperty = instantiateWithProperty;
+		result.statik = statik;
 		result.styleName = styleName;
 		result.source = source;
 		return result;
