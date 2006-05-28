@@ -740,11 +740,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	private function addSpecialFunctionProcesses(processes:Map):Void {
 		var batch:Batch = getBatch();
 		processes.remove(BATCH_BEAN_NAME);
-		var weaverProcess:Process = processes.get(WEAVER_BEAN_NAME);
-		if (weaverProcess != null) {
-			batch.addProcess(weaverProcess);
-			processes.remove(WEAVER_BEAN_NAME);
-		}
 		var logConfigurationProcess:Process = processes.get(LOG_CONFIGURATION_BEAN_NAME);
 		if (logConfigurationProcess != null) {
 			batch.addProcess(logConfigurationProcess);
