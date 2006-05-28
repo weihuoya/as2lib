@@ -265,12 +265,18 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 	 * 
 	 * @param xmlLogConfiguration the XML log configuration to parse
 	 * @throws IllegalArgumentException if argument {@code xmlLogConfiguration} is
-	 * {@code null} or {@code undefined}
+	 * {@code null} or {@code undefined} and no log configuration was set via
+	 * {@link setLogConfiguration} previously
 	 * @throws LogConfigurationParseException if the bean definition could not be parsed
 	 */
 	public function parse(xmlLogConfiguration:String):Void {
 		if (xmlLogConfiguration == null) {
-			throw new IllegalArgumentException("Argument 'xmlLogConfiguration' [" + xmlLogConfiguration + "] must not be 'null' nor 'undefined'", this, arguments);
+			xmlLogConfiguration = getLogConfiguration();
+			if (xmlLogConfiguration == null) {
+				throw new IllegalArgumentException("Either argument 'xmlLogConfiguration' " +
+						"must be supplied or the log configuration must be set via " +
+						"'setLogConfiguration' before invoking this method.", this, arguments);
+			}
 		}
 		var rootNode:XMLNode = parseXml(xmlLogConfiguration);
 		if (rootNode.attributes.enabled != "false") {
