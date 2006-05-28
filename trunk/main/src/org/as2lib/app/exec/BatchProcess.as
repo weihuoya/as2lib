@@ -50,8 +50,7 @@ import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributo
  * @author Simon Wacker
  * @version 2.0
  */
-class org.as2lib.app.exec.BatchProcess extends AbstractBatch implements Batch,
-		BatchFinishListener, BatchUpdateListener, BatchErrorListener, ProcessFinishListener,
+class org.as2lib.app.exec.BatchProcess extends AbstractBatch implements
 		ProcessUpdateListener, ProcessErrorListener {
 	
 	/** All added processes. */
@@ -67,37 +66,6 @@ class org.as2lib.app.exec.BatchProcess extends AbstractBatch implements Batch,
 	 * Constructs a new {@code BatchProcess} instance.
 	 */
 	public function BatchProcess(Void) {
-		// There is a class initialization error in Mtasc (note that this error does not occur in
-		// Flash) that prevents BatchProcess from inheriting from AbstractBatch.
-		if (BatchProcess.prototype.__proto__ != AbstractBatch.prototype) {
-			BatchProcess.prototype.__proto__ = AbstractBatch.prototype;
-			// LogSupport Constructor
-			addProperty("logger", getLogger, null);
-			// EventSupport Constructor
-			distributorControl = new SimpleConsumableCompositeEventDistributorControl();
-			// AbstractTimeConsumer Constructor
-			duration = new Time(0);
-			totalTime = new Time(0);
-			restTime = new Time(0);
-			started = false;
-			finished = false;
-			// AbstractProcess Constructor
-			errors = new Array();
-			subProcesses = new HashMap();
-			paused = false;
-			working = false;
-			acceptListenerType(ProcessStartListener);
-			acceptListenerType(ProcessErrorListener);
-			acceptListenerType(ProcessUpdateListener);
-			acceptListenerType(ProcessPauseListener);
-			acceptListenerType(ProcessResumeListener);
-			acceptListenerType(ProcessFinishListener);
-			// AbstractBatch Constructor
-			processes = new Array();
-			percentage = 0;
-			started = false;
-			finished = false;
-		}
 	}
 	
 	/**
