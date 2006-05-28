@@ -17,16 +17,25 @@
 package org.as2lib.ant;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
+
 import org.apache.tools.ant.BuildException;
+import org.apache.tools.ant.Project;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Execute;
 import org.apache.tools.ant.types.Commandline;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.xml.sax.SAXException;
 
 /**
  * {@code UnitTest} executes a unit test swf and writes the result to the console.
@@ -117,21 +126,36 @@ public class UnitTest extends Task {
 		
 		public void run() {
 			try {
+				task.log("-\n-");
 				while (true) {
 					Socket socket = server.accept();
 					in = new BufferedReader(new InputStreamReader(socket.getInputStream()));
 					char[] charBuffer = new char[1];
 					while (in.read(charBuffer, 0, 1) != -1) {
-						task.log("-\n-");
 						StringBuffer stringBuffer = new StringBuffer(8192);
 						while (charBuffer[0] != '\0') {
 							stringBuffer.append(charBuffer[0]);
 							in.read(charBuffer, 0, 1);
 						}
-						task.log(stringBuffer.toString());
-						task.log("-\n-");
-						process.destroy();
-						return;
+						DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+						DocumentBuilder builder = factory.newDocumentBuilder();
+						Document document = builder.parse(new ByteArrayInputStream(stringBuffer.toString().getBytes()));
+						Element element = document.getDocumentElement();
+						String message = element.getFirstChild().getNodeValue();
+						if (element.getNodeName().equals("finish")) {
+							if (element.getAttribute("hasErrors").equals("true")) {
+								task.log(message, Project.MSG_ERR);
+							}
+							else {
+								task.log(message);
+							}
+							task.log("-\n-");
+							process.destroy();
+							return;
+						}
+						else {
+							task.log(message);
+						}
 					}
 				}
 				/*while (true) {
@@ -159,6 +183,12 @@ public class UnitTest extends Task {
 				}*/
 			}
 			catch (IOException e) {
+				throw new BuildException("Error on reading result.", e, task.getLocation());
+			}
+			catch (ParserConfigurationException e) {
+				throw new BuildException("Error on reading result.", e, task.getLocation());
+			}
+			catch (SAXException e) {
 				throw new BuildException("Error on reading result.", e, task.getLocation());
 			}
 		}
