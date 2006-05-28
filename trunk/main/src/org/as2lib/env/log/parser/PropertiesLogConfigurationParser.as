@@ -125,12 +125,18 @@ class org.as2lib.env.log.parser.PropertiesLogConfigurationParser extends Abstrac
 	 * @param propertiesLogConfiguration the log configuration in properties format to
 	 * parse
 	 * @throws IllegalArgumentException if argument {@code xmlLogConfiguration} is
-	 * {@code null} or {@code undefined}
+	 * {@code null} or {@code undefined} and no log configuration was set via
+	 * {@link setLogConfiguration} previously
 	 * @throws LogConfigurationParseException in case of parse errors
 	 */
 	public function parse(propertiesLogConfiguration:String):Void {
 		if (propertiesLogConfiguration == null) {
-			throw new IllegalArgumentException("Argument 'propertiesLogConfiguration' [" + propertiesLogConfiguration + "] must not be 'null' nor 'undefined'.", this, arguments);
+			propertiesLogConfiguration = getLogConfiguration();
+			if (propertiesLogConfiguration == null) {
+				throw new IllegalArgumentException("Either argument 'propertiesLogConfiguration' " +
+						"must be supplied or the log configuration must be set via " +
+						"'setLogConfiguration' before invoking this method.", this, arguments);
+			}
 		}
 		var parser:PropertiesParser = new PropertiesParser();
 		var props:Properties = parser.parseProperties(propertiesLogConfiguration);
