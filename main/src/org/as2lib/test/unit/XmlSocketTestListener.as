@@ -30,6 +30,22 @@ import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.StringUtil;
 
 /**
+ * {@code XmlSocketTestListener} writes-out received test execution information with
+ * the xml socket.
+ * 
+ * <p>The written-out information is formatted as follows:
+ * <ul>
+ *   <li>&lt;start&gt;Start message.&lt;/start&gt;</li>
+ *   <li>&lt;update&gt;Update message.&lt;/update&gt;</li>
+ *   <li>&lt;pause&gt;Pause message.&lt;/pause&gt;</li>
+ *   <li>&lt;resume&gt;Resume message.&lt;/resume&gt;
+ *   <li>&lt;error&gt;Error message.&lt;/error&gt;</li>
+ *   <li>&lt;finish hasErrors="false/true"&gt;Finish message.&lt;/finish&gt;</li>
+ * </ul>
+ * 
+ * <p>This format is also expected by the Unit Test Task of As2ant, so you may easily
+ * use this test listener and the task in conjunction.
+ * 
  * @author Christophe Herreman
  * @author Simon Wacker
  */
@@ -41,6 +57,15 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 	
 	private var socket:XMLSocket;
 	
+	/**
+	 * Constructs a new {@code XmlSocketTestListener} instance.
+	 * 
+	 * <p>If {@code host} is not specified, {@code "localhost"} is used. If
+	 * {@code port} is not specified, {@code 3212} is used.
+	 * 
+	 * @param host the host of the connection to open
+	 * @param port the port of the connection to open
+	 */
 	public function XmlSocketTestListener(host:String, port:Number) {
 		if (host == null) {
 			host = "localhost";
