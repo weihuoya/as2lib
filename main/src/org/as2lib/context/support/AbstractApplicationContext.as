@@ -42,6 +42,7 @@ import org.as2lib.data.type.Time;
 import org.as2lib.env.event.distributor.EventDistributorControl;
 import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.env.except.IllegalStateException;
+import org.as2lib.env.log.LogConfigurationParser;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LoggerRepository;
 import org.as2lib.env.log.LogManager;
@@ -127,6 +128,11 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	 * process beans.
 	 */
 	public static var LOG_CONFIGURATION_BEAN_NAME:String = "logConfiguration";
+	
+	/**
+	 * Name of the {@link LogConfigurationParser} bean to execute.
+	 */
+	public static var LOG_CONFIGURATION_PARSER_BEAN_NAME:String = "logConfigurationParser";
 	
 	/** Parent context. */
 	private var parent:ApplicationContext;
@@ -355,6 +361,8 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			initLogger();
 			// initializes the logger repository
 			initLoggerRepository();
+			// initializes the log configuration parser
+			initLogConfigurationParser();
 			// initializes message source for this context
 			initMessageSource();
 			// initializes event distributor control for this context
@@ -481,6 +489,17 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			var loggerRepository:LoggerRepository =
 					getBeanByNameAndType(LOGGER_REPOSITORY_BEAN_NAME, LoggerRepository);
 			LogManager.setLoggerRepository(loggerRepository);
+		}
+	}
+	
+	/**
+	 * Initializes the log configuration parser if it exists (executes it).
+	 */
+	private function initLogConfigurationParser(Void):Void {
+		if (containsLocalBean(LOG_CONFIGURATION_PARSER_BEAN_NAME)) {
+			var logConfigurationParser:LogConfigurationParser =
+					getBeanByNameAndType(LOG_CONFIGURATION_PARSER_BEAN_NAME, LogConfigurationParser);
+			logConfigurationParser.parse();
 		}
 	}
 	
