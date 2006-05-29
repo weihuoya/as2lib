@@ -54,7 +54,14 @@ interface org.as2lib.app.exec.Batch extends Process {
 	 * 
 	 * @return the process that is currently running
 	 */
-	public function getCurrentProcess(Void):Process;	
+	public function getCurrentProcess(Void):Process;
+	
+	/**
+	 * Returns all added processes.
+	 * 
+	 * @return all added processes
+	 */
+	public function getAllProcesses(Void):Array;
 	
 	/**
 	 * Adds the given process to be executed by this batch.
@@ -62,6 +69,13 @@ interface org.as2lib.app.exec.Batch extends Process {
 	 * @param process the process to add
 	 */
 	public function addProcess(process:Process):Void;
+	
+	/**
+	 * Adds all given processes.
+	 * 
+	 * @param processes the processes to add
+	 */
+	public function addAllProcesses(processes:Array):Void;
 	
 	/**
 	 * Removes the given process.
@@ -74,13 +88,6 @@ interface org.as2lib.app.exec.Batch extends Process {
 	 * Removes all processes.
 	 */
 	public function removeAllProcesses(Void):Void;
-	
-	/**
-	 * Returns all added processes.
-	 * 
-	 * @return all added processes
-	 */
-	public function getAllProcesses(Void):Array;
 	
 	/**
 	 * Returns the number of processes added to this batch.
