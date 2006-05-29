@@ -29,9 +29,6 @@ import org.as2lib.env.reflect.ReflectUtil;
  * factoring out common properties of {@link RootBeanDefinition} and
  * {@link ChildBeanDefinition}.
  * 
- * <p>The autowire constants match the ones defined in the {@link AbstractBeanFactory}
- * class.
- * 
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass
