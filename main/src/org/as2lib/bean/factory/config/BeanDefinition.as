@@ -73,9 +73,18 @@ interface org.as2lib.bean.factory.config.BeanDefinition extends BasicInterface {
 	 * instance.
 	 * 
 	 * @return {@code true} if this bean shall be instantiated using the getter of the
-	 * enclosing or referencing property
+	 * enclosing or referencing property, else {@code false}
 	 */
 	public function isInstantiateWithProperty(Void):Boolean;
+	
+	/**
+	 * Returns whether this bean is static. This means that this bean is not an
+	 * instance of the bean class, but the bean class itself (which is in turn a static
+	 * class).
+	 * 
+	 * @return {@code true} if this bean is static else {@code false}
+	 */
+	public function isStatic(Void):Boolean;
 	
 	/**
 	 * Returns the names of the beans this bean depends on.
