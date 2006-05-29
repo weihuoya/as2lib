@@ -140,6 +140,17 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 	}
 	
 	/**
+	 * Adds all given processes which implement the {@link Process} interface.
+	 * 
+	 * @param processes the processes to add
+	 */
+	public function addAllProcesses(processes:Array):Void {
+		for (var i:Number = 0; i < processes.length; i++) {
+			addProcess(Process(processes[i]));
+		}
+	}
+	
+	/**
 	 * Removes all occurrences of the given process.
 	 * 
 	 * @param process the process to remove

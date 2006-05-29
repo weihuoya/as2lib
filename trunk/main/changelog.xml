@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="5">
+        		<day value="29">
+        			<entry type="add" package="org.as2lib.app.exec" class="Batch" method="addAllProcesses">Adds all processes from the given array.</entry>
+        		</day>
         		<day value="28">
         			<entry type="add" package="org.as2lib.test.unit" class="XmlSocketTestListener">Test listener to use in conjunction with the unit test ant task.</entry>
         		</day>
