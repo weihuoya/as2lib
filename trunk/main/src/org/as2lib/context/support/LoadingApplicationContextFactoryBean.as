@@ -231,8 +231,8 @@ class org.as2lib.context.support.LoadingApplicationContextFactoryBean extends Ba
 		return applicationContext.getErrors();
 	}
 	
-	public function hasError(Void):Boolean {
-		return applicationContext.hasError();
+	public function hasErrors(Void):Boolean {
+		return applicationContext.hasErrors();
 	}
 	
 	public function getDuration(Void):Time {
