@@ -340,8 +340,8 @@ class org.as2lib.context.support.ResourceBundleMessageSource extends AbstractMes
 		return getBatch().getErrors();
 	}
 	
-	public function hasError(Void):Boolean {
-		return getBatch().hasError();
+	public function hasErrors(Void):Boolean {
+		return getBatch().hasErrors();
 	}
 	
 	public function getDuration(Void):Time {

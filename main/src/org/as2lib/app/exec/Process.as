@@ -167,11 +167,11 @@ interface org.as2lib.app.exec.Process extends EventListenerSource {
     public function getErrors(Void):Array;
 	
 	/**
-	 * Checks if an error occured during execution of the {@code Process}.
-	 *  
-	 * @return {@code true} if an error occured, else {@code false}
+	 * Checks if errors occurred during execution of the {@code Process}.
+	 * 
+	 * @return {@code true} if errors occurred, else {@code false}
 	 */
-	public function hasError(Void):Boolean;
+	public function hasErrors(Void):Boolean;
 	
 	/**
 	 * By using {@code start()} it saves the start time of the execution of the process.

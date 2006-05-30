@@ -187,8 +187,8 @@ class org.as2lib.bean.factory.config.StyleSheetConfigurer extends BasicClass imp
 		return batch.getErrors();
 	}
 	
-	public function hasError(Void):Boolean {
-		return batch.hasError();
+	public function hasErrors(Void):Boolean {
+		return batch.hasErrors();
 	}
 	
 	public function getDuration(Void):Time {

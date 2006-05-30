@@ -327,11 +327,11 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 	
 	/**
-	 * Returns {@code true} if a error occured.
+	 * Returns {@code true} if errors occurred.
 	 *  
-	 * @return {@code true} if a error occured
+	 * @return {@code true} if errors occurred
 	 */
-	public function hasError(Void):Boolean {
+	public function hasErrors(Void):Boolean {
 		return (getErrors().length != 0);
 	}
 	
