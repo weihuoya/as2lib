@@ -66,6 +66,29 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
     	}
 	}
 	
+	/**
+	 * Starts the next process and distributes an update event, or finishes this
+	 * batch and distributes a finished event if there is no next process.
+	 * 
+	 * @see #distributeUpdateEvent
+	 * @see #finish
+	 */
+	private function nextProcess(Void):Void {
+		getCurrentProcess().removeListener(this);
+		if (currentProcess < processes.length - 1) {
+			updatePercentage(100);
+			currentProcess++;
+			var process:Process = processes[currentProcess];
+			process.setParentProcess(this);
+			process.addListener(this);
+			distributeUpdateEvent();
+			process.start();
+		}
+		else {
+			finish();
+		}
+	}
+	
 	public function getName(Void):String {
 		var result:String = super.getName();
 		if (result == null) {
@@ -85,20 +108,6 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 	 */
 	private function updatePercentage(percentage:Number):Void {
 		this.percentage = 100 / getProcessCount() * (currentProcess + (1 / 100 * percentage));
-	}
-	
-	public function getProcessCount(Void):Number {
-		var result:Number = 0;
-		for (var i:Number = 0; i < processes.length; i++) {
-			var batch:Batch = Batch(processes[i]);
-			if (batch != null) {
-				result += batch.getProcessCount();
-			}
-			else {
-				result++;
-			}
-		}
-		return result;
 	}
 	
 	public function getParentProcess(Void):Process {
@@ -122,6 +131,14 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 			parentProcess = parentProcess.getParentProcess();
 		}
 		while (parentProcess != null);
+	}
+	
+	public function getCurrentProcess(Void):Process {
+		return processes[currentProcess];
+	}
+	
+	public function getAllProcesses(Void):Array {
+		return processes.concat();
 	}
 	
 	/**
@@ -204,12 +221,18 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 		}
 	}
 	
-	public function getCurrentProcess(Void):Process {
-		return processes[currentProcess];
-	}
-	
-	public function getAllProcesses(Void):Array {
-		return processes.concat();
+	public function getProcessCount(Void):Number {
+		var result:Number = 0;
+		for (var i:Number = 0; i < processes.length; i++) {
+			var batch:Batch = Batch(processes[i]);
+			if (batch != null) {
+				result += batch.getProcessCount();
+			}
+			else {
+				result++;
+			}
+		}
+		return result;
 	}
 	
 	/**
@@ -233,29 +256,6 @@ class org.as2lib.app.exec.AbstractBatch extends AbstractProcess implements Batch
 	public function onBatchFinish(batch:Batch):Void {
 		batch.removeListener(this);
 		nextProcess();
-	}
-	
-	/**
-	 * Starts the next process and distributes an update event, or finishes this
-	 * batch and distributes a finished event if there is no next process.
-	 * 
-	 * @see #distributeUpdateEvent
-	 * @see #finish
-	 */
-	private function nextProcess(Void):Void {
-		getCurrentProcess().removeListener(this);
-		if (currentProcess < processes.length - 1) {
-			updatePercentage(100);
-			currentProcess++;
-			var process:Process = processes[currentProcess];
-			process.setParentProcess(this);
-			process.addListener(this);
-			process.start();
-			distributeUpdateEvent();
-		}
-		else {
-			finish();
-		}
 	}
 	
 	/**
