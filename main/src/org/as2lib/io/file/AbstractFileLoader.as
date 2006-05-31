@@ -32,7 +32,7 @@ import org.as2lib.env.except.IllegalArgumentException;
  * {@code AbstractFileLoader} is a abstract implementation for a {@code FileLoader}.
  * 
  * <p>Extend {@code AbstractFileLoader} to implement most methods required
- * for a {@code ResourceLoader}.
+ * for a {@code FileLoader}.
  * 
  * @author Martin Heidegger
  * @version 1.0
@@ -186,7 +186,7 @@ class org.as2lib.io.file.AbstractFileLoader extends AbstractTimeConsumer impleme
 	 * Returns the loaded resource.
 	 * 
 	 * @return the loaded resource
-	 * @throws org.as2lib.io.file.ResourceNotLoadedException if the resource has
+	 * @throws org.as2lib.io.file.FileNotLoadedException if the resource has
 	 *         not been loaded yet
 	 */
 	public function getFile(Void):File {
