@@ -7,6 +7,8 @@
         <year value="2006">
         	<month value="5">
         		<day value="31">
+        			<entry type="add" package="org.as2lib.io.file" class="SwfFileLoader" method="getSwfFile">Properly typed access to the loaded swf file.</entry>
+        			<entry type="add" package="org.as2lib.io.file" class="XmlFileLoader" method="getXmlFile">Properly typed access to the loaded xml file.</entry>
         			<entry type="add" package="org.as2lib.io.file" class="PropertiesFileLoader"></entry>
         		</day>
         		<day value="30">
