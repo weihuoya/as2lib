@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-import org.as2lib.io.file.AbstractFileLoader;
-import org.as2lib.data.type.Byte;
+import org.as2lib.app.exec.Executable;
 import org.as2lib.data.holder.Iterator;
+import org.as2lib.data.holder.Map;
+import org.as2lib.data.type.Byte;
+import org.as2lib.data.type.Time;
 import org.as2lib.env.event.impulse.FrameImpulse;
 import org.as2lib.env.event.impulse.FrameImpulseListener;
+import org.as2lib.io.file.AbstractFileLoader;
+import org.as2lib.io.file.File;
 import org.as2lib.io.file.FileLoader;
 import org.as2lib.io.file.FileNotLoadedException;
-import org.as2lib.data.type.Time;
-import org.as2lib.app.exec.Executable;
-import org.as2lib.data.holder.Map;
-import org.as2lib.io.file.File;
 import org.as2lib.io.file.SwfFile;
 
 /**
@@ -103,8 +103,8 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	/** Movie clip to load the file into. */
 	private var movieClip:MovieClip;
 	
-	/** Loaded {@code File}. */
-	private var result:File;
+	/** The loaded swf file. */
+	private var swfFile:SwfFile;
 	
     /** Holding former file size for progress event */
     private var formerLoaded:Number;
@@ -145,7 +145,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 */
 	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
 		super.load(uri, method, parameters, callBack);
-		result = null;
+		swfFile = null;
 		endTime = null;
 		if(parameters) {
 			var keys:Iterator = parameters.keyIterator();
@@ -166,10 +166,20 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	 * @throws FileNotLoadedException if the file has not been loaded yet
 	 */
 	public function getFile(Void):File {
-		if (!result) {
-			throw new FileNotLoadedException("No File has been loaded.", this, arguments);
+		return getSwfFile();
+	}
+	
+	/**
+	 * Returns the loaded swf file.
+	 * 
+	 * @return the loaded swf file
+	 * @throws FileNotLoadedException if the swf file has not been loaded yet
+	 */
+	public function getSwfFile(Void):SwfFile {
+		if (!swfFile) {
+			throw new FileNotLoadedException("Swf file has not been loaded yet.", this, arguments);
 		}
-		return result;
+		return swfFile;
 	}
 	
 	/**
@@ -258,7 +268,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 	private function successLoading(Void):Void {
 		finished = true;
 		started = false;
-		result = new SwfFile(movieClip, uri, getBytesTotal());
+		swfFile = new SwfFile(movieClip, uri, getBytesTotal());
 		endTime = getTimer();
 		sendCompleteEvent();
 		tearDown();
