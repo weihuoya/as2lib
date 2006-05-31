@@ -15,13 +15,15 @@
  */
 
 import org.as2lib.io.file.TextFileLoader;
+import org.as2lib.io.file.XmlFile;
 import org.as2lib.io.file.XmlFileFactory;
 
 /**
  * {@code XmlFileLoader} manages loading XML-files.
  * 
  * <p>The file returned by the {@link #getFile} method is an instance of type
- * {@link XmlFile}; you can safely cast the returned file to this type.
+ * {@link XmlFile}; you can safely cast the returned file to this type. You may
+ * alternatively use {@link #getXmlFile} which returns a properly typed xml file.
  * 
  * @author Simon Wacker
  */
@@ -33,5 +35,15 @@ class org.as2lib.io.file.XmlFileLoader extends TextFileLoader {
 	public function XmlFileLoader(Void) {
 		super(new XmlFileFactory());
 	}
-
+	
+	/**
+	 * Returns the loaded xml file.
+	 * 
+	 * @return the loaded xml file
+	 * @throws FileNotLoadedException if the file has not been loaded yet
+	 */
+	public function getXmlFile(Void):XmlFile {
+		return XmlFile(getFile());
+	}
+	
 }
