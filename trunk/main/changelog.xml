@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="5">
+        		<day value="31">
+        			<entry type="add" package="org.as2lib.io.file" class="PropertiesFileLoader"></entry>
+        		</day>
         		<day value="30">
         			<entry type="add" package="org.as2lib.app.conf" class="UnitTestExecution">Added support for custom test listeners.</entry>
         			<entry type="change" package="org.as2lib.app.exec" class="Process" method="hasError"><change-rename to="hasErrors"/></entry>
