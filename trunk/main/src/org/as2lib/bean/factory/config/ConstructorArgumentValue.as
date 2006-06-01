@@ -50,6 +50,15 @@ class org.as2lib.bean.factory.config.ConstructorArgumentValue extends BasicClass
 	}
 	
 	/**
+	 * Sets the value of this constructor argument.
+	 * 
+	 * @param value the value of this constructor argument
+	 */
+	public function setValue(value):Void {
+		
+	}
+	
+	/**
 	 * Returns the type to convert the value to.
 	 * 
 	 * @return the type to convert the value to
