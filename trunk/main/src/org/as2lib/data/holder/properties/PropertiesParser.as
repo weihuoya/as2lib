@@ -60,10 +60,12 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 	 * it.
 	 * 
 	 * @param source the source to parse
+	 * @param properties the properties instance to populate with the properties of the
+	 * given source
 	 * @return the properties defined by the given {@code source}
 	 */
-	public function parseProperties(source:String):Properties {
-		var result:Properties = new SimpleProperties();
+	public function parseProperties(source:String, properties:Properties):Properties {
+		var result:Properties = properties == null ? new SimpleProperties() : properties;
 		var lines:MultilineString = new MultilineString(source);
 		var i:Number;
 		var c:Number = lines.getLineCount();
@@ -72,31 +74,33 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 		var formerKey:String;
 		var formerValue:String;
 		var useNextLine:Boolean = false;;
-		for (i=0; i<c; i++) {
+		for (i = 0; i < c; i++) {
 			var line:String = lines.getLine(i);
 			// Trim the line
 			line = TrimUtil.trim(line);
 			// Ignore Comments
-			if ( line.indexOf("#") != 0 && line.indexOf("!") != 0 && line.length != 0) {
+			if (line.indexOf("#") != 0 && line.indexOf("!") != 0 && line.length != 0) {
 				// Line break processing
 				if (useNextLine) {
 					key = formerKey;
-					value = formerValue+line;
+					value = formerValue + line;
 					useNextLine = false;
-				} else {
+				}
+				else {
 					var sep:Number = getSeperation(line);
-					key = TrimUtil.rightTrim(line.substr(0,sep));
-					value = line.substring(sep+1);
+					key = TrimUtil.rightTrim(line.substr(0, sep));
+					value = line.substring(sep + 1);
 					formerKey = key;
 					formerValue = value;
 				}
 				// Trim the content
 				value = TrimUtil.leftTrim(value);
 				// Allow normal lines
-				if (value.charAt(value.length-1) == "\\") {
-					formerValue = value =  value.substr(0, value.length-1);
+				if (value.charAt(value.length - 1) == "\\") {
+					formerValue = value =  value.substr(0, value.length - 1);
 					useNextLine = true;
-				} else {
+				}
+				else {
 					// Commit Property
 					result.setProp(key, value);
 				}
@@ -114,15 +118,16 @@ class org.as2lib.data.holder.properties.PropertiesParser extends BasicClass {
 	private function getSeperation(line:String):Number {
 		var i:Number;
 		var l:Number = line.length;
-		for (i=0; i<l; i++) {
+		for (i = 0; i < l; i++) {
 			var c:String = line.charAt(i);
 			if (c == "'") {
 				i++;
-			} else {
+			}
+			else {
 				if (c == ":" || c == "=" || c == "	") break;
 			}
 		}
-		return ( (i == l) ? line.length : i );
+		return ((i == l) ? line.length : i);
 	}
 	
 }
