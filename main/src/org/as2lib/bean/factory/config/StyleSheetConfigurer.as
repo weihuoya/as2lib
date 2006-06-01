@@ -152,87 +152,87 @@ class org.as2lib.bean.factory.config.StyleSheetConfigurer extends BasicClass imp
 	}
 	
 	public function start() {
-		batch.start();
+		getBatch().start();
 	}
 	
 	public function hasStarted(Void):Boolean {
-		return batch.hasStarted();
+		return getBatch().hasStarted();
 	}
 	
 	public function hasFinished(Void):Boolean {
-		return batch.hasFinished();
+		return getBatch().hasFinished();
 	}
 	
 	public function isPaused(Void):Boolean {
-		return batch.isPaused();
+		return getBatch().isPaused();
 	}
 	
 	public function isRunning(Void):Boolean {
-		return batch.isRunning();
+		return getBatch().isRunning();
 	}
 	
 	public function getPercentage(Void):Number {
-		return batch.getPercentage();
+		return getBatch().getPercentage();
 	}
 	
 	public function setParentProcess(process:Process):Void {
-		batch.setParentProcess(process);
+		getBatch().setParentProcess(process);
 	}
 	
 	public function getParentProcess(Void):Process {
-		return batch.getParentProcess();
+		return getBatch().getParentProcess();
 	}
 	
 	public function getErrors(Void):Array {
-		return batch.getErrors();
+		return getBatch().getErrors();
 	}
 	
 	public function hasErrors(Void):Boolean {
-		return batch.hasErrors();
+		return getBatch().hasErrors();
 	}
 	
 	public function getDuration(Void):Time {
-		return batch.getDuration();
+		return getBatch().getDuration();
 	}
 	
 	public function getEstimatedTotalTime(Void):Time {
-		return batch.getEstimatedTotalTime();
+		return getBatch().getEstimatedTotalTime();
 	}
 	
 	public function getEstimatedRestTime(Void):Time {
-		return batch.getEstimatedRestTime();
+		return getBatch().getEstimatedRestTime();
 	}
 	
 	public function getName(Void):String {
-		return batch.getName();
+		return getBatch().getName();
 	}
 	
 	public function setName(name:String):Void {
-		batch.setName(name);
+		getBatch().setName(name);
 	}
 	
 	public function addListener(listener):Void {
-		batch.addListener(listener);
+		getBatch().addListener(listener);
 	}
 	
 	public function addAllListeners(listeners:Array):Void {
-		batch.addAllListeners(listeners);
+		getBatch().addAllListeners(listeners);
 	}
 	
 	public function removeListener(listener):Void {
-		batch.removeListener(listener);
+		getBatch().removeListener(listener);
 	}
 	
 	public function removeAllListeners(Void):Void {
-		batch.removeAllListeners();
+		getBatch().removeAllListeners();
 	}
 	
 	public function getAllListeners(Void):Array {
-		return batch.getAllListeners();
+		return getBatch().getAllListeners();
 	}
 	
 	public function hasListener(listener):Boolean {
-		return batch.hasListener(listener);
+		return getBatch().hasListener(listener);
 	}
 	
 }
