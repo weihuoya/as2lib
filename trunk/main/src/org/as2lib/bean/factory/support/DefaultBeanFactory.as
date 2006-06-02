@@ -637,6 +637,12 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				var pv:PropertyValue = pvArray[i];
 				var name:String = pv.getName();
 				if (name == null) {
+					if (defaultName == null) {
+						throw new BeanDefinitionStoreException(beanName, "Property value [" +
+								pv + "] has no name although bean [" + mergedBeanDefinition +
+								"] has no default property name: at least one of these must be " +
+								"supplied.", this, arguments);
+					}
 					name = defaultName;
 				}
 				var value = pv.getValue();
