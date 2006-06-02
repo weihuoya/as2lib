@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- *************************************************************************************
+		Alcon
+		
+		Universal build file for FDT Flash Projects.
+		16.01.2006 - sascha
+     ************************************************************************************* -->
+	
+<project name="Alcon" default="Usage" basedir=".">
+	<description>Universal build file for FDT Flash projects</description>
+	
+	<!-- project specific properties -->
+	<property name="sourceswf" value="console.swf"/>
+	<property name="targetswf" value="Alcon.swf"/>
+	<property name="targethtml" value="Alcon.html"/>
+	<property name="mainclass" value="Console.as"/>
+	<property name="classframe" value="2"/>
+	
+	<!-- project folders -->
+	<property name="deploy" location="bin"/>
+	<property name="library" location="lib"/>
+	<property name="source" location="src"/>
+	
+	<!-- classpath info -->
+	<property name="classpath1" value="E:/Projects/Flash Classes/Classes Additional"/>
+	<property name="classpath2" value="E:/Projects/Flash Classes/Classes Zinc/"/>
+	
+	<!-- tool locations -->
+	<property name="mtasc" location="D:/Authoring/Flash Tools/MTASC/mtasc.exe"/>
+	<property name="flashplayer8.0" location="D:/Authoring/Flash 8/Players/SAFlashPlayer.exe"/>
+	<property name="flashplayer8.5" location="D:/Authoring/Flex/Player/Version 8.5 alpha 1/Debug/SAFlashPlayer.exe"/>
+	
+	<!-- custom trace function for MTASC trace functionality -->
+	<property name="tracefunction" value="net.hiddenresource.util.debug.Debug.trace"/>
+	<property name="debugpackage" location="E:/Projects/Flash Classes/Classes Additional/net/hiddenresource/util/debug"/>
+	
+	
+	<!-- ==== targets ==================================================================== -->
+	
+	<!-- target: Usage -->
+	<target name="Usage">
+		<echo message=""/>
+		<echo message="----------------------"/>
+		<echo message="Available Ant targets:"/>
+		<echo message="Copy SWF"/>
+		<echo message="MTASC Compile (Debug)"/>
+		<echo message="MTASC Compile (Release)"/>
+		<echo message="FlashPlayer 8.0"/>
+		<echo message="FlashPlayer 8.5"/>
+		<echo message="----------------------"/>
+		<echo message=""/>
+	</target>
+	
+	<!-- target: Copy SWF -->
+	<target name="Copy SWF" description="Copies the default SWF to be used by MTASC">
+		<delete file="${deploy}/${targetswf}"/>
+		<copy file="${library}/swf/${sourceswf}" todir="${deploy}"/>
+		<move file="${deploy}/${sourceswf}" tofile="${deploy}/${targetswf}"/>
+	</target>
+	
+	<!-- target: MTASC Compile (Debug) -->
+	<target name="MTASC Compile (Debug)" description="Compiles an existing SWF file with MTASC for debugging">
+		<exec executable="${mtasc}" failonerror="true">
+			<arg value="-cp"/>
+			<arg value="${source}"/>
+			<arg value="-cp"/>
+			<arg value="${classpath1}"/>
+			<arg value="-cp"/>
+			<arg value="${classpath2}"/>
+			<arg value="-pack"/>
+			<arg value="${debugpackage}"/>
+			<arg value="-trace"/>
+			<arg value="${tracefunction}"/>
+			<arg value="-group"/>
+			<arg value="-swf"/>
+			<arg value="${deploy}/${targetswf}"/>
+			<arg value="-frame"/>
+			<arg value="${classframe}"/>
+			<arg value="-main"/>
+			<arg value="${source}/${mainclass}"/>
+		</exec>
+	</target>
+	
+	<!-- target: MTASC Compile (Release) -->
+	<target name="MTASC Compile (Release)" description="Compiles an existing SWF file with MTASC for release">
+		<exec executable="${mtasc}" failonerror="true">
+			<arg value="-cp"/>
+			<arg value="${source}"/>
+			<arg value="-cp"/>
+			<arg value="${classpath1}"/>
+			<arg value="-cp"/>
+			<arg value="${classpath2}"/>
+			<arg value="-trace"/>
+			<arg value="no"/>
+			<arg value="-group"/>
+			<arg value="-swf"/>
+			<arg value="${deploy}/${targetswf}"/>
+			<arg value="-frame"/>
+			<arg value="${classframe}"/>
+			<arg value="-main"/>
+			<arg value="${source}/${mainclass}"/>
+		</exec>
+	</target>
+	
+	<!-- target: FlashPlayer 8.0 -->
+	<target name="FlashPlayer 8.0" description="Opens the SWF in Flashplayer 8.0">
+		<exec executable="${flashplayer8.0}" spawn="true">
+			<arg value="${deploy}\${targetswf}"/>
+		</exec>
+	</target>
+	
+	<!-- target: FlashPlayer 8.5 -->
+	<target name="FlashPlayer 8.5" description="Opens the SWF in Flashplayer 8.5">
+		<exec executable="${flashplayer8.5}" spawn="true">
+			<arg value="${deploy}\${targetswf}"/>
+		</exec>
+	</target>
+
+</project>
