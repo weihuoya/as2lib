@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -42,13 +42,13 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 		ProcessPauseListener,
 		ProcessResumeListener,
 		ProcessUpdateListener {
-	
+
 	/* Instance holfer of the default LoggerTestListener */
 	private static var instance:LoggerTestListener;
-	
+
 	/**
 	 * Returns a instance of {@code LoggerTestListener}
-	 * 
+	 *
 	 * @return Instance of {@code LoggerTestListener}
 	 */
 	public static function getInstance(Void):LoggerTestListener {
@@ -57,28 +57,28 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 		}
 		return instance;
 	}
-	
+
 	/** Stores former displayed TestCase. */
 	private var formerTest:TestCaseResult;
-	
+
 	/**
-	 * Private constructor, use {@link #getInstance} to create a instance.
+	 * Constructs a new {@code LoggerTestListener} instance.
 	 */
-	private function LoggerTestListener() {}
-	
-	
+	public function LoggerTestListener() {}
+
+
 	/**
 	 * Start event, fired by start of a TestRunner.
-	 * 
+	 *
 	 * @param startInfo Informations about the TestRunner that started.
 	 */
 	public function onProcessStart(process:Process):Void {
 		logger.info("TestRunner started execution.");
 	}
-	
+
 	/**
 	 * Progress event, fired after each executed method within a TestRunner.
-	 * 
+	 *
 	 * @param progressInfo Extended informations the current progress.
 	 */
 	public function onProcessUpdate(process:Process):Void {
@@ -90,10 +90,10 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 			}
 		}
 	}
-	
+
 	/**
 	 * Redirects the string representation of the testrunner to the logger
-	 * 
+	 *
 	 * @param finishInfo Informations about the TestRunner that finished.
 	 */
 	public function onProcessFinish(process:Process):Void {
@@ -104,30 +104,30 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 			throw new IllegalArgumentException("LoggerTestListener added to a different Process", this, arguments);
 		}
 	}
-	
+
 	/**
 	 * Pause event, fired after by pausing the execution of a TestRunner.
-	 * 
+	 *
 	 * @param pauseInfo Informations about the TestRunner that paused.
 	 */
 	public function onProcessPause(process:Process):Void {
 		var test:TestRunner = TestRunner(process);
 		logger.info("TestRunner paused execution at "+test.getCurrentTestCaseMethodInfo().getName());
 	}
-	
+
 	/**
 	 * Pause event, fired after by resuming the execution of a TestRunner.
-	 * 
+	 *
 	 * @param resumeInfo Informations about the TestRunner that resumed working.
 	 */
 	public function onProcessResume(process:Process):Void {
 		var test:TestRunner = TestRunner(process);
 		logger.info("TestRunner resumed execution at "+test.getCurrentTestCaseMethodInfo().getName());
 	}
-	
+
 	/**
 	 * Executed if a Exeception was thrown during the execution
-	 * 
+	 *
 	 * @param process where the execution paused.
 	 * @param error Error that occured.
 	 */
@@ -135,5 +135,5 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport
 		logger.error("Exception was thrown during the execution of the TestRunner: " + error + ".");
 		return true;
 	}
-	
+
 }
