@@ -5,6 +5,11 @@
         xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
+        	<month value="6">
+        		<day value="1">
+        			<entry type="add" package="org.as2lib.data.holder" class="Properties" method="remove">Removes a property.</entry>
+        		</day>
+        	</month>
         	<month value="5">
         		<day value="31">
         			<entry type="add" package="org.as2lib.io.file" class="SwfFileLoader" method="getSwfFile">Properly typed access to the loaded swf file.</entry>
