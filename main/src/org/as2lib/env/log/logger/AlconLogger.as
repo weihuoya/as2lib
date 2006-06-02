@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,12 +19,12 @@ import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.message.MtascLogMessage;
 
-import net.hiddenresource.util.Debug;
+import net.hiddenresource.util.debug.Debug;
 
 /**
  * {@code AlconLogger} delegates all messages to the
- * {@code net.hiddenresource.util.Debug.trace} method.
- * 
+ * {@code net.hiddenresource.util.debug.Debug.trace} method.
+ *
  * <p>Using this class instead of the {@code Debug} class in your application
  * directly enables you to switch between almost every available Logging API without
  * having to change the logging calls but just the configuration on startup.
@@ -38,29 +38,29 @@ import net.hiddenresource.util.Debug;
  * @see <a href="http://hiddenresource.corewatch.net/index.php?itemid=17">Alcon</a>
  */
 class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger {
-	
+
 	/** Alcon debug level. */
 	public static var DEBUG:Number = 0;
-	
+
 	/** Alcon info level. */
 	public static var INFO:Number = 1;
-	
+
 	/** Alcon warn level. */
 	public static var WARN:Number = 2;
-	
+
 	/** Alcon error level. */
 	public static var ERROR:Number = 3;
-	
+
 	/** Alcon fatal level. */
 	public static var FATAL:Number = 4;
-		
+
 	/**
 	 * Proxy trace method for MTASC that directly outputs the specified {@code message} to
 	 * the Alcon logger console.
-	 * 
+	 *
 	 * <p>You can use this method as trace method for MTASC's trace support:
 	 * <code>mtasc ... -trace org.as2lib.env.log.logger.AlconLogger.trace</code>
-	 * 
+	 *
 	 * @param message the message to log
 	 * @param location the fully qualified name of the class and method which invoked the
 	 * {@code trace} method separated by "::"
@@ -74,25 +74,25 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 		var m:LogMessage = new MtascLogMessage(alconDebug.traceObject(message), location, fileName, lineNumber);
 		Debug.trace(m.toString());
 	}
-	
+
 	/** Determines whether to trace recursively or not. */
 	private var recursiveTracing:Boolean;
-	
+
 	/** Alcon debug level. */
 	private var debugLevel:Number;
-	
+
 	/** Alcon info level. */
 	private var infoLevel:Number;
-	
+
 	/** Alcon warn level. */
 	private var warnLevel:Number;
-	
+
 	/** Alcon error level. */
 	private var errorLevel:Number;
-	
+
 	/** Alcon fatal level. */
 	private var fatalLevel:Number;
-	
+
 	/**
 	 * Constructs a new {@code AlconLogger} instance.
 	 *
@@ -109,7 +109,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 		this.errorLevel = ERROR;
 		this.fatalLevel = FATAL;
 	}
-	
+
 	/**
 	 * Checks if this logger is enabled for debug level messages.
 	 *
@@ -119,7 +119,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function isDebugEnabled(Void):Boolean {
 		return (Debug.getFilterLevel() <= this.debugLevel);
 	}
-	
+
 	/**
 	 * Checks if this logger is enabled for info level messages.
 	 *
@@ -129,7 +129,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function isInfoEnabled(Void):Boolean {
 		return (Debug.getFilterLevel() <= this.infoLevel);
 	}
-	
+
 	/**
 	 * Checks if this logger is enabled for warning level messages.
 	 *
@@ -139,7 +139,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function isWarningEnabled(Void):Boolean {
 		return (Debug.getFilterLevel() <= this.warnLevel);
 	}
-	
+
 	/**
 	 * Checks if this logger is enabled for error level messages.
 	 *
@@ -149,7 +149,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function isErrorEnabled(Void):Boolean {
 		return (Debug.getFilterLevel() <= this.errorLevel);
 	}
-	
+
 	/**
 	 * Checks if this logger is enabled for fatal level messages.
 	 *
@@ -159,7 +159,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function isFatalEnabled(Void):Boolean {
 		return (Debug.getFilterLevel() <= this.fatalLevel);
 	}
-	
+
 	/**
 	 * Logs the passed-in {@code message} at debug level.
 	 *
@@ -175,7 +175,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function debug(message):Void {
 		Debug.trace(message, this.debugLevel, this.recursiveTracing);
 	}
-	
+
 	/**
 	 * Logs the passed-in {@code message} at info level.
 	 *
@@ -191,7 +191,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function info(message):Void {
 		Debug.trace(message, this.infoLevel, this.recursiveTracing);
 	}
-	
+
 	/**
 	 * Logs the passed-in {@code message} at warning level.
 	 *
@@ -207,7 +207,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function warning(message):Void {
 		Debug.trace(message, this.warnLevel, this.recursiveTracing);
 	}
-	
+
 	/**
 	 * Logs the passed-in {@code message} at error level.
 	 *
@@ -223,7 +223,7 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function error(message):Void {
 		Debug.trace(message, this.errorLevel, this.recursiveTracing);
 	}
-	
+
 	/**
 	 * Logs the passed-in {@code message} at fatal level.
 	 *
@@ -239,5 +239,5 @@ class org.as2lib.env.log.logger.AlconLogger extends BasicClass implements Logger
 	public function fatal(message):Void {
 		Debug.trace(message, this.fatalLevel, this.recursiveTracing);
 	}
-	
+
 }
