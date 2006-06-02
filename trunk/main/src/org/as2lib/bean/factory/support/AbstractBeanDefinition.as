@@ -627,11 +627,17 @@ class org.as2lib.bean.factory.support.AbstractBeanDefinition extends BasicClass
 	}
 
 	public function validate(Void):Void {
-		// TODO Validate whether all property values have a property name and if not whether a default property name is available.
-		// TODO Validate: Are there constructor arguments and method overrides although this bean is static?
 		if (lazyInit && !singleton) {
 			throw new BeanDefinitionValidationException("Lazy initialization is only applicable " +
 					"to singleton beans.", this, arguments);
+		}
+		if (statik && !constructorArgumentValues.isEmpty()) {
+			throw new BeanDefinitionValidationException("Constructor arguments values are only " +
+					"applicable to non-static beans.", this, arguments);
+		}
+		if (statik && !methodOverrides.isEmpty()) {
+			throw new BeanDefinitionValidationException("Method overrides are only applicable " +
+					"to non-static beans.", this, arguments);
 		}
 	}
 
