@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -47,11 +47,11 @@ import org.as2lib.bean.factory.support.LookupOverride;
 import org.as2lib.bean.factory.support.ManagedArray;
 import org.as2lib.bean.factory.support.ManagedList;
 import org.as2lib.bean.factory.support.ManagedMap;
+import org.as2lib.bean.factory.support.MethodOverride;
 import org.as2lib.bean.factory.support.MethodReplacer;
 import org.as2lib.bean.factory.support.ReplaceOverride;
 import org.as2lib.bean.factory.support.RootBeanDefinition;
 import org.as2lib.bean.PropertyAccess;
-import org.as2lib.bean.PropertyAccessExceptionsException;
 import org.as2lib.bean.PropertyValue;
 import org.as2lib.bean.PropertyValueConverter;
 import org.as2lib.bean.PropertyValues;
@@ -68,70 +68,70 @@ import org.as2lib.util.MethodUtil;
 /**
  * {@code DefaultBeanFactory} is the default implementation of the various bean
  * factory interfaces: a full-fledged bean factory based on bean definitions.
- * 
+ *
  * <p>Typical usage is registering all bean definitions first (possibly read
  * from a bean definition file), before accessing beans. Bean definition lookup
  * is therefore an inexpensive operation in a local bean definition table.
- * 
+ *
  * <p>Can be used as a standalone bean factory, or as a superclass for custom
  * bean factories. Note that readers for specific bean definition formats are
  * typically implemented separately rather than as bean factory subclasses.
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFactory implements
 		ConfigurableListableBeanFactory, BeanDefinitionRegistry {
-	
+
 	//---------------------------------------------------------------------
 	// Instance data
 	//---------------------------------------------------------------------
-	
+
 	/** The parent of this bean factory. */
 	private var parentBeanFactory:BeanFactory;
-	
+
 	/** The added bean definitions. */
 	private var beanDefinitionMap:Map;
-	
+
 	/** The cached singletons. */
 	private var singletonCache:Map;
-	
+
 	/** The alias of beans. */
 	private var aliasMap:Map;
-	
+
 	/** All added bean post processors. */
 	private var beanPostProcessors:Array;
-	
+
 	/** Whether there are any destruction aware bean post processors. */
 	private var hasDestructionAwareBeanPostProcessors:Boolean;
-	
+
 	/** Whether to allow bean definition overriding. */
 	private var allowBeanDefinitionOverriding:Boolean;
-	
+
 	/** Disposable bean instances: bean name --> disposable instance */
 	private var disposableBeans:Map;
 
 	/** Map between dependent bean names: bean name --> dependent bean name */
 	private var dependentBeanMap:Map;
-	
+
 	/** Whether to automatically try to resolve circular references between beans */
 	private var allowCircularReferences:Boolean;
-	
+
 	/** Property value converters to add to bean wrappers before setting property values. */
 	private var propertyValueConverters:Map;
-	
+
 	/** Names of beans that are currently in creation */
 	private var currentlyInCreation:Array;
-	
+
 	/** The bean wrapper used by this factory to resolve constructor arguments. */
 	private var beanWrapper:SimpleBeanWrapper;
-	
+
 	//---------------------------------------------------------------------
 	// Constructors
 	//---------------------------------------------------------------------
-	
+
 	/**
 	 * Constructs a new {@code DefaultBeanFactory} instance.
-	 * 
+	 *
 	 * @param parentBeanFactory the parent of this bean factory
 	 */
 	public function DefaultBeanFactory(parentBeanFactory:BeanFactory) {
@@ -148,11 +148,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		allowCircularReferences = true;
 		beanWrapper = new SimpleBeanWrapper();
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of AutowireCapableBeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	/*public function autowire(beanClass, autowireMode:Number, dependencyCheck:Boolean) {
 		// Use non-singleton bean definition, to avoid registering bean as dependent bean.
 		var bd:RootBeanDefinition = new RootBeanDefinition(beanClass, autowireMode, dependencyCheck);
@@ -162,7 +162,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		populateBean(beanName, bean, bd);
 		return bean;
 	}
-	
+
 	public function autowireBeanProperties(existingBean, autowireMode:Number, dependencyCheck:Boolean) {
 		// Use non-singleton bean definition, to avoid registering bean as dependent bean.
 		var beanClassName:String = ReflectUtil.getTypeNameForInstance(existingBean);
@@ -170,69 +170,69 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		bd.setSingleton(false);
 		populateBean(beanClassName, existingBean, bd);
 	}*/
-	
+
 	//---------------------------------------------------------------------
 	// Implementation methods
 	//---------------------------------------------------------------------
-	
+
 	/**
 	 * Sets whether it should be allowed to override bean definitions by registering
 	 * a different definition with the same name, automatically replacing the former.
 	 * If not, an exception will be thrown. Default is {@code true}.
-	 * 
+	 *
 	 * @param allowBeanDefinitionOverriding whether to allow bean definition overriding
 	 */
 	public function setAllowBeanDefinitionOverriding(allowBeanDefinitionOverriding:Boolean):Void {
 		this.allowBeanDefinitionOverriding = allowBeanDefinitionOverriding;
 	}
-	
+
 	/**
 	 * Returns whether it should be allowed to override bean definitions by registering
 	 * a different definition with the same name, automatically replacing the former.
-	 * 
+	 *
 	 * @return whether bean definition overriding is allowed
 	 */
 	public function isAllowBeanDefinitionOverriding(Void):Boolean {
 		return allowBeanDefinitionOverriding;
 	}
-	
+
 	/**
 	 * Sets whether to allow circular references between beans - and automatically
 	 * try to resolve them.
-	 * 
+	 *
 	 * <p>Note that circular reference resolution means that one of the involved beans
 	 * will receive a reference to another bean that is not fully initialized yet.
 	 * This can lead to subtle and not-so-subtle side effects on initialization;
 	 * it does work fine for many scenarios, though.
-	 * 
+	 *
 	 * <p>Default is {@code true}. Turn this off to throw an exception when encountering
 	 * a circular reference, disallowing them completely.
-	 * 
+	 *
 	 * @param allowCircularReferences whether to allow circular references
 	 */
 	public function setAllowCircularReferences(allowCircularReferences:Boolean):Void {
 		this.allowCircularReferences = allowCircularReferences;
 	}
-	
+
 	/**
 	 * Returns whether to allow circular references between beans - and automatically
 	 * try to resolve them.
-	 * 
+	 *
 	 * @param returns whether circular references are allowed
 	 */
 	public function isAllowCircularReferences(Void):Boolean {
 		return allowCircularReferences;
 	}
-	
+
 	public function applyBeanPropertyValues(existingBean, beanName:String):Void {
 		var bd:RootBeanDefinition = getMergedBeanDefinition(beanName, true);
 		applyPropertyValues(beanName, existingBean, bd, bd.getPropertyValues());
 	}
-	
+
 	/**
 	 * Initializes the given bean wrapper with the property value converters registered
 	 * with this factory.
-	 * 
+	 *
 	 * @param beanWrapper the BeanWrapper to initialize
 	 */
 	private function initBeanWrapper(beanWrapper:BeanWrapper):Void {
@@ -242,11 +242,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			beanWrapper.registerPropertyValueConverterForType(classes[i], converters[i]);
 		}
 	}
-	
+
 	/**
 	 * Gets the object for the given shared bean, either the bean instance itself or
 	 * its created object in case of a factory bean.
-	 * 
+	 *
 	 * @param name the name that may include factory dereference prefix
 	 * @param bean the shared bean instance
 	 * @param property the property to pass-to the factory bean's {@code getObject}
@@ -279,11 +279,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return bean;
 	}
-	
+
 	/**
 	 * Returns whether the given name is a factory dereference (beginning with the
 	 * factory dereference prefix).
-	 * 
+	 *
 	 * @param name the name to check whether it is a factory dereference
 	 * @return {@code true} if the given name is a factory dereference else {@code false}
 	 * @see AbstractBeanFactory#FACTORY_BEAN_PREFIX
@@ -291,11 +291,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	private function isFactoryDereference(name:String):Boolean {
 		return (name.indexOf(FACTORY_BEAN_PREFIX) == 0);
 	}
-	
+
 	/**
 	 * Returns the bean name, stripping out the factory dereference prefix if necessary,
 	 * and resolving aliases to canonical names.
-	 * 
+	 *
 	 * @param name the name to transform
 	 * @return the bean name
 	 */
@@ -309,7 +309,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return beanName;
 	}
-	
+
 	private function createBean(beanName:String, mergedBeanDefinition:RootBeanDefinition, property:PropertyAccess) {
 		var result;
 		if (mergedBeanDefinition.hasBeanClass()) {
@@ -383,16 +383,16 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		registerDisposableBeanIfNecessary(beanName, originalBean, mergedBeanDefinition);
 		return result;
 	}
-	
+
 	/**
 	 * Applies {@link InstantiationAwareBeanPostProcessor} instances to the given
 	 * existing bean instance, invoking their {@code postProcessBeforeInstantiation}
 	 * methods. The returned bean instance may be a wrapper around the original.
-	 * 
+	 *
 	 * <p>Any returned object will be used as the bean instead of actually instantiating
 	 * the target bean. A {@code null} return value from the post-processor will result
 	 * in the target bean being instantiated.
-	 * 
+	 *
 	 * @param beanClass the class of the bean to instantiate
 	 * @param beanName the name of the bean
 	 * @return the bean instance to use instead of a default instance of the target bean
@@ -412,10 +412,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return null;
 	}
-	
+
 	/**
 	 * Instantiates the bean defined by the given bean definition.
-	 * 
+	 *
 	 * @param beanName the name of the bean to instantiate
 	 * @param mergedBeanDefinition the merged bean definition of the bean to instantiate
 	 * @return the instantiated bean
@@ -437,11 +437,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		applyMethodOverrides(beanName, bean, mergedBeanDefinition);
 		return bean;
 	}
-	
+
 	/**
 	 * Instantiates the static bean defined by the given bean definition (simply returns
 	 * the bean class).
-	 * 
+	 *
 	 * @param beanName the name of the bean to instantiate
 	 * @param mergedBeanDefinition the merged bean definition of the bean to instantiate
 	 * @return the bean class
@@ -449,11 +449,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	private function instantiateStaticBean(beanName:String, mergedBeanDefinition:RootBeanDefinition) {
 		return mergedBeanDefinition.getBeanClass();
 	}
-	
+
 	/**
 	 * Instantiates the bean defined by the given bean definition with a factory
 	 * method.
-	 * 
+	 *
 	 * @param beanName the name of the bean to instantiate
 	 * @param mergedBeanDefinition the merged bean definition of the bean to instantiate
 	 * @return the instantiated bean
@@ -499,10 +499,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		applyMethodOverrides(beanName, bean, mergedBeanDefinition);
 		return bean;
 	}
-	
+
 	/**
 	 * Resolves the given constructor argument values.
-	 * 
+	 *
 	 * @param constructorArgumentValues the constructor argument values to resolve
 	 */
 	private function resolveConstructorArguments(constructorArgumentValues:ConstructorArgumentValues):Array {
@@ -516,10 +516,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Instantiates the bean with the given 'factory' property.
-	 * 
+	 *
 	 * @param beanName the name of the bean to instantiate
 	 * @param property the 'factory' property whose get-method instantiates the bean
 	 * @param mergedBeanDefinition the merged bean definition of the bean to instantiate
@@ -545,10 +545,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		applyMethodOverrides(beanName, bean, mergedBeanDefinition);
 		return bean;
 	}
-	
+
 	/**
 	 * Applies the method overrides of the given bean definition to the given bean.
-	 * 
+	 *
 	 * @param beanName the name of the bean
 	 * @param bean the bean to apply method overrides to
 	 * @param mergedBeanDefinition the bean definition of the bean
@@ -556,32 +556,21 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 	private function applyMethodOverrides(beanName:String, bean, mergedBeanDefinition:RootBeanDefinition):Void {
 		var overrides:Array = mergedBeanDefinition.getMethodOverrides().getOverrides();
 		for (var i:Number = 0; i < overrides.length; i++) {
-			var owner:BeanFactory = this;
-			if (overrides[i] instanceof LookupOverride) {
-				var lo:LookupOverride = overrides[i];
-				var lm:Function = function() {
-					return owner.getBeanByName(arguments.callee.beanName);
-				};
-				lm.beanName = lo.getBeanName();
-				bean[lo.getMethodName()] = lm;
+			var override:MethodOverride = overrides[i];
+			var methodName:String = override.getMethodName();
+			if (bean[methodName] === undefined) {
+				throw new BeanDefinitionStoreException(beanName, "Invalid method override: no " +
+						"method with name '" + methodName + "' exists on bean [" + bean + "] " +
+						"with bean definition [" + mergedBeanDefinition + "].", this, arguments);
 			}
-			else if (overrides[i] instanceof ReplaceOverride) {
-				var ro:ReplaceOverride = overrides[i];
-				var rm:Function = function() {
-					var mr:MethodReplacer = owner.getBeanByNameAndType(arguments.callee.beanName, MethodReplacer);
-					return mr.reimplement(this, arguments.callee.methodName, arguments);
-				};
-				rm.beanName = ro.getMethodReplacerBeanName();
-				rm.methodName = ro.getMethodName();
-				bean[ro.getMethodName()] = rm;
-			}
+			bean[methodName] = override.getProxy(this);
 		}
 	}
-	
+
 	/**
 	 * Populates the given bean instance with the property values from the bean
 	 * definition.
-	 * 
+	 *
 	 * @param beanName the name of the bean
 	 * @param bean the bean instance to populate
 	 * @param mergedBeanDefinition the bean definition for the bean
@@ -597,11 +586,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		//checkDependencies(beanName, mergedBeanDefinition, bw, pvs);
 		applyPropertyValues(beanName, bean, mergedBeanDefinition, propertyValues);
 	}
-	
+
 	/**
 	 * Fills in any missing property values with references to other beans in this
 	 * factory if autowire is set to "byName".
-	 * 
+	 *
 	 * @param beanName the name of the bean we are wiring up
 	 * @param bean the bean to wire up
 	 * @param mergedBeanDefinition the bean definition to update through autowiring
@@ -624,12 +613,12 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			}
 		}
 	}*/
-	
+
 	/**
 	 * Applies the given property values, resolving any runtime references to other
 	 * beans in this bean factory. Must use deep copy, so we do not permanently
 	 * modify this property.
-	 * 
+	 *
 	 * @param beanName the bean name passed for better exception information
 	 * @param bean the bean to apply property values to
 	 * @param mergedBeanDefinition the merged bean definition of the bean
@@ -669,11 +658,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 					this, arguments)).initCause(exception);
 		}
 	}
-	
+
 	/**
 	 * Resolves the given value. Bean definition holders, bean definitions, runtime
 	 * bean references, managed arrays, managed lists and managed maps are resolved.
-	 * 
+	 *
 	 * @param valueName the name of the value to resolve
 	 * @param value the value to resolve
 	 * @param beanName the name of the bean the value is resolved for
@@ -724,10 +713,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		// no need to resolve value
 		return value;
 	}
-	
+
 	/**
 	 * Resolves an inner bean definition.
-	 * 
+	 *
 	 * @param innerBeanName the name of the inner bean
 	 * @param innerBeanDefinition the inner bean definition to resolve
 	 * @param beanName the name of the bean holding the inner bean definition
@@ -748,10 +737,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return getBeanForSingleton(innerBeanName, innerBean, property);
 	}
-	
+
 	/**
 	 * Resolves a reference to another bean in this factory.
-	 * 
+	 *
 	 * @param valueName the name of the value
 	 * @param reference the reference to resolve
 	 * @param beanName the name of the bean the reference is resolved for
@@ -786,10 +775,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 					"' while setting property '" + valueName + "'", this, arguments)).initCause(exception);
 		}
 	}
-	
+
 	/**
 	 * Resolves values for each element in the managed array if necessary.
-	 * 
+	 *
 	 * @param valueName the name of the value
 	 * @param managedList the managed array to resolve values for
 	 */
@@ -800,10 +789,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return managedArray;
 	}
-	
+
 	/**
 	 * Resolves values for each element in the managed list if necessary.
-	 * 
+	 *
 	 * @param valueName the name of the value
 	 * @param managedList the managed list to resolve values for
 	 */
@@ -815,10 +804,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return managedList;
 	}
-	
+
 	/**
 	 * Resolves values for each entry in the managed map if necessary.
-	 * 
+	 *
 	 * @param valueName the name of the value
 	 * @param managedMap the managed map to resolve keys and values for
 	 */
@@ -832,14 +821,14 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return managedMap;
 	}
-	
+
 	/**
 	 * Initializes the given bean instance, applying factory callbacks as well as init
 	 * methods and bean post processors.
-	 * 
+	 *
 	 * <p>Called from {@code createBean} for traditionally defined beans, and from
 	 * {@code initializeBean} for existing bean instances.
-	 * 
+	 *
 	 * @param beanName the name of the bean in this factory
 	 * @param bean the new bean instance we may need to initialize
 	 * @param mergedBeanDefinition the bean definition that the bean was created with
@@ -872,7 +861,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		bean = applyBeanPostProcessorsAfterInitialization(bean, beanName);
 		return bean;
 	}
-	
+
 	public function applyBeanPostProcessorsBeforeInitialization(existingBean, beanName:String) {
 		var result = existingBean;
 		for (var i:Number = 0; i < beanPostProcessors.length; i++) {
@@ -880,20 +869,20 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			result = beanProcessor.postProcessBeforeInitialization(result, beanName);
 			if (result == null) {
 				throw new BeanCreationException(beanName,
-						"postProcessBeforeInitialization method of BeanPostProcessor [" + 
+						"postProcessBeforeInitialization method of BeanPostProcessor [" +
 						beanProcessor + "] returned 'null' for bean [" + result + "] with name [" +
 						beanName + "]", this, arguments);
 			}
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Gives a bean a chance to react now all its properties are set, and a chance to
 	 * know about its owning bean factory (this object). This means checking whether
 	 * the bean implements {@link InitializingBean} or defines a custom init method,
 	 * and invoking the necessary callback(s) if it does.
-	 * 
+	 *
 	 * @param beanName the name of the bean in this factory
 	 * @param bean the new bean instance we may need to initialize
 	 * @param mergedBeanDefinition the bean definition that the bean was created with
@@ -910,13 +899,13 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			invokeCustomInitMethod(beanName, bean, mergedBeanDefinition.getInitMethodName(), mergedBeanDefinition.isEnforceInitMethod());
 		}
 	}
-	
+
 	/**
 	 * Invokes the specified custom init method on the given bean.
-	 * 
+	 *
 	 * <p>Can be overridden in subclasses for custom resolution of init methods with
 	 * arguments.
-	 * 
+	 *
 	 * @param beanName the name of the bean in this factory
 	 * @param bean the new bean instance we may need to initialize
 	 * @param initMethodName the name of the custom init method
@@ -935,7 +924,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		bean[initMethodName]();
 	}
-	
+
 	public function applyBeanPostProcessorsAfterInitialization(existingBean, beanName:String) {
 		var result = existingBean;
 		for (var i:Number = 0; i < beanPostProcessors.length; i++) {
@@ -950,11 +939,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Destroys the given bean. Delegates to {@link #destroyBean} if a corresponding
 	 * disposable bean instance is found.
-	 * 
+	 *
 	 * @param beanName the name of the bean
 	 */
 	private function destroyDisposableBean(beanName:String):Void {
@@ -962,11 +951,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var disposableBean = disposableBeans.remove(beanName);
 		destroyBean(beanName, disposableBean);
 	}
-	
+
 	/**
 	 * Destroys the given bean. Must destroy beans that depend on the given bean
 	 * before the bean itself. Should not throw any exceptions.
-	 * 
+	 *
 	 * @param beanName the name of the bean
 	 * @param bean the bean instance to destroy
 	 */
@@ -988,11 +977,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns a root bean definition, even by traversing parent if the parameter is a
 	 * child definition. Can ask the parent bean factory if not found in this instance.
-	 * 
+	 *
 	 * @param beanName the name of the bean definition
 	 * @param includingAncestors whether to ask the parent bean factory if not found
 	 * in this instance
@@ -1055,15 +1044,15 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		throw new BeanDefinitionStoreException(beanName, "Definition is neither a root bean " +
 				"definition nor a child bean definition.", this, arguments);
 	}
-	
+
 	/**
 	 * Adds the given bean to the list of disposable beans in this factory, registering
 	 * its disposable bean and/or the given destroy method to be called on factory
 	 * shutdown (if applicable). Only applies to singletons.
-	 * 
+	 *
 	 * <p>Also registers bean as dependent on other beans, according to the "depends-on"
 	 * configuration in the bean definition.
-	 * 
+	 *
 	 * @param beanName the name of the bean
 	 * @param bean the bean instance
 	 * @param mergedBeanDefinition the bean definition for the bean
@@ -1136,11 +1125,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			}
 		}
 	}
-	
+
 	/**
 	 * Registers a dependent bean for the given bean, to be destroyed before the
 	 * given bean is destroyed.
-	 * 
+	 *
 	 * @param beanName the name of the bean
 	 * @param dependentBeanName the name of the dependent bean
 	 */
@@ -1152,11 +1141,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		dependencies.push(dependentBeanName);
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of BeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	public function containsBean(name:String):Boolean {
 		var beanName:String = transformBeanName(name);
 		if (singletonCache.containsKey(beanName)) {
@@ -1170,7 +1159,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return false;
 	}
-	
+
 	public function getBeanByName(name:String, property:PropertyAccess) {
 		var beanName:String = transformBeanName(name);
 		if (singletonCache.containsKey(beanName)) {
@@ -1220,7 +1209,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return createBean(beanName, beanDefinition, property);
 	}
-	
+
 	public function getBeanByNameAndType(name:String, requiredType:Function, property:PropertyAccess) {
 		var bean = getBeanByName(name, property);
 		if (requiredType != null) {
@@ -1230,7 +1219,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return bean;
 	}
-	
+
 	public function getAliases(name:String):Array {
 		var beanName:String = transformBeanName(name);
 		if (containsSingleton(beanName) || containsBeanDefinition(beanName)) {
@@ -1249,7 +1238,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		throw new NoSuchBeanDefinitionException(beanName, toString(), this, arguments);
 	}
-	
+
 	public function isSingleton(name:String):Boolean {
 		var beanName:String = transformBeanName(name);
 		var singleton:Boolean = true;
@@ -1278,7 +1267,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return singleton;
 	}
-	
+
 	public function getType(name:String):Function {
 		var beanName:String = transformBeanName(name);
 		try {
@@ -1318,10 +1307,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			throw exception;
 		}
 	}
-	
+
 	/**
 	 * Determines the bean type for the given bean definition, if possible.
-	 * 
+	 *
 	 * @param beanName the name of the bean
 	 * @param mergedBeanDefinition the bean definition for the bean
 	 * @return the type for the bean if determinable, else {@code null}
@@ -1334,39 +1323,39 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return null;
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of ConfigurableBeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	/**
 	 * Returns whether the specified singleton is currently in creation.
-	 * 
+	 *
 	 * @param beanName the name of the bean
 	 * @return {@code true} if the specified singleton is currently in creation else
 	 * {@code false}
-	 */ 
+	 */
 	private function isSingletonCurrentlyInCreation(beanName:String):Boolean {
 		return (currentlyInCreation[beanName] == true);
 	}
-	
+
 	public function registerSingleton(beanName:String, singleton):Void {
 		if (singletonCache.containsKey(beanName)) {
 			throw new BeanDefinitionStoreException(null, "Could not register singleton [" +
-					singleton + "] under bean name '" + beanName + "': there is already singleton [" + 
+					singleton + "] under bean name '" + beanName + "': there is already singleton [" +
 					singletonCache.get(beanName) + " bound.", this, arguments);
 		}
 		singletonCache.put(beanName, singleton);
 	}
-	
+
 	public function addSingleton(beanName:String, singleton):Void {
 		singletonCache.put(beanName, singleton);
 	}
-	
+
 	public function containsSingleton(beanName : String) : Boolean {
 		return singletonCache.containsKey(beanName);
 	}
-	
+
 	public function destroySingletons(Void):Void {
 		var dbs:Array = disposableBeans.getKeys();
 		for (var i:Number = 0; i < dbs.length; i++) {
@@ -1374,11 +1363,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		singletonCache.clear();
 	}
-	
+
 	public function getSingletonNames(Void):Array {
 		return singletonCache.getKeys();
 	}
-	
+
 	public function registerAlias(beanName:String, alias:String):Void {
 		if (aliasMap.containsKey(alias)) {
 			throw new BeanDefinitionStoreException(null, "Cannot register alias '" + alias +
@@ -1387,48 +1376,48 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		aliasMap.put(alias, beanName);
 	}
-	
+
 	public function addBeanPostProcessor(beanPostProcessor:BeanPostProcessor):Void {
 		beanPostProcessors.push(beanPostProcessor);
 		if (beanPostProcessor instanceof DestructionAwareBeanPostProcessor) {
 			hasDestructionAwareBeanPostProcessors = true;
 		}
 	}
-	
+
 	public function getBeanPostProcessorCount(Void):Number {
 		return beanPostProcessors.length;
 	}
-	
+
 	public function getBeanPostProcessors(Void):Array {
 		return beanPostProcessors;
 	}
-	
+
 	public function registerPropertyValueConverter(requiredType:Function, propertyValueConverter:PropertyValueConverter):Void {
 		propertyValueConverters.put(requiredType, propertyValueConverter);
 		beanWrapper.registerPropertyValueConverterForType(requiredType, propertyValueConverter);
 	}
-	
+
 	public function setParentBeanFactory(parentBeanFactory:BeanFactory):Void {
 		this.parentBeanFactory = parentBeanFactory;
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of HierarchicalBeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	public function getParentBeanFactory(Void):BeanFactory {
 		return parentBeanFactory;
 	}
-	
+
 	public function containsLocalBean(name:String):Boolean {
 		var beanName:String = transformBeanName(name);
 		return (containsSingleton(beanName) || containsBeanDefinition(beanName));
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of ListableBeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	public function containsBeanDefinition(beanName:String, includingAncestors:Boolean):Boolean {
 		var result:Boolean = beanDefinitionMap.containsKey(beanName);
 		if (result) {
@@ -1442,7 +1431,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return false;
 	}
-	
+
 	public function getBeanDefinitionCount(includingAncestors:Boolean):Number {
 		var result:Number = beanDefinitionMap.size();
 		if (includingAncestors) {
@@ -1453,7 +1442,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return result;
 	}
-	
+
 	public function getBeanDefinitionNames(includingAncestors:Boolean):Array {
 		var result:Array = beanDefinitionMap.getKeys();
 		if (includingAncestors) {
@@ -1464,7 +1453,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return result;
 	}
-	
+
 	public function getBeanNames(includingAncestors:Boolean):Array {
 		var result:Array = new Array();
 		var beanDefinitionNames:Array = beanDefinitionMap.getKeys();
@@ -1491,7 +1480,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return result;
 	}
-	
+
 	public function getBeanNamesForType(type:Function, includePrototypes:Boolean, includeFactoryBeans:Boolean, includingAncestors:Boolean):Array {
 		var result:Array = new Array();
 		if (includePrototypes == null) includePrototypes = true;
@@ -1508,7 +1497,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 							&& isBeanTypeMatch(beanName, type)) {
 						result.push(beanName);
 						// Match found for this bean: do not match FactoryBean itself anymore.
-						continue;	
+						continue;
 					}
 					// We're done for anything but a full FactoryBean.
 					if (!isFactoryBean) {
@@ -1553,10 +1542,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Determines whether the bean with the given name is a factory bean.
-	 * 
+	 *
 	 * @param name the name of the bean to check
 	 * @throws NoSuchBeanDefinitionException if there is no bean with the given name
 	 */
@@ -1577,10 +1566,10 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			return (bd.hasBeanClass() && ClassUtil.isImplementationOf(bd.getBeanClass(), FactoryBean));
 		}
 	}
-	
+
 	/**
 	 * Checks whether the specified bean matches the given type.
-	 * 
+	 *
 	 * @param beanName the name of the bean to check
 	 * @param type the type to check for
 	 * @return {@code true} if the bean matches the given type else {@code false}
@@ -1593,7 +1582,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		var beanType:Function = getType(beanName);
 		return (ClassUtil.isAssignable(beanType, type));
 	}
-	
+
 	public function getBeansOfType(type:Function, includePrototypes:Boolean, includeFactoryBeans:Boolean, includingAncestors:Boolean):Map {
 		var result:Map = new PrimitiveTypeMap();
 		var beanNames:Array = getBeanNamesForType(type, includePrototypes, includeFactoryBeans);
@@ -1614,11 +1603,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		return result;
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of ConfigurableListableBeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	public function getBeanDefinition(beanName:String, includingAncestors:Boolean):BeanDefinition {
 		if (beanDefinitionMap.containsKey(beanName)) {
 			return beanDefinitionMap.get(beanName);
@@ -1631,7 +1620,7 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		throw new NoSuchBeanDefinitionException(beanName, null, this, arguments);
 	}
-	
+
 	public function preInstantiateSingletons(Void):Void {
 		var beanDefinitionNames:Array = beanDefinitionMap.getKeys();
 		for (var i:Number = 0; i < beanDefinitionNames.length; i++) {
@@ -1652,11 +1641,11 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 			}
 		}
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of BeanDefinitionRegistry interface
 	//---------------------------------------------------------------------
-	
+
 	public function registerBeanDefinition(beanName:String, beanDefinition:BeanDefinition):Void {
 		if (!allowBeanDefinitionOverriding && beanDefinitionMap.containsKey(beanName)) {
 			throw new BeanDefinitionStoreException(
@@ -1665,5 +1654,5 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 		}
 		beanDefinitionMap.put(beanName, beanDefinition);
 	}
-	
+
 }
