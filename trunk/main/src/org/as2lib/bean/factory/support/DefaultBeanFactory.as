@@ -1082,35 +1082,32 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 				// Register a DisposableBean implementation that performs all destruction
 				// work for the given bean: DestructionAwareBeanPostProcessors,
 				// DisposableBean interface, custom destroy method.
-				var db:DisposableBean = new eval("Object")();
-				db["__proto__"] = DisposableBean["prototype"];
-				db["__constructor__"] = DisposableBean;
-				var beanPostProcessors:Array = beanPostProcessors;
-				var hasDestructionAwareBeanPostProcessors:Boolean = hasDestructionAwareBeanPostProcessors;
+				var db:DisposableBean = ClassUtil.createCleanInstance(DisposableBean);
 				db.destroy = function(Void):Void {
-					if (hasDestructionAwareBeanPostProcessors) {
-						for (var i:Number = beanPostProcessors.length - 1; i >= 0; i--) {
+					if (this.hasDestructionAwareBeanPostProcessors) {
+						for (var i:Number = this.beanPostProcessors.length - 1; i >= 0; i--) {
 							var beanProcessor:DestructionAwareBeanPostProcessor =
-									DestructionAwareBeanPostProcessor(beanPostProcessors[i]);
+									DestructionAwareBeanPostProcessor(this.beanPostProcessors[i]);
 							if (beanProcessor != null) {
-								beanProcessor.postProcessBeforeDestruction(bean, beanName);
+								beanProcessor.postProcessBeforeDestruction(this.bean, this.beanName);
 							}
 						}
 					}
-					if (isDisposableBean) {
-						DisposableBean(bean).destroy();
+					if (this.isDisposableBean) {
+						DisposableBean(this.bean).destroy();
 					}
-					if (hasDestroyMethod) {
-						var destroyMethodName = mergedBeanDefinition.getDestroyMethodName();
-						if (bean[destroyMethodName] == null) {
-							if (mergedBeanDefinition.isEnforceDestroyMethod()) {
+					if (this.hasDestroyMethod) {
+						var bd:RootBeanDefinition = this.mergedBeanDefinition;
+						var destroyMethodName = bd.getDestroyMethodName();
+						if (this.bean[destroyMethodName] == null) {
+							if (bd.isEnforceDestroyMethod()) {
 								/*logger.error("Couldn't find a destroy method named '" + destroyMethodName +
 										"' on bean with name '" + beanName + "'");*/
 							}
 						}
 						else {
 							try {
-								bean[destroyMethodName]();
+								this.bean[destroyMethodName]();
 							}
 							catch (exception) {
 								/*logger.error("Couldn't invoke destroy method '" + destroyMethodName +
@@ -1119,6 +1116,13 @@ class org.as2lib.bean.factory.support.DefaultBeanFactory extends AbstractBeanFac
 						}
 					}
 				};
+				db["bean"] = bean;
+				db["beanName"] = beanName;
+				db["isDisposableBean"] = isDisposableBean;
+				db["hasDestroyMethod"] = hasDestroyMethod;
+				db["mergedBeanDefinition"] = mergedBeanDefinition;
+				db["hasDestructionAwareBeanPostProcessors"] = hasDestructionAwareBeanPostProcessors;
+				db["beanPostProcessors"] = beanPostProcessors;
 				disposableBeans.put(id, db);
 			}
 			// Register bean as dependent on other beans, if necessary,
