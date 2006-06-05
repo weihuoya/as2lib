@@ -14,16 +14,16 @@
  * limitations under the License.
  */
  
-import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.app.exec.BatchProcess;
+import org.as2lib.app.exec.Process;
+import org.as2lib.data.holder.array.TypedArray;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.unit.Test;
+import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
-import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.unit.TestSuiteResult;
-import org.as2lib.app.exec.Process;
-import org.as2lib.test.unit.TestCaseResult;
-import org.as2lib.test.unit.TestCaseMethodInfo;
 
 /**
  * {@code TestSuite} is a composite implementation of {@link Test}.
@@ -203,7 +203,7 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 	 * @return {@code TestResult} to the current executing {@code TestCase}
 	 */
 	public function getCurrentTestCase(Void):TestCaseResult {
-		return processes[currentProcess].getCurrentTestCase();
+		return TestRunner(getCurrentProcess(true)).getCurrentTestCase();
 	}
 	
 	/**
@@ -217,7 +217,7 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 	 * @see #getCurrentTestCase
 	 */
 	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo {
-		return processes[currentProcess].getCurrentTestCaseMethodInfo();
+		return TestRunner(getCurrentProcess(true)).getCurrentTestCaseMethodInfo();
 	}
 	
 }
