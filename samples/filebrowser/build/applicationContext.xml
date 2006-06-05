@@ -1,14 +1,8 @@
 <?xml version="1.0"?>
 
-<!--
-<beans xmlns="http://www.as2lib.org/schema/beans"
-	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	   xsi:schemaLocation="http://www.as2lib.org/schema/beans http://www.as2lib.org/schema/beans/as2lib-beans.xsd">
--->
-
 <beans>
 	
-	<bean id="LocaleManager" class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
+	<bean class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
 		<defaultLocale>en</defaultLocale>
 		<locales>
 			<array>
@@ -38,15 +32,15 @@
 	</bean>
 	
 	<bean id="fileBrowser" class="org.as2lib.sample.filebrowser.FileBrowser" init-method="init">
-		<scene>b{scene}</scene>
-		<title>b{title}</title>
-		<background>b{background}</background>
-		<fileView>b{fileView}</fileView>
-		<errorView>b{errorView}</errorView>
-		<navigation>b{navigation}</navigation>
+		<scene>r{scene}</scene>
+		<title>r{title}</title>
+		<background>r{background}</background>
+		<fileView>r{fileView}</fileView>
+		<errorView>r{errorView}</errorView>
+		<navigation>r{navigation}</navigation>
 	</bean>
 	
-	<bean id="scene" fileView="b{fileView}" errorView="b{errorView}" class="org.as2lib.sample.filebrowser.control.Scene"/>
+	<bean id="scene" fileView="r{fileView}" errorView="r{errorView}" class="org.as2lib.sample.filebrowser.control.Scene"/>
 	
 	<bean id="title" class="org.as2lib.sample.filebrowser.view.Title"/>
 	
@@ -55,7 +49,7 @@
 	<bean id="FileView" x="10" y="60" width="410" height="200" abstract="true"/>
 	
 	<bean id="fileView" class="org.as2lib.sample.filebrowser.view.file.FileViewMap">
-		<!-- <defaultFileView>b{textView}<defaultFileView/> -->
+		<!-- <defaultFileView>r{textView}<defaultFileView/> -->
 		<fileView-txt>
 			<FileView id="textView" class="org.as2lib.sample.filebrowser.view.file.TextView">
 				<fileLoader><bean class="org.as2lib.io.file.TextFileLoader"/></fileLoader>
@@ -79,21 +73,20 @@
 		<nextButton>
 			<Button x="210" linkage="next">
 				<releaseListener>
-					<bean scene="b{scene}" class="org.as2lib.sample.filebrowser.control.NextFileListener"/>
+					<bean scene="r{scene}" class="org.as2lib.sample.filebrowser.control.NextFileListener"/>
 				</releaseListener>
 			</Button>
 		</nextButton>
 		<previousButton>
 			<Button linkage="previous">
 				<releaseListener>
-					<bean scene="b{scene}" class="org.as2lib.sample.filebrowser.control.PreviousFileListener"/>
+					<bean scene="r{scene}" class="org.as2lib.sample.filebrowser.control.PreviousFileListener"/>
 				</releaseListener>
 			</Button>
 		</previousButton>
 	</bean>
 	
-	<!--
-	<bean id="weaver" class="org.as2lib.aop.weaver.SimpleWeaver">
+	<!--<bean id="weaver" class="org.as2lib.aop.weaver.SimpleWeaver">
 		<aspects>
 			<array>
 				<ref local="navigationControllingAspect"/>
@@ -120,21 +113,18 @@
 				<value>org.as2lib.env.log.logger</value>
 			</array>
 		</affectedPackages>
-	</bean>
-	-->
+	</bean>-->
 	
-	<!--
-	This approach cannot be taken because exceptions that occur when parsing the application context
-	cannot be logged.
-	<bean id="logConfigurationParser" class="org.as2lib.env.log.parser.XmlLogConfigurationParser">
+	<!--<bean id="logConfigurationParser" class="org.as2lib.env.log.parser.XmlLogConfigurationParser">
 		<logConfiguration>
 			<![CDATA[
 				<logging>
 					<register id="logger" class="org.as2lib.env.log.logger.SimpleHierarchicalLogger"/>
 					<register id="level" name="forName" class="org.as2lib.env.log.level.AbstractLogLevel" type="method"/>
 					<register id="stringifier" class="org.as2lib.env.log.stringifier.PatternLogMessageStringifier" type="singleton">
-						<constructor-arg>%d{HH:nn:ss.SSS} %7l %n{1}.%O  %m</constructor-arg>
+						<constructor-arg>%d{HH:nn:ss.SSS} %7l %n{1}.%O	%m</constructor-arg>
 					</register>
+					
 					<loggerRepository class="org.as2lib.env.log.repository.LoggerHierarchy">
 						<logger name="main" level="ERROR">
 							<handler><constructor-arg id="stringifier"/></handler>
@@ -151,10 +141,10 @@
 							</handler>
 						</logger>
 					</loggerRepository>
+					
 				</logging>
 			]]>
 		</logConfiguration>
-	</bean>
-	-->
+	</bean>-->
 	
 </beans>
