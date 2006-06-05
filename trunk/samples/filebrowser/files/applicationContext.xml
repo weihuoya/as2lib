@@ -86,8 +86,7 @@
 		</previousButton>
 	</bean>
 	
-	<!--
-	<bean id="weaver" class="org.as2lib.aop.weaver.SimpleWeaver">
+	<!--<bean id="weaver" class="org.as2lib.aop.weaver.SimpleWeaver">
 		<aspects>
 			<array>
 				<ref local="navigationControllingAspect"/>
@@ -114,21 +113,18 @@
 				<value>org.as2lib.env.log.logger</value>
 			</array>
 		</affectedPackages>
-	</bean>
-	-->
+	</bean>-->
 	
-	<!--
-	This approach cannot be taken because exceptions that occur when parsing the application context
-	cannot be logged.
-	<bean id="logConfigurationParser" class="org.as2lib.env.log.parser.XmlLogConfigurationParser">
+	<!--<bean id="logConfigurationParser" class="org.as2lib.env.log.parser.XmlLogConfigurationParser">
 		<logConfiguration>
 			<![CDATA[
 				<logging>
 					<register id="logger" class="org.as2lib.env.log.logger.SimpleHierarchicalLogger"/>
 					<register id="level" name="forName" class="org.as2lib.env.log.level.AbstractLogLevel" type="method"/>
 					<register id="stringifier" class="org.as2lib.env.log.stringifier.PatternLogMessageStringifier" type="singleton">
-						<constructor-arg>%d{HH:nn:ss.SSS} %7l %n{1}.%O  %m</constructor-arg>
+						<constructor-arg>%d{HH:nn:ss.SSS} %7l %n{1}.%O	%m</constructor-arg>
 					</register>
+					
 					<loggerRepository class="org.as2lib.env.log.repository.LoggerHierarchy">
 						<logger name="main" level="ERROR">
 							<handler><constructor-arg id="stringifier"/></handler>
@@ -145,10 +141,10 @@
 							</handler>
 						</logger>
 					</loggerRepository>
+					
 				</logging>
 			]]>
 		</logConfiguration>
-	</bean>
-	-->
+	</bean>-->
 	
 </beans>
