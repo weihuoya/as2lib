@@ -363,11 +363,10 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	/**
 	 * Internal method to send update events for {@link ProcessUpdateListener}.
 	 */
-	private function distributeUpdateEvent(process:Process):Void {
-		if (process == null) process = this;
+	private function distributeUpdateEvent(Void):Void {
 		try {
 			var updateDistributor:ProcessUpdateListener = distributorControl.getDistributor(ProcessUpdateListener);
-			updateDistributor.onProcessUpdate(process);
+			updateDistributor.onProcessUpdate(this);
 		}
 		catch (exception:org.as2lib.env.event.EventExecutionException) {
 			distributeErrorEvent(exception.getCause());
@@ -377,11 +376,10 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	/**
 	 * Internal method to send pause events for {@link ProcessPauseListener}.
 	 */
-	private function distributePauseEvent(process:Process):Void {
-		if (process == null) process = this;
+	private function distributePauseEvent(Void):Void {
 		try {
 			var pauseDistributor:ProcessPauseListener = distributorControl.getDistributor(ProcessPauseListener);
-			pauseDistributor.onProcessPause(process);
+			pauseDistributor.onProcessPause(this);
 		}
 		catch (exception:org.as2lib.env.event.EventExecutionException) {
 			distributeErrorEvent(exception.getCause());
@@ -391,11 +389,10 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	/**
 	 * Internal method to send resume events for {@link ProcessResumeListener}.
 	 */
-	private function distributeResumeEvent(process:Process):Void {
-		if (process == null) process = this;
+	private function distributeResumeEvent(Void):Void {
 		try {
 			var resumeDistributor:ProcessResumeListener = distributorControl.getDistributor(ProcessResumeListener);
-			resumeDistributor.onProcessResume(process);
+			resumeDistributor.onProcessResume(this);
 		}
 		catch (exception:org.as2lib.env.event.EventExecutionException) {
 			distributeErrorEvent(exception.getCause());
@@ -405,11 +402,10 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	/**
 	 * Internal method to send start events for {@link ProcessStartListener}.
 	 */
-	private function distributeStartEvent(process:Process):Void {
-		if (process == null) process = this;
+	private function distributeStartEvent(Void):Void {
 		try {
 			var startDistributor:ProcessStartListener = distributorControl.getDistributor(ProcessStartListener);
-			startDistributor.onProcessStart(process);
+			startDistributor.onProcessStart(this);
 		}
 		catch (exception:org.as2lib.env.event.EventExecutionException) {
 			distributeErrorEvent(exception.getCause());
@@ -419,21 +415,19 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	/**
 	 * Internal method to send error events for {@link ProcessErrorListener}.
 	 */
-	private function distributeErrorEvent(error, process:Process):Boolean {
-		if (process == null) process = this;
+	private function distributeErrorEvent(error):Boolean {
 		addError(error);
 		var errorDistributor:ProcessErrorListener = distributorControl.getDistributor(ProcessErrorListener);
-		return errorDistributor.onProcessError(process, error);
+		return errorDistributor.onProcessError(this, error);
 	}
 	
 	/**
 	 * Internal method to send finish events for {@link ProcessFinishListener}.
 	 */
-	private function distributeFinishEvent(process:Process):Void {
-		if (process == null) process = this;
+	private function distributeFinishEvent(Void):Void {
 		try {
 			var finishDistributor:ProcessFinishListener = distributorControl.getDistributor(ProcessFinishListener);
-			finishDistributor.onProcessFinish(process);
+			finishDistributor.onProcessFinish(this);
 		}
 		catch (exception:org.as2lib.env.event.EventExecutionException) {
 			distributeErrorEvent(exception.getCause());

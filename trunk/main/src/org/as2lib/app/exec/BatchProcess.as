@@ -15,20 +15,6 @@
  */
 
 import org.as2lib.app.exec.AbstractBatch;
-import org.as2lib.app.exec.Batch;
-import org.as2lib.app.exec.BatchErrorListener;
-import org.as2lib.app.exec.BatchFinishListener;
-import org.as2lib.app.exec.BatchUpdateListener;
-import org.as2lib.app.exec.Process;
-import org.as2lib.app.exec.ProcessErrorListener;
-import org.as2lib.app.exec.ProcessFinishListener;
-import org.as2lib.app.exec.ProcessPauseListener;
-import org.as2lib.app.exec.ProcessResumeListener;
-import org.as2lib.app.exec.ProcessStartListener;
-import org.as2lib.app.exec.ProcessUpdateListener;
-import org.as2lib.data.holder.map.HashMap;
-import org.as2lib.data.type.Time;
-import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
 
 /**
  * {@code BatchProcess} is a batch that acts to the outside like a process. Use this
@@ -40,27 +26,25 @@ import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributo
  * finished execution and so on.
  * 
  * <p>You can seamlessly add this batch to other {@code BatchProcess} instances or
- * to {@code SimpleBatch} instances. But do never add {@code SimpleBatch} instances
- * as child-processes to this batch.
+ * to {@code SimpleBatch} instances to build process trees.
  * 
  * <p>Because this batch acts like a process it does not distribute batch events but
- * only process events.
- *
+ * only process events:
+ * 
+ * <ul>
+ *   <li>{@link ProcessStartListener}</li>
+ *   <li>{@link ProcessUpdateListener}</li>
+ *   <li>{@link ProcessPauseListener}</li>
+ *   <li>{@link ProcessResumeListener}</li>
+ *   <li>{@link ProcessErrorListener}</li>
+ *   <li>{@link ProcessFinishListener}</li>
+ * </ul>
+ * 
  * @author Martin Heidegger
  * @author Simon Wacker
  * @version 2.0
  */
-class org.as2lib.app.exec.BatchProcess extends AbstractBatch implements
-		ProcessUpdateListener, ProcessErrorListener {
-	
-	/** All added processes. */
-	private var processes:Array;
-	
-	/** The process that is currently running. */
-	private var currentProcess:Number;
-	
-	/** Loading progress in percent. */
-	private var percentage:Number;
+class org.as2lib.app.exec.BatchProcess extends AbstractBatch {
 	
 	/**
 	 * Constructs a new {@code BatchProcess} instance.
@@ -69,39 +53,18 @@ class org.as2lib.app.exec.BatchProcess extends AbstractBatch implements
 	}
 	
 	/**
-	 * Distributes a process error event with the given error.
-	 * 
-	 * @param process the process that raised the error
-	 * @param error the raised error
-	 */
-	public function onProcessError(process:Process, error):Boolean {
-		return distributeErrorEvent(error);
-	}
-	
-	/**
-	 * Distributes a process update event.
-	 * 
-	 * @param process the process that was updated
-	 */
-	public function onProcessUpdate(process:Process):Void {
-		var percentage:Number = getCurrentProcess().getPercentage();
-		if (percentage != null) {
-			updatePercentage(percentage);
-		}
-		distributeUpdateEvent();
-	}
-	
-	/**
-	 * Distributes a process error event with the given error.
+	 * Distributes a process error event with the given error and finishes this batch
+	 * if none of the process error listeners consumed the event.
 	 * 
 	 * @param error the error to distribute
+	 * @return {@code true} if the event was consumed else {@code false}
 	 */
 	private function distributeErrorEvent(error):Boolean {
-		var result:Boolean = super.distributeErrorEvent(error);
-		if (!result && !hasFinished()) {
+		var consumed:Boolean = super.distributeErrorEvent(error);
+		if (!consumed) {
 			finish();
 		}
-		return result;
+		return consumed;
 	}
 	
 }

@@ -1,171 +1,88 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 import org.as2lib.app.exec.AbstractBatch;
-import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.BatchErrorListener;
 import org.as2lib.app.exec.BatchFinishListener;
 import org.as2lib.app.exec.BatchStartListener;
 import org.as2lib.app.exec.BatchUpdateListener;
-import org.as2lib.app.exec.Process;
-import org.as2lib.app.exec.ProcessErrorListener;
-import org.as2lib.app.exec.ProcessFinishListener;
-import org.as2lib.app.exec.ProcessPauseListener;
-import org.as2lib.app.exec.ProcessResumeListener;
-import org.as2lib.app.exec.ProcessStartListener;
-import org.as2lib.app.exec.ProcessUpdateListener;
-import org.as2lib.env.except.IllegalArgumentException;
+import org.as2lib.app.exec.NextProcessListener;
 
 /**
  * {@code SimpleBatch} is a simple implementation of the {@link Batch} interface.
- * 
+ *
  * <p>This batch executes its child-processes after each other. This means that the
  * first child-process will be executed at the beginning, the second after the first
  * finished execution and so on.
- * 
- * <p>This batch distributes process as well as batch events.
- * 
- * <p>Process events are distributed if added child-processes distribute themselves process
- * events; the events distributed by the child-processes are so to speak just passed on.
- * This is done for all types of process events published by child-processes.
- * 
- * <p>Batch events are on the other hand distributed if this batch's state changes or an
- * error occurred, for example if the next child-process gets started.
- * 
- * <p>Note that error and update events are an exception to the above rule: If a
- * child-process distributes an error event, this batch will distribute a process error
- * event and a batch error event. The same is true if the child-process distributes an
- * update event because an update of a child-process means an update of this batch.
- * 
+ *
+ * <p>This batch distributes process events:
+ *
+ * <ul>
+ *   <li>{@link ProcessStartListener}</li>
+ *   <li>{@link ProcessUpdateListener}</li>
+ *   <li>{@link ProcessPauseListener}</li>
+ *   <li>{@link ProcessResumeListener}</li>
+ *   <li>{@link ProcessErrorListener}</li>
+ *   <li>{@link ProcessFinishListener}</li>
+ * </ul>
+ *
+ * <p>As well as batch events:
+ *
+ * <ul>
+ *   <li>{@link BatchStartListener}</li>
+ *   <li>{@link BatchUpdateListener}</li>
+ *   <li>{@link NextProcessListener}</li>
+ *   <li>{@link BatchErrorListener}</li>
+ *   <li>{@link BatchFinishListener}</li>
+ * </ul>
+ *
  * <p>You can seamlessly add batch processes as child-processes to this batch. If the
  * added child-batch acts like a simple process (as does {@link BatchProcess}} this
  * batch will treat the child-batch like a simple process. If the added child-batch
  * acts like a real batch (as does this batch) it is treated as if it were not there,
  * this means as if the child-processes of the child-batch were directly added to this
  * batch.
- * 
+ *
  * <p>If you want multiple processes to be treated as one process, use the
  * {@link BatchProcess}. If you want to group multiple processes, but still want them
- * to be independent and have their own events use this {@code Batch} implementation.
- * 
- * <p>For example if you add a {@link ProcessStartListener} to this batch you will be
- * notified when a child-process is started, if you add a {@link BatchStartListener}
- * you will only be notified when this batch is started. If you add a
- * {@link ProcessUpdateListener} you will be notified when a child-process has been
- * updated (that means that the progress percentage of the given process begins with
- * 0 for every new process), if you add a {@ink BatchUpdateListener} you will be notified
- * when this batch is updated (that means that the progress percentage of the given batch
- * will be the average of the total progress of all child-processes).
- * 
+ * to be independent and you want to be notified when the next process is executed use
+ * this batch. If you simply do not care use this batch: it is more convenient to use
+ * because of the properly typed batch events.
+ *
  * @author Simon Wacker
  */
-class org.as2lib.app.exec.SimpleBatch extends AbstractBatch implements ProcessStartListener,
-		ProcessUpdateListener, ProcessPauseListener, ProcessResumeListener, ProcessErrorListener {
-	
+class org.as2lib.app.exec.SimpleBatch extends AbstractBatch {
+
 	/**
 	 * Constructs a new {@code SimpleBatch} instance.
 	 */
 	public function SimpleBatch(Void) {
 		acceptListenerType(BatchStartListener);
-		acceptListenerType(BatchFinishListener);
-		acceptListenerType(BatchErrorListener);
 		acceptListenerType(BatchUpdateListener);
+		acceptListenerType(NextProcessListener);
+		acceptListenerType(BatchErrorListener);
+		acceptListenerType(BatchFinishListener);
 	}
-	
+
 	/**
-	 * Distributes a process finish event for the given process and executes the next
-	 * process if the current process has also finished (the given finished process
-	 * may be a sub-process of the current process).
-	 * 
-	 * @param process the finished process
-	 * @see #nextProcess
-	 */
-	public function onProcessFinish(process:Process):Void {
-		super.distributeFinishEvent(process);
-		super.onProcessFinish(process);
-	}
-	
-	/**
-	 * Distributes a process finish event for the given process.
-	 * 
-	 * @param process the process that has started its execution
-	 */
-	public function onProcessStart(process:Process):Void {
-		super.distributeStartEvent(process);
-	}
-	
-	/**
-	 * Distributes a process pause event for the given process.
-	 * 
-	 * @param process the process that has paused its execution
-	 */
-	public function onProcessPause(process:Process):Void {
-		super.distributePauseEvent(process);
-	}
-	
-	/**
-	 * Distributes a process resume event for the given process.
-	 * 
-	 * @param process the process that has resumed its execution
-	 */
-	public function onProcessResume(process:Process):Void {
-		super.distributeResumeEvent(process);
-	}
-	
-	/**
-	 * Distributes a process error event for the given process and a batch error event
-	 * if this batch has no parent process.
-	 * 
-	 * @param process the process that raised the error
-	 */
-	public function onProcessError(process:Process, error):Boolean {
-		var result:Boolean = super.distributeErrorEvent(error, process);
-		if (getParentProcess() == null) {
-			result = distributeErrorEvent(error, result);
-		}
-		else {
-			addError(error);
-			if (!result && !hasFinished()) {
-				finish();
-			}
-		}
-		return result;
-	}
-	
-	/**
-	 * Distributes a process update event for the given process and a batch update
-	 * event if this batch has no parent.
-	 * 
-	 * @param process the process that was updated
-	 */
-	public function onProcessUpdate(process:Process):Void {
-		var percentage:Number = getCurrentProcess().getPercentage();
-		if (percentage != null) {
-			updatePercentage(percentage);
-		}
-		super.distributeUpdateEvent(process);
-		if (getParentProcess() == null) {
-			distributeUpdateEvent();
-		}
-	}
-	
-	/**
-	 * Distributes a batch start event and a batch error event if a listener threw an
-	 * exception.
+	 * Distributes process and batch start events, and process and batch error events
+	 * if a listener threw an exception.
 	 */
 	private function distributeStartEvent(Void):Void {
+		super.distributeStartEvent();
 		try {
 			var startDistributor:BatchStartListener = distributorControl.getDistributor(BatchStartListener);
 			startDistributor.onBatchStart(this);
@@ -174,12 +91,13 @@ class org.as2lib.app.exec.SimpleBatch extends AbstractBatch implements ProcessSt
 			distributeErrorEvent(exception.getCause());
 		}
 	}
-	
+
 	/**
-	 * Distributes a batch update event and a batch error event if a listener threw an
-	 * exception.
+	 * Distributes process and batch update events, and process and batch error events
+	 * if a listener threw an exception.
 	 */
 	private function distributeUpdateEvent(Void):Void {
+		super.distributeUpdateEvent();
 		try {
 			var updateDistributor:BatchUpdateListener = distributorControl.getDistributor(BatchUpdateListener);
 			updateDistributor.onBatchUpdate(this);
@@ -188,48 +106,63 @@ class org.as2lib.app.exec.SimpleBatch extends AbstractBatch implements ProcessSt
 			distributeErrorEvent(exception.getCause());
 		}
 	}
-	
+
 	/**
-	 * Distributes a batch update event.
-	 * 
+	 * Distributes process and batch update events.
+	 *
 	 * @see #distributeUpdateEvent
 	 */
 	private function distributePauseEvent(Void):Void {
 		distributeUpdateEvent();
 	}
-	
+
 	/**
-	 * Distributes a batch update event.
-	 * 
+	 * Distributes process and batch update events.
+	 *
 	 * @see #distributeUpdateEvent
 	 */
 	private function distributeResumeEvent(Void):Void {
 		distributeUpdateEvent();
 	}
-	
+
+	public function distributeNextProcessEvent(Void):Void {
+		if (currentProcessIndex > 0 || getParentProcess() == null) {
+			try {
+				var nextProcessDistributor:NextProcessListener = distributorControl.getDistributor(NextProcessListener);
+				nextProcessDistributor.onNextProcess(this);
+			}
+			catch (exception:org.as2lib.env.event.EventExecutionException) {
+				distributeErrorEvent(exception.getCause());
+			}
+		}
+	}
+
 	/**
-	 * Distributes a batch error event with the given error.
-	 * 
+	 * Distributes a process error event, and a batch error event if none of the
+	 * process error listeners consumed the event. If neither a process error listener
+	 * nor a batch error listener consumed the event, this batch will be finished.
+	 *
 	 * @param error the error that occurred
-	 * @param consumed whether the error has already been consumed by another error
-	 * listener
-	 * @return {@code true} to consume the event
+	 * @return {@code true} if the event was consumed else {@code false}
 	 */
-	private function distributeErrorEvent(error, consumed:Boolean):Boolean {
-		addError(error);
-		var errorDistributor:BatchErrorListener = distributorControl.getDistributor(BatchErrorListener);
-		var co:Boolean = errorDistributor.onBatchError(this, error);
-		if (!co && !consumed && !hasFinished()) {
+	private function distributeErrorEvent(error):Boolean {
+		var consumed:Boolean = super.distributeErrorEvent(error);
+		if (!consumed) {
+			var errorDistributor:BatchErrorListener = distributorControl.getDistributor(BatchErrorListener);
+			consumed = errorDistributor.onBatchError(this, error);
+		}
+		if (!consumed) {
 			finish();
 		}
-		return (co || consumed);
+		return consumed;
 	}
-	
+
 	/**
-	 * Distributes a batch finish event and a batch error event if a listener threw an
-	 * exception.
+	 * Distributes process and batch finish events, and process and batch error events
+	 * if a listener threw an exception.
 	 */
 	private function distributeFinishEvent(Void):Void {
+		super.distributeFinishEvent();
 		try {
 			var finishDistributor:BatchFinishListener = distributorControl.getDistributor(BatchFinishListener);
 			finishDistributor.onBatchFinish(this);
@@ -238,5 +171,5 @@ class org.as2lib.app.exec.SimpleBatch extends AbstractBatch implements ProcessSt
 			distributeErrorEvent(exception.getCause());
 		}
 	}
-	
+
 }
