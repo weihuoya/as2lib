@@ -1,24 +1,24 @@
 <?xml version="1.0"?>
 
 <beans xmlns="*.xml">
-	
+
 	<bean class="org.as2lib.bean.factory.config.StyleSheetConfigurer">
 		<property name="styleSheetUri">style.css</property>
 	</bean>
-	
+
 	<bean id="smartFoxClient" class="it.gotoandplay.smartfoxserver.SmartFoxClient"/>
-	
+
 	<Login id="login" width="800" height="600" ip="127.0.0.1" port="9339" zone="simpleChat"
 			class="org.as2lib.context.support.AsWingApplicationContext">
 		<property name="smartFoxClient"><ref local="smartFoxClient"/></property>
 		<property name="chat"><ref local="chat"/></property>
 	</Login>
-	
-	<Chat id="chat" width="800" height="600" visible="true"
+
+	<Chat id="chat" width="800" height="600" visible="false"
 			class="org.as2lib.context.support.AsWingApplicationContext">
 		<property name="smartFoxClient"><ref local="smartFoxClient"/></property>
 	</Chat>
-	
+
 	<bean id="localeManager" class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
 		<property name="defaultLocale">en</property>
 		<property name="locales">
@@ -28,10 +28,10 @@
 			</array>
 		</property>
 	</bean>
-	
+
 	<bean id="messageSource" class="org.as2lib.context.support.ResourceBundleMessageSource"
 			depends-on="localeManager">
 		<property name="baseName">messages</property>
 	</bean>
-	
+
 </beans>
