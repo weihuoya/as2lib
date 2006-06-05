@@ -1,10 +1,10 @@
 <?xml version="1.0"?>
 
 <project name="As2lib Pizza" default="build" basedir=".">
-  
+
   <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../ant/dist/as2ant.jar"/>
   <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../ant/dist/as2ant.jar"/>
-  
+
   <property name="src.dir" location="src"/>
   <property name="build.dir" location="build"/>
   <property name="context.dir" location="context"/>
@@ -15,17 +15,17 @@
   <property name="actionstep.dir" location="D:/Projects/As2lib/lib/actionstep/src"/>
   <property name="enflash.dir" location="D:/Projects/As2lib/lib/enflash/src/classes"/>
   <property name="remoting.dir" location="C:/Programme/Macromedia/Flash 8/en/First Run/Classes"/>
-  
+
   <property name="logging.xml" location="${context.dir}/logging.xml"/>
   <property name="applicationContext.xml" location="${context.dir}/applicationContext.xml"/>
   <property name="view.xml" location="${view.dir}/View.xml"/>
   <property name="orderForm.xml" location="${view.dir}/OrderForm.xml"/>
   <property name="viewOrdersForm.xml" location="${view.dir}/ViewOrdersForm.xml"/>
-  
+
   <property name="pizza.swf" location="${build.dir}/pizza.swf"/>
-  
+
   <property name="player.exe" location="C:/Programme/Macromedia/Flash 8/Players/SAFlashPlayer.exe"/>
-  
+
   <target name="build">
     <mkdir dir="${build.dir}"/>
     <copy todir="${build.dir}">
@@ -57,11 +57,11 @@
     </swf>
     <exec executable="${player.exe}" spawn="yes"><arg value="${pizza.swf}"/></exec>
   </target>
-  
+
   <target name="clean">
     <delete dir="${build.dir}"/>
   </target>
-  
+
   <target name="compile">
     <mtasc srcdir="${src.dir}" version="8" split="yes">
       <classpath path="${enflash.dir}"/>
@@ -72,5 +72,5 @@
       <classpath path="${src.dir}"/>
     </mtasc>
   </target>
-  
+
 </project>
