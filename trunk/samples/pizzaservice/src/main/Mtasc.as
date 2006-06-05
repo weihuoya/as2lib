@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,11 +19,7 @@ import org.as2lib.app.exec.BatchErrorListener;
 import org.as2lib.app.exec.BatchFinishListener;
 import org.as2lib.app.exec.BatchStartListener;
 import org.as2lib.app.exec.BatchUpdateListener;
-import org.as2lib.app.exec.Process;
-import org.as2lib.app.exec.ProcessErrorListener;
-import org.as2lib.app.exec.ProcessFinishListener;
-import org.as2lib.app.exec.ProcessStartListener;
-import org.as2lib.app.exec.ProcessUpdateListener;
+import org.as2lib.app.exec.NextProcessListener;
 import org.as2lib.app.exec.SimpleBatch;
 import org.as2lib.context.support.AsWingApplicationContext;
 import org.as2lib.context.support.LoadingApplicationContext;
@@ -40,24 +36,24 @@ import com.interactiveAlchemy.utils.Debug;
 /**
  * @author Simon Wacker
  */
-class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateListener, BatchErrorListener,
-		BatchFinishListener, ProcessStartListener, ProcessUpdateListener, ProcessErrorListener, ProcessFinishListener {
-	
+class main.Mtasc extends BasicClass implements BatchStartListener, NextProcessListener,
+		BatchUpdateListener, BatchErrorListener, BatchFinishListener {
+
 	private static var logger:Logger = LogManager.getLogger("main.Mtasc");
-	
+
 	public static var LOG_CONFIGURATION_URI:String = "logging.xml";
 	public static var APPLICATION_CONTEXT_URI:String = "applicationContext.xml";
 	public static var ASWING_VIEW_URI:String = "aswing/View.xml";
 	public static var ACTIONSTEP_VIEW_URI:String = "actionstep/View.xml";
 	public static var ENFLASH_VIEW_URI:String = "enflash/View.xml";
-	
+
 	private var rootApplicationContext:XmlApplicationContext;
 	private var childApplicationContext:LoadingApplicationContext;
-	
+
 	public function Mtasc(Void) {
 		System.useCodepage = true;
 	}
-	
+
 	public function init(Void):Void {
 		Debug.write("Initializing.");
 		var batchProcess:SimpleBatch = new SimpleBatch();
@@ -73,43 +69,29 @@ class main.Mtasc extends BasicClass implements BatchStartListener, BatchUpdateLi
 		batchProcess.addProcess(childApplicationContext);
 		batchProcess.start();
 	}
-	
+
 	public function onBatchStart(batch:Batch):Void {
 		Debug.write("Batch started.");
 	}
-	
-	public function onProcessStart(process:Process):Void {
-		// TODO: Use process name for preloader to show what is currently being loaded.
-		Debug.write("Started process '" + process.getName() + "'.");
+
+	public function onNextProcess(batch:Batch):Void {
+		Debug.write("Next process: " + batch.getCurrentProcess().getName());
 	}
-	
-	public function onProcessUpdate(process:Process):Void {
-		Debug.write("Process percentage: " + process.getPercentage());
-	}
-	
-	public function onProcessError(process:Process, error):Boolean {
-		Debug.write("Process error: " + process.getName());
-		return false;
-	}
-	
-	public function onProcessFinish(process:Process):Void {
-		Debug.write("Finished process '" + process.getName() + "'.");
-	}
-	
+
 	public function onBatchUpdate(batch:Batch):Void {
-		//Debug.write("Batch percentage: " + batch.getPercentage());
+		Debug.write("Batch percentage: " + batch.getPercentage());
 	}
-	
+
 	public function onBatchError(batch:Batch, error):Boolean {
 		Debug.write("Running batch process failed with error: \n" +
 				StringUtil.addSpaceIndent(error.toString(), 2));
 		return false;
 	}
-	
+
 	public function onBatchFinish(batch:Batch):Void {
 		if (logger.isDebugEnabled()) {
 			logger.debug("Batch finished.");
 		}
 	}
-	
+
 }
