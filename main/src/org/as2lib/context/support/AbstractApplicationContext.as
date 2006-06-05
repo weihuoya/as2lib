@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,6 +18,7 @@ import org.as2lib.aop.Weaver;
 import org.as2lib.app.exec.Batch;
 import org.as2lib.app.exec.BatchFinishListener;
 import org.as2lib.app.exec.Process;
+import org.as2lib.app.exec.ProcessFinishListener;
 import org.as2lib.bean.factory.BeanFactory;
 import org.as2lib.bean.factory.config.BeanFactoryPostProcessor;
 import org.as2lib.bean.factory.config.BeanPostProcessor;
@@ -53,123 +54,123 @@ import org.as2lib.util.ClassUtil;
  * {@code AbstractApplicationContext} provides implementations of methods that are
  * mostly the same for application contexts. This abstract implementation does not
  * mandate the type of storage used for configuration.
- * 
+ *
  * <p>The template method design pattern is used, requiring concrete sub-classes to
  * implement the abstract methods {@link #refreshBeanFactory} and {@link #getBeanFactory}.
- * 
+ *
  * <p>In contrast to a plain bean factory, an application context is supposed to detect
  * special beans defined in its internal bean factory: Therefore, this class automatically
  * registers {@link BeanFactoryPostProcessor}, {@link BeanPostProcessor} and {@link ApplicationListener}
  * instances that are defined as beans in this context.
- * 
+ *
  * <p>A {@link MessageSource} implementation may also be supplied as a bean in the context,
  * with the name "messageSource"; else, message resolution is delegated to the parent context.
- * 
+ *
  * <p>Furthermore, a {@link EventDistributorControl} for application events can be supplied
  * as "eventDistributorControl" bean in the context; else, publishing application events is
  * not possible, and will raise errors if it is nevertheless tried.
- * 
+ *
  * <p>You may also supply a {@link Weaver} implementation as "weaver" whose {@code weave}
  * method will be invoked automatically when this context gets refreshed.
- * 
+ *
  * <p>If you want {@link Process} beans to be executed before this context is post-refreshed
  * and all singleton beans are initialized, you may supply a {@link Batch} implementation as
  * "batch".
- * 
+ *
  * <p>To configure the {@link LogManager}, you may supply either a "loggerRepository" or "logger"
  * bean. Note that the configuration of the log manager has global effect (not only context-wide).
  * As third alternative you may also supply a "logConfiguration" process bean which is executed
  * before general purpose process beans.
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory implements
 		ConfigurableApplicationContext, ApplicationEventPublisher, Process, BatchFinishListener,
 		DisposableBean {
-	
+
 	/**
 	 * Name of the {@link MessageSource} bean in this factory.
 	 * If none is supplied, message resolution is delegated to the parent.
 	 */
 	public static var MESSAGE_SOURCE_BEAN_NAME:String = "messageSource";
-	
+
 	/**
 	 * Name of the {@link EventDistributorControl} bean in this factory.
 	 * If none is supplied, publishing application events is not possible and will
 	 * raise errors.
 	 */
 	public static var EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME:String = "eventDistributorControl";
-	
+
 	/**
 	 * Name of the {@link Batch} bean in this factory.
 	 * If none is supplied, processing processes is not supported and specifying
 	 * processes will raise errors.
 	 */
 	public static var BATCH_BEAN_NAME:String = "batch";
-	
+
 	/**
 	 * Name of the {@link Weaver} bean in this factory.
 	 */
 	public static var WEAVER_BEAN_NAME:String = "weaver";
-	
+
 	/**
 	 * Name of the {@link Logger} bean to initialize the {@link LogManager} with.
 	 */
 	public static var LOGGER_BEAN_NAME:String = "logger";
-	
+
 	/**
 	 * Name of the {@link LoggerRepository} bean to initialize the {@link LogManager}
 	 * with.
 	 */
 	public static var LOGGER_REPOSITORY_BEAN_NAME:String = "loggerRepository";
-	
+
 	/**
 	 * Name of the {@link LogConfigurationParser} bean to execute.
 	 */
 	public static var LOG_CONFIGURATION_PARSER_BEAN_NAME:String = "logConfigurationParser";
-	
+
 	/**
 	 * Name of the log configuration process bean to run before general purpose
 	 * process beans.
 	 */
 	public static var LOG_CONFIGURATION_BEAN_NAME:String = "logConfiguration";
-	
+
 	/** Parent context. */
 	private var parent:ApplicationContext;
-	
+
 	/** Display name. */
 	private var displayName:String;
-	
+
 	/** System time in milliseconds when this context started */
 	private var startupTime:Number;
-	
+
 	/** Flag that indicates whether this context is currently active. */
 	private var active:Boolean;
-	
+
 	/** {@link BeanFactoryPostProcessor} instances to apply on refresh. */
 	private var beanFactoryPostProcessors:Array;
-	
+
 	/**
 	 * {@link BeanFactoryPostProcessor} instances which also implement the
 	 * {@link Process} interface and must thus be processed before they can be applied.
 	 */
 	private var beanFactoryPostProcessorProcesses:Array;
-	
+
 	/** {@link BeanPostProcessor} instances to apply on refresh. */
 	private var beanPostProcessors:Array;
-	
+
 	/** Message source to look-up localized messages. */
 	private var messageSource:MessageSource;
-	
+
 	/** Event distributor control to distribute events. */
 	private var eventDistributorControl:EventDistributorControl;
-	
+
 	/** The batch used internally to delegate to. */
 	private var batch:Batch;
-	
+
 	/**
 	 * Constructs a new {@code AbstractApplicationContext} instance.
-	 * 
+	 *
 	 * @param parent the parent of this application context
 	 */
 	private function AbstractApplicationContext(parent:ApplicationContext) {
@@ -178,29 +179,29 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		beanFactoryPostProcessors = new Array();
 		beanPostProcessors = new Array();
 	}
-	
+
 	/**
 	 * Returns this instance properly typed.
-	 * 
+	 *
 	 * @return this instance
 	 */
 	private function getThis(Void):ApplicationContext {
 		return ApplicationContext(this);
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of ApplicationContext interface
 	//---------------------------------------------------------------------
-	
+
 	public function getParent(Void):ApplicationContext {
 		return parent;
 	}
-	
+
 	public function getDisplayName(Void):String {
 		if (displayName == null) displayName = ReflectUtil.getTypeNameForInstance(this);
 		return displayName;
 	}
-	
+
 	/**
 	 * Sets the display name of this context; typically done during initialization of
 	 * concrete context implementations.
@@ -208,23 +209,23 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	public function setDisplayName(displayName:String):Void {
 		this.displayName = displayName;
 	}
-	
+
 	/**
 	 * Returns the timestamp in milliseconds when this context was first loaded.
-	 * 
+	 *
 	 * @return the start-up date
 	 */
 	public function getStartupDate(Void):Number {
 		return startupTime;
 	}
-	
+
 	public function getEventPublisher(Void):ApplicationEventPublisher {
 		return this;
 	}
-	
+
 	/**
 	 * Returns the internal message source used by this context.
-	 * 
+	 *
 	 * @return the internal message source
 	 * @throws IllegalStateException if this context has not been initialized yet
 	 */
@@ -235,17 +236,17 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		}
 		return messageSource;
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of ApplicationEventPublisher interface
 	//---------------------------------------------------------------------
-	
+
 	/**
 	 * Publishes the given {@code event} to all listeners.
-	 * 
+	 *
 	 * <p>Note that listeners get initialized after the message source, to be able to
 	 * access it within listeners. Thus, message sources cannot publish events.
-	 * 
+	 *
 	 * @param event the event to publish (may be application-specific or a standard
 	 * framework event)
 	 */
@@ -256,12 +257,12 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			parent.getEventPublisher().publishEvent(event);
 		}
 	}
-	
+
 	/**
 	 * Returns the event distributor control to publish events with.
-	 * 
+	 *
 	 * <p>Note that there is no default event distributor control.
-	 * 
+	 *
 	 * @return the event distributor control
 	 * @throws IllegalStateException if either there is no event distributor control
 	 * or it has not been initialized yet
@@ -274,58 +275,58 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		}
 		return eventDistributorControl;
 	}
-	
+
 	/**
 	 * Returns whether this context has an event distributor control.
-	 * 
+	 *
 	 * @return {@code ture} if there is an event distributor and it has been initialized,
 	 * otherwise {@code false}
 	 */
 	public function hasEventDistributorControl(Void):Boolean {
 		return (eventDistributorControl != null);
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of ConfigurableApplicationContext interface
 	//---------------------------------------------------------------------
-	
+
 	public function setParent(parent:ApplicationContext):Void {
 		this.parent = parent;
 	}
-	
+
 	public function addBeanFactoryPostProcessor(beanFactoryPostProcessor:BeanFactoryPostProcessor):Void {
 		beanFactoryPostProcessors.push(beanFactoryPostProcessor);
 	}
-	
+
 	public function addBeanPostProcessor(beanPostProcessor:BeanPostProcessor):Void {
 		beanPostProcessors.push(beanPostProcessor);
 	}
-	
+
 	/**
 	 * Returns the list of {@link BeanFactoryPostProcessor} instances that will be
 	 * applied to beans created with this factory.
-	 * 
+	 *
 	 * @return the list of bean factory post processors
 	 */
 	public function getBeanFactoryPostProcessors(Void):Array {
 		return beanFactoryPostProcessors.concat();
 	}
-	
+
 	/**
 	 * Returns the list of {@link BeanPostProcessor} instance to apply to beans
 	 * created by this factory.
-	 * 
+	 *
 	 * @return the list of bean post processors
 	 */
 	public function getBeanPostProcessors(Void):Array {
 		return beanPostProcessors.concat();
 	}
-	
+
 	public function refresh(Void):Void {
 		preRefresh();
 		postRefresh();
 	}
-	
+
 	private function preRefresh(Void):Void {
 		startupTime = (new Date()).getTime();
 		// tells subclass to refresh the internal bean factory
@@ -341,7 +342,6 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		// invokes factory processors registered with the context instance
 		beanFactoryPostProcessorProcesses = new Array();
 		for (var i:Number = 0; i < beanFactoryPostProcessors.length; i++) {
-			// TODO Refactor!
 			var factoryProcessor:BeanFactoryPostProcessor = beanFactoryPostProcessors[i];
 			if (factoryProcessor instanceof Process) {
 				beanFactoryPostProcessorProcesses.push(factoryProcessor);
@@ -378,7 +378,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			throw exception;
 		}
 	}
-	
+
 	private function postRefresh(Void):Void {
 		var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
 		try {
@@ -398,25 +398,24 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			throw exception;
 		}
 	}
-	
+
 	/**
 	 * Modifies the application context's internal bean factory after its standard
 	 * initialization. All bean definitions will have been loaded, but no beans
 	 * will have been instantiated yet. This allows for registering special bean post
 	 * processors etc. in certain application contexts.
-	 * 
+	 *
 	 * @param beanFactory the bean factory used by this application context
 	 * @throws BeanException in case of errors
 	 */
 	private function postProcessBeanFactory(beanFactory:ConfigurableListableBeanFactory):Void {
 	}
-	
+
 	/**
 	 * Instantiates and invokes all registered post-processor beans. Must be called
 	 * before singleton instantiation.
 	 */
 	private function invokeBeanFactoryPostProcessors(Void):Void {
-		// TODO Refactor!
 		// Do not initialize FactoryBeans here: We need to leave all regular beans
 		// uninitialized to let the bean factory post-processors apply to them!
 		var factoryProcessorNames:Array = getBeanNamesForType(BeanFactoryPostProcessor, true, false);
@@ -438,14 +437,17 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			for (var i:Number = 0; i < parentFactoryProcessorNames.length; i++) {
 				var factoryProcessorName:String = parentFactoryProcessorNames[i];
 				var factoryProcessor:BeanFactoryPostProcessor = parentFactory.getBeanByName(factoryProcessorName);
+				// Differentiation between BeanFactoryPostProcessors which also implement the
+				// Process interface and those that do not, must not be done for post processors
+				// from parents, because parents are supposed to be fully initialized.
 				factoryProcessor.postProcessBeanFactory(getBeanFactory());
 			}
 		}
 	}
-	
+
 	/**
 	 * Instantiates and invokes all registered post-processor beans.
-	 * 
+	 *
 	 * <p>Must be called before any instantiation of application beans.
 	 */
 	private function registerBeanPostProcessors(Void):Void {
@@ -461,7 +463,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			beanFactory.addBeanPostProcessor(beanProcessors[i]);
 		}
 	}
-	
+
 	/**
 	 * Initializes the batch if it exists.
 	 */
@@ -470,7 +472,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			setBatch(getBean(BATCH_BEAN_NAME, Batch));
 		}
 	}
-	
+
 	/**
 	 * Initializes the log manager with the logger if it exists.
 	 */
@@ -480,7 +482,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			LogManager.setLogger(logger);
 		}
 	}
-	
+
 	/**
 	 * Initializes the log manager with the logger repository if it exists.
 	 */
@@ -491,7 +493,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			LogManager.setLoggerRepository(loggerRepository);
 		}
 	}
-	
+
 	/**
 	 * Initializes the log configuration parser if it exists (executes it).
 	 */
@@ -502,7 +504,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			logConfigurationParser.parse();
 		}
 	}
-	
+
 	/**
 	 * Initializes the weaver if it exists (executes the weaving process).
 	 */
@@ -512,7 +514,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			weaver.weave();
 		}
 	}
-	
+
 	/**
 	 * Initializes the message source.
 	 */
@@ -534,10 +536,10 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			messageSource = new DelegatingMessageSource(getParent().getMessageSource());
 		}
 	}
-	
+
 	/**
 	 * Initializes the event distributor control.
-	 * 
+	 *
 	 * <p>Note that there is no default distributor.
 	 */
 	private function initEventDistributorControl(Void):Void {
@@ -546,21 +548,21 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 					EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME, EventDistributorControl);
 		}
 	}
-	
+
 	/**
 	 * Refreshes this context.
-	 * 
+	 *
 	 * <p>This method is a template method which can be overridden to add
 	 * context-specific refresh work. Called on initialization of special beans, before
 	 * instantiation of singletons.
-	 * 
+	 *
 	 * @throws BeanException in case of errors during refresh
 	 * @see #refresh
 	 */
 	private function onRefresh(Void):Void {
 		// For subclasses: do nothing by default.
 	}
-	
+
 	/**
 	 * Adds beans that implement the {@link ApplicationListener} interface as listeners.
 	 * This does not affect other listeners, which can be added without being beans.
@@ -574,20 +576,20 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			//addListener(listeners[i]);
 		}
 	}
-	
+
 	/**
 	 * Registers an application listener. Any beans in this context that are listeners
 	 * are automatically added.
-	 * 
+	 *
 	 * @param listener the listener to register
 	 */
 	/*private function addListener(listener:ApplicationListener):Void {
 		getEventDistributorControl().addListener(listener);
 	}*/
-	
+
 	/**
 	 * Destroys this instance by invoking the {@link close} method.
-	 * 
+	 *
 	 * <p>This method corresponds to the {@link DisposableBean} callback for
 	 * destruction of this context. Only called when this context itself is
 	 * running as a bean in another bean factory or application context, which is
@@ -596,7 +598,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 	public function destroy(Void):Void {
 		close();
 	}
-	
+
 	/**
 	 * Closes this application context, destroying all beans in its bean factory.
 	 */
@@ -618,75 +620,75 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			active = false;
 		}
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of BeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	public function getBeanByName(name:String, property:PropertyAccess) {
 		return getBeanFactory().getBeanByName(name, property);
 	}
-	
+
 	public function getBeanByNameAndType(name:String, requiredType:Function, property:PropertyAccess) {
 		return getBeanFactory().getBeanByNameAndType(name, requiredType, property);
 	}
-	
+
 	public function containsBean(name:String):Boolean {
 		return getBeanFactory().containsBean(name);
 	}
-	
+
 	public function isSingleton(name:String):Boolean {
 		return getBeanFactory().isSingleton(name);
 	}
-	
+
 	public function getType(name:String):Function {
 		return getBeanFactory().getType(name);
 	}
-	
+
 	public function getAliases(name:String):Array {
 		return getBeanFactory().getAliases(name);
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of ListableBeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	public function containsBeanDefinition(name:String, includingAncestors:Boolean):Boolean {
 		return getBeanFactory().containsBeanDefinition(name, includingAncestors);
 	}
-	
+
 	public function getBeanDefinitionCount(includingAncestors:Boolean):Number {
 		return getBeanFactory().getBeanDefinitionCount(includingAncestors);
 	}
-	
+
 	public function getBeanDefinitionNames(includingAncestors:Boolean):Array {
 		return getBeanFactory().getBeanDefinitionNames(includingAncestors);
 	}
-	
+
 	public function getBeanNames(includingAncestors:Boolean):Array {
 		return getBeanFactory().getBeanNames(includingAncestors);
 	}
-	
+
 	public function getBeanNamesForType(type:Function, includePrototypes:Boolean, includeFactoryBeans:Boolean, includingAncestors:Boolean):Array {
 		return getBeanFactory().getBeanNamesForType(type, includePrototypes, includeFactoryBeans, includingAncestors);
 	}
-	
+
 	public function getBeansOfType(type:Function, includePrototypes:Boolean, includeFactoryBeans:Boolean, includingAncestors:Boolean):Map {
 		return getBeanFactory().getBeansOfType(type, includePrototypes, includeFactoryBeans, includingAncestors);
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of HierarchicalBeanFactory interface
 	//---------------------------------------------------------------------
-	
+
 	public function getParentBeanFactory(Void):BeanFactory {
 		return getParent();
 	}
-	
+
 	public function containsLocalBean(name:String):Boolean {
 		return getBeanFactory().containsLocalBean(name);
 	}
-	
+
 	/**
 	 * Returns the internal bean factory of the parent context if it implements the
 	 * {@link ConfigurableApplicationContext} class; else, returns the parent context
@@ -696,22 +698,22 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		return (getParent() instanceof ConfigurableApplicationContext) ?
 				ConfigurableApplicationContext(getParent()).getBeanFactory() : getParent();
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Implementation of Process interface
 	//---------------------------------------------------------------------
-	
+
 	/**
 	 * Starts this application context asynchronously.
-	 * 
+	 *
 	 * <p>Pre-refreshes this application context, then processes all beans implementing
 	 * the {@link Process} interface and post-refreshes this context after processing
 	 * the bean processes has finished.
-	 * 
+	 *
 	 * <p>Note that the bean processes are processed asynchronously. That means in
 	 * order to know when this application is fully refreshed you need to add a batch
 	 * listener.
-	 * 
+	 *
 	 * @see #refresh
 	 * @see BatchStartListener
 	 * @see BatchErrorListener
@@ -725,7 +727,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			batch.start();
 		}
 	}
-	
+
 	/**
 	 * Registers all singleton beans that implement the {@code Process} interface at
 	 * the batch of this context.
@@ -736,7 +738,7 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		addBeanFactoryPostProcessorProcesses(beanFactoryPostProcessorProcesses);
 		addCustomProcesses(processes.getValues());
 	}
-	
+
 	private function addSpecialFunctionProcesses(processes:Map):Void {
 		var batch:Batch = getBatch();
 		processes.remove(BATCH_BEAN_NAME);
@@ -756,23 +758,23 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			processes.remove(EVENT_DISTRIBUTOR_CONTROL_BEAN_NAME);
 		}
 	}
-	
+
 	private function addBeanFactoryPostProcessorProcesses(processes:Array):Void {
 		var batch:Batch = getBatch();
 		for (var i:Number = 0; i < processes.length; i++) {
 			var process:Process = processes[i];
-			// TODO Problem: It is unknown whether 'process' behaves like a batch or like a process.
-			var listener:BatchFinishListener = ClassUtil.createCleanInstance(BatchFinishListener);
-			var beanFactory:ConfigurableListableBeanFactory = getBeanFactory();
-			listener.onBatchFinish = function(b:Batch):Void {
-				var factoryProcessor:BeanFactoryPostProcessor = BeanFactoryPostProcessor(process);
-				factoryProcessor.postProcessBeanFactory(beanFactory);
+			var listener:ProcessFinishListener = ClassUtil.createCleanInstance(ProcessFinishListener);
+			listener.onProcessFinish = function(p:Process):Void {
+				var factoryProcessor:BeanFactoryPostProcessor = this.postProcessor;
+				factoryProcessor.postProcessBeanFactory(this.beanFactory);
 			};
+			listener["postProcessor"] = process;
+			listener["beanFactory"] = getBeanFactory();
 			process.addListener(listener);
 			batch.addProcess(process);
 		}
 	}
-	
+
 	private function addCustomProcesses(processes:Array):Void {
 		var batch:Batch = getBatch();
 		for (var i:Number = 0; i < processes.length; i++) {
@@ -782,113 +784,113 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 			}
 		}
 	}
-	
+
 	/**
 	 * Returns a map of all singleton beans that implement the {@link Process}
 	 * interface in this context with the bean names as keys and the bean instances
 	 * as values.
-	 * 
+	 *
 	 * @return all singleton process beans
 	 */
 	private function getProcessBeans(Void):Map {
 		return getBeanFactory().getBeansOfType(Process, false, false);
 	}
-	
+
 	/**
 	 * Post-refreshes this application context after the internal batch has finished
 	 * its run.
-	 * 
+	 *
 	 * @param batch the internal batch that finished its run
 	 */
 	public function onBatchFinish(batch:Batch):Void {
 		postRefresh();
 	}
-	
+
 	public function hasStarted(Void):Boolean {
 		return getBatch().hasStarted();
 	}
-	
+
 	public function hasFinished(Void):Boolean {
 		return getBatch().hasFinished();
 	}
-	
+
 	public function isPaused(Void):Boolean {
 		return getBatch().isPaused();
 	}
-	
+
 	public function isRunning(Void):Boolean {
 		return getBatch().isPaused();
 	}
-	
+
 	public function getPercentage(Void):Number {
 		return getBatch().getPercentage();
 	}
-	
+
 	public function setParentProcess(process:Process):Void {
 		getBatch().setParentProcess(process);
 	}
-	
+
 	public function getParentProcess(Void):Process {
 		return getBatch().getParentProcess();
 	}
-	
+
 	public function getErrors(Void):Array {
 		return getBatch().getErrors();
 	}
-	
+
 	public function hasErrors(Void):Boolean {
 		return getBatch().hasErrors();
 	}
-	
+
 	public function getDuration(Void):Time {
 		return getBatch().getDuration();
 	}
-	
+
 	public function getEstimatedTotalTime(Void):Time {
 		return getBatch().getEstimatedTotalTime();
 	}
-	
+
 	public function getEstimatedRestTime(Void):Time {
 		return getBatch().getEstimatedRestTime();
 	}
-	
+
 	public function addListener(listener):Void {
 		getBatch().addListener(listener);
 	}
-	
+
 	public function addAllListeners(listeners:Array):Void {
 		getBatch().addAllListeners(listeners);
 	}
-	
+
 	public function removeListener(listener):Void {
 		getBatch().removeListener(listener);
 	}
-	
+
 	public function removeAllListeners(Void):Void {
 		getBatch().removeAllListeners();
 	}
-	
+
 	public function getAllListeners(Void):Array {
 		return getBatch().getAllListeners();
 	}
-	
+
 	public function hasListener(listener):Boolean {
 		return getBatch().hasListener(listener);
 	}
-	
+
 	public function getName(Void):String {
 		return getBatch().getName();
 	}
-	
+
 	public function setName(name:String):Void {
 		getBatch().setName(name);
 	}
-	
+
 	/**
 	 * Returns the batch to add asynchronous processes to.
-	 * 
+	 *
 	 * <p>Note that there is no default batch.
-	 * 
+	 *
 	 * @return the batch
 	 * @throws IllegalStateException if either there is no batch or it has not been
 	 * initialized yet
@@ -901,36 +903,36 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		}
 		return batch;
 	}
-	
+
 	/**
 	 * Sets the batch to add asynchronous processes to.
-	 * 
+	 *
 	 * <p>Do not set the batch instance variable directly, but use this method
 	 * to set it, because this context must be registered as listener at the batch;
 	 * this method takes care of this.
-	 * 
+	 *
 	 * @param batch the new batch
 	 */
 	public function setBatch(batch:Batch):Void {
 		this.batch = batch;
 		batch.addListener(this);
 	}
-	
+
 	//---------------------------------------------------------------------
 	// Abstract methods that must be implemented by subclasses
 	//---------------------------------------------------------------------
-	
+
 	/**
 	 * Refreshes the bean factory.
-	 * 
+	 *
 	 * <p>Subclasses must implement this method to perform the actual configuration load.
 	 * The method is invoked by {@code refresh} before any other initialization work.
-	 * 
+	 *
 	 * <p>A subclass will either create a new bean factory and hold a reference to it,
 	 * or return a single bean factory instance that it holds. In the latter case, it
 	 * will usually throw an illegal state exception if refreshing the context more than
 	 * once.
-	 * 
+	 *
 	 * @throws BeanException if initialization of the bean factory failed
 	 * @throws IllegalStateException if already initialized and multiple refresh attempts
 	 * are not supported
@@ -940,14 +942,14 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 		throw new AbstractOperationException("This method is marked as abstract and must be " +
 				"overridden by sub-classes.", this, arguments);
 	}
-	
+
 	/**
 	 * Returns the internal bean factory.
-	 * 
+	 *
 	 * <p>Subclasses must return their internal bean factory here. They should implement
 	 * the lookup efficiently, so that it can be called repeatedly without a performance
 	 * penalty.
-	 * 
+	 *
 	 * @return this application context's internal bean factory
 	 * @throws IllegalStateException if this context does not hold an internal bean factory
 	 * yet (usually if {@code refresh} has never been called)
@@ -958,5 +960,5 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 				"overridden by sub-classes.", this, arguments);
 		return null;
 	}
-	
+
 }
