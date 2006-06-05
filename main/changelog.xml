@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="6">
+        		<day value="5">
+        			<entry type="add" package="org.as2lib.app.exec" class="NextProcessListener">Distributed by batches when the next process was started.</entry>
+        		</day>
         		<day value="1">
         			<entry type="add" package="org.as2lib.data.holder" class="Properties" method="remove">Removes a property.</entry>
         		</day>
