@@ -7,6 +7,7 @@
         <year value="2006">
         	<month value="6">
         		<day value="6">
+        			<entry type="add" package="org.as2lib.env.log.handler" class="CacheLogHandler">Caches log messages.</entry>
         			<entry type="add" package="org.as2lib.env.log.handler" class="AbstractLogHandler" method="getMessageStringifier"></entry>
         		</day>
         		<day value="5">
