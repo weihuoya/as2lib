@@ -2,13 +2,6 @@
 
 <beans xmlns:aw="org.aswing" xmlns:ab="org.aswing.border" xmlns:import="aswing/*.xml">
 
-	<bean id="viewController" controller="r{controller}" view="r{view}" progressBar="r{progressBar}"
-			statusLabel="r{statusLabel}" class="org.as2lib.sample.pizza.view.aswing.AsWingView"
-			init-method="showOrderForm">
-		<orderForm><import:OrderForm class="org.as2lib.context.support.AsWingApplicationContext"/></orderForm>
-		<viewOrdersForm><import:ViewOrdersForm class="org.as2lib.context.support.AsWingApplicationContext"/></viewOrdersForm>
-	</bean>
-
 	<bean id="Form" abstract="true">
 		<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
 	</bean>
@@ -22,6 +15,13 @@
 	<ab:EmptyBorder id="Border" abstract="true">
 		<insets><aw:Insets bottom="0" left="5" right="5" top="5"/></insets>
 	</ab:EmptyBorder>
+
+	<bean id="viewController" controller="r{controller}" view="r{view}" progressBar="r{progressBar}"
+			statusLabel="r{statusLabel}" class="org.as2lib.sample.pizza.view.aswing.AsWingView"
+			init-method="showOrderForm">
+		<orderForm><import:OrderForm class="org.as2lib.context.support.AsWingApplicationContext"/></orderForm>
+		<viewOrdersForm><import:ViewOrdersForm class="org.as2lib.context.support.AsWingApplicationContext"/></viewOrdersForm>
+	</bean>
 
 	<aw:JFrame id="view" width="445" height="360" resizable="false" init-method="show">
 		<aw:JPanel constraints="v{org.aswing.WindowLayout.TITLE}" background="v{org.aswing.ASColor.BLACK}" opaque="true">
