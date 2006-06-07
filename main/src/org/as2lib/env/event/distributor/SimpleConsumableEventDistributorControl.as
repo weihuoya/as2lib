@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -22,12 +22,12 @@ import org.as2lib.env.event.distributor.ConsumableEventDistributorControl;
  * {@code SimpleConsumableEventDistributorControl} acts as a listener source and
  * event distributor. It enables you to distribute and handle events in the safest
  * way possible.
- * 
+ *
  * <p>Note that unlike the {@link SimpleEventDistributorControl} class, this class
  * supports the consumption of events. An event is consumed if an event method on a
  * listener returns {@code true}. This means that the distribution of the event will
  * be stopped immediately. Otherwise the event will further be distributed.
- * 
+ *
  * <p>Example:
  * <code>
  *   // creates a distributor control with the expected listener type
@@ -44,17 +44,17 @@ import org.as2lib.env.event.distributor.ConsumableEventDistributorControl;
  * <p>If in the above example, the {@code MyErrorListener.onError} method returns
  * {@code true}, the {@code SimpleErrorListener.onError} method will not be invoked
  * because the event is consumed.
- * 
+ *
  * @author Simon Wacker
  * @author Martin Heidegger
  */
 class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl extends AbstractEventDistributorControl implements ConsumableEventDistributorControl {
-	
+
 	/**
 	 * Constructs a new {@code SimpleConsumableEventDistributorControl} instance.
 	 *
 	 * <p>{@code checkListenerType} is by default set to {@code true}.
-	 * 
+	 *
 	 * @param listenerType the expected type of listeners
 	 * @param checkListenerType determines whether to check that passed-in listeners
 	 * are of the expected type
@@ -68,7 +68,7 @@ class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl e
 			addAllListeners(listeners);
 		}
 	}
-	
+
 	/**
 	 * Executes the event with the given {@code eventName} on all added listeners, using
 	 * the arguments after {@code eventName} as parameters.
@@ -81,7 +81,7 @@ class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl e
 	 *
 	 * <p>If {@code args} is {@code null} or {@code undefined} nor parameters will be
 	 * passed to the listeners' event methods.
-	 * 
+	 *
 	 * @param eventName the name of the event method to execute on the added listeners
 	 * @param args any number of arguments that are used as parameters on execution of
 	 * the event on the listeners
@@ -108,5 +108,5 @@ class org.as2lib.env.event.distributor.SimpleConsumableEventDistributorControl e
 		}
 		return false;
 	}
-	
+
 }
