@@ -84,9 +84,9 @@ import org.as2lib.util.ClassUtil;
  *
  * @author Simon Wacker
  */
-class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory implements
-		ConfigurableApplicationContext, ApplicationEventPublisher, Process, BatchFinishListener,
-		DisposableBean {
+class org.as2lib.context.support.AbstractApplicationContext extends AbstractBeanFactory
+		implements ConfigurableApplicationContext, ApplicationEventPublisher, Process,
+		ProcessFinishListener, DisposableBean {
 
 	/**
 	 * Name of the {@link MessageSource} bean in this factory.
@@ -798,11 +798,11 @@ class org.as2lib.context.support.AbstractApplicationContext extends AbstractBean
 
 	/**
 	 * Post-refreshes this application context after the internal batch has finished
-	 * its run.
+	 * its execution.
 	 *
-	 * @param batch the internal batch that finished its run
+	 * @param process the internal batch that finished its execution
 	 */
-	public function onBatchFinish(batch:Batch):Void {
+	public function onProcessFinish(process:Process):Void {
 		postRefresh();
 	}
 
