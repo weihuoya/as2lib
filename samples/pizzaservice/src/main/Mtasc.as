@@ -56,34 +56,34 @@ class main.Mtasc extends BasicClass implements BatchStartListener, NextProcessLi
 
 	public function init(Void):Void {
 		Debug.write("Initializing.");
-		var batchProcess:SimpleBatch = new SimpleBatch();
-		batchProcess.addListener(this);
+		var batch:SimpleBatch = new SimpleBatch();
+		batch.addListener(this);
 		var logConfigurationProcess:LogConfigurationProcess =
 				new LogConfigurationProcess(LOG_CONFIGURATION_URI, new XmlLogConfigurationParser());
 		rootApplicationContext = new XmlApplicationContext(APPLICATION_CONTEXT_URI);
 		//childApplicationContext = new ActionStepApplicationContext(ACTIONSTEP_VIEW_URI, rootApplicationContext);
 		childApplicationContext = new AsWingApplicationContext(ASWING_VIEW_URI, rootApplicationContext);
 		//childApplicationContext = new EnFlashApplicationContext(ENFLASH_VIEW_URI, rootApplicationContext);
-		batchProcess.addProcess(logConfigurationProcess);
-		batchProcess.addProcess(rootApplicationContext);
-		batchProcess.addProcess(childApplicationContext);
-		batchProcess.start();
+		batch.addProcess(logConfigurationProcess);
+		batch.addProcess(rootApplicationContext);
+		batch.addProcess(childApplicationContext);
+		batch.start();
 	}
 
 	public function onBatchStart(batch:Batch):Void {
-		Debug.write("Batch started.");
+		trace("Batch started.");
 	}
 
 	public function onNextProcess(batch:Batch):Void {
-		Debug.write("Next process: " + batch.getCurrentProcess().getName());
+		trace("Next process: " + batch.getCurrentProcess().getName());
 	}
 
 	public function onBatchUpdate(batch:Batch):Void {
-		Debug.write("Batch percentage: " + batch.getPercentage());
+		trace("Batch percentage: " + batch.getPercentage());
 	}
 
 	public function onBatchError(batch:Batch, error):Boolean {
-		Debug.write("Running batch process failed with error: \n" +
+		trace("Running batch process failed with error: \n" +
 				StringUtil.addSpaceIndent(error.toString(), 2));
 		return false;
 	}
