@@ -1,58 +1,62 @@
 <?xml version="1.0"?>
 
 <beans>
-	
+
 	<bean id="Import" class="org.as2lib.context.support.LoadingApplicationContextFactoryBean" abstract="true">
 		<applicationContextClass type="Class">org.as2lib.context.support.ActionStepApplicationContext</applicationContextClass>
 	</bean>
-	
+
+	<bean id="View" class="org.actionstep.NSView"/>
+
 	<bean id="HBox" init="true" defaultMinXMargin="15" class="org.actionstep.layout.ASHBox"
 			default-property="view" abstract="true"/>
 	<bean id="VBox" init="true" defaultMinYMargin="5" class="org.actionstep.layout.ASVBox"
 			default-property="view" abstract="true"/>
-	
+
 	<bean id="Button" width="100" height="25" class="org.actionstep.NSButton" abstract="true"/>
 	<bean id="Label" width="100" height="25" class="org.actionstep.ASLabel" abstract="true"/>
 	<bean id="ProgressBar" class="org.actionstep.NSProgressIndicator" abstract="true"/>
-	
+
 	<bean id="Form" x="10" y="40" width="445" height="335" abstract="true"/>
 	<bean id="FormItem" defaultMinYMargin="0" parent="VBox" abstract="true"/>
 	<bean id="List" class="org.actionstep.ASList"/>
-	
+
 	<bean id="TextField" width="125" height="25" class="org.actionstep.NSTextField"/>
 	<bean id="ComboBox" width="125" height="25" class="org.actionstep.NSComboBox"/>
 	<bean id="Stepper" width="125" height="25" class="org.actionstep.NSStepper"/>
-	
+
 	<bean id="Array" class="org.actionstep.NSArray"/>
 	<bean id="Rectangle" class="org.actionstep.NSRect"/>
-	
-	<bean class="org.actionstep.NSApplication" factory-method="sharedApplication" init-method="run"
-			depends-on="window"/>
-	
+
+	<bean id="viewController" controller="r{controller}" progressBar="r{progressBar}"
+			statusText="r{statusText}" class="org.as2lib.sample.pizza.view.actionstep.ActionStepView">
+		<orderForm>r{orderForm}</orderForm>
+		<viewOrdersForm>r{viewOrdersForm}</viewOrdersForm>
+	</bean>
+
+	<bean id="application" class="org.actionstep.NSApplication" factory-method="sharedApplication"
+			init-method="run" depends-on="window"/>
+
 	<bean id="window" class="org.actionstep.NSWindow">
 		<contentRect><Rectangle>0, 0, 445, 360</Rectangle></contentRect>
 		<backgroundColor>m{org.actionstep.ASColors.lightGrayColor}</backgroundColor>
 		<contentView.subview>r{view}</contentView.subview>
 	</bean>
-	
-	<bean id="view" width="445" height="360" class="org.as2lib.sample.pizza.view.actionstep.ActionStepView"
-			init-method="init">
-		<controller>r{controller}</controller>
-		<progressBar>r{progressBar}</progressBar>
-		<statusText>r{statusText}</statusText>
+
+	<View id="view" width="445" height="360">
 		<HBox x="5" y="5" width="445" height="30" defaultMinXMargin="0">
-			<Button title="{messageSource.message[button.orderForm]}" target="r{view}" action="showOrderForm"/>
-			<Button title="{messageSource.message[button.viewOrders]}" target="r{view}" action="showViewOrdersForm"/>
+			<Button title="{messageSource.message[button.orderForm]}" target="r{viewController}" action="showOrderForm"/>
+			<Button title="{messageSource.message[button.viewOrders]}" target="r{viewController}" action="showViewOrdersForm"/>
 		</HBox>
 		<Label id="statusText" x="212" y="12" width="226" height="26" selectable="false"/>
 		<ProgressBar id="progressBar" x="210" y="10" width="226" height="26" doubleValue="100"
 				animated="true" hidden="true"/>
-		<orderForm>r{orderForm}</orderForm>
-		<viewOrdersForm>r{viewOrdersForm}</viewOrdersForm>
-	</bean>
-	
+		<subview>r{orderForm}</subview>
+		<subview>r{viewOrdersForm}</subview>
+	</View>
+
 	<Import id="orderForm" targetBeanName="orderForm" beanDefinitionUri="actionstep/OrderForm.xml"/>
-	
+
 	<Import id="viewOrdersForm" targetBeanName="viewOrdersForm" beanDefinitionUri="actionstep/ViewOrdersForm.xml"/>
-	
+
 </beans>

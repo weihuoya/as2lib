@@ -1,34 +1,35 @@
 <?xml version="1.0"?>
 
 <beans xmlns:aw="org.aswing" xmlns:ab="org.aswing.border" xmlns:import="aswing/*.xml">
-	
-	<bean id="Form" abstract="true">
-		<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
-	</bean>
-	
-	<aw:JPanel id="FormItem" abstract="true">
-		<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}"/></layout>
-	</aw:JPanel>
-	
-	<aw:JTextField id="TextField" preferredWidth="120" preferredHeight="20" abstract="true"/>
-	
-	<ab:EmptyBorder id="Border" abstract="true">
-		<insets><aw:Insets bottom="0" left="5" right="5" top="5"/></insets>
-	</ab:EmptyBorder>
-	
-	<bean id="view" width="445" height="360" resizable="false"
-			class="org.as2lib.sample.pizza.view.aswing.AsWingView" init-method="show">
-		<controller>r{controller}</controller>
-		<progressBar>r{progressBar}</progressBar>
-		<statusLabel>r{statusLabel}</statusLabel>
-		<aw:JPanel constraints="v{org.aswing.WindowLayout.TITLE}" background="v{org.aswing.ASColor.BLACK}" opaque="true">
-			<aw:JButton text="{messageSource.message[button.orderForm]}" actionListener="d{view.showOrderForm}"/>
-			<aw:JButton text="{messageSource.message[button.viewOrders]}" actionListener="d{view.showViewOrdersForm}"/>
-			<aw:JLabel id="statusLabel" foreground="v{org.aswing.ASColor.WHITE}"/>
-			<aw:JProgressBar id="progressBar" value="100" preferredWidth="255" visible="false"/>
-		</aw:JPanel>
+
+	<bean id="viewController" controller="r{controller}" view="r{view}" progressBar="r{progressBar}"
+			statusLabel="r{statusLabel}" class="org.as2lib.sample.pizza.view.aswing.AsWingView"
+			init-method="showOrderForm">
 		<orderForm><import:OrderForm class="org.as2lib.context.support.AsWingApplicationContext"/></orderForm>
 		<viewOrdersForm><import:ViewOrdersForm class="org.as2lib.context.support.AsWingApplicationContext"/></viewOrdersForm>
 	</bean>
-	
+
+	<bean id="Form" abstract="true">
+		<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
+	</bean>
+
+	<aw:JPanel id="FormItem" abstract="true">
+		<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}"/></layout>
+	</aw:JPanel>
+
+	<aw:JTextField id="TextField" preferredWidth="120" preferredHeight="20" abstract="true"/>
+
+	<ab:EmptyBorder id="Border" abstract="true">
+		<insets><aw:Insets bottom="0" left="5" right="5" top="5"/></insets>
+	</ab:EmptyBorder>
+
+	<aw:JFrame id="view" width="445" height="360" resizable="false" init-method="show">
+		<aw:JPanel constraints="v{org.aswing.WindowLayout.TITLE}" background="v{org.aswing.ASColor.BLACK}" opaque="true">
+			<aw:JButton text="{messageSource.message[button.orderForm]}" actionListener="d{viewController.showOrderForm}"/>
+			<aw:JButton text="{messageSource.message[button.viewOrders]}" actionListener="d{viewController.showViewOrdersForm}"/>
+			<aw:JLabel id="statusLabel" foreground="v{org.aswing.ASColor.WHITE}"/>
+			<aw:JProgressBar id="progressBar" value="100" preferredWidth="255" visible="false"/>
+		</aw:JPanel>
+	</aw:JFrame>
+
 </beans>
