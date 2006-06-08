@@ -1,22 +1,22 @@
 <?xml version="1.0"?>
 
 <beans xmlns:ef="com.asual.enflash.ui">
-	
-	<bean id="controller" class="org.as2lib.sample.pizza.view.enflash.EnFlashViewOrdersForm">
-		<controller><ref parent="controller"/></controller>
+
+	<bean id="formController" class="org.as2lib.sample.pizza.view.enflash.EnFlashViewOrdersForm">
+		<controller>r{controller}</controller>
 		<lookup-method name="getOrderList" bean="orderList"/>
 		<lookup-method name="getPizzaList" bean="pizzaList"/>
 		<lookup-method name="getCancelOrderButton" bean="cancelOrderButton"/>
 		<lookup-method name="getProgressBar" bean="progressBar"/>
 	</bean>
-	
+
 	<ef:ScrollPane id="viewOrdersForm">
 		<ef:Label value="{messageSource.message[label.orders]}"/>
-		<ef:ListBox id="orderList" onchange="d{controller.updatePizzas}"/>
+		<ef:ListBox id="orderList" onchange="d{formController.updatePizzas}"/>
 		<ef:Label value="{messageSource.message[label.pizzas]}"/>
 		<ef:ListBox id="pizzaList"/>
-		<ef:Button id="cancelOrderButton" onrelease="d{controller.cancelOrder}"
+		<ef:Button id="cancelOrderButton" onrelease="d{formController.cancelOrder}"
 				value="{messageSource.message[button.cancelOrder]}"/>
 	</ef:ScrollPane>
-	
+
 </beans>
