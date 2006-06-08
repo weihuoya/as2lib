@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 
 <beans xmlns:ef="com.asual.enflash.ui">
-	
-	<bean id="controller" class="org.as2lib.sample.pizza.view.enflash.EnFlashOrderForm">
-		<controller><ref parent="controller"/></controller>
+
+	<bean id="formController" class="org.as2lib.sample.pizza.view.enflash.EnFlashOrderForm">
+		<controller>r{controller}</controller>
 		<lookup-method name="getNameTextInput" bean="nameTextInput"/>
 		<lookup-method name="getQuantityTextInput" bean="quantityTextInput"/>
 		<lookup-method name="getSizeComboBox" bean="sizeComboBox"/>
@@ -15,7 +15,7 @@
 		<lookup-method name="getPlaceOrderButton" bean="placeOrderButton"/>
 		<lookup-method name="getProgressBar" bean="progressBar"/>
 	</bean>
-	
+
 	<ef:ScrollPane id="orderForm">
 		<container>
 			<ef:Container rows="53%,35%,12%" default-property="pane">
@@ -24,7 +24,7 @@
 						<ef:Container cols="30%,30%,40%" default-property="pane">
 							<ef:ScrollPane>
 								<ef:Label value="{messageSource.message[label.name]}"/>
-								<ef:TextInput id="nameTextInput" onchange="d{controller.onNameChanged}"/>
+								<ef:TextInput id="nameTextInput" onchange="d{formController.onNameChanged}"/>
 							</ef:ScrollPane>
 							<ef:ScrollPane>
 								<ef:Label value="{messageSource.message[label.quantity]}"/>
@@ -45,7 +45,7 @@
 							</ef:ScrollPane>
 							<ef:ScrollPane>
 								<ef:Label value="{messageSource.message[label.toppings]}"/>
-								<ef:ListBox id="toppingList" onchange="d{controller.onToppingsChanged}">
+								<ef:ListBox id="toppingList" onchange="d{formController.onToppingsChanged}">
 									<ef:ListItem value="{messageSource.message[toppings.sausage]}"/>
 									<ef:ListItem value="{messageSource.message[toppings.pepperoni]}"/>
 									<ef:ListItem value="{messageSource.message[toppings.onions]}"/>
@@ -55,7 +55,7 @@
 									<ef:ListItem value="{messageSource.message[toppings.olives]}"/>
 									<ef:ListItem value="{messageSource.message[toppings.garlic]}"/>
 								</ef:ListBox>
-								<ef:Button id="addButton" onrelease="d{controller.addOrderItem}"
+								<ef:Button id="addButton" onrelease="d{formController.addOrderItem}"
 										value="{messageSource.message[button.add]}"/>
 							</ef:ScrollPane>
 						</ef:Container>
@@ -66,13 +66,13 @@
 					<ef:ListBox id="orderTicketList"/>
 				</ef:ScrollPane>
 				<ef:ScrollPane>
-					<ef:Button id="removeButton" onrelease="d{controller.removeOrderItem}"
+					<ef:Button id="removeButton" onrelease="d{formController.removeOrderItem}"
 							value="{messageSource.message[button.remove]}"/>
-					<ef:Button id="placeOrderButton" onrelease="d{controller.placeOrder}"
+					<ef:Button id="placeOrderButton" onrelease="d{formController.placeOrder}"
 							value="{messageSource.message[button.placeOrder]}"/>
 				</ef:ScrollPane>
 			</ef:Container>
 		</container>
 	</ef:ScrollPane>
-	
+
 </beans>
