@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -39,12 +39,12 @@ import org.xml.sax.SAXException;
 
 /**
  * {@code UnitTest} executes a unit test swf and writes the result to the console.
- * 
+ *
  * <p>The unit test swf must send the result over the XML socket, with host "localhost"
  * and port 3212 by default or the one declared in the build file. The unit test swf
  * may register the {@code XmlSocketTestListener} at the test runner which sends the
  * test execution information properly formatted to this task.
- * 
+ *
  * <p>The sent test execution information must be formatted as follows:
  * <ul>
  *   <li>&lt;start&gt;Start message.&lt;/start&gt;</li>
@@ -55,60 +55,73 @@ import org.xml.sax.SAXException;
  *   <li>&lt;finish hasErrors="false/true"&gt;Finish message.&lt;/finish&gt;</li>
  *   <li>&lt;message&gt;Arbitrary message.&lt;/message&gt;</li>
  * </ul>
- * 
+ *
  * <p>As soon as the ant task receives the finish information it will close the opened
  * unit test swf and finish its execution.
- * 
+ *
+ * <p>This task can take the following arguments:
+ * <ul>
+ *   <li>
+ *     {@link #setSwf(File) swf} (test swf file to execute and receive unit test
+ *     results from)
+ *   </li>
+ *   <li>
+ *     {@link #setFlashPlayer(File) flashplayer} (location of the flashplayer to
+ *     execute the swf with)
+ *   </li>
+ *   <li>{@link #setPort(int) port} (port of the xml socket to listen to)</li>
+ * </ul>
+ *
  * @author Simon Wacker
  * @author Christophe Herreman
  */
 public class UnitTest extends Task {
-	
+
 	public static final String START_ELEMENT = "start";
 	public static final String UPDATE_ELEMENT = "update";
 	public static final String PAUSE_ELEMENT = "pause";
 	public static final String RESUME_ELEMENT = "resume";
 	public static final String ERROR_ELEMENT = "error";
 	public static final String FINISH_ELEMENT = "finish";
-	
+
 	private File swf;
 	private File flashPlayer;
 	private int port;
-	
+
 	/**
 	 * Constructs a new {@code UnitTest} instance, with the default port 3212.
 	 */
 	public UnitTest() {
 		port = 3212;
 	}
-	
+
 	public void setSwf(File swf) {
 		this.swf = swf;
 	}
-	
+
 	public File getSwf() {
 		return swf;
 	}
-	
+
 	public void setFlashPlayer(File flashPlayer) {
 		this.flashPlayer = flashPlayer;
 	}
-	
+
 	public File getFlashPlayer() {
 		return flashPlayer;
 	}
-	
+
 	public void setPort(int port) {
 		this.port = port;
 	}
-	
+
 	public int getPort() {
 		return port;
 	}
-	
+
 	/**
 	 * Executes this task.
-	 * 
+	 *
 	 * @throws BuildException if swf or flash player is not specified
 	 */
 	public void execute() throws BuildException {
@@ -137,22 +150,22 @@ public class UnitTest extends Task {
 		}
 		receiver.stopServer();
 	}
-	
+
 	private static class Receiver extends Thread {
-		
+
 		private Task task;
 		private ServerSocket server;
 		private BufferedReader in;
 		private Process process;
-		
+
 		public Receiver(Task task) {
 			this.task = task;
 		}
-		
+
 		public void setProcess(Process process) {
 			this.process = process;
 		}
-		
+
 		public void run() {
 			try {
 				task.log("-\n-");
@@ -220,7 +233,7 @@ public class UnitTest extends Task {
 				throw new BuildException("Error on reading result.", e, task.getLocation());
 			}
 		}
-		
+
 		public void startServer(int port) {
 			try {
 				server = new ServerSocket(port);
@@ -231,7 +244,7 @@ public class UnitTest extends Task {
 				throw new BuildException("Error on starting server.", e, task.getLocation());
 			}
 		}
-		
+
 		public void stopServer() {
 			try {
 				if (server != null) {
@@ -252,7 +265,7 @@ public class UnitTest extends Task {
 				}
 			}
 		}
-		
+
 	}
-	
+
 }
