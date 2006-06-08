@@ -1,17 +1,20 @@
 <?xml version="1.0"?>
 
 <beans>
-	
-	<Form id="viewOrdersForm" hidden="true" class="org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm">
+
+	<bean id="formController" class="org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm">
 		<controller>r{controller}</controller>
 		<orderList>r{orderList}</orderList>
 		<pizzaList>r{pizzaList}</pizzaList>
 		<cancelOrderButton>r{cancelOrderButton}</cancelOrderButton>
 		<progressBar>r{progressBar}</progressBar>
+	</bean>
+
+	<Form id="viewOrdersForm" hidden="true">
 		<HBox defaultMinXMargin="0">
 			<FormItem>
 				<Label stringValue="{messageSource.message[label.orders]}"/>
-				<List id="orderList" width="120" height="252" target="r{viewOrdersForm}"
+				<List id="orderList" width="120" height="252" target="r{formController}"
 						action="updatePizzas"/>
 			</FormItem>
 			<FormItem>
@@ -21,7 +24,7 @@
 		</HBox>
 		<Button id="cancelOrderButton" x="0" y="283" width="100" height="25"
 				title="{messageSource.message[button.cancelOrder]}" enabled="false"
-				target="r{viewOrdersForm}" action="cancelOrder"/>
+				target="r{formController}" action="cancelOrder"/>
 	</Form>
-	
+
 </beans>

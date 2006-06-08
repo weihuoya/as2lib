@@ -1,14 +1,16 @@
 <?xml version="1.0"?>
 
 <beans xmlns:aw="org.aswing">
-	
-	<Form id="viewOrdersForm" constraints="v{org.aswing.WindowLayout.CONTENT}"
-			class="org.as2lib.sample.pizza.view.aswing.AsWingViewOrdersForm">
+
+	<bean id="formController" class="org.as2lib.sample.pizza.view.aswing.AsWingViewOrdersForm">
 		<controller>r{controller}</controller>
 		<orderList>r{orderList}</orderList>
 		<pizzaList>r{pizzaList}</pizzaList>
 		<cancelOrderButton>r{cancelOrderButton}</cancelOrderButton>
 		<progressBar>r{progressBar}</progressBar>
+	</bean>
+
+	<Form id="viewOrdersForm" constraints="v{org.aswing.WindowLayout.CONTENT}">
 		<aw:SoftBox>
 			<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.X_AXIS}" gap="10"/></layout>
 			<border><Border/></border>
@@ -16,7 +18,7 @@
 				<aw:JLabel text="{messageSource.message[label.orders]}"/>
 				<aw:JScrollPane preferredWidth="120" preferredHeight="248">
 					<view>
-						<aw:JList id="orderList" selectionListener="d{viewOrdersForm.updatePizzas}"
+						<aw:JList id="orderList" selectionListener="d{formController.updatePizzas}"
 								opaque="true"/>
 					</view>
 				</aw:JScrollPane>
@@ -30,8 +32,8 @@
 		</aw:SoftBox>
 		<aw:JPanel background="v{org.aswing.ASColor.BLACK}" opaque="true">
 			<aw:JButton id="cancelOrderButton" text="{messageSource.message[button.cancelOrder]}"
-					actionListener="d{viewOrdersForm.cancelOrder}" enabled="false"/>
+					actionListener="d{formController.cancelOrder}" enabled="false"/>
 		</aw:JPanel>
 	</Form>
-	
+
 </beans>
