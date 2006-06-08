@@ -17,7 +17,7 @@
 	<bean id="Label" width="100" height="25" class="org.actionstep.ASLabel" abstract="true"/>
 	<bean id="ProgressBar" class="org.actionstep.NSProgressIndicator" abstract="true"/>
 
-	<bean id="Form" x="10" y="40" width="445" height="335" abstract="true"/>
+	<bean id="Form" x="10" y="40" width="445" height="335" class="org.actionstep.NSView" abstract="true"/>
 	<bean id="FormItem" defaultMinYMargin="0" parent="VBox" abstract="true"/>
 	<bean id="List" class="org.actionstep.ASList"/>
 

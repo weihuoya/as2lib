@@ -2,9 +2,9 @@
 
 <beans xmlns:aw="org.aswing" xmlns:ab="org.aswing.border" xmlns:import="aswing/*.xml">
 
-	<bean id="Form" abstract="true">
+	<aw:JPanel id="Form" abstract="true">
 		<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
-	</bean>
+	</aw:JPanel>
 
 	<aw:JPanel id="FormItem" abstract="true">
 		<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}"/></layout>
