@@ -3,6 +3,10 @@ As2ant 2.0
 ----------
 
 
+[!] org.as2lib.ant.Mtasc
+    Detects and removes duplicate source files which are very likely when bean
+    definition xml files are used as source files.
+
 [+] org.as2lib.ant.Mtasc
     Added new argument: 'packset'. This argument can be used to include multiple
     packages based on name patterns (analogous to 'srcset').

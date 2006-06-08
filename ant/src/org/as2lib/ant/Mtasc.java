@@ -22,8 +22,9 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
+import java.util.Set;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -138,7 +139,7 @@ public class Mtasc extends Task {
     public static final String WIMP = "-wimp";
 
     private String mtasc;
-    private List compileFiles;
+    private Set compileFiles;
     private Path sourceDirectory;
     private File source;
     private ArrayList sourceSets;
@@ -175,7 +176,6 @@ public class Mtasc extends Task {
      * <p>Note that {@code split} is by default set to {@code false}.
      */
     public Mtasc() {
-        this.compileFiles = new ArrayList();
         this.sourceSets = new ArrayList();
         this.sourceList = new ArrayList();
         this.arguments = new ArrayList();
@@ -982,7 +982,7 @@ public class Mtasc extends Task {
      * Resets the compile files.
      */
     private void resetCompileFiles() {
-        this.compileFiles = new ArrayList();
+        this.compileFiles = new HashSet();
     }
 
     /**
@@ -1254,8 +1254,9 @@ public class Mtasc extends Task {
                 + ".");
             if (this.split) {
                 boolean hasCompileErrors = false;
-                for (int i = 0; i < this.compileFiles.size(); i++) {
-                    Commandline cmd = setupCommand((File) this.compileFiles.get(i));
+                Iterator it = this.compileFiles.iterator();
+                while (it.hasNext()) {
+                    Commandline cmd = setupCommand((File) it.next());
                     try {
                         executeCommand(cmd);
                     }
@@ -1470,8 +1471,9 @@ public class Mtasc extends Task {
      * @param command the command to add the compile files to
      */
     private void addCompileFiles(Commandline command) {
-        for (int i = 0; i < this.compileFiles.size(); i++) {
-            File cf = (File) this.compileFiles.get(i);
+    	Iterator it = this.compileFiles.iterator();
+        while (it.hasNext()) {
+            File cf = (File) it.next();
             addCompileFile(command, cf);
         }
     }
