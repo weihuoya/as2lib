@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,18 +21,13 @@ import org.actionstep.NSComboBox;
 import org.actionstep.NSProgressIndicator;
 import org.actionstep.NSStepper;
 import org.actionstep.NSTextField;
-import org.actionstep.NSView;
-import org.as2lib.context.ApplicationEvent;
-import org.as2lib.context.ApplicationListener;
-import org.as2lib.sample.pizza.control.Controller;
-import org.as2lib.sample.pizza.event.OrderPlacedEvent;
+import org.as2lib.sample.pizza.view.OrderForm;
 
 /**
  * @author Simon Wacker
  */
-class org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm extends NSView implements ApplicationListener {
-	
-	private var controller:Controller = null;
+class org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm extends OrderForm {
+
 	private var nameTextField:NSTextField = null;
 	private var quantityStepper:NSStepper = null;
 	private var sizeComboBox:NSComboBox = null;
@@ -43,92 +38,102 @@ class org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm extends NSView
 	private var removeButton:NSButton = null;
 	private var placeOrderButton:NSButton = null;
 	private var progressBar:NSProgressIndicator = null;
-	
+
 	public function ActionStepOrderForm(Void) {
 	}
-	
-	public function onApplicationEvent(event:ApplicationEvent):Void {
-		if (event instanceof OrderPlacedEvent) {
-			orderTicketList.removeAllItems();
-			controller.removeOrderItems();
-		}
+
+	private function getName(Void):String {
+		return nameTextField.stringValue();
 	}
-	
-	public function placeOrder(Void):Void {
-		progressBar.setHidden(false);
-		controller.placeOrder(nameTextField.stringValue());
+
+	private function getQuantity(Void):Number {
+		return quantityStepper.intValue();
 	}
-	
-	public function addOrderItem(Void):Void {
-		var quantity:Number = Number(quantityStepper.intValue());
-		var size:String = String(sizeComboBox.objectValueOfSelectedItem());
-		var crust:String = String(crustComboBox.objectValueOfSelectedItem());
-		var toppings:Array = getToppingNames(toppingList.selectedItems().internalList());
-		var item:String = controller.addOrderItem(quantity, size, crust, toppings);
-		orderTicketList.addItemWithLabelData(item);
-		orderTicketList.selectItemAtIndex(orderTicketList.numberOfItems() - 1);
-		removeButton.setEnabled(true);
-		if (nameTextField.stringValue() != "") {
-			placeOrderButton.setEnabled(true);
-		}
+
+	private function getSize(Void):String {
+		return String(sizeComboBox.objectValueOfSelectedItem());
 	}
-	
-	private function getToppingNames(toppingItems:Array):Array {
+
+	private function getCrust(Void):String {
+		return String(crustComboBox.objectValueOfSelectedItem());
+	}
+
+	private function getToppings(Void):Array {
 		var result:Array = new Array();
+		var toppingItems:Array = toppingList.selectedItems().internalList();
 		for (var i:Number = 0; i < toppingItems.length; i++) {
 			var item:ASListItem = toppingItems[i];
 			result.push(item.label());
 		}
 		return result;
 	}
-	
-	public function removeOrderItem(Void):Void {
+
+	private function showProgressBar(Void):Void {
+		progressBar.setHidden(false);
+	}
+
+	private function enablePlaceOrderButton(Void):Void {
+		placeOrderButton.setEnabled(true);
+	}
+
+	private function disablePlaceOrderButton(Void):Void {
+		placeOrderButton.setEnabled(false);
+	}
+
+	private function enableAddButton(Void):Void {
+		addButton.setEnabled(true);
+	}
+
+	private function disableAddButton(Void):Void {
+		addButton.setEnabled(false);
+	}
+
+	private function enableRemoveButton(Void):Void {
+		removeButton.setEnabled(true);
+	}
+
+	private function disableRemoveButton(Void):Void {
+		removeButton.setEnabled(false);
+	}
+
+	private function getOrderTicketCount(Void):Number {
+		return orderTicketList.numberOfItems();
+	}
+
+	private function getSelectedOrderTicketIndices(Void):Array {
+		var result:Array = new Array();
 		var items:Array = orderTicketList.items().internalList();
-		var itemIndices:Array = new Array();
 		for (var i:Number = 0; i < items.length; i++) {
 			var item:ASListItem = items[i];
 			if (item.isSelected()) {
-				itemIndices.push(i);
+				result.push(i);
 			}
 		}
-		controller.removeOrderItems(itemIndices);
-		for (var i:Number = itemIndices.length - 1; i >= 0; i--) {
-			orderTicketList.removeItemAtIndex(itemIndices[i]);
-		}
-		if (orderTicketList.numberOfItems() == 0) {
-			removeButton.setEnabled(false);
-			placeOrderButton.setEnabled(false);
-		}
-		else {
-			var index:Number;
-			if (orderTicketList.numberOfItems() > itemIndices[0]) {
-				index = itemIndices[0];
-			}
-			else {
-				index = orderTicketList.numberOfItems() - 1;
-			}
-			orderTicketList.selectItemAtIndex(index);
-		}
+		return result;
 	}
-	
-	public function onNameChanged(Void):Void {
-		if (nameTextField.stringValue() != "") {
-			if (orderTicketList.numberOfItems() > 0) {
-				placeOrderButton.setEnabled(true);
+
+	private function addOrderTicket(orderTicket:String):Void {
+		orderTicketList.addItemWithLabelData(orderTicket);
+		orderTicketList.selectItemAtIndex(orderTicketList.numberOfItems() - 1);
+	}
+
+	private function removeOrderTickets(orderTicketIndices:Array):Void {
+		if (orderTicketIndices != null) {
+			for (var i:Number = orderTicketIndices.length - 1; i >= 0; i--) {
+				orderTicketList.removeItemAtIndex(orderTicketIndices[i]);
 			}
 		}
 		else {
-			placeOrderButton.setEnabled(false);
+			orderTicketList.removeAllItems();
 		}
 	}
-	
-	public function onToppingsChanged(Void):Void {
-		if (toppingList.selectedItems().internalList().length == 0) {
-			addButton.setEnabled(false);
-		}
-		else {
-			addButton.setEnabled(true);
-		}
+
+	private function selectOrderTicket(orderTicketIndex:Number):Void {
+		orderTicketList.selectItemAtIndex(orderTicketIndex);
 	}
-	
+
+	private function isToppingSelected(Void):Boolean {
+		return (toppingList.selectedItems().internalList().length > 0);
+	}
+
 }

@@ -1,0 +1,197 @@
+/*
+ * Copyright the original author or authors.
+ *
+ * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.mozilla.org/MPL/MPL-1.1.html
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+import org.as2lib.context.ApplicationEvent;
+import org.as2lib.context.ApplicationListener;
+import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.AbstractOperationException;
+import org.as2lib.sample.pizza.control.Controller;
+import org.as2lib.sample.pizza.event.OrderPlacedEvent;
+
+/**
+ * @author Simon Wacker
+ */
+class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
+		ApplicationListener {
+
+	private var controller:Controller = null;
+
+	private function OrderForm(Void) {
+	}
+
+	public function onApplicationEvent(event:ApplicationEvent):Void {
+		if (event instanceof OrderPlacedEvent) {
+			removeOrderTickets(null);
+			disablePlaceOrderButton();
+			disableRemoveButton();
+			controller.removeOrderItems();
+		}
+	}
+
+	public function placeOrder(Void):Void {
+		showProgressBar();
+		controller.placeOrder(getName());
+	}
+
+	public function addOrderItem(Void):Void {
+		var orderTicket:String = controller.addOrderItem(getQuantity(), getSize(), getCrust(), getToppings());
+		addOrderTicket(orderTicket);
+		enableRemoveButton();
+		if (getName().length > 0) {
+			enablePlaceOrderButton();
+		}
+	}
+
+	public function removeOrderItem(Void):Void {
+		var items:Array = getSelectedOrderTicketIndices();
+		controller.removeOrderItems(items);
+		removeOrderTickets(items);
+		var orderTicketCount:Number = getOrderTicketCount();
+		if (orderTicketCount > 0) {
+			var index:Number;
+			if (orderTicketCount > items[0]) {
+				index = items[0];
+			}
+			else {
+				index = orderTicketCount - 1;
+			}
+			selectOrderTicket(index);
+		}
+		else {
+			disableRemoveButton();
+			disablePlaceOrderButton();
+		}
+	}
+
+	public function onNameChanged(Void):Void {
+		if (getName().length > 0) {
+			if (getOrderTicketCount() > 0) {
+				enablePlaceOrderButton();
+			}
+		}
+		else {
+			disablePlaceOrderButton();
+		}
+	}
+
+	public function onToppingsChanged(Void):Void {
+		if (isToppingSelected()) {
+			enableAddButton();
+		}
+		else {
+			disableAddButton();
+		}
+	}
+
+	private function getName(Void):String {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+		return null;
+	}
+
+	private function getQuantity(Void):Number {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+		return null;
+	}
+
+	private function getSize(Void):String {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+		return null;
+	}
+
+	private function getCrust(Void):String {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+		return null;
+	}
+
+	private function getToppings(Void):Array {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+		return null;
+	}
+
+	private function showProgressBar(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function enablePlaceOrderButton(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function disablePlaceOrderButton(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function enableAddButton(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function disableAddButton(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function enableRemoveButton(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function disableRemoveButton(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function getOrderTicketCount(Void):Number {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+		return null;
+	}
+
+	private function getSelectedOrderTicketIndices(Void):Array {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+		return null;
+	}
+
+	private function addOrderTicket(orderTicket:String):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function removeOrderTickets(orderTicketIndices:Array):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function selectOrderTicket(orderTicketIndex:Number):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+	}
+
+	private function isToppingSelected(Void):Boolean {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
+		return null;
+	}
+
+}
