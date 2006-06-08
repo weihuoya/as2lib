@@ -1,9 +1,8 @@
 <?xml version="1.0"?>
 
 <beans xmlns:aw="org.aswing">
-	
-	<Form id="orderForm" constraints="v{org.aswing.WindowLayout.CONTENT}"
-			class="org.as2lib.sample.pizza.view.aswing.AsWingOrderForm">
+
+	<bean id="formController" class="org.as2lib.sample.pizza.view.aswing.AsWingOrderForm">
 		<controller>r{controller}</controller>
 		<nameTextField>r{nameTextField}</nameTextField>
 		<quantityTextField>r{quantityTextField}</quantityTextField>
@@ -15,6 +14,9 @@
 		<removeButton>r{removeButton}</removeButton>
 		<placeOrderButton>r{placeOrderButton}</placeOrderButton>
 		<progressBar>r{progressBar}</progressBar>
+	</bean>
+
+	<Form id="orderForm" constraints="v{org.aswing.WindowLayout.CONTENT}">
 		<aw:SoftBox>
 			<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
 			<border><Border/></border>
@@ -22,9 +24,7 @@
 				<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.X_AXIS}" gap="20"/></layout>
 				<FormItem>
 					<aw:JLabel text="{messageSource.message[label.name]}"/>
-					<TextField id="nameTextField">
-						<property name="eventListener[onTextChanged]">d{orderForm.onNameChanged}</property>
-					</TextField>
+					<TextField id="nameTextField" eventListener-onTextChanged="d{formController.onNameChanged}"/>
 				</FormItem>
 				<aw:SoftBox>
 					<layout><aw:SoftBoxLayout axis="v{org.aswing.SoftBoxLayout.Y_AXIS}" gap="10"/></layout>
@@ -64,7 +64,7 @@
 						<aw:JLabel text="{messageSource.message[label.toppings]}"/>
 						<aw:JScrollPane preferredWidth="140" preferredHeight="120">
 							<view>
-								<aw:JList id="toppingList" selectionListener="d{orderForm.onToppingsChanged}">
+								<aw:JList id="toppingList" selectionListener="d{formController.onToppingsChanged}">
 									<listData>
 										<array>
 											<value>{messageSource.message[toppings.sausage]}</value>
@@ -82,7 +82,7 @@
 						</aw:JScrollPane>
 					</FormItem>
 					<aw:JButton id="addButton" text="{messageSource.message[button.add]}"
-							actionListener="d{orderForm.addOrderItem}" enabled="false"/>
+							actionListener="d{formController.addOrderItem}" enabled="false"/>
 				</aw:SoftBox>
 			</aw:SoftBox>
 			<FormItem>
@@ -94,10 +94,10 @@
 		</aw:SoftBox>
 		<aw:JPanel background="v{org.aswing.ASColor.BLACK}" opaque="true">
 			<aw:JButton id="removeButton" text="{messageSource.message[button.remove]}"
-					actionListener="d{orderForm.removeOrderItem}" enabled="false"/>
+					actionListener="d{formController.removeOrderItem}" enabled="false"/>
 			<aw:JButton id="placeOrderButton" text="{messageSource.message[button.placeOrder]}"
-					actionListener="d{orderForm.placeOrder}" enabled="false"/>
+					actionListener="d{formController.placeOrder}" enabled="false"/>
 		</aw:JPanel>
 	</Form>
-	
+
 </beans>
