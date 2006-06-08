@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,20 +29,20 @@ import org.as2lib.sample.pizza.model.OrderItem;
  * @author Simon Wacker
  */
 class org.as2lib.sample.pizza.control.Controller extends BasicClass {
-	
+
 	private static var logger:Logger = LogManager.getLogger("org.as2lib.sample.pizza.control.Controller");
-	
+
 	private var pizzaService:PizzaService;
 	private var loadOrdersCallback:MethodInvocationCallback;
 	private var placeOrderCallback:MethodInvocationCallback;
 	private var cancelOrderCallback:MethodInvocationCallback;
 	private var currentOrder:Order;
 	private var cachedOrders:Array;
-	
+
 	private function Controller(Void) {
 		currentOrder = new Order();
 	}
-	
+
 	public function init(Void):Void {
 		if (pizzaService == null) {
 			throw new IllegalArgumentException("Pizza service is required.", this, arguments);
@@ -57,30 +57,30 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 			throw new IllegalArgumentException("Cancel order callback is required.", this, arguments);
 		}
 	}
-	
+
 	public function setPizzaService(pizzaService:PizzaService):Void {
 		this.pizzaService = pizzaService;
 	}
-	
+
 	public function setLoadOrdersCallback(loadOrdersCallback:MethodInvocationCallback):Void {
 		this.loadOrdersCallback = loadOrdersCallback;
 	}
-	
+
 	public function setPlaceOrderCallback(placeOrderCallback:MethodInvocationCallback):Void {
 		this.placeOrderCallback = placeOrderCallback;
 	}
-	
+
 	public function setCancelOrderCallback(cancelOrderCallback:MethodInvocationCallback):Void {
 		this.cancelOrderCallback = cancelOrderCallback;
 	}
-	
+
 	public function placeOrder(customerName:String):Void {
 		if (logger.isInfoEnabled()) {
 			logger.info("Placing order [" + currentOrder + "] for customer '" + customerName + "'.");
 		}
 		pizzaService.order(customerName, currentOrder.getItems(), placeOrderCallback);
 	}
-	
+
 	public function cancelOrder(orderIndex:Number):Void {
 		var orderId:Number = Order(cachedOrders[orderIndex]).getId();
 		if (logger.isInfoEnabled()) {
@@ -88,32 +88,31 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 		}
 		pizzaService.cancelOrder(orderId, cancelOrderCallback);
 	}
-	
+
 	public function loadOrders(Void):Void {
 		if (logger.isInfoEnabled()) {
 			logger.info("Loading orders.");
 		}
 		pizzaService.getOrderList(loadOrdersCallback);
 	}
-	
+
 	public function addOrderItem(quantity:Number, size:String, crust:String, toppings:Array):String {
-		var details:String = OrderItem.generateDetails(size, crust, toppings);
+		var details:String = OrderItem.generateDetails(quantity, size, crust, toppings);
 		if (logger.isInfoEnabled()) {
-			logger.info("Adding order item with quantity '" + quantity + "' and details '" + details + "'.");
+			logger.info("Adding order item '" + details + "'.");
 		}
 		var orderItem:OrderItem = new OrderItem(quantity, details);
 		currentOrder.addItem(orderItem);
-		// TODO: toString is normally not ment to be displayed to the user
-		return orderItem.toString();
+		return details;
 	}
-	
+
 	public function removeOrderItem(itemIndex:Number):Void {
 		if (logger.isInfoEnabled()) {
 			logger.info("Removing order item '" + itemIndex + "'.");
 		}
 		currentOrder.removeItem(itemIndex);
 	}
-	
+
 	public function removeOrderItems(items:Array):Void {
 		if (items == null) {
 			currentOrder.removeItems();
@@ -124,7 +123,7 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 			}
 		}
 	}
-	
+
 	public function getOrderNames(Void):Array {
 		var result:Array = new Array();
 		for (var i:Number = 0; i < cachedOrders.length; i++) {
@@ -133,21 +132,20 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 		}
 		return result;
 	}
-	
+
 	public function getPizzaDetails(orderIndex:Number):Array {
 		var result:Array = new Array();
 		var order:Order = cachedOrders[orderIndex];
 		var orderItems:Array = order.getItems();
 		for (var i:Number = 0; i < orderItems.length; i++) {
 			var orderItem:OrderItem = orderItems[i];
-			// TODO: toString methods are intended for the developer and not for display to users
-			result.push(orderItem.toString());
+			result.push(orderItem.getDetails());
 		}
 		return result;
 	}
-	
+
 	public function setOrders(orders:Array):Void {
 		this.cachedOrders = orders;
 	}
-	
+
 }
