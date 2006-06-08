@@ -96,11 +96,11 @@ class org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm extends OrderF
 		removeButton.setEnabled(false);
 	}
 
-	private function getOrderTicketCount(Void):Number {
+	private function getOrderItemCount(Void):Number {
 		return orderTicketList.numberOfItems();
 	}
 
-	private function getSelectedOrderTicketIndices(Void):Array {
+	private function getSelectedOrderItemIndices(Void):Array {
 		var result:Array = new Array();
 		var items:Array = orderTicketList.items().internalList();
 		for (var i:Number = 0; i < items.length; i++) {
@@ -112,15 +112,15 @@ class org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm extends OrderF
 		return result;
 	}
 
-	private function addOrderTicket(orderTicket:String):Void {
-		orderTicketList.addItemWithLabelData(orderTicket);
+	private function addToOrderTicket(orderItem:String):Void {
+		orderTicketList.addItemWithLabelData(orderItem);
 		orderTicketList.selectItemAtIndex(orderTicketList.numberOfItems() - 1);
 	}
 
-	private function removeOrderTickets(orderTicketIndices:Array):Void {
-		if (orderTicketIndices != null) {
-			for (var i:Number = orderTicketIndices.length - 1; i >= 0; i--) {
-				orderTicketList.removeItemAtIndex(orderTicketIndices[i]);
+	private function removeFromOrderTicket(orderItemIndices:Array):Void {
+		if (orderItemIndices != null) {
+			for (var i:Number = orderItemIndices.length - 1; i >= 0; i--) {
+				orderTicketList.removeItemAtIndex(orderItemIndices[i]);
 			}
 		}
 		else {
@@ -128,8 +128,8 @@ class org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm extends OrderF
 		}
 	}
 
-	private function selectOrderTicket(orderTicketIndex:Number):Void {
-		orderTicketList.selectItemAtIndex(orderTicketIndex);
+	private function selectOrderItem(orderItemIndex:Number):Void {
+		orderTicketList.selectItemAtIndex(orderItemIndex);
 	}
 
 	private function isToppingSelected(Void):Boolean {
