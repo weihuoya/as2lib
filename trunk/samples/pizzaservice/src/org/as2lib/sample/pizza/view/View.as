@@ -21,6 +21,7 @@ import org.as2lib.context.event.SuccessEvent;
 import org.as2lib.context.MessageSource;
 import org.as2lib.context.MessageSourceAware;
 import org.as2lib.core.BasicClass;
+import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.sample.pizza.control.Controller;
 import org.as2lib.sample.pizza.event.OrderPlacedEvent;
 
@@ -69,12 +70,18 @@ class org.as2lib.sample.pizza.view.View extends BasicClass implements
 	}
 
 	private function setStatusMessage(message:String):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"overriden by subclasses.", this, arguments);
 	}
 
 	private function hideProgressBar(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"overriden by subclasses.", this, arguments);
 	}
 
 	private function showProgressBar(Void):Void {
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"overriden by subclasses.", this, arguments);
 	}
 
 }
