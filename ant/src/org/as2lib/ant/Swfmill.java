@@ -57,15 +57,24 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  *
  * <p>This task can take the following arguments:
  * <ul>
- *   <li>src or source or in</li>
- *   <li>dest or destination or out</li>
- *   <li>xsl</li>
- *   <li>cmd or command (supported values: 'swf2xml', 'xml2swf', 'simple', 'xslt')</li>
- *   <li>help</li>
- *   <li>quiet</li>
- *   <li>verbose</li>
- *   <li>dump</li>
- *   <li>swfmill</li>
+ *   <li>
+ *     {@link #setSrc(File) src} or {@link #setSource(File) source} or {@link #setIn(File) in}
+ *     (swf or xml file depending on the command to use)
+ *   </li>
+ *   <li>
+ *     {@link #setDest(File) dest} or {@link #setDestination(File) destination} or
+ *     {@link #setOut(File) out} (xml or swf file depending on the command to use)
+ *   </li>
+ *   <li>{@link #setXsl(File) xsl} (xslt stylesheet)</li>
+ *   <li>
+ *     {@link #setCmd(Command) cmd} or {@link #setCommand(Command) command}
+ *     (supported values: 'swf2xml', 'xml2swf', 'simple', 'xslt')
+ *   </li>
+ *   <li>{@link #setQuiet(boolean) quiet} (turn quiet mode on?)</li>
+ *   <li>{@link #setVerbose(boolean) verbose} (turn verbose mode on?)</li>
+ *   <li>{@link #setDump(boolean) dump} (dump swf data when loaded?)</li>
+ *   <li>{@link #setSwfmill(String) swfmill (path to or name of the swfmill executable)</li>
+ *   <li>{@link #setHelp(boolean) help} (show help message)</li>
  * </ul>
  *
  * @author Simon Wacker
