@@ -34,7 +34,7 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 
 	public function onApplicationEvent(event:ApplicationEvent):Void {
 		if (event instanceof OrderPlacedEvent) {
-			removeOrderTickets(null);
+			removeFromOrderTicket(null);
 			disablePlaceOrderButton();
 			disableRemoveButton();
 			controller.removeOrderItems();
@@ -47,8 +47,8 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 	}
 
 	public function addOrderItem(Void):Void {
-		var orderTicket:String = controller.addOrderItem(getQuantity(), getSize(), getCrust(), getToppings());
-		addOrderTicket(orderTicket);
+		var orderItem:String = controller.addOrderItem(getQuantity(), getSize(), getCrust(), getToppings());
+		addToOrderTicket(orderItem);
 		enableRemoveButton();
 		if (getName().length > 0) {
 			enablePlaceOrderButton();
@@ -56,19 +56,19 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 	}
 
 	public function removeOrderItem(Void):Void {
-		var items:Array = getSelectedOrderTicketIndices();
+		var items:Array = getSelectedOrderItemIndices();
 		controller.removeOrderItems(items);
-		removeOrderTickets(items);
-		var orderTicketCount:Number = getOrderTicketCount();
-		if (orderTicketCount > 0) {
+		removeFromOrderTicket(items);
+		var orderItemCount:Number = getOrderItemCount();
+		if (orderItemCount > 0) {
 			var index:Number;
-			if (orderTicketCount > items[0]) {
+			if (orderItemCount > items[0]) {
 				index = items[0];
 			}
 			else {
-				index = orderTicketCount - 1;
+				index = orderItemCount - 1;
 			}
-			selectOrderTicket(index);
+			selectOrderItem(index);
 		}
 		else {
 			disableRemoveButton();
@@ -78,7 +78,7 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 
 	public function onNameChanged(Void):Void {
 		if (getName().length > 0) {
-			if (getOrderTicketCount() > 0) {
+			if (getOrderItemCount() > 0) {
 				enablePlaceOrderButton();
 			}
 		}
@@ -161,29 +161,29 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 				"implemented by subclasses.", this, arguments);
 	}
 
-	private function getOrderTicketCount(Void):Number {
+	private function getOrderItemCount(Void):Number {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 		return null;
 	}
 
-	private function getSelectedOrderTicketIndices(Void):Array {
+	private function getSelectedOrderItemIndices(Void):Array {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 		return null;
 	}
 
-	private function addOrderTicket(orderTicket:String):Void {
+	private function addToOrderTicket(orderItem:String):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}
 
-	private function removeOrderTickets(orderTicketIndices:Array):Void {
+	private function removeFromOrderTicket(orderItemIndices:Array):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}
 
-	private function selectOrderTicket(orderTicketIndex:Number):Void {
+	private function selectOrderItem(orderItemIndex:Number):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}

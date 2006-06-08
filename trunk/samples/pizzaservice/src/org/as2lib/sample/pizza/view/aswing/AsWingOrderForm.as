@@ -89,28 +89,28 @@ class org.as2lib.sample.pizza.view.aswing.AsWingOrderForm extends OrderForm {
 		removeButton.setEnabled(false);
 	}
 
-	private function getOrderTicketCount(Void):Number {
+	private function getOrderItemCount(Void):Number {
 		return orderTicketList.getModel().getSize();
 	}
 
-	private function getSelectedOrderTicketIndices(Void):Array {
+	private function getSelectedOrderItemIndices(Void):Array {
 		return orderTicketList.getSelectedIndices();
 	}
 
-	private function addOrderTicket(orderTicket:String):Void {
+	private function addToOrderTicket(orderItem:String):Void {
 		// TODO: Find a better solution for adding items to the list.
 		var model:VectorListModel = VectorListModel(orderTicketList.getModel());
-		model.append(orderTicket);
-		selectOrderTicket(model.getSize() - 1);
+		model.append(orderItem);
+		selectOrderItem(model.getSize() - 1);
 		orderTicketList.scrollToBottomLeft();
 	}
 
-	private function removeOrderTickets(orderTicketIndices:Array):Void {
+	private function removeFromOrderTicket(orderItemIndices:Array):Void {
 		// TODO: Find a better solution for removing items from the list.
 		var model:VectorListModel = VectorListModel(orderTicketList.getModel());
-		if (orderTicketIndices != null) {
-			for (var i:Number = orderTicketIndices.length - 1; i >= 0; i--) {
-				model.removeAt(orderTicketIndices[i]);
+		if (orderItemIndices != null) {
+			for (var i:Number = orderItemIndices.length - 1; i >= 0; i--) {
+				model.removeAt(orderItemIndices[i]);
 			}
 		}
 		else {
@@ -118,8 +118,8 @@ class org.as2lib.sample.pizza.view.aswing.AsWingOrderForm extends OrderForm {
 		}
 	}
 
-	private function selectOrderTicket(orderTicketIndex:Number):Void {
-		orderTicketList.setSelectedIndex(orderTicketIndex);
+	private function selectOrderItem(orderItemIndex:Number):Void {
+		orderTicketList.setSelectedIndex(orderItemIndex);
 	}
 
 	private function isToppingSelected(Void):Boolean {

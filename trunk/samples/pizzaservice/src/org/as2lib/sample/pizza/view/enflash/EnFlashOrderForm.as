@@ -80,32 +80,32 @@ class org.as2lib.sample.pizza.view.enflash.EnFlashOrderForm extends OrderForm {
 		getRemoveButton().enabled = false;
 	}
 
-	private function getOrderTicketCount(Void):Number {
+	private function getOrderItemCount(Void):Number {
 		return getOrderTicketList()["_content"].length;
 	}
 
-	private function getSelectedOrderTicketIndices(Void):Array {
+	private function getSelectedOrderItemIndices(Void):Array {
 		return [getOrderTicketList().selectedIndex];
 	}
 
-	private function addOrderTicket(orderTicket:String):Void {
+	private function addToOrderTicket(orderItem:String):Void {
 		var orderTicketList:ListBox = getOrderTicketList();
 		var listItem:ListItem = orderTicketList.addItem();
-		listItem.value = orderTicket;
+		listItem.value = orderItem;
 		orderTicketList.selectedIndex = orderTicketList["_content"].length - 1;
 	}
 
-	private function removeOrderTickets(orderTicketIndices:Array):Void {
-		if (orderTicketIndices != null) {
-			getOrderTicketList().removeItemAt(orderTicketIndices[0]);
+	private function removeFromOrderTicket(orderItemIndices:Array):Void {
+		if (orderItemIndices != null) {
+			getOrderTicketList().removeItemAt(orderItemIndices[0]);
 		}
 		else {
 			getOrderTicketList().removeAll();
 		}
 	}
 
-	private function selectOrderTicket(orderTicketIndex:Number):Void {
-		getOrderTicketList().selectedIndex = orderTicketIndex;
+	private function selectOrderItem(orderItemIndex:Number):Void {
+		getOrderTicketList().selectedIndex = orderItemIndex;
 	}
 
 	private function isToppingSelected(Void):Boolean {
