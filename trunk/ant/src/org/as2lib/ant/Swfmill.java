@@ -294,6 +294,21 @@ public class Swfmill extends Task {
      *
      * <p>The xslt command is used if a xsl file is set.
      *
+     * <p>Supported commands are:
+     * <ul>
+     *   <li>'swf2xml' converts from {@link #setIn(File) SWF} to {@link #setOut(File) XML}.</li>
+     *   <li>'xml2swf' converts from {@link #setIn(File) XML} to {@link #setOut(File) SWF}.</li>
+     *   <li>
+     *     'simple' converts from a {@link #setIn(File) movie definition file} to
+     *     {@link #setOut(File) SWF}.
+     *   </li>
+     *   <li>
+     *     'xslt' transforms the {@link #setIn(File) input XML file} to the
+     *     {@link #setOut(File) output file} as described by the
+     *     {@link #setXsl(File) XSLT stylesheet}.
+     *   </li>
+     * </ul>
+     *
      * @param command the swfmill command to use
      */
     public void setCmd(Command command) {
