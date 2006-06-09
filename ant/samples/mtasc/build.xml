@@ -6,8 +6,8 @@
   <property name="build.dir" location="build"/>
 
   <target name="sample" description="builds sample swf">
-    <mtasc src="${src.dir}/com/simonwacker/ant/Sample.as" classpath="${src.dir}"
-        swf="${build.dir}/sample.swf" header="300:100:31:00FF00" main="yes"/>
+    <mtasc src="${src.dir}/com/simonwacker/ant/Sample.as" swf="${build.dir}/sample.swf"
+        classpath="${src.dir}" header="300:100:31:00FF00" main="yes"/>
   </target>
 
 </project>
