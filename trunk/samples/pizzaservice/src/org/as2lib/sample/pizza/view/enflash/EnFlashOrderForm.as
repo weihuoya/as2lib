@@ -52,32 +52,20 @@ class org.as2lib.sample.pizza.view.enflash.EnFlashOrderForm extends OrderForm {
 		return [getToppingList().selectedItem.value];
 	}
 
-	private function showProgressBar(Void):Void {
-		getProgressBar().visible = true;
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		getProgressBar().visible = showProgressBar;
 	}
 
-	private function enablePlaceOrderButton(Void):Void {
-		getPlaceOrderButton().enabled = true;
+	private function setEnablePlaceOrderButton(enablePlaceOrderButton:Boolean):Void {
+		getPlaceOrderButton().enabled = enablePlaceOrderButton;
 	}
 
-	private function disablePlaceOrderButton(Void):Void {
-		getPlaceOrderButton().enabled = false;
+	private function setEnableAddButton(enableAddButton:Boolean):Void {
+		getAddButton().enabled = enableAddButton;
 	}
 
-	private function enableAddButton(Void):Void {
-		getAddButton().enabled = true;
-	}
-
-	private function disableAddButton(Void):Void {
-		getAddButton().enabled = false;
-	}
-
-	private function enableRemoveButton(Void):Void {
-		getRemoveButton().enabled = true;
-	}
-
-	private function disableRemoveButton(Void):Void {
-		getRemoveButton().enabled = false;
+	private function setEnableRemoveButton(enableRemoveButton:Boolean):Void {
+		getRemoveButton().enabled = enableRemoveButton;
 	}
 
 	private function getOrderItemCount(Void):Number {

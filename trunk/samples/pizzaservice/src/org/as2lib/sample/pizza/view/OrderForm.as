@@ -35,23 +35,23 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 	public function onApplicationEvent(event:ApplicationEvent):Void {
 		if (event instanceof OrderPlacedEvent) {
 			removeFromOrderTicket(null);
-			disablePlaceOrderButton();
-			disableRemoveButton();
+			setEnablePlaceOrderButton(false);
+			setEnableRemoveButton(false);
 			controller.removeOrderItems();
 		}
 	}
 
 	public function placeOrder(Void):Void {
-		showProgressBar();
+		setShowProgressBar(true);
 		controller.placeOrder(getName());
 	}
 
 	public function addOrderItem(Void):Void {
 		var orderItem:String = controller.addOrderItem(getQuantity(), getSize(), getCrust(), getToppings());
 		addToOrderTicket(orderItem);
-		enableRemoveButton();
+		setEnableRemoveButton(true);
 		if (getName().length > 0) {
-			enablePlaceOrderButton();
+			setEnablePlaceOrderButton(true);
 		}
 	}
 
@@ -71,28 +71,28 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 			selectOrderItem(index);
 		}
 		else {
-			disableRemoveButton();
-			disablePlaceOrderButton();
+			setEnableRemoveButton(false);
+			setEnablePlaceOrderButton(false);
 		}
 	}
 
 	public function onNameChanged(Void):Void {
 		if (getName().length > 0) {
 			if (getOrderItemCount() > 0) {
-				enablePlaceOrderButton();
+				setEnablePlaceOrderButton(true);
 			}
 		}
 		else {
-			disablePlaceOrderButton();
+			setEnablePlaceOrderButton(false);
 		}
 	}
 
 	public function onToppingsChanged(Void):Void {
 		if (isToppingSelected()) {
-			enableAddButton();
+			setEnableAddButton(true);
 		}
 		else {
-			disableAddButton();
+			setEnableAddButton(false);
 		}
 	}
 
@@ -126,37 +126,22 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 		return null;
 	}
 
-	private function showProgressBar(Void):Void {
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}
 
-	private function enablePlaceOrderButton(Void):Void {
+	private function setEnablePlaceOrderButton(enablePlaceOrderButton:Boolean):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}
 
-	private function disablePlaceOrderButton(Void):Void {
+	private function setEnableAddButton(enableAddButton:Boolean):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}
 
-	private function enableAddButton(Void):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
-	}
-
-	private function disableAddButton(Void):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
-	}
-
-	private function enableRemoveButton(Void):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
-	}
-
-	private function disableRemoveButton(Void):Void {
+	private function setEnableRemoveButton(enableRemoveButton:Boolean):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}

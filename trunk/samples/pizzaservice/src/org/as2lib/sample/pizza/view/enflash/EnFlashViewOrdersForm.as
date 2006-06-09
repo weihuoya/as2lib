@@ -28,20 +28,12 @@ class org.as2lib.sample.pizza.view.enflash.EnFlashViewOrdersForm extends ViewOrd
 	public function EnFlashViewOrdersForm(Void) {
 	}
 
-	private function showProgressBar(Void):Void {
-		getProgressBar().visible = true;
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		getProgressBar().visible = showProgressBar;
 	}
 
-	private function hideProgressBar(Void):Void {
-		getProgressBar().visible = false;
-	}
-
-	private function enableCancelOrderButton(Void):Void {
-		getCancelOrderButton().enabled = true;
-	}
-
-	private function disableCancelOrderButton(Void):Void {
-		getCancelOrderButton().enabled = false;
+	private function setEnableCancelOrderButton(enableCancelOrderButton:Boolean):Void {
+		getCancelOrderButton().enabled = enableCancelOrderButton;
 	}
 
 	private function getSelectedOrderIndex(Void):Number {

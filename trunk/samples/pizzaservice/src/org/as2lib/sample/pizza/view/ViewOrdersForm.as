@@ -36,7 +36,7 @@ class org.as2lib.sample.pizza.view.ViewOrdersForm extends BasicClass implements
 	public function onApplicationEvent(event:ApplicationEvent):Void {
 		if (event instanceof OrdersLoadedEvent) {
 			updateOrders();
-			hideProgressBar();
+			setShowProgressBar(false);
 			return;
 		}
 		if (event instanceof OrderCanceledEvent) {
@@ -46,7 +46,7 @@ class org.as2lib.sample.pizza.view.ViewOrdersForm extends BasicClass implements
 	}
 
 	public function cancelOrder(Void):Void {
-		showProgressBar();
+		setShowProgressBar(true);
 		var orderIndex:Number = getSelectedOrderIndex();
 		controller.cancelOrder(orderIndex);
 	}
@@ -56,10 +56,10 @@ class org.as2lib.sample.pizza.view.ViewOrdersForm extends BasicClass implements
 		setOrders(orderNames);
 		if (orderNames.length > 0) {
 			selectOrder(0);
-			enableCancelOrderButton();
+			setEnableCancelOrderButton(true);
 		}
 		else {
-			disableCancelOrderButton();
+			setEnableCancelOrderButton(false);
 		}
 		updatePizzas();
 	}
@@ -69,20 +69,20 @@ class org.as2lib.sample.pizza.view.ViewOrdersForm extends BasicClass implements
 		if (orderIndex > -1) {
 			var pizzaDetails:Array = controller.getPizzaDetails(orderIndex);
 			setPizzas(pizzaDetails);
-			enableCancelOrderButton();
+			setEnableCancelOrderButton(true);
 		}
 		else {
 			setPizzas(null);
-			disableCancelOrderButton();
+			setEnableCancelOrderButton(false);
 		}
 	}
 
-	private function showProgressBar(Void):Void {
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}
 
-	private function hideProgressBar(Void):Void {
+	private function setEnableCancelOrderButton(enableCancelOrderButton:Boolean):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}
@@ -94,16 +94,6 @@ class org.as2lib.sample.pizza.view.ViewOrdersForm extends BasicClass implements
 	}
 
 	private function selectOrder(orderIndex:Number):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
-	}
-
-	private function enableCancelOrderButton(Void):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
-	}
-
-	private function disableCancelOrderButton(Void):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}

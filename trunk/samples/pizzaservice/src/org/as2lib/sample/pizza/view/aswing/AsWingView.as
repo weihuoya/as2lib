@@ -50,12 +50,8 @@ class org.as2lib.sample.pizza.view.aswing.AsWingView extends View {
 		statusLabel.setText(message);
 	}
 
-	private function hideProgressBar(Void):Void {
-		progressBar.setVisible(false);
-	}
-
-	private function showProgressBar(Void):Void {
-		progressBar.setVisible(true);
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		progressBar.setVisible(showProgressBar);
 	}
 
 }
