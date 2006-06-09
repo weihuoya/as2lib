@@ -1,0 +1,13 @@
+<project name="As2api Ant Task - Sample" default="sample" basedir=".">
+
+  <taskdef name="as2api" classname="org.as2lib.ant.As2api" classpath="../../as2ant.jar"/>
+
+  <property name="src.dir" location="../../flash"/>
+  <property name="docs.dir" location="docs"/>
+
+  <target name="sample" description="generates api documentation">
+    <as2api package="org.as2lib.test.unit" classpath="${src.dir}" outputDir="${docs.dir}/api"
+        dotExe="dot.exe" drawDiagrams="yes" sources="yes" title="As2api Ant Task - Sample"/>
+  </target>
+
+</project>
