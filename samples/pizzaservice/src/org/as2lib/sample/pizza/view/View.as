@@ -48,7 +48,7 @@ class org.as2lib.sample.pizza.view.View extends BasicClass implements
 				var message:String = messageSource.getMessage(errorCode);
 				setStatusMessage(message);
 			}
-			hideProgressBar();
+			setShowProgressBar(false);
 			return;
 		}
 		if (event instanceof OrderPlacedEvent) {
@@ -65,7 +65,7 @@ class org.as2lib.sample.pizza.view.View extends BasicClass implements
 	}
 
 	public function showViewOrdersForm(Void):Void {
-		showProgressBar();
+		setShowProgressBar(true);
 		controller.loadOrders();
 	}
 
@@ -74,12 +74,7 @@ class org.as2lib.sample.pizza.view.View extends BasicClass implements
 				"implemented by subclasses.", this, arguments);
 	}
 
-	private function hideProgressBar(Void):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
-	}
-
-	private function showProgressBar(Void):Void {
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
 		throw new AbstractOperationException("This method is abstract and must be " +
 				"implemented by subclasses.", this, arguments);
 	}

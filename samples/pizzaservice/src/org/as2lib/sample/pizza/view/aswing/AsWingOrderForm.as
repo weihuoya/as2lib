@@ -61,32 +61,20 @@ class org.as2lib.sample.pizza.view.aswing.AsWingOrderForm extends OrderForm {
 		return toppingList.getSelectedValues();
 	}
 
-	private function showProgressBar(Void):Void {
-		progressBar.setVisible(true);
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		progressBar.setVisible(showProgressBar);
 	}
 
-	private function enablePlaceOrderButton(Void):Void {
-		placeOrderButton.setEnabled(true);
+	private function setEnablePlaceOrderButton(enablePlaceOrderButton:Boolean):Void {
+		placeOrderButton.setEnabled(enablePlaceOrderButton);
 	}
 
-	private function disablePlaceOrderButton(Void):Void {
-		placeOrderButton.setEnabled(false);
+	private function setEnableAddButton(enableAddButton:Boolean):Void {
+		addButton.setEnabled(enableAddButton);
 	}
 
-	private function enableAddButton(Void):Void {
-		addButton.setEnabled(true);
-	}
-
-	private function disableAddButton(Void):Void {
-		addButton.setEnabled(false);
-	}
-
-	private function enableRemoveButton(Void):Void {
-		removeButton.setEnabled(true);
-	}
-
-	private function disableRemoveButton(Void):Void {
-		removeButton.setEnabled(false);
+	private function setEnableRemoveButton(enableRemoveButton:Boolean):Void {
+		removeButton.setEnabled(enableRemoveButton);
 	}
 
 	private function getOrderItemCount(Void):Number {
@@ -98,7 +86,6 @@ class org.as2lib.sample.pizza.view.aswing.AsWingOrderForm extends OrderForm {
 	}
 
 	private function addToOrderTicket(orderItem:String):Void {
-		// TODO: Find a better solution for adding items to the list.
 		var model:VectorListModel = VectorListModel(orderTicketList.getModel());
 		model.append(orderItem);
 		selectOrderItem(model.getSize() - 1);
@@ -106,7 +93,6 @@ class org.as2lib.sample.pizza.view.aswing.AsWingOrderForm extends OrderForm {
 	}
 
 	private function removeFromOrderTicket(orderItemIndices:Array):Void {
-		// TODO: Find a better solution for removing items from the list.
 		var model:VectorListModel = VectorListModel(orderTicketList.getModel());
 		if (orderItemIndices != null) {
 			for (var i:Number = orderItemIndices.length - 1; i >= 0; i--) {

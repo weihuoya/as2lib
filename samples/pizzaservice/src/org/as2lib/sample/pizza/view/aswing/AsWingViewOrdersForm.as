@@ -32,20 +32,12 @@ class org.as2lib.sample.pizza.view.aswing.AsWingViewOrdersForm extends ViewOrder
 	public function AsWingViewOrdersForm(Void) {
 	}
 
-	private function showProgressBar(Void):Void {
-		progressBar.setVisible(true);
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		progressBar.setVisible(showProgressBar);
 	}
 
-	private function hideProgressBar(Void):Void {
-		progressBar.setVisible(false);
-	}
-
-	private function enableCancelOrderButton(Void):Void {
-		cancelOrderButton.setEnabled(true);
-	}
-
-	private function disableCancelOrderButton(Void):Void {
-		cancelOrderButton.setEnabled(false);
+	private function setEnableCancelOrderButton(enableCancelOrderButton:Boolean):Void {
+		cancelOrderButton.setEnabled(enableCancelOrderButton);
 	}
 
 	private function getSelectedOrderIndex(Void):Number {

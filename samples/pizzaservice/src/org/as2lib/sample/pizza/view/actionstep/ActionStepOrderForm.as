@@ -68,32 +68,20 @@ class org.as2lib.sample.pizza.view.actionstep.ActionStepOrderForm extends OrderF
 		return result;
 	}
 
-	private function showProgressBar(Void):Void {
-		progressBar.setHidden(false);
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		progressBar.setHidden(!showProgressBar);
 	}
 
-	private function enablePlaceOrderButton(Void):Void {
-		placeOrderButton.setEnabled(true);
+	private function setEnablePlaceOrderButton(enablePlaceOrderButton:Boolean):Void {
+		placeOrderButton.setEnabled(enablePlaceOrderButton);
 	}
 
-	private function disablePlaceOrderButton(Void):Void {
-		placeOrderButton.setEnabled(false);
+	private function setEnableAddButton(enableAddButton:Boolean):Void {
+		addButton.setEnabled(enableAddButton);
 	}
 
-	private function enableAddButton(Void):Void {
-		addButton.setEnabled(true);
-	}
-
-	private function disableAddButton(Void):Void {
-		addButton.setEnabled(false);
-	}
-
-	private function enableRemoveButton(Void):Void {
-		removeButton.setEnabled(true);
-	}
-
-	private function disableRemoveButton(Void):Void {
-		removeButton.setEnabled(false);
+	private function setEnableRemoveButton(enableRemoveButton:Boolean):Void {
+		removeButton.setEnabled(enableRemoveButton);
 	}
 
 	private function getOrderItemCount(Void):Number {

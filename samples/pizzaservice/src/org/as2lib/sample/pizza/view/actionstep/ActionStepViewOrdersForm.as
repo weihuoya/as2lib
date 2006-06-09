@@ -35,20 +35,12 @@ class org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm extends
 	public function ActionStepViewOrdersForm(Void) {
 	}
 
-	private function showProgressBar(Void):Void {
-		progressBar.setHidden(false);
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		progressBar.setHidden(!showProgressBar);
 	}
 
-	private function hideProgressBar(Void):Void {
-		progressBar.setHidden(true);
-	}
-
-	private function enableCancelOrderButton(Void):Void {
-		cancelOrderButton.setEnabled(true);
-	}
-
-	private function disableCancelOrderButton(Void):Void {
-		cancelOrderButton.setEnabled(false);
+	private function setEnableCancelOrderButton(enableCancelOrderButton:Boolean):Void {
+		cancelOrderButton.setEnabled(enableCancelOrderButton);
 	}
 
 	private function getSelectedOrderIndex(Void):Number {

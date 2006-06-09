@@ -47,12 +47,8 @@ class org.as2lib.sample.pizza.view.actionstep.ActionStepView extends View {
 		statusText.setStringValue(message);
 	}
 
-	private function hideProgressBar(Void):Void {
-		progressBar.setHidden(true);
-	}
-
-	private function showProgressBar(Void):Void {
-		progressBar.setHidden(false);
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		progressBar.setHidden(!showProgressBar);
 	}
 
 }

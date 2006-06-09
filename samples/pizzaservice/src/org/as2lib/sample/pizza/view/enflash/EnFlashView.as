@@ -62,12 +62,8 @@ class org.as2lib.sample.pizza.view.enflash.EnFlashView extends View {
 		statusLabel.value = message;
 	}
 
-	private function hideProgressBar(Void):Void {
-		progressBar.visible = false;
-	}
-
-	private function showProgressBar(Void):Void {
-		progressBar.visible = true;
+	private function setShowProgressBar(showProgressBar:Boolean):Void {
+		progressBar.visible = showProgressBar;
 	}
 
 }
