@@ -95,26 +95,46 @@ public class UnitTest extends Task {
 		port = 3212;
 	}
 
+	/**
+	 * Sets the swf file which executes the compiled unit tests and sends the result
+	 * through the xml socket.
+	 */
 	public void setSwf(File swf) {
 		this.swf = swf;
 	}
 
+	/**
+	 * Returns the swf file which executes the compiled unit tests and sends the result
+	 * through the xml socket.
+	 */
 	public File getSwf() {
 		return swf;
 	}
 
+	/**
+	 * Sets the flash player to run the unit test swf in.
+	 */
 	public void setFlashPlayer(File flashPlayer) {
 		this.flashPlayer = flashPlayer;
 	}
 
+	/**
+	 * Returns the flash player to run the unit test swf in.
+	 */
 	public File getFlashPlayer() {
 		return flashPlayer;
 	}
 
+	/**
+	 * Sets the port to listen for unit test results on. The default port is 3212.
+	 */
 	public void setPort(int port) {
 		this.port = port;
 	}
 
+	/**
+	 * Returns the port to listen for unit test results on. The default port is 3212.
+	 */
 	public int getPort() {
 		return port;
 	}
