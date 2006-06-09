@@ -1,16 +1,16 @@
 <project name="Swf Ant Task - Sample" default="sample" basedir=".">
-  
-  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../dist/as2ant.jar"/>
-  
+
+  <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="../../as2ant.jar"/>
+
   <property name="src.dir" location="src"/>
   <property name="files.dir" location="files"/>
   <property name="build.dir" location="build"/>
-  
+
   <target name="sample" description="builds sample swf">
     <swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf" classpath="${src.dir}" width="300" height="100" framerate="31" bgcolor="FF8A00">
       <clip id="simonwacker" import="${files.dir}/simonwacker.jpg"/>
       <font id="pixel" import="${files.dir}/PixelClassic.ttf"/>
     </swf>
   </target>
-  
+
 </project>
