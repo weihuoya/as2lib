@@ -1,0 +1,15 @@
+strict digraph class_diagram {
+  rankdir=LR;
+  TypeXmlSocketTestListener[
+    label="XmlSocketTestListener",
+    URL="XmlSocketTestListener.html",
+    tooltip="org.as2lib.test.unit.XmlSocketTestListener",
+    shape="record"
+  ];
+  TypeXmlSocketResultPrinter[
+    label="XmlSocketResultPrinter",
+    URL="XmlSocketResultPrinter.html",
+    tooltip="org.as2lib.test.unit.XmlSocketResultPrinter",
+    shape="record"
+  ];
+}
