@@ -7,7 +7,8 @@
   <property name="build.dir" location="build"/>
 
   <target name="sample" description="builds sample swf">
-    <swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf" classpath="${src.dir}" width="300" height="100" framerate="31" bgcolor="FF8A00">
+    <swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf"
+        classpath="${src.dir}" width="300" height="100" framerate="31" bgcolor="FF8A00">
       <clip id="simonwacker" import="${files.dir}/simonwacker.jpg"/>
       <font id="pixel" import="${files.dir}/PixelClassic.ttf"/>
     </swf>
