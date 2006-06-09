@@ -52,6 +52,7 @@ import org.xml.sax.SAXException;
  *   <li>&lt;pause&gt;Pause message.&lt;/pause&gt;</li>
  *   <li>&lt;resume&gt;Resume message.&lt;/resume&gt;
  *   <li>&lt;error&gt;Error message.&lt;/error&gt;</li>
+ *   <li>&lt;failure&gt;Failure message.&lt;/failure&gt;</li>
  *   <li>&lt;finish hasErrors="false/true"&gt;Finish message.&lt;/finish&gt;</li>
  *   <li>&lt;message&gt;Arbitrary message.&lt;/message&gt;</li>
  * </ul>
@@ -84,7 +85,10 @@ public class UnitTest extends Task {
 	public static final String PAUSE_ELEMENT = "pause";
 	public static final String RESUME_ELEMENT = "resume";
 	public static final String ERROR_ELEMENT = "error";
+	public static final String FAILURE_ELEMENT = "failure";
 	public static final String FINISH_ELEMENT = "finish";
+	public static final String HAS_ERRORS_ATTRIBUTE = "hasErrors";
+	public static final String TRUE_VALUE = "true";
 
 	private File swf;
 	private File flashPlayer;
@@ -220,15 +224,15 @@ public class UnitTest extends Task {
 						else if (nodeName.equals(RESUME_ELEMENT)) {
 							task.log(message + "\n-");
 						}
-						else if (nodeName.equals("error")) {
+						else if (nodeName.equals(ERROR_ELEMENT) || nodeName.equals(FAILURE_ELEMENT)) {
 							task.log(message, Project.MSG_ERR);
 						}
-						else if (nodeName.equals("finish")) {
+						else if (nodeName.equals(FINISH_ELEMENT)) {
 							if (!previousNodeName.equals(START_ELEMENT) &&
 									!previousNodeName.equals(RESUME_ELEMENT)) {
 								task.log("-");
 							}
-							if (element.getAttribute("hasErrors").equals("true")) {
+							if (element.getAttribute(HAS_ERRORS_ATTRIBUTE).equals(TRUE_VALUE)) {
 								task.log(message, Project.MSG_ERR);
 							}
 							else {
