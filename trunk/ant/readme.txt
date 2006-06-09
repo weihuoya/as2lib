@@ -9,7 +9,7 @@ ActionScript 2.0 Library (http://www.as2lib.org).
 
 
 1. Mtasc Ant Task
-   
+
    The mtasc ant task allows you to use the Motion-Twin ActionScript 2.0 Compiler (MTASC)
    in your ant build script. It supports all functionalites supported by MTASC and some
    more. The tasks does for example allow you to compile only classes matching a given
@@ -44,22 +44,32 @@ ActionScript 2.0 Library (http://www.as2lib.org).
    class.
 
 
-5. Using As2ant
-   
+5. Unit Test Task
+
+   The unit test task executes a test swf and prints the test result to the console. The
+   As2lib Unit Test and AsUnit frameworks are directly supported (XmlSocketTestListener or
+   XmlSocketResultPrinter) but you may also write your own adapter class to plugin other unit
+   test frameworks.
+   For more information take a look at the API documentation of the org.as2lib.ant.UnitTest
+   class.
+
+
+6. Using As2ant
+
    (1) Create a 'build.xml' file (take a look at 'samples/swf/build.xml' for a complete
        example):
-       
+
        <project name="My Project" default="mytarget" basedir="."></project>
-       
+
    (2) Add task definitions for the needed tasks ('classpath' must be an absolute or relative
        path to 'as2ant.jar' or to the folder with the compiled sources):
-       
+
        <taskdef name="swf" classname="org.as2lib.ant.Swf" classpath="as2ant.jar"/>
        <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="as2ant.jar"/>
        <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="as2ant.jar"/>
-       
+
    (3) Create a target which uses the defined tasks:
-       
+
        <target name="mytarget" description="my target description">
          <swf src="${src.dir}/com/simonwacker/ant/MySample.as" dest="${build.dir}/mysample.swf"
              classpath="${src.dir}" width="300" height="100" framerate="31" bgcolor="FF8A00">
@@ -67,25 +77,25 @@ ActionScript 2.0 Library (http://www.as2lib.org).
            <font id="pixel" import="${files.dir}/PixelClassic.ttf"/>
          </swf>
        </target>
-   
+
    (4) Run the target:
-       
+
        > With the command line (requires '{ant.home}/bin' to be part of the 'PATH' environment
          variable):
-         
+
          ant mytarget
-       
+
        > With Eclipse (any further builds can be triggered with the green arrow with brief
          case (External Tools)):
-       
+
          Right click on your build.xml file.
          Select Run As -> Ant Build
 
 
-6. Additional Eclipse Setup
-   
+7. Additional Eclipse Setup
+
    (1) Define tasks globally (frees you from defining tasks in every build.xml file):
-       
+
        > Go to Window -> Preferences
        > Open Ant -> Runtime
        > Add 'as2ant.jar' as External JAR
@@ -95,5 +105,5 @@ ActionScript 2.0 Library (http://www.as2lib.org).
        > Go to /org/as2lib/ant in the left window below 'Location'
        > Select either 'Swf.class', 'Mtasc.class' or 'Swfmill.class', respectively
        > Click OK
-   
+
    (2) ...
