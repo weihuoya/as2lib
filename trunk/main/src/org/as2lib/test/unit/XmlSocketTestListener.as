@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -32,7 +32,7 @@ import org.as2lib.util.StringUtil;
 /**
  * {@code XmlSocketTestListener} writes-out received test execution information with
  * the xml socket.
- * 
+ *
  * <p>The written-out information is formatted as follows:
  * <ul>
  *   <li>&lt;start&gt;Start message.&lt;/start&gt;</li>
@@ -42,27 +42,27 @@ import org.as2lib.util.StringUtil;
  *   <li>&lt;error&gt;Error message.&lt;/error&gt;</li>
  *   <li>&lt;finish hasErrors="false/true"&gt;Finish message.&lt;/finish&gt;</li>
  * </ul>
- * 
+ *
  * <p>This format is also expected by the Unit Test Task of As2ant, so you may easily
  * use this test listener and the task in conjunction.
- * 
+ *
  * @author Christophe Herreman
  * @author Simon Wacker
  */
 class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		ProcessStartListener, ProcessPauseListener, ProcessResumeListener,
 		ProcessUpdateListener, ProcessErrorListener, ProcessFinishListener {
-	
+
 	private static var logger:Logger = LogManager.getLogger("org.as2lib.test.unit.XmlSocketTestListener");
-	
+
 	private var socket:XMLSocket;
-	
+
 	/**
 	 * Constructs a new {@code XmlSocketTestListener} instance.
-	 * 
+	 *
 	 * <p>If {@code host} is not specified, {@code "localhost"} is used. If
 	 * {@code port} is not specified, {@code 3212} is used.
-	 * 
+	 *
 	 * @param host the host of the connection to open
 	 * @param port the port of the connection to open
 	 */
@@ -76,11 +76,11 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		socket = new XMLSocket();
 		socket.connect(host, port);
 	}
-	
+
 	public function onProcessStart(process:Process):Void {
 		socket.send(new XML("<start>Started execution of tests.</start>"));
 	}
-	
+
 	public function onProcessUpdate(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
@@ -91,7 +91,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 			}
 		}
 	}
-	
+
 	public function onProcessPause(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
@@ -99,15 +99,15 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 					testRunner.getCurrentTestCaseMethodInfo().getName() + ".</pause>"));
 		}
 	}
-	
+
 	public function onProcessResume(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
-			socket.send(new XML("<resume>Resumed execution at " + 
+			socket.send(new XML("<resume>Resumed execution at " +
 					testRunner.getCurrentTestCaseMethodInfo().getName() + ".</resume>"));
 		}
 	}
-	
+
 	public function onProcessFinish(process:Process):Void {
 		if (!(process instanceof TestRunner)) {
 			if (logger.isErrorEnabled()) {
@@ -119,10 +119,10 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		socket.send(new XML("<finish hasErrors='" + testResult.hasErrors() + "'><![CDATA[" +
 				"Finished execution with result:\n" + testResult + "]]></finish>"));
 	}
-	
+
 	public function onProcessError(process:Process, error):Boolean {
 		socket.send(new XML("<error><![CDATA[Error was raised during execution:\n" + error + "]]></error>"));
 		return false;
 	}
-	
+
 }
