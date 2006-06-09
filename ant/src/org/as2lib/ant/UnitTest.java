@@ -41,9 +41,15 @@ import org.xml.sax.SAXException;
  * {@code UnitTest} executes a unit test swf and writes the result to the console.
  *
  * <p>The unit test swf must send the result over the XML socket, with host "localhost"
- * and port 3212 by default or the one declared in the build file. The unit test swf
- * may register the {@code XmlSocketTestListener} at the test runner which sends the
- * test execution information properly formatted to this task.
+ * and port 3212 by default or the one declared in the build file.
+ *
+ * <p>If <b>As2lib Unit Test</b> is used the unit test swf may register the
+ * {@code XmlSocketTestListener} at the test runner which sends the test execution
+ * information properly formatted to this task.
+ *
+ * <p><p>If <b>AsUnit</b> is used the unit test swf may register the
+ * {@code XmlSocketResultPrinter} at the test runner which sends the test execution
+ * information properly formatted to this task.
  *
  * <p>The sent test execution information must be formatted as follows:
  * <ul>
