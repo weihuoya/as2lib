@@ -77,12 +77,12 @@ class org.as2lib.test.unit.XmlSocketResultPrinter extends MovieClip implements
 
 	public function printResult(result:TestResult, runTime:Number):Void {
 		printHeader(runTime);
-	    printErrors(result);
-	    if (result.errorCount() > 0 && result.failureCount() > 0) {
-	    	socket.send("<message>-</message>");
-	    }
-	    printFailures(result);
-	    printFooter(result);
+		printErrors(result);
+		if (result.errorCount() > 0 && result.failureCount() > 0) {
+			socket.send("<message>-</message>");
+		}
+		printFailures(result);
+		printFooter(result);
 	}
 
 	private function printHeader(runTime:Number):Void {
