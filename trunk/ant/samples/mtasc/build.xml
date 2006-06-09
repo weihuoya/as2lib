@@ -1,12 +1,12 @@
 <project name="Mtasc Ant Task - Sample" default="sample" basedir=".">
-  
-  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../dist/as2ant.jar"/>
-  
+
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../as2ant.jar"/>
+
   <property name="src.dir" location="src"/>
   <property name="build.dir" location="build"/>
-  
+
   <target name="sample" description="builds sample swf">
     <mtasc src="${src.dir}/com/simonwacker/ant/Sample.as" classpath="${src.dir}" swf="${build.dir}/sample.swf" header="300:100:31:00FF00" main="yes"/>
   </target>
-  
+
 </project>

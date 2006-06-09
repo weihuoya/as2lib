@@ -1,8 +1,8 @@
 <project name="Natural Entry Point" default="build" basedir=".">
-  
-  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../dist/as2ant.jar"/>
-  <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="../../dist/as2ant.jar"/>
-  
+
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../as2ant.jar"/>
+  <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="../../as2ant.jar"/>
+
   <target name="build" description="builds application">
     <mtasc swf="classes.swf" header="1:1:30" split="false">
       <srcset dir=".">
@@ -12,5 +12,5 @@
     </mtasc>
     <swfmill src="application.xml" dest="application.swf" cmd="simple"/>
   </target>
-  
+
 </project>

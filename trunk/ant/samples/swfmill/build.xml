@@ -1,9 +1,9 @@
 <project name="Swfmill Ant Task - Samples" default="usage" basedir=".">
-  
-  <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="../../dist/as2ant.jar"/>
-  
+
+  <taskdef name="swfmill" classname="org.as2lib.ant.Swfmill" classpath="../../as2ant.jar"/>
+
   <property name="swf.file" location="sample.swf"/>
-  
+
   <target name="usage">
     <echo message=""/>
     <echo message="------------------------------------------------------"/>
@@ -15,17 +15,17 @@
     <echo message="------------------------------------------------------"/>
     <echo message=""/>
   </target>
-  
+
   <target name="simple" description="simple xml to swf">
     <swfmill src="simple.xml" dest="${swf.file}" cmd="simple"/>
   </target>
-  
+
   <target name="xml2swf" description="xml to swf">
     <swfmill src="xml2swf.xml" dest="${swf.file}"/>
   </target>
-  
+
   <target name="swf2xml" description="swf to xml">
     <swfmill src="${swf.file}" dest="swf2xml.xml"/>
   </target>
-  
+
 </project>
