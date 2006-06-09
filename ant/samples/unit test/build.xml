@@ -1,0 +1,17 @@
+<project name="Unit Test Ant Task - Sample" default="sample" basedir=".">
+
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../as2ant.jar"/>
+  <taskdef name="unittest" classname="org.as2lib.ant.UnitTest" classpath="../../as2ant.jar"/>
+
+  <property name="as2lib.dir" location="D:/Projects/As2lib/main/src"/>
+  <property name="tests.dir" location="tests"/>
+  <property name="build.dir" location="build"/>
+  <property name="flashplayer.exe" location="C:\Programme\Macromedia\Flash 8\Players\SAFlashPlayer.exe"/>
+
+  <target name="sample" description="runs unit tests">
+    <mtasc src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" swf="${build.dir}/test.swf"
+        classpath="${as2lib.dir};${tests.dir}" main="yes" header="10:10:10"/>
+    <unittest swf="${build.dir}/test.swf" flashplayer="${flashplayer.exe}"/>
+  </target>
+
+</project>
