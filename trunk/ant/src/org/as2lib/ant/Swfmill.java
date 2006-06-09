@@ -32,7 +32,7 @@ import org.apache.tools.ant.types.Commandline;
 import org.apache.tools.ant.types.EnumeratedAttribute;
 
 /**
- * {@code Swfmill} is an ant task for swfmill that processes xml so swf and vice versa.
+ * {@code Swfmill} is an ant task for swfmill that converts xml to swf and vice versa.
  *
  * <p>You can include it as task in your build file as follows; note that for this to
  * work this class must be in the classpath, either in the global one or in the one of
@@ -73,7 +73,7 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  *   <li>{@link #setQuiet(boolean) quiet} (turn quiet mode on?)</li>
  *   <li>{@link #setVerbose(boolean) verbose} (turn verbose mode on?)</li>
  *   <li>{@link #setDump(boolean) dump} (dump swf data when loaded?)</li>
- *   <li>{@link #setSwfmill(String) swfmill (path to or name of the swfmill executable)</li>
+ *   <li>{@link #setSwfmill(String) swfmill} (path to or name of the swfmill executable)</li>
  *   <li>{@link #setHelp(boolean) help} (show help message)</li>
  * </ul>
  *
