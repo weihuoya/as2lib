@@ -72,6 +72,8 @@ import org.xml.sax.SAXException;
  *   <li>{@link #setPort(int) port} (port of the xml socket to listen to)</li>
  * </ul>
  *
+ * <p>You must supply 'swf' and 'flashplayer'.
+ *
  * @author Simon Wacker
  * @author Christophe Herreman
  */
