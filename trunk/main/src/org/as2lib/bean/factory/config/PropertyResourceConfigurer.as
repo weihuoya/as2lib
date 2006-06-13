@@ -81,6 +81,7 @@ class org.as2lib.bean.factory.config.PropertyResourceConfigurer extends BasicCla
 		ignoreResourceNotFound = false;
 		locations = new Array();
 		properties = new SimpleProperties();
+		propertiesParser = new PropertiesParser();
 	}
 
 	/**
