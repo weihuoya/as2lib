@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -34,14 +34,14 @@ import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
 /**
  * {@code ClassInfo} reflects a class and provides methods to get information about
  * that class.
- * 
+ *
  * <p>The static search methods {@link #forName}, {@link #forObject}, {@link #forInstance}
  * and {@link #forClass} can be used to get class infos for specific classes.
- * 
+ *
  * <p>If you for example want to get information about the class of a specific instance
  * you can retrieve the appropriate {@code ClassInfo} instance and you can then use
  * its methods to get the information you wanted.
- * 
+ *
  * <p>Example:
  * <code>
  *   var myInstance:MyClass = new MyClass();
@@ -51,37 +51,37 @@ import org.as2lib.env.reflect.algorithm.PropertyAlgorithm;
  *   trace("Declared Methods: " + classInfo.getMethods(true));
  *   trace("Declared Properties: " + classInfo.getProperties(true));
  * </code>
- * 
+ *
  * <p>Note that right now it is not possible to distinguish between interfaces and
  * classes at run-time. Therefore are both classes and interfaces reflected by
  * {@code ClassInfo} instances. This is going to change as soon is the differentiation
  * is possible.
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
-	
+
 	/** The algorithm to find classes. */
 	private static var classAlgorithm:ClassAlgorithm;
-	
+
 	/** The algorithm to find methods of classes. */
 	private static var methodAlgorithm:MethodAlgorithm;
-	
+
 	/** The algorithm to find properties of classes. */
 	private static var propertyAlgorithm:PropertyAlgorithm;
-	
+
 	/**
-	 * Returns the class info corresponding to the passed-in fully qualified 
+	 * Returns the class info corresponding to the passed-in fully qualified
 	 * {@code className}.
-	 * 
-	 * <p>Fully qualified means that {@code className} must consist of the class's 
+	 *
+	 * <p>Fully qualified means that {@code className} must consist of the class's
 	 * namespace (preceding package structure) as well as its name. For example
 	 * {@code "org.as2lib.core.BasicClass"}.
 	 *
 	 * <p>This method first checks whether the class info for the class with the given
 	 * {@code className} is already contained in the cache and adds it to the cache if
 	 * not.
-	 * 
+	 *
 	 * @param className the fully qualified class name
 	 * @return the class info reflecting the class corresponding to the {@code className}
 	 * @throws IllegalArgumentException if the passed-in {@code className} is {@code null},
@@ -93,10 +93,10 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public static function forName(className:String):ClassInfo {
 		return getClassAlgorithm().executeByName(className);
 	}
-	
+
 	/**
 	 * Returns the class info corresponding to the passed-in {@code object}.
-	 * 
+	 *
 	 * <p>If the passed-in {@code object} is of type {@code function} it is supposed
 	 * that it is the class you want to get the class info for. Otherwise it is supposed
 	 * that the object is an instance of the class you want to get the class info for.
@@ -129,7 +129,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return forInstance(object);
 	}
-	
+
 	/**
 	 * Returns the class info corresponding to the class of the passed-in
 	 * {@code instance}
@@ -140,7 +140,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *
 	 * @param instance the instance you want to get the class info for
 	 * @return the class info reflecting the class of the passed-in {@code instance}
-	 * @throws IllegalArgumentException if the passed-in {@code instance} is 
+	 * @throws IllegalArgumentException if the passed-in {@code instance} is
 	 * {@code null} or {@code undefined}
 	 * @throws ClassNotFoundException if the class corresponding to the passed-in
 	 * {@code instance} could not be found
@@ -183,7 +183,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		throw new ClassNotFoundException("The class corresponding to the passed-in instance '" + instance + "' could not be found.", eval("th" + "is"), arguments);
 	}
-	
+
 	/**
 	 * Returns the class info corresponding to the passed-in {@code clazz}.
 	 *
@@ -203,9 +203,9 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (classInfo) return classInfo;
 		return ReflectConfig.getCache().addClass(new ClassInfo(clazz));
 	}
-	
+
 	/**
-	 * Sets the algorithm used to find classes. 
+	 * Sets the algorithm used to find classes.
 	 *
 	 * <p>If the passed-in {@code newClassAlgorithm} is of value {@code null} or
 	 * {@code undefined}, the {@link #getClassAlgorithm} method will return the default
@@ -217,7 +217,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public static function setClassAlgorithm(newClassAlgorithm:ClassAlgorithm):Void {
 		classAlgorithm = newClassAlgorithm;
 	}
-	
+
 	/**
 	 * Returns the class algorithm used to find classes.
 	 *
@@ -231,7 +231,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (!classAlgorithm) classAlgorithm = new ClassAlgorithm();
 		return classAlgorithm;
 	}
-	
+
 	/**
 	 * Sets the algorithm used to find methods.
 	 *
@@ -245,7 +245,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public static function setMethodAlgorithm(newMethodAlgorithm:MethodAlgorithm):Void {
 		methodAlgorithm = newMethodAlgorithm;
 	}
-	
+
 	/**
 	 * Returns the method algorithm used to find methods.
 	 *
@@ -259,7 +259,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (!methodAlgorithm) methodAlgorithm = new MethodAlgorithm();
 		return methodAlgorithm;
 	}
-	
+
 	/**
 	 * Sets the algorithm used to find properties.
 	 *
@@ -273,7 +273,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public static function setPropertyAlgorithm(newPropertyAlgorithm:PropertyAlgorithm):Void {
 		propertyAlgorithm = newPropertyAlgorithm;
 	}
-	
+
 	/**
 	 * Returns the property algorithm used to find properties.
 	 *
@@ -288,38 +288,38 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (!propertyAlgorithm) propertyAlgorithm = new PropertyAlgorithm();
 		return propertyAlgorithm;
 	}
-	
+
 	/** The name of the reflected class. */
 	private var name:String;
-	
+
 	/** The fully qualified name of the reflected class. */
 	private var fullName:String;
-	
+
 	/** The reflected class. */
 	private var clazz:Function;
-	
+
 	/** The super class of the reflected class. */
 	private var superClass:ClassInfo;
-	
+
 	/** The package the reflected class is a member of. */
 	private var package:PackageInfo;
-	
+
 	/** The methods the reflected class declares. */
 	private var methods:Array;
-	
+
 	/** The properties the reflected class declares. */
 	private var properties:Array;
-	
+
 	/** The constructor of the reflected class. */
 	private var classConstructor:ConstructorInfo;
-	
+
 	/**
 	 * Constructs a new {@code ClassInfo} instance.
 	 *
 	 * <p>Note that the argument {@code clazz} is not mandatorily necessary, although
 	 * most of the methods cannot do their job correctly if it is {@code null} or
 	 * {@code undefined}.
-	 * 
+	 *
 	 * <p>If you do not pass-in the {@code name} or the {@code package} they will be
 	 * resolved lazily when requested using the passed-in {@code clazz}.
 	 *
@@ -327,14 +327,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * @param name (optional) the name of the reflected class
 	 * @param package (optional) the package the reflected class is a member of
 	 */
-	public function ClassInfo(clazz:Function,
-							  name:String,
-							  package:PackageInfo) {
+	public function ClassInfo(clazz:Function, name:String, package:PackageInfo) {
 		this.clazz = clazz;
 		this.name = name;
 		this.package = package;
 	}
-	
+
 	/**
 	 * Returns the name of the represented class without its namespace.
 	 *
@@ -349,11 +347,11 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (name === undefined) initNameAndPackage();
 		return name;
 	}
-	
+
 	/**
 	 * Returns the fully qualified name of the represented class. That means the name
 	 * of the class plus its package path, namespace.
-	 * 
+	 *
 	 * <p>The path will not be included if:
 	 * <ul>
 	 *   <li>The {@link #getPackage} method returns {@code null} or {@code undefined}.</li>
@@ -375,7 +373,16 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return fullName;
 	}
-	
+
+	/**
+	 * Returns the actual class this class info represents.
+	 *
+	 * @return the represented class
+	 */
+	public function getClass(Void):Function {
+		return clazz;
+	}
+
 	/**
 	 * Returns the actual class this class info represents.
 	 *
@@ -392,11 +399,11 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}*/
 		return clazz;
 	}
-	
+
 	/**
 	 * Returns the class's constructor representation.
-	 * 
-	 * <p>You can use the returned constructor info to get the actual 
+	 *
+	 * <p>You can use the returned constructor info to get the actual
 	 * constructor. Note that the constructor in Flash is by default the same as the
 	 * class. Thus the function returned by the {@link #getType} method and the
 	 * {@code getMethod} method of the returned constructor is the same, if you did not
@@ -410,7 +417,30 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return classConstructor;
 	}
-	
+
+	/**
+	 * Returns the super class of the class this instance represents.
+	 *
+	 * <p>{@code null} will be returned if:
+	 * <ul>
+	 *   <li>The represented class is {@code Object}.</li>
+	 *   <li>The represented class has no prototype.</li>
+	 *   <li>The static {@link #forInstance} method returns {@code null}.</li>
+	 * </ul>
+	 *
+	 * @return the super class of the class this instance represents or {@code null}
+	 */
+	public function getSuperClass(Void):ClassInfo {
+		if (superClass === undefined) {
+			if (clazz.prototype.__proto__) {
+				superClass = forInstance(clazz.prototype);
+			} else {
+				superClass = null;
+			}
+		}
+		return superClass;
+	}
+
 	/**
 	 * Returns the super class of the class this instance represents.
 	 *
@@ -425,18 +455,12 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * </ul>
 	 *
 	 * @return the super class of the class this instance represents or {@code null}
+	 * @see #getSuperClass
 	 */
 	public function getSuperType(Void):TypeInfo {
-		if (superClass === undefined) {
-			if (clazz.prototype.__proto__) {
-				superClass = forInstance(clazz.prototype);
-			} else {
-				superClass = null;
-			}
-		}
-		return superClass;
+		return getSuperClass();
 	}
-	
+
 	/**
 	 * Creates a new instance of the represented class passing the constructor
 	 * arguments.
@@ -450,7 +474,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	public function newInstance() {
 		return ClassUtil.createInstance(getConstructor().getMethod(), arguments);
 	}
-	
+
 	/**
 	 * Returns the package the represented class is a member of.
 	 *
@@ -463,7 +487,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (package === undefined) initNameAndPackage();
 		return package;
 	}
-	
+
 	/**
 	 * Initializes the name and the package of the represented class.
 	 *
@@ -475,7 +499,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (name === undefined) name = info.name == null ? null : info.name;
 		if (package === undefined) package = info.package == null ? null : info.package;
 	}
-	
+
 	/**
 	 * Returns whether this class or any super-class implements a method with the
 	 * passed-in {@code methodName}.
@@ -506,7 +530,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @overload #getMethodsByFlag
 	 * @overload #getMethodsByFilter
@@ -518,7 +542,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		o.addHandler([TypeMemberFilter], getMethodsByFilter);
 		return o.forward(arguments);
 	}
-	
+
 	/**
 	 * Returns an array containing the methods represented by {@link MethodInfo}
 	 * instances this type declares and maybe the ones of the super-classes.
@@ -550,7 +574,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns an array that contains the methods represented by {@link MethodInfo}
 	 * instances, this class and super classes' declare, that are not filtered/excluded.
@@ -558,7 +582,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * <p>The {@link TypeMemberFilter#filter} method of the passed-in {@code methodFilter}
 	 * is invoked for every method to determine whether it shall be contained in the
 	 * result. The passed-in argument is of type {@code MethodInfo}.
-	 * 
+	 *
 	 * <p>If the passed-in {@code methodFilter} is {@code null} or {@code undefined}
 	 * the result of an invocation of the {@link #getMethodsByFlag} method with
 	 * argument {@code false} will be returned.
@@ -587,7 +611,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * @overload #getMethodByName
 	 * @overload #getMethodByMethod
@@ -598,7 +622,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		overload.addHandler([Function], getMethodByMethod);
 		return overload.forward(arguments);
 	}
-	
+
 	/**
 	 * Returns the method info corresponding to the passed-in {@code methodName}.
 	 *
@@ -610,7 +634,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *     class or any super class.
 	 *   </li>
 	 * </ul>
-	 * 
+	 *
 	 * <p>If this class overwrites a method of any super class the, {@code MethodInfo}
 	 * instance of the overwriting method will be returned.
 	 *
@@ -628,7 +652,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (getSuperType()) return getSuperType().getMethodByName(methodName);
 		return null;
 	}
-	
+
 	/**
 	 * Returns the method info corresponding to the passed-in {@code concreteMethod}.
 	 *
@@ -662,7 +686,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (getSuperType()) return getSuperType().getMethodByMethod(concreteMethod);
 		return null;
 	}
-	
+
 	/**
 	 * Returns whether this class or any super-class implements a property with the
 	 * passed-in {@code propertyName}.
@@ -695,7 +719,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * @overload #getPropertiesByFlag
 	 * @overload #getPropertiesByFilter
@@ -707,7 +731,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		o.addHandler([TypeMemberFilter], getPropertiesByFilter);
 		return o.forward(arguments);
 	}
-	
+
 	/**
 	 * Returns an array containing the properties represented by {@link PropertyInfo}
 	 * instances this class declares and maybe the ones of the super-classes.
@@ -722,7 +746,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 *   <li>The property algorithm returns {@code null} or {@code undefined}.</li>
 	 * </ul>
 	 *
-	 * @param filterSuperClasses (optional) determines whether the super classes' 
+	 * @param filterSuperClasses (optional) determines whether the super classes'
 	 * properties shall be excluded/filtered
 	 * @return an array containing the properties
 	 */
@@ -739,7 +763,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns an array containing the properties represented by {@link PropertyInfo}
 	 * instances this class and super classes' declare that are not filtered/excluded.
@@ -749,7 +773,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 	 * result.
 	 *
 	 * <p>If the passed-in {@code propertyFilter} is {@code null} or {@code undefined}
-	 * the result of the invocation of {@link #getPropertiesByFlag} with argument 
+	 * the result of the invocation of {@link #getPropertiesByFlag} with argument
 	 * {@code false} will be returned.
 	 *
 	 * <p>{@code null} will be returned if:
@@ -773,7 +797,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * @overload #getPropertyByName
 	 * @overload #getPropertyByProperty
@@ -784,7 +808,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		overload.addHandler([Function], getPropertyByProperty);
 		return overload.forward(arguments);
 	}
-	
+
 	/**
 	 * Returns the property info corresponding to the passed-in {@code propertyName}.
 	 *
@@ -814,7 +838,7 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (getSuperType()) return ClassInfo(getSuperType()).getPropertyByName(propertyName);
 		return null;
 	}
-	
+
 	/**
 	 * Returns the property info corresponding to the passed-in {@code concreteProperty}.
 	 *
@@ -850,15 +874,15 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		if (getSuperType()) return ClassInfo(getSuperType()).getPropertyByProperty(concreteProperty);
 		return null;
 	}
-	
+
 	/**
 	 * Returns the string representation of this instance.
-	 * 
+	 *
 	 * <p>The string representation is constructed as follows:
 	 * <pre>
 	 *   [reflection fullyQualifiedNameOfReflectedType]
 	 * </pre>
-	 * 
+	 *
 	 * @param displayContent (optional) a {@code Boolean} that determines whether to
 	 * render all methods {@code true} or not {@code false}
 	 * @return this instance's string representation
@@ -876,5 +900,5 @@ class org.as2lib.env.reflect.ClassInfo extends BasicClass implements TypeInfo {
 		}
 		return (result + "]");
 	}
-	
+
 }
