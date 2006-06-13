@@ -62,6 +62,9 @@ class org.as2lib.bean.factory.config.PropertyResourceConfigurer extends BasicCla
 	/** Batch used to load properties files. */
 	private var batch:Batch;
 
+	/** Shall resources which cannot be found be ignored? */
+	private var ignoreResourceNotFound:Boolean;
+
 	/** Locations of properties files. */
 	private var locations:Array;
 
@@ -75,6 +78,7 @@ class org.as2lib.bean.factory.config.PropertyResourceConfigurer extends BasicCla
 	 * Constructs a new {@code PropertyResourceConfigurer} instance.
 	 */
 	private function PropertyResourceConfigurer(Void) {
+		ignoreResourceNotFound = false;
 		locations = new Array();
 		properties = new SimpleProperties();
 	}
@@ -101,10 +105,34 @@ class org.as2lib.bean.factory.config.PropertyResourceConfigurer extends BasicCla
 	}
 
 	/**
+	 * Shall resources which cannot be found be ignored? {@code true} is appropriate
+	 * if the properties file is completely optional. Default is {@code false}.
+	 */
+	public function setIgnoreResourceNotFound(ignoreResourceNotFound:Boolean):Void {
+		this.ignoreResourceNotFound = ignoreResourceNotFound;
+	}
+
+	/**
+	 * Returns whether resources which cannot be found are ignored.
+	 */
+	public function isIgnoreResourceNotFound(Void):Boolean {
+		return ignoreResourceNotFound;
+	}
+
+	/**
 	 * Adds the location of a properties file to load.
 	 */
 	public function addLocation(location:String):Void {
 		locations.push(location);
+	}
+
+	/**
+	 * Adds the locations of properties files to load.
+	 */
+	public function addLocations(locations:Array):Void {
+		for (var i:Number = 0; i < locations.length; i++) {
+			this.locations.push(locations[i]);
+		}
 	}
 
 	/**
@@ -131,7 +159,7 @@ class org.as2lib.bean.factory.config.PropertyResourceConfigurer extends BasicCla
 		for (var i:Number = 0; i < locations.length; i++) {
 			var fileLoader:FileLoader = new TextFileLoader();
 			fileLoader.addListener(this);
-			var fileLoaderProcess:FileLoaderProcess = new FileLoaderProcess(fileLoader);
+			var fileLoaderProcess:FileLoaderProcess = new FileLoaderProcess(fileLoader, ignoreResourceNotFound);
 			fileLoaderProcess.setUri(locations[i]);
 			getBatch().addProcess(fileLoaderProcess);
 		}
