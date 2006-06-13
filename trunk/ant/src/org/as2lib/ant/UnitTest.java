@@ -51,6 +51,9 @@ import org.xml.sax.SAXException;
  * {@code XmlSocketResultPrinter} at the test runner which sends the test execution
  * information properly formatted to this task.
  *
+ * <p>{@code XmlSocketTestListener} and {@code XmlSocketResultPrinter} can be found in
+ * the "flash" directory of the as2ant distribution.
+ *
  * <p>The sent test execution information must be formatted as follows:
  * <ul>
  *   <li>&lt;start&gt;Start message.&lt;/start&gt;</li>
