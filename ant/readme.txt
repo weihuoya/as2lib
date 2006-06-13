@@ -8,6 +8,20 @@ under the Mozilla Public License Version 1.1. They are part of the As2lib Open S
 ActionScript 2.0 Library (http://www.as2lib.org).
 
 
+0. Files and Directories
+
+   as2ant.jar - compiled source files (to be used as classpath in task definitions)
+   build.xml - various targets to compile sources, generate documentation, create distributions
+   changelog.txt - changes since the previous release
+   license.txt - license under which as2ant is distributed
+   readme.txt - basic information on as2ant to get started
+   bin - compiled source files (binaries)
+   docs - API documentation (detailed information on the usage of the tasks)
+   flash - plug-in classes for as2lib unit test and asunit to be used with the unit test task
+   samples - samples for the different tasks
+   src - java source files
+
+
 1. Mtasc Ant Task
 
    The mtasc ant task allows you to use the Motion-Twin ActionScript 2.0 Compiler (MTASC)
