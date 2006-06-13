@@ -62,8 +62,8 @@ ActionScript 2.0 Library (http://www.as2lib.org).
 
    The unit test task executes a test swf and prints the test result to the console. The
    As2lib Unit Test and AsUnit frameworks are directly supported (XmlSocketTestListener or
-   XmlSocketResultPrinter) but you may also write your own adapter class to plugin other unit
-   test frameworks.
+   XmlSocketResultPrinter classes in the "flash" directory) but you may also write your own
+   adapter class to plugin other unit test frameworks.
    For more information take a look at the API documentation of the org.as2lib.ant.UnitTest
    class.
 
