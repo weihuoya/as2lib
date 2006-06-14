@@ -848,6 +848,13 @@ public class Swf extends Mtasc {
      * {@code Clip} represents a clip library symbol. This is either a movieclip or a
      * graphic library symbol.
      *
+     * <p>Multiple clips can be declared as follows:
+     * <pre><code>&lt;clip&gt;
+     *  &lt;include id="simonwacker" import="${file.dir}/simonwacker.jpg"/&gt;
+     *  &lt;include id="martinheidegger" import="${file.dir}/martinheidegger.jpg"/&gt;
+     *&lt;/clip&gt;
+     * </code></pre>
+     *
      * <p>This task can take the following arguments:
      * <ul>
      *   <li>id</li>
