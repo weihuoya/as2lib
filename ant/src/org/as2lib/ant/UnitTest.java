@@ -231,7 +231,10 @@ public class UnitTest extends Task {
 						DocumentBuilder builder = factory.newDocumentBuilder();
 						Document document = builder.parse(new ByteArrayInputStream(stringBuffer.toString().getBytes()));
 						Element element = document.getDocumentElement();
-						String message = element.getFirstChild().getNodeValue();
+						String message = "";
+						if (element.hasChildNodes()) {
+							message = element.getFirstChild().getNodeValue();
+						}
 						String nodeName = element.getNodeName();
 						if (nodeName.equals(START_ELEMENT)) {
 							task.log(message + "\n-");
@@ -249,16 +252,20 @@ public class UnitTest extends Task {
 							task.log(message, Project.MSG_ERR);
 						}
 						else if (nodeName.equals(FINISH_ELEMENT)) {
-							if (!previousNodeName.equals(START_ELEMENT) &&
-									!previousNodeName.equals(RESUME_ELEMENT)) {
-								task.log("-");
+							if (!message.equals("")) {
+								if (!previousNodeName.equals(START_ELEMENT) &&
+										!previousNodeName.equals(RESUME_ELEMENT)) {
+									task.log("-");
+								}
 							}
-							if (element.getAttribute(HAS_ERRORS_ATTRIBUTE).equals(TRUE_VALUE)) {
-								task.log(message, Project.MSG_ERR);
+							int level = Project.MSG_INFO;
+							if (element.hasAttribute(HAS_ERRORS_ATTRIBUTE) &&
+									element.getAttribute(HAS_ERRORS_ATTRIBUTE).equals(TRUE_VALUE)) {
+								level = Project.MSG_ERR;
 								exception = new BuildException("Tests failed.", task.getLocation());
 							}
-							else {
-								task.log(message);
+							if (!message.equals("")) {
+								task.log(message, level);
 							}
 							task.log("-\n-");
 							process.destroy();
