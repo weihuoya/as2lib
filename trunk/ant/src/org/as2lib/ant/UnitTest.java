@@ -262,7 +262,7 @@ public class UnitTest extends Task {
 							if (element.hasAttribute(HAS_ERRORS_ATTRIBUTE) &&
 									element.getAttribute(HAS_ERRORS_ATTRIBUTE).equals(TRUE_VALUE)) {
 								level = Project.MSG_ERR;
-								exception = new BuildException("Tests failed.", task.getLocation());
+								exception = new BuildException("Test(s) failed.", task.getLocation());
 							}
 							if (!message.equals("")) {
 								task.log(message, level);
