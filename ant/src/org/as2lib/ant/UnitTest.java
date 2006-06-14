@@ -215,7 +215,7 @@ public class UnitTest extends Task {
 
 		public void run() {
 			try {
-				task.log("-\n-");
+				task.log("-");
 				String previousNodeName = "";
 				while (true) {
 					Socket socket = server.accept();
@@ -267,7 +267,6 @@ public class UnitTest extends Task {
 							if (!message.equals("")) {
 								task.log(message, level);
 							}
-							task.log("-\n-");
 							process.destroy();
 							return;
 						}
