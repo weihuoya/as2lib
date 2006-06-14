@@ -3,6 +3,9 @@ As2ant 2.1
 ----------
 
 
+[+] samples/asunit
+    Added sample showing how to use AsUnit with the unit test task.
+
 [!] org.as2lib.test.unit.XmlSocketTestListener
     Improved output: highlight only errors.
 
