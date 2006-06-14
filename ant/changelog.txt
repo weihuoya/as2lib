@@ -3,6 +3,9 @@ As2ant 2.1
 ----------
 
 
+[+] samples/swfmill, samples/swf
+    Added samples showing usage of swfmill xml in-line.
+
 [+] samples/asunit
     Added sample showing how to use AsUnit with the unit test task.
 
