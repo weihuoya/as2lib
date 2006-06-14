@@ -14,8 +14,7 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.test.unit.TestCase;
+import asunit.framework.TestCase;
 
 /**
  * @author Simon Wacker
@@ -39,7 +38,7 @@ class com.simonwacker.MyTest extends TestCase {
 	}
 
 	public function testException(Void):Void {
-		throw new IllegalArgumentException("Error message.", this, arguments);
+		throw new Error("Error message.");
 	}
 
 }
