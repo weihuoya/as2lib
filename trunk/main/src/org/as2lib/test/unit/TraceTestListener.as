@@ -27,7 +27,7 @@ import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
 
 /**
- * {@code TraceTestListener} writes-out test execution information via {@code trace}.
+ * {@code TraceTestListener} uses {@code trace} to write-out test execution information.
  * You may either use this test listener in the Flash IDE or in conjunction with the
  * MTASC trace support.
  *
