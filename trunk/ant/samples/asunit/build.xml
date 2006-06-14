@@ -1,0 +1,17 @@
+<project name="AsUnit Ant Task - Sample" default="sample" basedir=".">
+
+  <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../as2ant.jar"/>
+  <taskdef name="unittest" classname="org.as2lib.ant.UnitTest" classpath="../../as2ant.jar"/>
+
+  <property file="build.properties"/>
+
+  <property name="test.dir" location="test"/>
+  <property name="build.dir" location="build"/>
+  <property name="flash.dir" location="../../flash"/>
+
+  <target name="sample" description="runs unit tests">
+    <mtasc src="${test.dir}/MyTestRunner.as" classpath="${test.dir};${asunit.dir};${flash.dir}"
+        swf="${build.dir}/tests.swf" header="300:100:31:FFFFF0" main="yes"/>
+    <unittest swf="${build.dir}/tests.swf" flashplayer="${flashplayer.exe}"/>
+  </target>
+</project>
