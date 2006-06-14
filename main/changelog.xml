@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="6">
+        		<day value="14">
+        			<entry type="add" package="org.as2lib.test.unit" class="TraceTestListener">Uses trace to write-out test results.</entry>
+        		</day>
         		<day value="13">
         			<entry type="add" package="org.as2lib.env.reflect" class="ClassInfo" method="getClass"/>
         			<entry type="add" package="org.as2lib.env.reflect" class="ClassInfo" method="getSuperClass"/>
