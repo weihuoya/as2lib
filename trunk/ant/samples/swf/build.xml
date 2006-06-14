@@ -14,4 +14,23 @@
     </swf>
   </target>
 
+  <target name="inline" description="builds sample swf using inline xml">
+    <swf src="${src.dir}/com/simonwacker/ant/Sample.as" dest="${build.dir}/sample.swf"
+        classpath="${src.dir}">
+      <xml>
+        <![CDATA[
+          <movie width="300" height="100" framerate="31">
+            <background color='#FF8A00'/>
+            <frame>
+              <library>
+                <clip id="simonwacker" import="${files.dir}/simonwacker.jpg"/>
+                <font id="pixel" import="${files.dir}/PixelClassic.ttf"/>
+              </library>
+            </frame>
+          </movie>
+        ]]>
+      </xml>
+    </swf>
+  </target>
+
 </project>
