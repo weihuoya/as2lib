@@ -125,7 +125,7 @@ class org.as2lib.test.unit.XmlSocketResultPrinter extends MovieClip implements
 	}
 
 	private function printFooter(result:TestResult):Void {
-		socket.send("<finish hasErrors='" + result.wasSuccessful() +
+		socket.send("<finish hasErrors='" + !result.wasSuccessful() +
 				"'>Tests run: " + result.runCount() +
 				", Failures: " + result.failureCount() +
 				", Errors: " + result.errorCount() +
