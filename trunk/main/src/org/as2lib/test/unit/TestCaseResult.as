@@ -1,12 +1,12 @@
 ﻿/**
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -28,32 +28,32 @@ import org.as2lib.data.type.Time;
 
 /**
  * {@code TestCaseResult} contains all informations about the execution of a {@code TestCase}.
- * 
+ *
  * <p>{@link TestCaseRunner} contains all states of execution of the {@code TestCase}
  * and {@code TestCaseResult} contains all informations about the execution.
- * 
+ *
  * @author Martin Heidegger.
  * @version 1.0
  * @see TestCase
  * @see TestCaseRunner
  */
 class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResult {
-	
+
 	/** Reference to the related testcase. */
 	private var testCase:TestCase;
-	
+
 	/** All methods contained in the Testcase. */
 	private var testCaseMethodInfos:TypedArray;
-	
+
 	/** Flag if the TestCase has been finished. */
 	private var finished:Boolean;
-	
+
 	/** Flag if the TestCase has been started. */
 	private var started:Boolean;
-	
+
 	/**
 	 * Constructs a new {@code TestCaseResult}.
-	 * 
+	 *
 	 * @param testCase {@coce TestCase} related to the informations
 	 */
 	public function TestCaseResult(testCase:TestCase) {
@@ -61,14 +61,14 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		this.started = false;
 		this.finished = false;
 	}
-	
+
 	/**
 	 * Returns all informations in a list about the methods contained within the
 	 * {@code TestCase}.
 	 *
 	 * <p>All methods get wrapped within {@code TestCaseMethodInfo}s. Only methods
 	 * that start with "test" are contained within this list.
-	 * 
+	 *
 	 * @return list of all methods contained within the related {@code TestCase}
 	 */
 	public function getMethodInfos(Void):TypedArray {
@@ -80,10 +80,10 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		}
 		return testCaseMethodInfos;
 	}
-	
+
 	/**
 	 * Fetches all methods starting with "test" within the {@code TestCase}
-	 * 
+	 *
 	 * @return list of all methods contained within the related {@code TestCase}
 	 */
 	private function fetchTestCaseMethodInfos(Void):TypedArray {
@@ -99,28 +99,28 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the related {@code TestCase}.
-	 * 
+	 *
 	 * @return instance of the related {@code TestCase}
 	 */
 	public function getTestCase(Void):TestCase {
 		return testCase;
 	}
-	
+
 	/**
 	 * Returns the class name of the related {@code TestCase}.
-	 * 
+	 *
 	 * @return class name of the related TestCase.
 	 */
 	public function getName(Void):String {
 		return ClassInfo.forInstance(getTestCase()).getFullName();
 	}
-	
+
 	/**
 	 * Implementation of @see TestResult#getTestResults.
-	 * 
+	 *
 	 * @return This TestCaseResult in a new list for Results.
 	 */
 	public function getTestResults(Void):TypedArray {
@@ -128,11 +128,11 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		result.push(this);
 		return result;
 	}
-	
+
 	/**
 	 * Returns all result to the TestCase results.
 	 * Implementation of @see TestResult#getTestCaseResults.
-	 * 
+	 *
 	 * @return The Testcase in a list of TestCaseResults.
 	 */
 	public function getTestCaseResults(Void):TypedArray {
@@ -140,31 +140,31 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		result.push(this);
 		return result;
 	}
-	
+
 	/**
 	 * Returns the percentage ({@code 0}-{@code 100}) of the executed methods.
-	 * 
+	 *
 	 * @return percentage of execution
 	 */
 	public function getPercentage(Void):Number {
 		var finished:Number = 0;
-		
+
 		var a:Array = getMethodInfos();
 		var total:Number = a.length;
 		var i:Number = a.length;
-		
+
 		while(--i-(-1)) {
 			if(a[i].hasFinished()) {
 				finished ++;
 			}
 		}
-		
+
 		return (100/total*finished);
 	}
-	
+
 	/**
 	 * Returns {@code true} if the {@code TestCase} has been finished.
-	 * 
+	 *
 	 * @return {@code true} if the {@code TestCase} has been finished
 	 */
 	public function hasFinished(Void):Boolean {
@@ -177,10 +177,10 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		}
 		return (finished=true);
 	}
-	
+
 	/**
 	 * Returns {@code true} if the {@code TestCase} has been started.
-	 * 
+	 *
 	 * @return {@code true} if the {@code TestCase} has been started
 	 */
 	public function hasStarted(Void):Boolean {
@@ -193,10 +193,10 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Returns the total operation time for all methods executed for the {@code TestCase}.
-	 * 
+	 *
 	 * @return total operation time of the {@code TestCase}
 	 */
 	public function getOperationTime(Void):Time {
@@ -207,10 +207,10 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		}
 		return (new Time(result));
 	}
-	
+
 	/**
 	 * Returns {@code true} if the errors occured during the execution of {@code TestCase}.
-	 * 
+	 *
 	 * @return {@code true} if the errors occured during the execution of {@code TestCase}.
 	 */
 	public function hasErrors(Void):Boolean {
@@ -222,10 +222,10 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Extended .toString implementation.
-	 * 
+	 *
 	 * @return {@code TestCaseResult} as well formated {@code String}
 	 */
 	public function toString():String {
@@ -243,11 +243,11 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 				methodResult += "\n"+StringUtil.addSpaceIndent(method.toString(), 3);
 			}
 		}
-		
-		result = getName()+" run "+methodInfos.length+" methods in ["+ms+"ms]. ";
-		
+
+		result = getName() + " ran " + methodInfos.length + " methods in [" + ms + "ms]. ";
+
 		result += (errors>0) ? errors + ((errors > 1) ? " errors" : " error") + " occured" + methodResult : "no error occured";
-		
+
 		return result;
 	}
 }
