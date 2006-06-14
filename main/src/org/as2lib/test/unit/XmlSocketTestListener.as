@@ -25,6 +25,7 @@ import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogManager;
 import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.StringUtil;
@@ -116,12 +117,25 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 			}
 		}
 		var testResult:TestResult = TestRunner(process).getTestResult();
-		socket.send(new XML("<finish hasErrors='" + testResult.hasErrors() + "'><![CDATA[" +
-				"Finished execution with result:\n" + testResult + "]]></finish>"));
+		var testCaseResults:Array = testResult.getTestCaseResults();
+		socket.send(new XML("<message>-</message>"));
+		socket.send(new XML("<message><![CDATA[*** Test " + testResult.getName() + " (" +
+				testCaseResults.length + " Tests) [" + testResult.getOperationTime() +
+				"ms] ***]]></message>"));
+		for (var i:Number = 0; i < testCaseResults.length; i++) {
+			var testCaseResult:TestCaseResult = testCaseResults[i];
+			if (testCaseResult.hasErrors()) {
+				socket.send(new XML("<error>" + testCaseResult.toString() + "</error>"));
+			}
+			else {
+				socket.send(new XML("<message>" + testCaseResult.toString() + "</message>"));
+			}
+		}
+		socket.send(new XML("<finish hasErrors='" + testResult.hasErrors() + "'/>"));
 	}
 
 	public function onProcessError(process:Process, error):Boolean {
-		socket.send(new XML("<error><![CDATA[Error was raised during execution:\n" + error + "]]></error>"));
+		socket.send(new XML("<error>Error was raised during execution:\n" + error + "</error>"));
 		return false;
 	}
 
