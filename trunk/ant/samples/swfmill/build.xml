@@ -12,6 +12,7 @@
     <echo message="simple"/>
     <echo message="xml2swf"/>
     <echo message="swf2xml"/>
+    <echo message="inline"/>
     <echo message="------------------------------------------------------"/>
     <echo message=""/>
   </target>
@@ -26,6 +27,17 @@
 
   <target name="swf2xml" description="swf to xml">
     <swfmill src="${swf.file}" dest="swf2xml.xml"/>
+  </target>
+
+  <target name="inline" description="inline xml">
+    <swfmill dest="${swf.file}">
+      <![CDATA[
+        <movie width="320" height="240" framerate="12">
+          <background color="#00FFFF"/>
+          <frame/>
+        </movie>
+      ]]>
+    </swfmill>
   </target>
 
 </project>
