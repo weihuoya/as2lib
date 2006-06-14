@@ -1,4 +1,4 @@
-<project name="Unit Test Ant Task - Sample" default="sample" basedir=".">
+<project name="As2lib Unit Test Ant Task - Sample" default="sample" basedir=".">
 
   <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../as2ant.jar"/>
   <taskdef name="unittest" classname="org.as2lib.ant.UnitTest" classpath="../../as2ant.jar"/>
