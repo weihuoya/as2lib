@@ -3,5 +3,11 @@ As2ant 2.1
 ----------
 
 
-[!] org.as2lib.ant.UnitTest
+[!] org.as2lib.test.unit.XmlSocketTestListener
+    Improved output: highlight only errors.
+
+[!] org.as2lib.test.unit.XmlSocketResultPrinter
+    Fixed bug with wrong value in attribute "hasErrors" of element "finish".
+
+[+] org.as2lib.ant.UnitTest
     Added proper handling of exceptions and failed tests.
