@@ -1,23 +1,7 @@
 ----------
-As2ant 2.0
+As2ant 2.1
 ----------
 
 
-[+] org.as2lib.ant.UnitTest
-    Added task to execute unit tests. As2lib Unit Test and AsUnit are directly
-    supported.
-
-[!] org.as2lib.ant.Mtasc
-    Detects and removes duplicate source files which are very likely when bean
-    definition xml files are used as source files.
-
-[+] org.as2lib.ant.Mtasc
-    Added new argument: 'packset'. This argument can be used to include multiple
-    packages based on name patterns (analogous to 'srcset').
-
-[+] org.as2lib.ant.Mtasc
-    Added support for wimp-flag (turns warnings for unused imports on)
-
-[+] org.as2lib.ant.Mtasc
-    Added namespace support for xml source files (according to the As2lib Application
-    Context specification)
+[!] org.as2lib.ant.UnitTest
+    Added proper handling of exceptions and failed tests.

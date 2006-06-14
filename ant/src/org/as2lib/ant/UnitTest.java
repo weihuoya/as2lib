@@ -176,6 +176,9 @@ public class UnitTest extends Task {
 			Process process = Execute.launch(getProject(), command.getCommandline(), null, getProject().getBaseDir(), true);
 			receiver.setProcess(process);
 			process.waitFor();
+			if (receiver.hasException()) {
+				throw receiver.getException();
+			}
 		}
 		catch (IOException e) {
 			throw new BuildException("Error running unit tests.", e, getLocation());
@@ -192,6 +195,7 @@ public class UnitTest extends Task {
 		private ServerSocket server;
 		private BufferedReader in;
 		private Process process;
+		private BuildException exception;
 
 		public Receiver(Task task) {
 			this.task = task;
@@ -199,6 +203,14 @@ public class UnitTest extends Task {
 
 		public void setProcess(Process process) {
 			this.process = process;
+		}
+
+		public BuildException getException() {
+			return exception;
+		}
+
+		public boolean hasException() {
+			return (exception != null);
 		}
 
 		public void run() {
@@ -243,6 +255,7 @@ public class UnitTest extends Task {
 							}
 							if (element.getAttribute(HAS_ERRORS_ATTRIBUTE).equals(TRUE_VALUE)) {
 								task.log(message, Project.MSG_ERR);
+								exception = new BuildException("Tests failed.", task.getLocation());
 							}
 							else {
 								task.log(message);
@@ -259,13 +272,13 @@ public class UnitTest extends Task {
 				}
 			}
 			catch (IOException e) {
-				throw new BuildException("Error on reading result.", e, task.getLocation());
+				exception = new BuildException("Error on reading result.", e, task.getLocation());
 			}
 			catch (ParserConfigurationException e) {
-				throw new BuildException("Error on reading result.", e, task.getLocation());
+				exception = new BuildException("Error on reading result.", e, task.getLocation());
 			}
 			catch (SAXException e) {
-				throw new BuildException("Error on reading result.", e, task.getLocation());
+				exception = new BuildException("Error on reading result.", e, task.getLocation());
 			}
 		}
 
@@ -298,6 +311,9 @@ public class UnitTest extends Task {
 				catch (IOException e) {
 					throw new BuildException("Error on stopping server.", e, task.getLocation());
 				}
+			}
+			if (hasException()) {
+				throw getException();
 			}
 		}
 
