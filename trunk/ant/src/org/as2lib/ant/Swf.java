@@ -51,7 +51,7 @@ import org.apache.tools.ant.BuildException;
  *  &lt;import file="${imports.dir}/import.swf" url="http://www.simonwacker.com/import.swf"/&gt;
  *&lt;/swf&gt;</code></pre>
  *
- * <p>It is also possible to nest clips, fonts and imports respectively.
+ * <p>Multiple clips, fonts and imports can be specified as follows:
  * <pre><code>&lt;swf src="${src.dir}/MyMain.as" dest="${dest.dir}/main.swf" width="300" height="300" framerate="31" bgcolor="00FFFF"&gt;
  *  &lt;clip&gt;
  *    &lt;include id="clip1" import="${images.dir}/image1.jpg"/&gt;
