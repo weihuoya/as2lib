@@ -459,7 +459,9 @@ public class Swfmill extends Task {
      * @param xml the swfmill xml to use
      */
     public void addText(String xml) {
-        this.xml = xml;
+    	if (!xml.trim().equals("")) {
+    		this.xml = xml;
+    	}
     }
 
     /**
@@ -484,7 +486,12 @@ public class Swfmill extends Task {
 
     private void checkParameters() throws BuildException {
         if (this.source == null && this.xml == null) {
-            throw new BuildException("The 'src', 'source' or 'in' attribute or the xml data must be set.", getLocation());
+            throw new BuildException("'src', 'source' or 'in' attribute or inline " +
+            		"xml must be specified.", getLocation());
+        }
+        if (this.source != null && this.xml != null) {
+        	throw new BuildException("Specify either 'src' ('source', 'in') or " +
+        			"inline xml, not both.", getLocation());
         }
     }
 
