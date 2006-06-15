@@ -122,6 +122,7 @@ public class Swfmill extends Task {
      * Constructs a new {@code Swfmill} instance.
      */
     public Swfmill() {
+    	this.swfmill = SWFMILL;
     }
 
     /**
@@ -133,7 +134,6 @@ public class Swfmill extends Task {
      * @return the path to or name of the swfmill executable
      */
     public String getSwfmill() {
-        if (this.swfmill == null) this.swfmill = SWFMILL;
         return this.swfmill;
     }
 
