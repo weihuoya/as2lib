@@ -51,6 +51,16 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  * 'simple' or 'xslt'. This must be done when you want to use the 'simple' command.
  * <p><code>&lt;swfmill src="src.xml" dest="dest.swf" cmd="simple"/&gt;</code>
  *
+ * <p>While it is possible to use a separate source xml file you may also declare it
+ * directly in the build file.
+ * <p><pre><code>&lt;swfmill dest="${swf.file}"&gt;
+ *  &lt;![CDATA[
+ *    &lt;movie width="320" height="240" framerate="12"&gt;
+ *      &lt;background color="#00FFFF"/&gt;
+ *    &lt;/movie&gt;
+ *  ]]&gt;
+ *&lt;/swfmill&gt;</code></pre>
+ *
  * <p>If the swfmill executable is not included as environment variable in your operating
  * system you must either include it or set it yourself for every swfmill-tag using the
  * "swfmill" attribute. Take a look at {@link #setSwfmill(String)} for more information.
