@@ -17,7 +17,6 @@
 package org.as2lib.ant;
 
 import java.io.ByteArrayInputStream;
-import java.io.DataInputStream;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -26,7 +25,6 @@ import org.apache.tools.ant.BuildException;
 import org.apache.tools.ant.Task;
 import org.apache.tools.ant.taskdefs.Execute;
 import org.apache.tools.ant.taskdefs.ExecuteStreamHandler;
-import org.apache.tools.ant.taskdefs.ExecuteWatchdog;
 import org.apache.tools.ant.taskdefs.PumpStreamHandler;
 import org.apache.tools.ant.types.Commandline;
 import org.apache.tools.ant.types.EnumeratedAttribute;
@@ -469,7 +467,8 @@ public class Swfmill extends Task {
      * @param xml the swfmill xml to use
      */
     public void addText(String xml) {
-    	if (!xml.trim().equals("")) {
+    	xml = xml.trim();
+    	if (!xml.equals("")) {
     		this.xml = xml;
     	}
     }
@@ -583,10 +582,9 @@ public class Swfmill extends Task {
             Execute exe;
             if (this.xml != null) {
                 String xml = getProject().replaceProperties(this.xml);
-                InputStream bis = new ByteArrayInputStream(xml.trim().getBytes());
-                DataInputStream dis = new DataInputStream(bis);
-                ExecuteStreamHandler sh = new PumpStreamHandler(System.out, System.err, dis);
-                exe = new Execute(sh, new ExecuteWatchdog((long) 10000));
+                InputStream bis = new ByteArrayInputStream(xml.getBytes());
+                ExecuteStreamHandler sh = new PumpStreamHandler(System.out, System.err, bis);
+                exe = new Execute(sh);
             } else {
                 exe = new Execute();
             }
