@@ -3,6 +3,10 @@ As2ant 2.1
 ----------
 
 
+[!] org.as2lib.ant.Swfmill
+    Removed watchdog for execution of swfmill. Watchdog aborted execution if it
+    took too long which caused troubles with big symbols (clips, fonts, includes).
+
 [+] samples/swfmill, samples/swf
     Added samples showing usage of swfmill xml in-line.
 
