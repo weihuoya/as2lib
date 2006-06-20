@@ -3,6 +3,9 @@ As2ant 2.1
 ----------
 
 
+[!] org.as2lib.ant.Mtasc
+    Enabled usage of "no" for "trace" argument.
+
 [!] org.as2lib.ant.Swfmill
     Removed watchdog for execution of swfmill. Watchdog aborted execution if it
     took too long which caused troubles with big symbols (clips, fonts, includes).
