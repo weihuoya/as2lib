@@ -994,7 +994,7 @@ public class Mtasc extends Task {
         addCompileFiles((File[]) this.sourceList.toArray(new File[]{}));
         addCompileFiles((FileSet[]) this.sourceSets.toArray(new FileSet[]{}));
         addCompileFile(this.source);
-        if (this.trace != null) {
+        if (this.trace != null && this.trace.indexOf('.') != -1) {
             addCompileFile(this.trace.substring(0, this.trace.lastIndexOf('.')));
         }
     }
