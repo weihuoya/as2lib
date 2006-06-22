@@ -15,84 +15,77 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.data.holder.array.ArrayIterator;
 import org.as2lib.data.holder.array.TypedArray;
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.test.unit.TestResult;
-import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.data.type.Time;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
+import org.as2lib.test.unit.TestCase;
+import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.test.unit.TestResult;
 import org.as2lib.util.StringUtil;
-import org.as2lib.data.type.Time;
 
 /**
- * {@code TestCaseResult} contains all informations about the execution of a {@code TestCase}.
+ * {@code TestCaseResult} contains information about the execution of a test case.
  *
- * <p>{@link TestCaseRunner} contains all states of execution of the {@code TestCase}
- * and {@code TestCaseResult} contains all informations about the execution.
- *
- * @author Martin Heidegger.
- * @version 1.0
+ * @author Martin Heidegger
+ * @author Simon Wacker
+ * @version 2.0
  * @see TestCase
- * @see TestCaseRunner
  */
 class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResult {
 
-	/** Reference to the related testcase. */
+	/** The corresponding test case */
 	private var testCase:TestCase;
 
-	/** All methods contained in the Testcase. */
-	private var testCaseMethodInfos:TypedArray;
+	/** All {@link TestCaseMethodInfo} instances of the corresponding test case. */
+	private var testCaseMethods:TypedArray;
 
-	/** Flag if the TestCase has been finished. */
+	/** Has the test runner finished execution? */
 	private var finished:Boolean;
 
-	/** Flag if the TestCase has been started. */
+	/** Has the test runner started execution? */
 	private var started:Boolean;
 
 	/**
-	 * Constructs a new {@code TestCaseResult}.
+	 * Constructs a new {@code TestCaseResult} instance.
 	 *
-	 * @param testCase {@coce TestCase} related to the informations
+	 * @param testCase the test case this result corresponds to
 	 */
 	public function TestCaseResult(testCase:TestCase) {
 		this.testCase = testCase;
-		this.started = false;
-		this.finished = false;
+		started = false;
+		finished = false;
 	}
 
 	/**
-	 * Returns all informations in a list about the methods contained within the
-	 * {@code TestCase}.
+	 * Returns all {@link TestCaseMethodInfo} instances of the corresponding test
+	 * case.
 	 *
-	 * <p>All methods get wrapped within {@code TestCaseMethodInfo}s. Only methods
-	 * that start with "test" are contained within this list.
+	 * <p>Only methods with the prefix "test" are regarded as test methods.
 	 *
-	 * @return list of all methods contained within the related {@code TestCase}
+	 * @return all {@link TestCaseMethodInfo} instances of the corresponding test
+	 * case
 	 */
 	public function getMethodInfos(Void):TypedArray {
-		// Lacy Initialisation for load balancing. All Methods get evaluated by starting this TestCaseResult
-		// But not by starting all Available TestCaseResult, as it wood if this would be directly inside the
-		// Constructor.
-		if(!testCaseMethodInfos){
-			testCaseMethodInfos = fetchTestCaseMethodInfos();
+		if (testCaseMethods == null) {
+			testCaseMethods = fetchTestCaseMethods();
 		}
-		return testCaseMethodInfos;
+		return testCaseMethods;
 	}
 
 	/**
-	 * Fetches all methods starting with "test" within the {@code TestCase}
+	 * Fetches all methods with the prefix "test" of the corresponding test case.
 	 *
-	 * @return list of all methods contained within the related {@code TestCase}
+	 * @return all {@code test*} methods of the corresponding test case wrapped by
+	 * {@link TestCaseMethodInfo} instances
 	 */
-	private function fetchTestCaseMethodInfos(Void):TypedArray {
+	private function fetchTestCaseMethods(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseMethodInfo);
 		var methods:Array = ClassInfo.forInstance(testCase).getMethods();
-		if(methods) {
-			for (var i:Number = methods.length-1; i >= 0; i--) {
+		if (methods != null) {
+			for (var i:Number = methods.length - 1; i >= 0; i--) {
 				var method:MethodInfo = methods[i];
-				if (StringUtil.startsWith(method.getName(), 'test')) {
+				if (StringUtil.startsWith(method.getName(), "test")) {
 					result.push(new TestCaseMethodInfo(method));
 				}
 			}
@@ -101,27 +94,27 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 
 	/**
-	 * Returns the related {@code TestCase}.
+	 * Returns the test case corresponding to this test result.
 	 *
-	 * @return instance of the related {@code TestCase}
+	 * @return the corresponding test case
 	 */
 	public function getTestCase(Void):TestCase {
 		return testCase;
 	}
 
 	/**
-	 * Returns the class name of the related {@code TestCase}.
+	 * Returns the fully qualified class name of the corresponding test case.
 	 *
-	 * @return class name of the related TestCase.
+	 * @return the fully qualified class name of the corresponding test case
 	 */
 	public function getName(Void):String {
 		return ClassInfo.forInstance(getTestCase()).getFullName();
 	}
 
 	/**
-	 * Implementation of @see TestResult#getTestResults.
+	 * Returns an array containing only this test case result.
 	 *
-	 * @return This TestCaseResult in a new list for Results.
+	 * @return an array containing only this test case result
 	 */
 	public function getTestResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestResult);
@@ -130,10 +123,9 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 
 	/**
-	 * Returns all result to the TestCase results.
-	 * Implementation of @see TestResult#getTestCaseResults.
+	 * Returns an array containing only this test case result.
 	 *
-	 * @return The Testcase in a list of TestCaseResults.
+	 * @return an array containing only this test case result
 	 */
 	public function getTestCaseResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseResult);
@@ -141,82 +133,62 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		return result;
 	}
 
-	/**
-	 * Returns the percentage ({@code 0}-{@code 100}) of the executed methods.
-	 *
-	 * @return percentage of execution
-	 */
 	public function getPercentage(Void):Number {
 		var finished:Number = 0;
-
 		var a:Array = getMethodInfos();
 		var total:Number = a.length;
 		var i:Number = a.length;
-
-		while(--i-(-1)) {
-			if(a[i].hasFinished()) {
-				finished ++;
+		while (--i-(-1)) {
+			if (a[i].hasFinished()) {
+				finished++;
 			}
 		}
-
-		return (100/total*finished);
+		return (100 / total * finished);
 	}
 
-	/**
-	 * Returns {@code true} if the {@code TestCase} has been finished.
-	 *
-	 * @return {@code true} if the {@code TestCase} has been finished
-	 */
 	public function hasFinished(Void):Boolean {
-		if (finished) return true; // Caching of a true result as performance enhancement.
-		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
-		while (methodIterator.hasNext()) {
-			if(!methodIterator.next().hasFinished()) {
+		if (finished) {
+			return true;
+		}
+		var methodInfos:Array = getMethodInfos();
+		for (var i:Number = 0; i < methodInfos.length; i++) {
+			var methodInfo:TestCaseMethodInfo = methodInfos[i];
+			if (!methodInfo.isExecuted()) {
 				return false;
 			}
 		}
-		return (finished=true);
+		return (finished = true);
 	}
 
-	/**
-	 * Returns {@code true} if the {@code TestCase} has been started.
-	 *
-	 * @return {@code true} if the {@code TestCase} has been started
-	 */
 	public function hasStarted(Void):Boolean {
-		if (started) return true; // Caching of a true result as performance enhancement.
-		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
-		while (methodIterator.hasNext()) {
-			if (methodIterator.next().hasFinished()) {
-				return (started=true);
+		if (started) {
+			return true;
+		}
+		var methodInfos:Array = getMethodInfos();
+		for (var i:Number = 0; i < methodInfos.length; i++) {
+			var methodInfo:TestCaseMethodInfo = methodInfos[i];
+			if (methodInfo.isExecuted()) {
+				return (started = true);
 			}
 		}
 		return false;
 	}
 
-	/**
-	 * Returns the total operation time for all methods executed for the {@code TestCase}.
-	 *
-	 * @return total operation time of the {@code TestCase}
-	 */
 	public function getOperationTime(Void):Time {
 		var result:Number = 0;
-		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
-		while (methodIterator.hasNext()) {
-			result += methodIterator.next().getStopWatch().getTimeInMilliSeconds();
+		var methodInfos:Array = getMethodInfos();
+		for (var i:Number = 0; i < methodInfos.length; i++) {
+			var methodInfo:TestCaseMethodInfo = methodInfos[i];
+			result += methodInfo.getStopWatch().getTimeInMilliSeconds();
 		}
-		return (new Time(result));
+		return new Time(result);
 	}
 
-	/**
-	 * Returns {@code true} if the errors occured during the execution of {@code TestCase}.
-	 *
-	 * @return {@code true} if the errors occured during the execution of {@code TestCase}.
-	 */
 	public function hasErrors(Void):Boolean {
-		var methodIterator:Iterator = new ArrayIterator(getMethodInfos());
-		while (methodIterator.hasNext()) {
-			if (methodIterator.next().hasErrors()) {
+		var methodInfos:Array = getMethodInfos();
+		for (var i:Number = 0; i < methodInfos.length; i++) {
+			var methodInfo:TestCaseMethodInfo = methodInfos[i];
+			if (methodInfo.hasErrors()) {
 				return true;
 			}
 		}
@@ -224,9 +196,10 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 
 	/**
-	 * Extended .toString implementation.
+	 * Returns the string representation of this test case result. It is properly
+	 * formatted and may be used to show the test result in text based consoles.
 	 *
-	 * @return {@code TestCaseResult} as well formated {@code String}
+	 * @return the string representation of this test case result
 	 */
 	public function toString():String {
 		var result:String;
@@ -234,20 +207,18 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		var ms:Number = 0;
 		var errors:Number = 0;
 		var methodInfos:Array = getMethodInfos();
-		var iter:Iterator = new ArrayIterator(methodInfos);
-		while (iter.hasNext()) {
-			var method:TestCaseMethodInfo = iter.next();
+		for (var i:Number = 0; i < methodInfos.length; i++) {
+			var method:TestCaseMethodInfo = methodInfos[i];
 			ms += method.getStopWatch().getTimeInMilliSeconds();
 			if(method.hasErrors()) {
 				errors += method.getErrors().length;
-				methodResult += "\n"+StringUtil.addSpaceIndent(method.toString(), 3);
+				methodResult += "\n" + StringUtil.addSpaceIndent(method.toString(), 2);
 			}
 		}
-
-		result = getName() + " ran " + methodInfos.length + " methods in [" + ms + "ms]. ";
-
-		result += (errors>0) ? errors + ((errors > 1) ? " errors" : " error") + " occurred" + methodResult : "no error occurred";
-
+		result = getName() + " ran " + methodInfos.length + " methods in [" + ms + "ms]: ";
+		result += (errors>0) ? errors + ((errors > 1) ? " errors" : " error") +
+				" occurred" + methodResult : "no error occurred";
 		return result;
 	}
+
 }

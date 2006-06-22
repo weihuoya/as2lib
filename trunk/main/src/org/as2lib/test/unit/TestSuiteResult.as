@@ -1,12 +1,12 @@
 ﻿/**
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -16,222 +16,155 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.data.holder.array.TypedArray;
-import org.as2lib.test.unit.TestResult;
+import org.as2lib.data.type.Time;
 import org.as2lib.test.unit.TestCaseResult;
+import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.util.StringUtil;
-import org.as2lib.data.type.Time;
 
 /**
- * {@code TestSuiteResult} contains all informations about the execution of a {@code TestSuite}.
- * 
- * <p>{@link TestSuite} contains all states of execution of the {@code TestSuite}
- * and {@code TestSuiteResult} contains all informations about the execution.
- * 
- * @author Martin Heidegger.
- * @version 1.0
+ * {@code TestSuiteResult} contains information about the execution of a test suite.
+ *
+ * @author Martin Heidegger
+ * @author Simon Wacker
+ * @version 2.0
  * @see TestSuite
  */
 class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestResult {
 
-	/** Related {@code TestSuite}. */
+	/** The corresponding test suite. */
 	private var testSuite:TestSuite;
-	
-	/** {@code TestResults} to the {@code TestSuite}. */
+
+	/** All {@code TestResult} instances of the corresponding test suite. */
 	private var testResults:TypedArray;
 
 	/**
-	 * Constructs a new {@code TestSuiteResult}.
-	 * 
-	 * @param testSuite related {@code TestSuite}
+	 * Constructs a new {@code TestSuiteResult} instance.
+	 *
+	 * @param testSuite the test suite this result corresponds to
 	 */
 	public function TestSuiteResult(testSuite:TestSuite) {
 		this.testSuite = testSuite;
 		testResults = new TypedArray(TestResult);
-		
 		var tests:Array = testSuite.getTests();
-		for (var i:Number=0; i<tests.length; i++) {
-			addTest(tests[i]);
+		for (var i:Number = 0; i < tests.length; i++) {
+			addTestResult(tests[i]);
 		}
 	}
-	
+
 	/**
-	 * Adds a {@code TestResult} to the {@code TestSuiteResult}.
-	 * 
-	 * @param test {@code TestResult} to be added
+	 * Returns the test suite corresponding to this test suite result.
+	 *
+	 * @return the corresponding test suite
 	 */
-	public function addTest(test:TestResult):Void {
-		testResults.unshift(test);
+	public function getTestSuite(Void):TestSuite {
+		return testSuite;
 	}
-	
+
 	/**
-	 * Returns all {@code TestResult) in a {@link TypedArray} contained in the
-	 * {@code TestSuite}.
-	 * 
-	 * @return list of all {@code TestResult}s
+	 * Adds the given test result to this test suite result.
+	 *
+	 * @param testResult the test result to add
 	 */
-	public function getTests(Void):TypedArray {
-		return this.testResults;
+	public function addTestResult(testResult:TestResult):Void {
+		testResults.unshift(testResult);
 	}
-	
-	/**
-	 * Returns the percentage ({@code 0}-{@code 100}) of the added {@code Test}s.
-	 * 
-	 * @return percentage of execution
-	 */
+
 	public function getPercentage(Void):Number {
 		var result:Number = 0;
-		var unit:Number = 100/this.testResults.length;
-		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
-			result += (unit/100*this.testResults[i].getPercentage());
+		var unit:Number = 100 / testResults.length;
+		for (var i:Number = testResults.length - 1; i >= 0; i--) {
+			result += (unit / 100 * testResults[i].getPercentage());
 		}
 		return result;
 	}
-	
-	/**
-	 * Returns {@code true} if the {@code TestSuite} has been finished.
-	 * 
-	 * @return {@code true} if the {@code TestSuite} has been finished
-	 */
+
 	public function hasFinished(Void):Boolean {
-		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
-			if (!this.testResults[i].isFinished()) {
+		for (var i:Number = testResults.length - 1; i >= 0; i--) {
+			if (!testResults[i].isFinished()) {
 				return false;
 			}
 		}
 		return true;
 	}
-	
-	/**
-	 * Returns {@code true} if the {@code TestSuite} has been started.
-	 * 
-	 * @return {@code true} if the {@code TestSuite} has been started
-	 */
+
 	public function hasStarted(Void):Boolean {
-		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
-			if (this.testResults[i].hasStarted()) {
+		for (var i:Number = testResults.length - 1; i >= 0; i--) {
+			if (testResults[i].hasStarted()) {
 				return true;
 			}
 		}
 		return false;
 	}
-		
+
 	/**
-	 * Returns all {@code TestResult}s for the {@code Test}s contained
-	 * within the related {@code TestSuite}.
-	 * 
-	 * <p>Since its possible to add more than one {@code Test} to a {@code TestSuite}
-	 * its necessary to get the {@code TestResult}s to all added {@code Test}s.
+	 * Returns all {@code TestResult} instances of the corresponding test suite. These
+	 * are all test results of the tests that were directly added to the test suite,
+	 * including test suite results.
 	 *
-	 * <p>It flattens out all {@code TestResults}, this means it concats all
-	 * {@code getTestResults} of every added {@code Test}. 
-	 * 
-	 * @return all {@code TestResult}s to all contained {@code Test}s
+	 * @return all {@code TestResult} instances of the corresponding test suite
 	 */
 	public function getTestResults(Void):TypedArray {
-		var result:TypedArray = new TypedArray(TestResult);
-		for (var i:Number=0; i<this.testResults.length; i++) {
-			// TODO: Bug? Why can't i use .concat ???
-			var testCases:Array = this.testResults[i].getTestResults();
-			for (var j:Number=0; j<testCases.length; j++) {
-				result.push(testCases[j]);
-			}
-		}
-		return result;
+		return testResults.concat();
 	}
-	
+
 	/**
-	 * Returns all {@code TestCaseResult}s for the {@code TestCase}s contained
-	 * within the related {@code Test}.
-	 * 
-	 * <p>Since its possible to add more than one {@code Test} to a {@code TestSuite}
-	 * its necessary to get the {@code TestResult}s to all added {@code Test}s.
-	 * 
-	 * <p>{@code TestCase} represents the lowest level of {@code Test} therefor
-	 * its important to get all added {@code TestCaseResults} seperatly.
+	 * Returns all {@link TestCaseResult} instances of the corresponding test suite.
+	 * These are all test case results of child test cases plus all test case results
+	 * of child test suites; all test case results in the whole tree.
 	 *
-	 * <p>It flattens out all {@code TestResults}, this means it concats all
-	 * {@code getTestCaseResults} of every added {@code Test}. 
-	 * 
-	 * @return all {@code TestResult}s to all contained {@code Test}s
+	 * @return all {@code TestCaseResult} instances of the corresponding test suite
 	 */
 	public function getTestCaseResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseResult);
-		for (var i:Number=0; i<this.testResults.length; i++) {
-			// TODO: Bug? Why can't i use .concat ???
-			var testCases:Array = this.testResults[i].getTestCaseResults();
-			for (var j:Number=0; j<testCases.length; j++) {
-				result.push(testCases[j]);
-			}
+		for (var i:Number = 0; i < testResults.length; i++) {
+			var testCases:Array = testResults[i].getTestCaseResults();
+			result.push.apply(result, testCases);
 		}
 		return result;
 	}
-	
+
 	/**
-	 * Retuns the name of the {@code TestSuite}.
-	 * 
-	 * @return name of the {@code TestSuite}
+	 * Retuns the name of the corresponding test suite.
+	 *
+	 * @return the name of the corresponding test suite
 	 */
 	public function getName(Void):String {
-		return this.getTestSuite().getName();
+		return getTestSuite().getName();
 	}
-	
-	/**
-	 * Returns the total operation time for all methods executed for the
-	 * related {@code TestSuite}.
-	 * 
-	 * @return total operation time of the {@code Test}
-	 */
+
 	public function getOperationTime(Void):Time {
 		var result:Number = 0;
-		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
-			result += this.testResults[i].getOperationTime();
+		for (var i:Number = testResults.length - 1; i >= 0; i--) {
+			result += testResults[i].getOperationTime();
 		}
 		return new Time(result);
 	}
-	
-	
-	/**
-	 * Returns {@code true} if the errors occured during the execution of the
-	 * related {@code Test}.
-	 * 
-	 * @return {@code true} if the errors occured during the execution of the
-	 * 		   related {@code Test}.
-	 */
+
 	public function hasErrors(Void):Boolean {
 		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
-			if (this.testResults[i].hasErrors()) {
+			if (testResults[i].hasErrors()) {
 				return true;
 			}
 		}
 		return false;
 	}
-	
-	/**
-	 * Returns the related {@coee TestSuite}.
-	 * 
-	 * @return related {@code TestSuite}
-	 */
-	public function getTestSuite(Void):TestSuite {
-		return this.testSuite;
-	}
-
 
 	/**
-	 * Extended .toString implementation.
-	 * 
-	 * @return {@code TestSuiteResult} as well formated {@code String}
+	 * Returns the string representation of this test suite result. It is properly
+	 * formatted and may be used to show the test result in text based consoles.
+	 *
+	 * @return the string representation of this test suite result
 	 */
 	public function toString():String {
-		var result:String;
-		var titleLength:Number;
-		result = "*** TestSuite "+getName()+" ("+testResults.length+" Tests) ["+getOperationTime()+"ms] ***";
-		titleLength = result.length;
+		var result:String = "*** Test Suite " + getName() + " (" +
+				testResults.length + " Tests) [" + getOperationTime() + "ms] ***";
+		var titleLength:Number = result.length;
 		for (var i:Number = 0; i < testResults.length; i++){
-			result += "\n"+StringUtil.addSpaceIndent(this.testResults[i].toString(), 2);
+			result += "\n" + StringUtil.addSpaceIndent(testResults[i].toString(), 2);
 		}
-		result += "\n"+StringUtil.multiply("*", titleLength);
+		result += "\n" + StringUtil.multiply("*", titleLength);
 		return result;
 	}
-	
+
 }
