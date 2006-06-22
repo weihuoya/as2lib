@@ -88,7 +88,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 			var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
 			if (methodInfo != null) {
 				socket.send(new XML("<update>Executing " + testRunner.getCurrentTestCase().getName() +
-						"." + methodInfo.getMethodInfo().getName() + ".</update>"));
+						"." + methodInfo.getMethodInfo().getName() + "</update>"));
 			}
 		}
 	}
@@ -97,7 +97,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
 			socket.send(new XML("<pause>Paused execution at " +
-					testRunner.getCurrentTestCaseMethodInfo().getName() + ".</pause>"));
+					testRunner.getCurrentTestCaseMethodInfo().getName() + "</pause>"));
 		}
 	}
 
@@ -105,7 +105,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
 			socket.send(new XML("<resume>Resumed execution at " +
-					testRunner.getCurrentTestCaseMethodInfo().getName() + ".</resume>"));
+					testRunner.getCurrentTestCaseMethodInfo().getName() + "</resume>"));
 		}
 	}
 
@@ -135,7 +135,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 	}
 
 	public function onProcessError(process:Process, error):Boolean {
-		socket.send(new XML("<error>Error was raised during execution:\n" + error + "</error>"));
+		socket.send(new XML("<error>Error was raised during test execution:\n" + error + "</error>"));
 		return false;
 	}
 
