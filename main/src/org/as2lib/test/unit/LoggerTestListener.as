@@ -15,124 +15,127 @@
  */
 
 import org.as2lib.app.exec.Process;
-import org.as2lib.test.unit.TestRunner;
-import org.as2lib.test.unit.TestCaseResult;
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.env.log.LogSupport;
-import org.as2lib.test.unit.TestCaseMethodInfo;
-import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.ProcessErrorListener;
 import org.as2lib.app.exec.ProcessFinishListener;
 import org.as2lib.app.exec.ProcessPauseListener;
 import org.as2lib.app.exec.ProcessResumeListener;
+import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.ProcessUpdateListener;
+import org.as2lib.env.log.LogSupport;
+import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.test.unit.TestRunner;
+import org.as2lib.util.StringUtil;
 
 /**
- * {@code LoggerTestListener} is the default listener for Tests.
- * Listener as default logger for the Testrunner. To be used as standard outwriter for the TestRunner.
+ * {@code LoggerTestListener} directs test results to As2lib Logging. This means that
+ * As2lib Logging must be configured to do the actual output to a console of your
+ * choice.
+ *
+ * <p>If you are working in the Flash IDE you can use the {@link TraceLogger} to do the
+ * output. If you are working with MTASC you may use the {@link LuminicBoxLogger} or
+ * {@link AlconLogger}. There are of course lots of other output consoles supported.
+ * Just take a look at the {@code org.as2lib.env.log.logger} package.
+ *
+ * <code>
+ *   import org.as2lib.env.log.LogManager;
+ *   import org.as2lib.env.log.logger.TraceLogger;
+ *
+ *   LogManager.setLogger(new TraceLogger());
+ * </code>
  *
  * @author Martin Heidegger
- * @see LogManager#getLoggerRepository
+ * @author Simon Wacker
  * @see Logger
+ * @see LogManager#setLogger
+ * @see LogManager#setLoggerRepository
  */
-class org.as2lib.test.unit.LoggerTestListener extends LogSupport
-	implements ProcessStartListener,
-		ProcessErrorListener,
-		ProcessFinishListener,
-		ProcessPauseListener,
-		ProcessResumeListener,
-		ProcessUpdateListener {
+class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements
+		ProcessStartListener, ProcessErrorListener, ProcessFinishListener,
+		ProcessPauseListener, ProcessResumeListener, ProcessUpdateListener {
 
-	/* Instance holfer of the default LoggerTestListener */
+	/** Shared instance. */
 	private static var instance:LoggerTestListener;
 
 	/**
-	 * Returns a instance of {@code LoggerTestListener}
+	 * Returns a shared logger test listener. While there may exist multiple logger
+	 * test listeners, it is not necessary. The same instance can be used for multiple
+	 * test cases.
 	 *
-	 * @return Instance of {@code LoggerTestListener}
+	 * @return a shared logger test listener
 	 */
 	public static function getInstance(Void):LoggerTestListener {
-		if (!instance) {
+		if (instance == null) {
 			instance = new LoggerTestListener();
 		}
 		return instance;
 	}
 
-	/** Stores former displayed TestCase. */
-	private var formerTest:TestCaseResult;
-
 	/**
 	 * Constructs a new {@code LoggerTestListener} instance.
 	 */
-	public function LoggerTestListener() {}
-
-
-	/**
-	 * Start event, fired by start of a TestRunner.
-	 *
-	 * @param startInfo Informations about the TestRunner that started.
-	 */
-	public function onProcessStart(process:Process):Void {
-		logger.info("TestRunner started execution.");
+	public function LoggerTestListener(Void) {
 	}
 
 	/**
-	 * Progress event, fired after each executed method within a TestRunner.
+	 * Logs that test execution has been started.
 	 *
-	 * @param progressInfo Extended informations the current progress.
+	 * @param process the test runner that started the test execution
+	 */
+	public function onProcessStart(process:Process):Void {
+		logger.info("Started execution of tests.");
+	}
+
+	/**
+	 * Logs the execution of the next test.
+	 *
+	 * @param process the test runner that started executing the next test
 	 */
 	public function onProcessUpdate(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
-		if (testRunner) {
-			var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
-			if (methodInfo) {
-				logger.info("executing ... "+testRunner.getCurrentTestCase().getName()+"."+methodInfo.getMethodInfo().getName());
-			}
-		}
+		var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
+		logger.info("Executing " + testRunner.getCurrentTestCaseMethodInfo().getName());
 	}
 
 	/**
-	 * Redirects the string representation of the testrunner to the logger
+	 * Logs that the test execution has been paused.
 	 *
-	 * @param finishInfo Informations about the TestRunner that finished.
-	 */
-	public function onProcessFinish(process:Process):Void {
-		var testRunner:TestRunner = TestRunner(process);
-		if(testRunner) {
-			logger.info("TestRunner finished with the result: \n"+testRunner.getTestResult().toString());
-		} else {
-			throw new IllegalArgumentException("LoggerTestListener added to a different Process", this, arguments);
-		}
-	}
-
-	/**
-	 * Pause event, fired after by pausing the execution of a TestRunner.
-	 *
-	 * @param pauseInfo Informations about the TestRunner that paused.
+	 * @param process the test runner that has been paused
 	 */
 	public function onProcessPause(process:Process):Void {
 		var test:TestRunner = TestRunner(process);
-		logger.info("TestRunner paused execution at "+test.getCurrentTestCaseMethodInfo().getName());
+		logger.info("Paused execution at " + test.getCurrentTestCaseMethodInfo().getName());
 	}
 
 	/**
-	 * Pause event, fired after by resuming the execution of a TestRunner.
+	 * Logs that the test execution has been resumed.
 	 *
-	 * @param resumeInfo Informations about the TestRunner that resumed working.
+	 * @param process the test runner that has been resumed
 	 */
 	public function onProcessResume(process:Process):Void {
 		var test:TestRunner = TestRunner(process);
-		logger.info("TestRunner resumed execution at "+test.getCurrentTestCaseMethodInfo().getName());
+		logger.info("Resumed execution at " + test.getCurrentTestCaseMethodInfo().getName());
 	}
 
 	/**
-	 * Executed if a Exeception was thrown during the execution
+	 * Logs the result of the test execution; the string result is obtained with
+	 * the {@code toString} method of the given test runner.
 	 *
-	 * @param process where the execution paused.
-	 * @param error Error that occured.
+	 * @param process the test runner that finished the test execution
+	 */
+	public function onProcessFinish(process:Process):Void {
+		var testRunner:TestRunner = TestRunner(process);
+		logger.info(testRunner.getTestResult().toString());
+	}
+
+	/**
+	 * Logs that an exception was thrown during the test execution.
+	 *
+	 * @param process the test runner which catched the raised exception
+	 * @param error the error that occurred
 	 */
 	public function onProcessError(process:Process, error):Boolean {
-		logger.error("Exception was thrown during the execution of the TestRunner: " + error + ".");
+		logger.error("Error was raised during test execution:\n" +
+				StringUtil.addSpaceIndent(error.toString(), 2));
 		return true;
 	}
 
