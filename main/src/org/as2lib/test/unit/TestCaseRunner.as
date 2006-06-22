@@ -20,83 +20,80 @@ import org.as2lib.app.exec.StepByStepProcess;
 import org.as2lib.data.holder.Queue;
 import org.as2lib.data.holder.queue.LinearQueue;
 import org.as2lib.test.unit.ExecutionInfo;
+import org.as2lib.test.unit.info.ExecutionError;
+import org.as2lib.test.unit.info.InstantiationError;
+import org.as2lib.test.unit.info.SetUpError;
+import org.as2lib.test.unit.info.TearDownError;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestCaseResult;
-import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestResult;
-import org.as2lib.test.unit.info.InstantiationError;
-import org.as2lib.test.unit.info.ExecutionError;
-import org.as2lib.test.unit.info.SetUpError;
-import org.as2lib.test.unit.info.TearDownError;
+import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.ClassUtil;
 import org.as2lib.util.StopWatch;
 import org.as2lib.util.StringUtil;
 
 /**
- * {@code TestCaseRunner} is the implementation for the execution of {@link TestCase}s.
+ * {@code TestCaseRunner} runs a test case. It invokes all {@code test*} methods
+ * of the test case and handles exceptions and pauses and resumes.
  *
- * <p>It executes and handles all operations to process the certain {@code TestCase}.
+ * <p>You usually do not have to work with this class directly because every test
+ * case handles its runner automatically.
  *
- * <p>Usually you do not get in touch with the {@code TestCaseRunner} because any
- * {@code TestCase} handles it automatically.
+ * <p>Take a look at the {@link TestRunner} documentation for details on how to
+ * use test runners and code samples.
  *
- * <p>As its a implementation of {@link TestRunner} it is possible to add any
- * {@link org.as2lib.app.exec.ProcessListener} as listener to the execution of
- * the {@code TestCaseRunner}.
- *
- * @author HeideggerMartin
- * @version 1.0
+ * @author Martin Heidegger
+ * @author Simon Wacker
+ * @version 2.0
  */
-class org.as2lib.test.unit.TestCaseRunner
-			extends AbstractProcess
-			implements TestRunner, StepByStepProcess {
+class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
+		TestRunner, StepByStepProcess {
 
-	/** State if no method has been started. */
-	private var STATE_NOT_STARTED:Number = 1;
+	/** State that indicates that the next method must be started. */
+	private static var STATE_NOT_STARTED:Number = 1;
 
-	/** State if the instance has been created. */
-	private var STATE_TEST_CREATED:Number = 2;
+	/** State that indicates that the test case instance was created. */
+	private static var STATE_TEST_CREATED:Number = 2;
 
-	/** State if setUp has been executed. */
-	private var STATE_SET_UP_FINISHED:Number = 3;
+	/** State that indicates that the {@code setUp} method was invoked. */
+	private static var STATE_SET_UP_FINISHED:Number = 3;
 
-	/** State if the method has been executed. */
-	private var STATE_EXECUTION_FINISHED:Number = 4;
+	/** State that indicates that the {@code test*} method was invoked. */
+	private static var STATE_EXECUTION_FINISHED:Number = 4;
 
-	/** State if tearDown has been executed. */
-	private var STATE_TEAR_DOWN_FINISHED:Number = 5;
+	/** State that indicates that the {@code tearDown} method was invoked. */
+	private static var STATE_TEAR_DOWN_FINISHED:Number = 5;
 
-	/** Result to the execution. */
+	/** The result to the test execution. */
 	private var testResult:TestCaseResult;
 
-	/** Queue that contains the methods to execute. */
+	/** The {@code test*} methods to execute. */
 	private var openTestCaseMethods:Queue;
 
 	/**
-	 * Information for the current executing method.
-	 * Since its possible to pause/resume the process its necessary to safe it
-	 * in instance scope.
+	 * The currently executing test method. Since it is possible to pause/resume the
+	 * test execution it is necessary to store it as instance variable.
 	 */
 	private var methodInfo:TestCaseMethodInfo;
 
 	/**
-	 * State of the execution of the method.
-	 * Since its possible to pause/resume the process its necessary to safe at
-	 * what point of execution it had paused.
+	 * The current state of the execution of the current test method. Since it is
+	 * possible to pause/resume the test execution it is necessary to safe at what
+	 * point in the execution it was paused.
 	 */
 	private var methodState:Number;
 
-	/** Instance for the execution of the method. */
+	/** The test case to execute the current test method on. */
 	private var testCaseInstance:TestCase;
 
-	/** StopWatch related to the test (saved in instance scope because of performance). */
-	private var sW:StopWatch;
+	/** The stop watch for this test (saved in instance scope for better performance). */
+	private var stopWatch:StopWatch;
 
 	/**
-	 * Constructs a new {@code TestCaseRunner}.
+	 * Constructs a new {@code TestCaseRunner} instance.
 	 *
-	 * @param testCase {@code TestCase} that should be executed.
+	 * @param testCase the test case to run
 	 */
 	function TestCaseRunner(testCase:TestCase) {
 		testResult = new TestCaseResult(testCase);
@@ -104,59 +101,33 @@ class org.as2lib.test.unit.TestCaseRunner
 		openTestCaseMethods = new LinearQueue(testResult.getMethodInfos());
 	}
 
-	/**
-	 * Returns the {@code TestCaseResult} to the executed {@code TestCase}.
-	 *
-	 * <p>The result contains all informations about the connected {@code TestCase}.
-	 * Since it is available even if the {@code TestCaseRunner} has not been started
-	 * or finished the execution it is possible that the result is not complete at
-	 * the request. But it contains all informations about the methods that will
-	 * be executed.
-	 *
-	 * @return {@link TestResult} for the {@code TestCase} that contains all informations
-	 */
 	public function getTestResult(Void):TestResult {
 		return testResult;
 	}
 
-	/**
-	 * Returns the current executing {@code TestCaseResult}.
-	 *
-	 * <p>It is necessary to get the {@code TestCaseResult} for the {@code TestCase}
-	 * that just gets executed because there can be more than one {@code TestCase}
-	 * available within a {@code TestResult}.
-	 *
-	 * @return {@code TestCaseResult} related to the {@code TestCase}
-	 */
 	public function getCurrentTestCase(Void):TestCaseResult {
 		return testResult;
 	}
 
-	/**
-	 * Returns the current executing {@code TestCaseMethodInfo}.
-	 *
-	 * <p>It is necessary to get the {@code TestCaseMethodInfo} for the method
-	 * that just gets executed because there can be more than one methods available
-	 * within a {@code TestCaseResult}.
-	 *
-	 * @return informations about the current executing method
-	 * @see #getCurrentTestCase
-	 */
 	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo {
 		return methodInfo;
 	}
 
 	/**
-	 * Adds a information about the current executing method.
+	 * Adds test execution information for the currently executing method.
 	 *
-	 * @param info {@code ExecutionInfo} to be added
+	 * @param info the execution information to add
 	 */
 	public function addInfo(info:ExecutionInfo):Void {
 		methodInfo.addInfo(info);
 	}
 
 	/**
-	 * Implementation of {@link AbstractProcess#run} for the start of the {@code Process}.
+	 * Adds this step-by-step process to the processor which executes one step after
+	 * each other on every new frame. This makes it possible to pause and resume this
+	 * test runner and prevents flash player crashes.
+	 *
+	 * @see Processor
 	 */
 	private function run() {
 		working = true;
@@ -165,17 +136,16 @@ class org.as2lib.test.unit.TestCaseRunner
 	}
 
 	/**
-	 * Executes the next step of the {@code Process}
-	 *
-	 * <p>Implementation of {@link StepByStepProcess#nextStep}.
+	 * Executes the next step of this test run.
 	 */
 	public function nextStep(Void):Void {
 		if (openTestCaseMethods.isEmpty()) {
 			finish();
-		} else {
+		}
+		else {
 			if (methodState == STATE_NOT_STARTED) {
 				methodInfo = openTestCaseMethods.dequeue();
-				sW = methodInfo.getStopWatch();
+				stopWatch = methodInfo.getStopWatch();
 				distributeUpdateEvent();
 			}
 			while (processMethod());
@@ -183,91 +153,84 @@ class org.as2lib.test.unit.TestCaseRunner
 	}
 
 	/**
-	 * Returns the percentage of execution of the {@code TestCase}.
+	 * Returns the progress in percent of this test run.
 	 */
 	public function getPercentage(Void):Number {
-		return (100-(100/testResult.getMethodInfos().length*openTestCaseMethods.size()));
+		return (100 - (100 / testResult.getMethodInfos().length * openTestCaseMethods.size()));
 	}
 
 	/**
-	 * Executes the current method.
+	 * Executes the next state of the current test method.
 	 *
-	 * <p>Handles all possible executions states and continues to the next
-	 * execution.
-	 *
-	 * @return {@code true} if the execution has finished and {@code false} if it has to be continued.
+	 * @return {@code true} if the execution of the test method is finished and
+	 * {@code false} if not
 	 */
 	private function processMethod(Void):Boolean {
 		// Execution depending to the current state.
 		switch (methodState) {
 			case STATE_NOT_STARTED:
-
 			    // create instance and set state for next loop.
 				methodState = STATE_TEST_CREATED;
-
 			    try {
 				    testCaseInstance = ClassUtil.createInstance(
-							testResult.getTestCase()["__constructor__"]
-					);
-			    } catch(e) {
-					fatal(new InstantiationError("IMPORTANT: Testcase threw "
-						+ "an error by instanciation.\n"
-						+ StringUtil.addSpaceIndent(e.toString(), 2), this, arguments));
+							testResult.getTestCase()["__constructor__"]);
+			    }
+			    catch (exception) {
+					fatal(new InstantiationError("IMPORTANT: Test case threw an " +
+							"exception on instantiation:\n" +
+							StringUtil.addSpaceIndent(exception.toString(), 2),
+							this, arguments));
 				}
 				break;
 
 			case STATE_TEST_CREATED:
-
 				// set up the instance and set state for next loop.
 				methodState = STATE_SET_UP_FINISHED;
-
 				testCaseInstance.getTestRunner();
-
 				// Prepare the execution of the method by setUp
 				if (!methodInfo.hasErrors()) {
 					try {
 						testCaseInstance.setUp();
-					} catch (e) {
-						fatal(new SetUpError("IMPORTANT: Error occured during"
-							+ " set up(Testcase wasn't executed):\n"+StringUtil.addSpaceIndent(e.toString(), 2), testCaseInstance, arguments));
+					}
+					catch (exception) {
+						fatal(new SetUpError("IMPORTANT: Error occurred during " +
+								"set up:\n" + StringUtil.addSpaceIndent(
+								exception.toString(), 2), this, arguments));
 					}
 				}
 				break;
 
 			case STATE_SET_UP_FINISHED:
-
 				// execute the method and set the state for the next loop
 				methodState = STATE_EXECUTION_FINISHED;
-
 				if (!methodInfo.hasErrors()) {
 					// Execute the method
-					sW.start();
+					stopWatch.start();
 					try {
 						methodInfo.getMethodInfo().invoke(testCaseInstance, null);
-					} catch (e) {
-						fatal(new ExecutionError("Unexpected exception thrown"
-							+ " during execution:\n"
-							+ StringUtil.addSpaceIndent(e.toString(), 2),
-							testCaseInstance, arguments));
+					}
+					catch (exception) {
+						fatal(new ExecutionError("Test method threw an unexpected " +
+								"exception:\n" + StringUtil.addSpaceIndent(
+								exception.toString(), 2), this, arguments));
 					}
 				}
 				break;
 
 			case STATE_EXECUTION_FINISHED:
-
 				// tear down the instance and set the state for the next loop
 				methodState = STATE_TEAR_DOWN_FINISHED;
-				if (sW.hasStarted()) {
-					sW.stop();
+				if (stopWatch.hasStarted()) {
+					stopWatch.stop();
 				}
-
 				if (!methodInfo.hasErrors()) {
 					try {
 						testCaseInstance.tearDown();
-					} catch(e) {
-						fatal(new TearDownError("IMPORTANT: Error occured during"
-							+ " tear down:\n"+StringUtil.addSpaceIndent(e.toString(), 2),
-							testCaseInstance, arguments));
+					}
+					catch (exception) {
+						fatal(new TearDownError("IMPORTANT: Error occurred during " +
+								"tear down:\n" + StringUtil.addSpaceIndent(
+								exception.toString(), 2), this, arguments));
 					}
 				}
 				break;
@@ -283,15 +246,16 @@ class org.as2lib.test.unit.TestCaseRunner
 	}
 
 	/**
-	 * Internal helper to stop the execution if a fatal error occurs.
+	 * Adds the given fatal execution info to the currently executing method and stops
+	 * its execution.
 	 *
-	 * <p>It will add the passed-in {@code error} to the list of informations
-	 * with {@code addInfo}.
-	 *
-	 * @param error error that occured
+	 * @param error the fatal error that occurred
+	 * @see #addInfo
+	 * @see #STATE_TEAR_DOWN_FINISHED
 	 */
 	private function fatal(error:ExecutionInfo):Void {
 		addInfo(error);
 		methodState = STATE_TEAR_DOWN_FINISHED;
 	}
+
 }
