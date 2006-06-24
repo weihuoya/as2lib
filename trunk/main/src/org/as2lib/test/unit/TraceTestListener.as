@@ -22,6 +22,7 @@ import org.as2lib.app.exec.ProcessResumeListener;
 import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.ProcessUpdateListener;
 import org.as2lib.core.BasicClass;
+import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.StringUtil;
 
@@ -48,21 +49,33 @@ class org.as2lib.test.unit.TraceTestListener extends BasicClass implements
 
 	public function onProcessUpdate(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
-		trace("Executing " + testRunner.getCurrentTestCaseMethodInfo().getName());
+		if (testRunner != null) {
+			var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
+			if (methodInfo != null) {
+				trace("Executing " + methodInfo.getName());
+			}
+		}
 	}
 
 	public function onProcessPause(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
-		trace("Paused execution at " + testRunner.getCurrentTestCaseMethodInfo().getName());
+		if (testRunner != null) {
+			trace("Paused execution at " + testRunner.getCurrentTestCaseMethodInfo().getName());
+		}
 	}
 
 	public function onProcessResume(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
-		trace("Resumed execution at " + testRunner.getCurrentTestCaseMethodInfo().getName());
+		if (testRunner != null) {
+			trace("Resumed execution at " + testRunner.getCurrentTestCaseMethodInfo().getName());
+		}
 	}
 
 	public function onProcessFinish(process:Process):Void {
-		trace(TestRunner(process).getTestResult());
+		var testRunner:TestRunner = TestRunner(process);
+		if (testRunner != null) {
+			trace(testRunner.getTestResult());
+		}
 	}
 
 	public function onProcessError(process:Process, error):Boolean {

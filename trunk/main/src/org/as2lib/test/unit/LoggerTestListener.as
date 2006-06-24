@@ -92,8 +92,12 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements
 	 */
 	public function onProcessUpdate(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
-		var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
-		logger.info("Executing " + testRunner.getCurrentTestCaseMethodInfo().getName());
+		if (testRunner != null) {
+			var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
+			if (methodInfo != null) {
+				logger.info("Executing " + methodInfo.getName());
+			}
+		}
 	}
 
 	/**
@@ -102,8 +106,10 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements
 	 * @param process the test runner that has been paused
 	 */
 	public function onProcessPause(process:Process):Void {
-		var test:TestRunner = TestRunner(process);
-		logger.info("Paused execution at " + test.getCurrentTestCaseMethodInfo().getName());
+		var testRunner:TestRunner = TestRunner(process);
+		if (testRunner != null) {
+			logger.info("Paused execution at " + testRunner.getCurrentTestCaseMethodInfo().getName());
+		}
 	}
 
 	/**
@@ -112,8 +118,10 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements
 	 * @param process the test runner that has been resumed
 	 */
 	public function onProcessResume(process:Process):Void {
-		var test:TestRunner = TestRunner(process);
-		logger.info("Resumed execution at " + test.getCurrentTestCaseMethodInfo().getName());
+		var testRunner:TestRunner = TestRunner(process);
+		if (testRunner != null) {
+			logger.info("Resumed execution at " + testRunner.getCurrentTestCaseMethodInfo().getName());
+		}
 	}
 
 	/**
@@ -124,7 +132,9 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements
 	 */
 	public function onProcessFinish(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
-		logger.info(testRunner.getTestResult().toString());
+		if (testRunner != null) {
+			logger.info(testRunner.getTestResult().toString());
+		}
 	}
 
 	/**
