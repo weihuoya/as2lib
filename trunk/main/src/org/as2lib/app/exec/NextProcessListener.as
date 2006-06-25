@@ -18,15 +18,18 @@ import org.as2lib.app.exec.Batch;
 import org.as2lib.core.BasicInterface;
 
 /**
- * {@code NextProcessListener} can be added to batches to get informed when the next
- * process was started.
+ * {@code NextProcessListener} can be implemented by classes which want to be
+ * notified when a batch starts the next process. An instance of the implementing
+ * class can then be registered as listener at the batch to observe.
  *
  * @author Simon Wacker
+ * @see Batch
+ * @see Batch#addListener
  */
 interface org.as2lib.app.exec.NextProcessListener extends BasicInterface {
 
 	/**
-	 * Is executed when the next process was started.
+	 * Is executed when the next process is started.
 	 *
 	 * @param batch the batch which started the next process
 	 * @see Batch#getCurrentProcess

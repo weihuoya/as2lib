@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,25 +15,26 @@
  */
 
 import org.as2lib.app.exec.Process;
+import org.as2lib.core.BasicInterface;
 
 /**
- * {@code ProcessResumeListener} is a defintion for a observer of a resuming of a
- * {@link Process}.
- * 
- * <p>To observe a resuming of a {@code Process} you can implement this interface
- * and add your implementation with {@link Process#addListener} to observe a
- * certain {@code Process}.
- * 
+ * {@code ProcessResumeListener} can be implemented by classes which want to be
+ * notified when a process resumes. An instance of the implementing class can then
+ * be registered as listener at the process to observe.
+ *
  * @author Martin Heidegger
+ * @author Simon Wacker
  * @version 2.0
  * @see Process
+ * @see Process#addListener
  */
-interface org.as2lib.app.exec.ProcessResumeListener {
-	
+interface org.as2lib.app.exec.ProcessResumeListener extends BasicInterface {
+
 	/**
-	 * Method to be executed if a process awakes from pause.
-	 * 
-	 * @param process {@link Process} that resumes execution
+	 * Is executed when the observed process resumes.
+	 *
+	 * @param process the process that resumed execution
 	 */
 	public function onProcessResume(process:Process):Void;
+
 }
