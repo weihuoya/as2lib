@@ -14,95 +14,105 @@
  * limitations under the License.
  */
 
-import org.as2lib.env.except.AbstractOperationException;
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.app.exec.Process;
+import org.as2lib.app.exec.AbstractTimeConsumer;
 import org.as2lib.app.exec.Executable;
+import org.as2lib.app.exec.Process;
 import org.as2lib.app.exec.ProcessErrorListener;
 import org.as2lib.app.exec.ProcessFinishListener;
-import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.ProcessPauseListener;
 import org.as2lib.app.exec.ProcessResumeListener;
+import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.ProcessUpdateListener;
-import org.as2lib.app.exec.AbstractTimeConsumer;
+import org.as2lib.app.exec.StepByStepProcess;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.holder.map.HashMap;
+import org.as2lib.env.except.AbstractOperationException;
+import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.util.MethodUtil;
-import org.as2lib.env.event.distributor.CompositeEventDistributorControl;
 
 /**
- * {@code AbstractProcess} is a abstract helper class to implement processes.
+ * {@code AbstractProcess} provides the infrastructure for {@link Process}
+ * implementations. It handles all process states, distributes events and provides
+ * means for starting subprocesses. Subclasses must implement the {@link #run}
+ * template method, which is responsible for doing the actual processing. The
+ * {@code run} method can either do its job synchronously or asynchronously.
  *
- * <p>Most of the functionalities of {@link Process} are served well within
- * {@code AbstractProcess}. Because of the situation that most processes are
- * simple executions {@code AbstractProcess} allows easy implementations of
- * {@link Process}.
+ * <p>Synchronously means that all computations have been done as soon as the
+ * {@code run} method returns; the finish event will be distributed directly
+ * after the invocation of the {@code run} method.
  *
- * <p>To use the advantage of {@code AbstractProcess} simple extend it and
- * implement the {@link #run} method.
- *
- * <p>It executes {@link #run} at {@link #start} and handles the exeuction of
- * events and the correct states. If you wan't to stop your process
- * {@link #pause} and {@link #resume} offer direct support.
- *
- * <p>Example for a process that can not be finished by return:
  * <code>
- *   class MyProcess extends AbstractProcess {
+ *   class MySynchronousProcess extends AbstractProcess {
  *
- *     public function run() {
- *        // Xml that has to work
- *        var xml:Xml = new Xml();
+ *       private var collaborator:MyCollaborator;
  *
- *        // helper for the call back.
- *        var inst = this;
+ *       public function MySynchronousProcess(collaborator:MyCollaborator) {
+ *           this.collaborator = collaborator;
+ *       }
  *
- *        // Mtasc compatible return from loading
- *        xml.onLoad = function() {
- *          inst["finish"]();
- *        }
+ *       public function run() {
+ *           var number:Number = collaborator.getNumber();
+ *           collaborator.setNumber(number * 2);
+ *       }
  *
- *        // Flag to not finish automatically
- *        working = true;
+ *   }
+ * </code>
  *
- *        // Start of loading the xml file.
- *        xml.load("test.xml");
- *     }
+ * <p>Asynchronously means that the {@code run} method needs more than one frame
+ * to do its job (for example when files are loaded) and that processing is thus
+ * not finished when the {@code run} method returns. In this case the {@code run}
+ * method must designate that it has not finished processing when it returns by
+ * setting the {@code working} flag to {@code true} and finish the process as soon
+ * as the asynchrnous subprocess finishes.
+ *
+ * <code>
+ *   class MyAsynchronousProcess extends AbstractProcess {
+ *
+ *       private var xml:XML;
+ *
+ *       public function MyAsynchronousProcess(xml:XML) {
+ *           this.xml = xml;
+ *       }
+ *
+ *       public function run() {
+ *           var process:Process = this;
+ *           xml.onLoad = function() {
+ *               process["finish"]();
+ *           }
+ *           working = true;
+ *           xml.load("test.xml");
+ *       }
+ *
  *   }
  * </code>
  *
  * @author Martin Heidegger
- * @version 1.0
- * @see Process
- * @see ProcessStartListener
- * @see ProcessFinishListener
- * @see ProcessErrorListener
- * @see ProcessPauseListener
- * @see ProcessResumeListener
- * @see ProcessUpdateListener
+ * @author Simon Wacker
+ * @version 2.0
  */
-class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
-		implements Process, ProcessErrorListener, ProcessFinishListener {
+class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer implements
+		Process, ProcessErrorListener, ProcessFinishListener {
 
-	/** Flag if execution was paused. */
+	/** Is the execution currently paused? */
 	private var paused:Boolean;
 
-	/** Flag if execution is just not working (case if a event is not finished within .start). */
+	/** Is this process currently working? */
 	private var working:Boolean;
 
-	/** List of all errors that occur during execution. */
+	/** All errors that occurred during this process's execution. */
 	private var errors:Array;
 
-	/** All subprocesses (Key) and its mapped callBacks (Value).  */
+	/** All subprocesses as keys and their callbacks as values. */
 	private var subProcesses:Map;
 
-	/** Contains the possible parent. */
+	/** The parent of this process. */
 	private var parent:Process;
 
 	/** The name of this process. */
 	private var name:String;
 
 	/**
-	 * Constructs a new {@code AbstractProcess}.
+	 * Constructs a new {@code AbstractProcess} instance.
 	 */
 	private function AbstractProcess(Void) {
 		errors = new Array();
@@ -117,30 +127,16 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 		acceptListenerType(ProcessFinishListener);
 	}
 
-	/**
-	 * Setter for a parent process.
-	 *
-	 * <p>Validates if the passed-in {@code Process} is this instance or has
-	 * this instance in its parent hierarchy (to prevent recursions).
-	 *
-	 * @param p {@code Process} to act as parent
-	 * @throws IllegalArgumentException if the applied process has the current
-	 *         instance in its parent hierarchy or it is the current instance
-	 */
-	public function setParentProcess(p:Process):Void {
-		parent = p;
+	public function setParentProcess(parentProcess:Process):Void {
+		parent = parentProcess;
 		do {
-			if (p == this) {
-				throw new IllegalArgumentException("You can not start a process with itself as super process.", this, arguments);
+			if (parentProcess == this) {
+				throw new IllegalArgumentException("You cannot start a process " +
+						"with itself as super process.", this, arguments);
 			}
-		} while (p = p.getParentProcess());
+		} while (parentProcess = parentProcess.getParentProcess());
 	}
 
-	/**
-	 * Returns the {@code Process} that acts as parent for this process.
-	 *
-	 * @return parent {@code Process} if set, else {@code null}
-	 */
 	public function getParentProcess(Void):Process {
 		return parent;
 	}
@@ -154,31 +150,26 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
 	/**
-	 * Starts a sub-process.
+	 * Starts the given subprocess.
 	 *
-	 * <p>This method allows to start a {@code Process}. It registers itself as
-	 * parent of the passed-in {@code process} and starts the {@code process}
-	 * if necessary.
+	 * <p>Registers this process as parent of the given subprocess and starts the
+	 * subprocess immediately if necessary. This means that if you start multiple
+	 * subprocesses they will be executed synchronously and not one after the other.
 	 *
-	 * <p>If you add a sub-process it will be started immediately. This is important
-	 * if you start more than one sub-process, because they won't get executed in
-	 * a row like its handled within a {@link org.as2lib.app.exec.Batch}.
+	 * <p>This process does not finish execution until all subprocesses have finished.
 	 *
-	 * <p>This process will not be finished until all subprocesses have finished.
+	 * <p>If the given subprocess finishes its corresponding callback will be invoked.
 	 *
-	 * <p>On finish of the {@code process} to start it will execute the passed-in
-	 * {@code callBack}.
-	 *
-     * @param process process to be used as sub-process
-     * @param args arguments for the process start
-     * @param callBack call back to be executed if the process finishes
+     * @param process the subprocess to start
+     * @param args the arguments to start the subprocess with
+     * @param callback the callback to execute if the subprocess finishes
 	 */
-	public function startSubProcess(process:Process, args:Array, callBack:Executable):Void {
+	public function startSubProcess(process:Process, args:Array, callback:Executable):Void {
 		// Don't do anything if the the process is already registered as sub-process.
 		if (!subProcesses.containsKey(process)) {
 			process.addListener(this);
 			process.setParentProcess(this);
-			subProcesses.put(process, callBack);
+			subProcesses.put(process, callback);
 			if (!isPaused()) {
 				pause();
 			}
@@ -186,13 +177,15 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 			// Re-start if finished.
 			// Do nothing if started but not finished.
 			if (!process.hasStarted() || process.hasFinished()) {
-				process["start"].apply(process, args);
+				MethodUtil.invoke("start", process, args);
 			}
 		}
 	}
 
 	/**
-	 * Pauses the process.
+	 * Pauses this process and distributes a pause event.
+	 *
+	 * @see #distributePauseEvent
 	 */
 	public function pause(Void):Void {
 		paused = true;
@@ -200,16 +193,23 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
 	/**
-	 * Resumes the process.
+	 * Resumes this process and distributes a resume event.
+	 *
+	 * @see #distributeResumeEvent
 	 */
 	public function resume(Void):Void {
 		paused = false;
 		distributeResumeEvent();
-		//finish();
+		if (subProcesses.isEmpty() && !(this instanceof StepByStepProcess)) {
+			finish();
+		}
 	}
 
 	/**
-	 * Prepares the start of the process.
+	 * Prepares the start of this process by setting all flags and distributing a
+	 * start event.
+	 *
+	 * @see #distributeStartEvent
 	 */
 	private function prepare(Void):Void {
 		started = false;
@@ -223,11 +223,13 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
 	/**
-	 * Starts the process.
+	 * Starts the execution of this process.
 	 *
-	 * <p>Any applied parameter will be passed to the {@link #run} implementation.
+	 * <p>Any given parameters are passed to the {@code run} method.
 	 *
-	 * @return (optional) result of {@code run()}
+	 * @param * any number of paramters of any type to pass to the {@code run} method
+	 * @return the return value of the {@code run} method
+	 * @see #run
 	 */
     public function start() {
     	prepare();
@@ -237,8 +239,8 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
     		startTime = getTimer();
 			result = MethodUtil.invoke("run", this, arguments);
     	}
-    	catch(e) {
-    		distributeErrorEvent(e);
+    	catch (exception) {
+    		distributeErrorEvent(exception);
     	}
 		if (!isPaused() && !isWorking()) {
 			finish();
@@ -247,49 +249,46 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
 	/**
-	 * Flag if the current implementation is working.
+	 * Returns whether this process is currently working.
 	 *
-	 * <p>Important for {@link #start} this method indicates that the just starting
-	 * process is not finished by return.
+	 * <p>This flag can be used to indicate that this process is asynchronous and has
+	 * not finished execution when the {@link #run} method returns. Alternatively,
+	 * {@link #pause} and {@link #resume} may be used.
 	 *
-	 * @return {@code true} if the implementation is working
+	 * @return {@code true} if this process is currently working else {@code false}
 	 */
 	private function isWorking(Void):Boolean {
 		return working;
 	}
 
 	/**
-	 * Template method for running the process.
+	 * Does the actual computations.
 	 *
-	 * @throws AbstractOperationException if the method was not extended
+	 * <p>This method is abstract and must be implemented by subclasses.
+	 *
+	 * @throws AbstractOperationException if this method was not implemented by
+	 * subclasses
 	 */
 	private function run() {
-		throw new AbstractOperationException(".run is abstract and has to be implemented.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be " +
+				"implemented by subclasses.", this, arguments);
 	}
 
-	/**
-	 * Returns {@code true} if the process is paused.
-	 *
-	 * @return {@code true} if the process is paused
-	 */
 	public function isPaused(Void):Boolean {
 		return paused;
 	}
 
-
-	/**
-	 * Returns {@code true} if the process is running.
-	 *
-	 * @return {@code true} if the process is running
-	 */
 	public function isRunning(Void):Boolean {
-		return(!isPaused() && hasStarted());
+		return (!isPaused() && hasStarted());
 	}
 
 	/**
-	 * Method to be executed if a process finishes its execution.
+	 * Invoked when a subprocess finishes; removes itself as listener from the
+	 * subprocess, executes the callback corresponding of the subprocess and resumes
+	 * the execution of this process.
 	 *
-	 * @param process {@link Process} that finished with execution
+	 * @param process the subprocess that finished execution
+	 * @see #resume
 	 */
 	public function onProcessFinish(process:Process):Void {
 		if (subProcesses.containsKey(process)) {
@@ -303,18 +302,22 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
     /**
-     * Method to be executed if a exception was thrown during the execution.
+     * Invoked when a subprocess has an error; distributes an error event with the
+     * given error.
      *
-     * @param process {@link Process} where a error occured
-     * @param error error that occured
-     * @return {@code true} if error was consumed
+     * @param process the subprocess where the error occurred
+     * @param error the error that occurred
+     * @return {@code true} if the error was consumed else {@code false}
+     * @see #distributeErrorEvent
      */
 	public function onProcessError(process:Process, error):Boolean {
 		return distributeErrorEvent(error);
 	}
 
 	/**
-	 * Internal Method to finish the execution.
+	 * Finishes this process if it is currently running and has no more subprocesses
+	 * to wait for. It sets all flags, stores the end time and distributes a finish
+	 * event.
 	 */
 	private function finish(Void):Void {
 		if (subProcesses.isEmpty() && isRunning()) {
@@ -327,33 +330,47 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
 	/**
-	 * Returns {@code true} if errors occurred.
+	 * Returns {@code true} if at least one error occurred.
 	 *
-	 * @return {@code true} if errors occurred
+	 * @return {@code true} if at least one error occurred else {@code false}
 	 */
 	public function hasErrors(Void):Boolean {
 		return (getErrors().length != 0);
 	}
 
 	/**
-	 * Returns the list with all occured errors.
+	 * Returns all occurred errors.
 	 *
-	 * @return list that contains all occured errors
+	 * @return all occurred errors
 	 */
 	public function getErrors(Void):Array {
 		return errors;
 	}
 
+	/**
+	 * Adds the given error.
+	 *
+	 * <p>If the given error is {@code null} or {@code undefined}, {@code -1} will
+	 * be used instead.
+	 *
+	 * @param error the error to add
+	 */
 	private function addError(error):Void {
+		if (error == null) error = -1;
 		errors.push(error);
 	}
 
 	/**
-	 * Stores the {@code error} in the list of occured errors and finishes the process.
+	 * Interrupts the execution of this process with the given error.
 	 *
-	 * <p>It will set the error to -1 if you interrupt without a error.
+	 * <p>Stores the given error, distributes an error event and finishes this process.
 	 *
-	 * @param error error that occured to interrupt
+	 * <p>If no error is specified is will be set to {@code -1}.
+	 *
+	 * @param error the error that caused this interrupt
+	 * @see #addError
+	 * @see #distributeErrorEvent
+	 * @see #finish
 	 */
 	private function interrupt(error):Void {
 		distributeErrorEvent(error);
@@ -361,46 +378,8 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
 	/**
-	 * Internal method to send update events for {@link ProcessUpdateListener}.
-	 */
-	private function distributeUpdateEvent(Void):Void {
-		try {
-			var updateDistributor:ProcessUpdateListener = distributorControl.getDistributor(ProcessUpdateListener);
-			updateDistributor.onProcessUpdate(this);
-		}
-		catch (exception:org.as2lib.env.event.EventExecutionException) {
-			distributeErrorEvent(exception.getCause());
-		}
-	}
-
-	/**
-	 * Internal method to send pause events for {@link ProcessPauseListener}.
-	 */
-	private function distributePauseEvent(Void):Void {
-		try {
-			var pauseDistributor:ProcessPauseListener = distributorControl.getDistributor(ProcessPauseListener);
-			pauseDistributor.onProcessPause(this);
-		}
-		catch (exception:org.as2lib.env.event.EventExecutionException) {
-			distributeErrorEvent(exception.getCause());
-		}
-	}
-
-	/**
-	 * Internal method to send resume events for {@link ProcessResumeListener}.
-	 */
-	private function distributeResumeEvent(Void):Void {
-		try {
-			var resumeDistributor:ProcessResumeListener = distributorControl.getDistributor(ProcessResumeListener);
-			resumeDistributor.onProcessResume(this);
-		}
-		catch (exception:org.as2lib.env.event.EventExecutionException) {
-			distributeErrorEvent(exception.getCause());
-		}
-	}
-
-	/**
-	 * Internal method to send start events for {@link ProcessStartListener}.
+	 * Distributes process start events to registered {@link ProcessStartListener}
+	 * instances.
 	 */
 	private function distributeStartEvent(Void):Void {
 		try {
@@ -413,7 +392,52 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
 	/**
-	 * Internal method to send error events for {@link ProcessErrorListener}.
+	 * Distributes process update events to registered {@link ProcessUpdateListener}
+	 * instances.
+	 */
+	private function distributeUpdateEvent(Void):Void {
+		try {
+			var updateDistributor:ProcessUpdateListener = distributorControl.getDistributor(ProcessUpdateListener);
+			updateDistributor.onProcessUpdate(this);
+		}
+		catch (exception:org.as2lib.env.event.EventExecutionException) {
+			distributeErrorEvent(exception.getCause());
+		}
+	}
+
+	/**
+	 * Distributes process pause events to registered {@link ProcessPauseListener}
+	 * instances.
+	 */
+	private function distributePauseEvent(Void):Void {
+		try {
+			var pauseDistributor:ProcessPauseListener = distributorControl.getDistributor(ProcessPauseListener);
+			pauseDistributor.onProcessPause(this);
+		}
+		catch (exception:org.as2lib.env.event.EventExecutionException) {
+			distributeErrorEvent(exception.getCause());
+		}
+	}
+
+	/**
+	 * Distributes process resume events to registered {@link ProcessResumeListener}
+	 * instances.
+	 */
+	private function distributeResumeEvent(Void):Void {
+		try {
+			var resumeDistributor:ProcessResumeListener = distributorControl.getDistributor(ProcessResumeListener);
+			resumeDistributor.onProcessResume(this);
+		}
+		catch (exception:org.as2lib.env.event.EventExecutionException) {
+			distributeErrorEvent(exception.getCause());
+		}
+	}
+
+	/**
+	 * Distributes process error events to registered {@link ProcessErrorListener}
+	 * instances after storing the given error.
+	 *
+	 * @see #addError
 	 */
 	private function distributeErrorEvent(error):Boolean {
 		addError(error);
@@ -422,7 +446,8 @@ class org.as2lib.app.exec.AbstractProcess extends AbstractTimeConsumer
 	}
 
 	/**
-	 * Internal method to send finish events for {@link ProcessFinishListener}.
+	 * Distributes process finish events to registered {@link ProcessFinishListener}
+	 * instances.
 	 */
 	private function distributeFinishEvent(Void):Void {
 		try {
