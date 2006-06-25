@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,25 +15,26 @@
  */
 
 import org.as2lib.app.exec.Batch;
+import org.as2lib.core.BasicInterface;
 
 /**
- * {@code BatchStartListener} is a defintion for a observer of the start of a
- * {@link Batch}.
- * 
- * <p>To observe the start of a {@code Batch} you can implement this interface
- * and add your implementation with {@link Batch#addListener} to observe a
- * certain {@code Batch}.
- * 
+ * {@code BatchStartListener} can be implemented by classes which want to be
+ * notified when a batch starts. An instance of the implementing class can then
+ * be registered as listener at the batch to observe.
+ *
  * @author Martin Heidegger
+ * @author Simon Wacker
  * @version 2.0
- * @see Process
+ * @see Batch
+ * @see Batch#addListener
  */
-interface org.as2lib.app.exec.BatchStartListener {
-	
+interface org.as2lib.app.exec.BatchStartListener extends BasicInterface {
+
 	/**
-	 * Method to be executed if a {@code Batch} starts execution.
-	 * 
-	 * @param process {@link Batch} that started execution
+	 * Is executed when the observed batch starts.
+	 *
+	 * @param batch the batch that started execution
 	 */
 	public function onBatchStart(batch:Batch):Void;
+
 }

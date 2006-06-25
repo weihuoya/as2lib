@@ -47,6 +47,7 @@ import org.as2lib.app.exec.Process;
  * @author Martin Heidegger
  * @author Simon Wacker
  * @version 2.0
+ * @see AbstractBatch
  */
 interface org.as2lib.app.exec.Batch extends Process {
 
