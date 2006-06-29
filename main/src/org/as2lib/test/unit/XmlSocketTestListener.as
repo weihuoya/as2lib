@@ -24,11 +24,10 @@ import org.as2lib.app.exec.ProcessUpdateListener;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogManager;
-import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestCaseResult;
+import org.as2lib.test.unit.TestMethod;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
-import org.as2lib.util.StringUtil;
 
 /**
  * {@code XmlSocketTestListener} writes-out received test execution information with
@@ -85,7 +84,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 	public function onProcessUpdate(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
-			var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
+			var methodInfo:TestMethod = testRunner.getCurrentTestMethod();
 			if (methodInfo != null) {
 				socket.send(new XML("<update>Executing " + testRunner.getCurrentTestCase().getName() +
 						"." + methodInfo.getMethodInfo().getName() + "</update>"));
@@ -97,7 +96,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
 			socket.send(new XML("<pause>Paused execution at " +
-					testRunner.getCurrentTestCaseMethodInfo().getName() + "</pause>"));
+					testRunner.getCurrentTestMethod().getName() + "</pause>"));
 		}
 	}
 
@@ -105,7 +104,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
 			socket.send(new XML("<resume>Resumed execution at " +
-					testRunner.getCurrentTestCaseMethodInfo().getName() + "</resume>"));
+					testRunner.getCurrentTestMethod().getName() + "</resume>"));
 		}
 	}
 

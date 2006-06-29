@@ -15,9 +15,9 @@
  */
 
 import org.as2lib.app.exec.Process;
-import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestCaseResult;
-import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.test.unit.TestMethod;
+import org.as2lib.test.unit.TestResult;
 
 /**
  * {@code TestRunner} runs a test. This may be a test case or a test suite, depending
@@ -75,23 +75,17 @@ interface org.as2lib.test.unit.TestRunner extends Process {
 	/**
 	 * Returns the result of the currently executing test case.
 	 *
-	 * <p>It is necessary to get the test case result for the test case that is
-	 * currently being executed because there can be more than one test case
-	 * within a test result.
-	 *
 	 * @return the result of the currently executing test case
+	 * @see #getCurrentTestMethod
 	 */
 	public function getCurrentTestCase(Void):TestCaseResult;
 
 	/**
 	 * Returns the currently executing test method.
 	 *
-	 * <p>It is necessary to get the test method that is currently being executed
-	 * because there can be more than one method within a test case result.
-	 *
 	 * @return information about the currently executing test method
 	 * @see #getCurrentTestCase
 	 */
-	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo;
+	public function getCurrentTestMethod(Void):TestMethod;
 
 }
