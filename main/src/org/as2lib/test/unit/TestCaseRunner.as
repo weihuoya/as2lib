@@ -51,54 +51,54 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 		TestRunner, StepByStepProcess {
 
 	/** State that indicates that the next method must be started. */
-	private static var STATE_NOT_STARTED:Number = 1;
+	private static var NOT_STARTED_STATE:Number = 1;
 
 	/** State that indicates that the test case instance was created. */
-	private static var STATE_TEST_CREATED:Number = 2;
+	private static var TEST_CREATED_STATE:Number = 2;
 
 	/** State that indicates that the {@code setUp} method was invoked. */
-	private static var STATE_SET_UP_FINISHED:Number = 3;
+	private static var SET_UP_FINISHED_STATE:Number = 3;
 
 	/** State that indicates that the {@code test*} method was invoked. */
-	private static var STATE_EXECUTION_FINISHED:Number = 4;
+	private static var EXECUTION_FINISHED_STATE:Number = 4;
 
 	/** State that indicates that the {@code tearDown} method was invoked. */
-	private static var STATE_TEAR_DOWN_FINISHED:Number = 5;
+	private static var TEAR_DOWN_FINISHED_STATE:Number = 5;
 
-	/** The result to the test execution. */
+	/** The result of the test execution. */
 	private var testResult:TestCaseResult;
 
+	/** The test case to execute the current test method on. */
+	private var testCase:TestCase;
+
 	/** The {@code test*} methods to execute. */
-	private var openTestCaseMethods:Queue;
+	private var leftTestMethods:Queue;
 
 	/**
 	 * The currently executing test method. Since it is possible to pause/resume the
-	 * test execution it is necessary to store it as instance variable.
+	 * test execution it is necessary to store the current test method.
 	 */
-	private var methodInfo:TestMethod;
+	private var currentTestMethod:TestMethod;
+
+	/** The stop watch of the current test method. */
+	private var currentStopWatch:StopWatch;
 
 	/**
 	 * The current state of the execution of the current test method. Since it is
 	 * possible to pause/resume the test execution it is necessary to safe at what
 	 * point in the execution it was paused.
 	 */
-	private var methodState:Number;
-
-	/** The test case to execute the current test method on. */
-	private var testCaseInstance:TestCase;
-
-	/** The stop watch for this test (saved in instance scope for better performance). */
-	private var stopWatch:StopWatch;
+	private var currentMethodState:Number;
 
 	/**
 	 * Constructs a new {@code TestCaseRunner} instance.
 	 *
 	 * @param testCase the test case to run
 	 */
-	function TestCaseRunner(testCase:TestCase) {
+	public function TestCaseRunner(testCase:TestCase) {
 		testResult = new TestCaseResult(testCase);
-		methodState = STATE_NOT_STARTED;
-		openTestCaseMethods = new LinearQueue(testResult.getMethodInfos());
+		currentMethodState = NOT_STARTED_STATE;
+		leftTestMethods = new LinearQueue(testResult.getMethodInfos());
 	}
 
 	public function getTestResult(Void):TestResult {
@@ -110,7 +110,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	}
 
 	public function getCurrentTestMethod(Void):TestMethod {
-		return methodInfo;
+		return currentTestMethod;
 	}
 
 	/**
@@ -119,7 +119,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	 * @param info the execution information to add
 	 */
 	public function addInfo(info:ExecutionInfo):Void {
-		methodInfo.addInfo(info);
+		currentTestMethod.addInfo(info);
 	}
 
 	/**
@@ -139,13 +139,13 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	 * Executes the next step of this test run.
 	 */
 	public function nextStep(Void):Void {
-		if (openTestCaseMethods.isEmpty()) {
+		if (leftTestMethods.isEmpty()) {
 			finish();
 		}
 		else {
-			if (methodState == STATE_NOT_STARTED) {
-				methodInfo = openTestCaseMethods.dequeue();
-				stopWatch = methodInfo.getStopWatch();
+			if (currentMethodState == NOT_STARTED_STATE) {
+				currentTestMethod = leftTestMethods.dequeue();
+				currentStopWatch = currentTestMethod.getStopWatch();
 				distributeUpdateEvent();
 			}
 			while (processMethod());
@@ -156,7 +156,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	 * Returns the progress in percent of this test run.
 	 */
 	public function getPercentage(Void):Number {
-		return (100 - (100 / testResult.getMethodInfos().length * openTestCaseMethods.size()));
+		return (100 - (100 / testResult.getMethodInfos().length * leftTestMethods.size()));
 	}
 
 	/**
@@ -167,12 +167,12 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	 */
 	private function processMethod(Void):Boolean {
 		// Execution depending to the current state.
-		switch (methodState) {
-			case STATE_NOT_STARTED:
+		switch (currentMethodState) {
+			case NOT_STARTED_STATE:
 			    // create instance and set state for next loop.
-				methodState = STATE_TEST_CREATED;
+				currentMethodState = TEST_CREATED_STATE;
 			    try {
-				    testCaseInstance = ClassUtil.createInstance(
+				    testCase = ClassUtil.createInstance(
 							testResult.getTestCase()["__constructor__"]);
 			    }
 			    catch (exception) {
@@ -183,14 +183,14 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 				}
 				break;
 
-			case STATE_TEST_CREATED:
+			case TEST_CREATED_STATE:
 				// set up the instance and set state for next loop.
-				methodState = STATE_SET_UP_FINISHED;
-				testCaseInstance.getTestRunner();
+				currentMethodState = SET_UP_FINISHED_STATE;
+				testCase.getTestRunner();
 				// Prepare the execution of the method by setUp
-				if (!methodInfo.hasErrors()) {
+				if (!currentTestMethod.hasErrors()) {
 					try {
-						testCaseInstance.setUp();
+						testCase.setUp();
 					}
 					catch (exception) {
 						fatal(new SetUpError("IMPORTANT: Error occurred during " +
@@ -200,14 +200,14 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 				}
 				break;
 
-			case STATE_SET_UP_FINISHED:
+			case SET_UP_FINISHED_STATE:
 				// execute the method and set the state for the next loop
-				methodState = STATE_EXECUTION_FINISHED;
-				if (!methodInfo.hasErrors()) {
+				currentMethodState = EXECUTION_FINISHED_STATE;
+				if (!currentTestMethod.hasErrors()) {
 					// Execute the method
-					stopWatch.start();
+					currentStopWatch.start();
 					try {
-						methodInfo.getMethodInfo().invoke(testCaseInstance, null);
+						currentTestMethod.getMethodInfo().invoke(testCase, null);
 					}
 					catch (exception) {
 						fatal(new ExecutionError("Test method threw an unexpected " +
@@ -217,15 +217,15 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 				}
 				break;
 
-			case STATE_EXECUTION_FINISHED:
+			case EXECUTION_FINISHED_STATE:
 				// tear down the instance and set the state for the next loop
-				methodState = STATE_TEAR_DOWN_FINISHED;
-				if (stopWatch.hasStarted()) {
-					stopWatch.stop();
+				currentMethodState = TEAR_DOWN_FINISHED_STATE;
+				if (currentStopWatch.hasStarted()) {
+					currentStopWatch.stop();
 				}
-				if (!methodInfo.hasErrors()) {
+				if (!currentTestMethod.hasErrors()) {
 					try {
-						testCaseInstance.tearDown();
+						testCase.tearDown();
 					}
 					catch (exception) {
 						fatal(new TearDownError("IMPORTANT: Error occurred during " +
@@ -235,9 +235,9 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 				}
 				break;
 
-			case STATE_TEAR_DOWN_FINISHED:
-				methodState = STATE_NOT_STARTED;
-				methodInfo.setExecuted(true);
+			case TEAR_DOWN_FINISHED_STATE:
+				currentMethodState = NOT_STARTED_STATE;
+				currentTestMethod.setExecuted(true);
 				return false; // next method
 
 		}
@@ -255,7 +255,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	 */
 	private function fatal(error:ExecutionInfo):Void {
 		addInfo(error);
-		methodState = STATE_TEAR_DOWN_FINISHED;
+		currentMethodState = TEAR_DOWN_FINISHED_STATE;
 	}
 
 }
