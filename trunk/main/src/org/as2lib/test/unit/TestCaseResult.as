@@ -20,7 +20,7 @@ import org.as2lib.data.type.Time;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.env.reflect.MethodInfo;
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.test.unit.TestMethod;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.util.StringUtil;
 
@@ -80,13 +80,13 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	 * {@link TestCaseMethodInfo} instances
 	 */
 	private function fetchTestCaseMethods(Void):TypedArray {
-		var result:TypedArray = new TypedArray(TestCaseMethodInfo);
+		var result:TypedArray = new TypedArray(TestMethod);
 		var methods:Array = ClassInfo.forInstance(testCase).getMethods();
 		if (methods != null) {
 			for (var i:Number = methods.length - 1; i >= 0; i--) {
 				var method:MethodInfo = methods[i];
 				if (StringUtil.startsWith(method.getName(), "test")) {
-					result.push(new TestCaseMethodInfo(method));
+					result.push(new TestMethod(method));
 				}
 			}
 		}
@@ -152,7 +152,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		}
 		var methodInfos:Array = getMethodInfos();
 		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var methodInfo:TestCaseMethodInfo = methodInfos[i];
+			var methodInfo:TestMethod = methodInfos[i];
 			if (!methodInfo.isExecuted()) {
 				return false;
 			}
@@ -166,7 +166,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		}
 		var methodInfos:Array = getMethodInfos();
 		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var methodInfo:TestCaseMethodInfo = methodInfos[i];
+			var methodInfo:TestMethod = methodInfos[i];
 			if (methodInfo.isExecuted()) {
 				return (started = true);
 			}
@@ -178,7 +178,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		var result:Number = 0;
 		var methodInfos:Array = getMethodInfos();
 		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var methodInfo:TestCaseMethodInfo = methodInfos[i];
+			var methodInfo:TestMethod = methodInfos[i];
 			result += methodInfo.getStopWatch().getTimeInMilliSeconds();
 		}
 		return new Time(result);
@@ -187,7 +187,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	public function hasErrors(Void):Boolean {
 		var methodInfos:Array = getMethodInfos();
 		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var methodInfo:TestCaseMethodInfo = methodInfos[i];
+			var methodInfo:TestMethod = methodInfos[i];
 			if (methodInfo.hasErrors()) {
 				return true;
 			}
@@ -208,7 +208,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		var errors:Number = 0;
 		var methodInfos:Array = getMethodInfos();
 		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var method:TestCaseMethodInfo = methodInfos[i];
+			var method:TestMethod = methodInfos[i];
 			ms += method.getStopWatch().getTimeInMilliSeconds();
 			if(method.hasErrors()) {
 				errors += method.getErrors().length;

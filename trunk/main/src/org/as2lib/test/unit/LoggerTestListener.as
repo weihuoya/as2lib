@@ -22,7 +22,7 @@ import org.as2lib.app.exec.ProcessResumeListener;
 import org.as2lib.app.exec.ProcessStartListener;
 import org.as2lib.app.exec.ProcessUpdateListener;
 import org.as2lib.env.log.LogSupport;
-import org.as2lib.test.unit.TestCaseMethodInfo;
+import org.as2lib.test.unit.TestMethod;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.StringUtil;
 
@@ -93,7 +93,7 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements
 	public function onProcessUpdate(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
-			var methodInfo:TestCaseMethodInfo = testRunner.getCurrentTestCaseMethodInfo();
+			var methodInfo:TestMethod = testRunner.getCurrentTestMethod();
 			if (methodInfo != null) {
 				logger.info("Executing " + methodInfo.getName());
 			}
@@ -108,7 +108,7 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements
 	public function onProcessPause(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
-			logger.info("Paused execution at " + testRunner.getCurrentTestCaseMethodInfo().getName());
+			logger.info("Paused execution at " + testRunner.getCurrentTestMethod().getName());
 		}
 	}
 
@@ -120,7 +120,7 @@ class org.as2lib.test.unit.LoggerTestListener extends LogSupport implements
 	public function onProcessResume(process:Process):Void {
 		var testRunner:TestRunner = TestRunner(process);
 		if (testRunner != null) {
-			logger.info("Resumed execution at " + testRunner.getCurrentTestCaseMethodInfo().getName());
+			logger.info("Resumed execution at " + testRunner.getCurrentTestMethod().getName());
 		}
 	}
 

@@ -19,8 +19,8 @@ import org.as2lib.app.exec.Process;
 import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.test.unit.Test;
-import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestCaseResult;
+import org.as2lib.test.unit.TestMethod;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestSuiteResult;
@@ -290,8 +290,8 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 	 * @return information about the currently executing test method
 	 * @see #getCurrentTestCase
 	 */
-	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo {
-		return TestRunner(getCurrentProcess(true)).getCurrentTestCaseMethodInfo();
+	public function getCurrentTestMethod(Void):TestMethod {
+		return TestRunner(getCurrentProcess(true)).getCurrentTestMethod();
 	}
 
 }

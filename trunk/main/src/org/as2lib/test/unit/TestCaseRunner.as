@@ -25,8 +25,8 @@ import org.as2lib.test.unit.info.InstantiationError;
 import org.as2lib.test.unit.info.SetUpError;
 import org.as2lib.test.unit.info.TearDownError;
 import org.as2lib.test.unit.TestCase;
-import org.as2lib.test.unit.TestCaseMethodInfo;
 import org.as2lib.test.unit.TestCaseResult;
+import org.as2lib.test.unit.TestMethod;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
 import org.as2lib.util.ClassUtil;
@@ -75,7 +75,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	 * The currently executing test method. Since it is possible to pause/resume the
 	 * test execution it is necessary to store it as instance variable.
 	 */
-	private var methodInfo:TestCaseMethodInfo;
+	private var methodInfo:TestMethod;
 
 	/**
 	 * The current state of the execution of the current test method. Since it is
@@ -109,7 +109,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 		return testResult;
 	}
 
-	public function getCurrentTestCaseMethodInfo(Void):TestCaseMethodInfo {
+	public function getCurrentTestMethod(Void):TestMethod {
 		return methodInfo;
 	}
 
