@@ -40,7 +40,7 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 	private var infos:TypedArray;
 
 	/** Has this method already been executed? */
-	private var executed:Boolean = false;
+	private var executed:Boolean;
 
 	/**
 	 * Constructs a new {@code TestMethod} instance.
@@ -51,10 +51,13 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 		this.methodInfo = methodInfo;
 		stopWatch = new StopWatch();
 		infos = new TypedArray(ExecutionInfo);
+		executed = false;
 	}
 
 	/**
 	 * Returns the fully qualified name of this test method.
+	 *
+	 * @see MethodInfo#getFullName
 	 */
 	public function getName(Void):String {
 		return methodInfo.getFullName();
@@ -91,7 +94,7 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 	 * Returns the reflection information about this method.
 	 */
 	public function getMethodInfo(Void):MethodInfo {
-		return this.methodInfo;
+		return methodInfo;
 	}
 
 	/**
