@@ -70,31 +70,62 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		testResults.unshift(testResult);
 	}
 
-	public function getPercentage(Void):Number {
-		var result:Number = 0;
-		var unit:Number = 100 / testResults.length;
+	/**
+	 * Retuns the name of the corresponding test suite.
+	 *
+	 * @return the name of the corresponding test suite
+	 */
+	public function getName(Void):String {
+		return getTestSuite().getName();
+	}
+
+	public function hasStarted(Void):Boolean {
 		for (var i:Number = testResults.length - 1; i >= 0; i--) {
-			result += (unit / 100 * testResults[i].getPercentage());
+			var testResult:TestResult = testResults[i];
+			if (testResult.hasStarted()) {
+				return true;
+			}
 		}
-		return result;
+		return false;
 	}
 
 	public function hasFinished(Void):Boolean {
 		for (var i:Number = testResults.length - 1; i >= 0; i--) {
-			if (!testResults[i].isFinished()) {
+			var testResult:TestResult = testResults[i];
+			if (!testResult.hasFinished()) {
 				return false;
 			}
 		}
 		return true;
 	}
 
-	public function hasStarted(Void):Boolean {
+	public function hasErrors(Void):Boolean {
 		for (var i:Number = testResults.length - 1; i >= 0; i--) {
-			if (testResults[i].hasStarted()) {
+			var testResult:TestResult = testResults[i];
+			if (testResult.hasErrors()) {
 				return true;
 			}
 		}
 		return false;
+	}
+
+	public function getOperationTime(Void):Time {
+		var result:Number = 0;
+		for (var i:Number = testResults.length - 1; i >= 0; i--) {
+			var testResult:TestResult = testResults[i];
+			result += testResult.getOperationTime();
+		}
+		return new Time(result);
+	}
+
+	public function getPercentage(Void):Number {
+		var result:Number = 0;
+		var unit:Number = 100 / testResults.length;
+		for (var i:Number = testResults.length - 1; i >= 0; i--) {
+			var testResult:TestResult = testResults[i];
+			result += (unit / 100 * testResult.getPercentage());
+		}
+		return result;
 	}
 
 	/**
@@ -117,37 +148,12 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	 */
 	public function getTestCaseResults(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestCaseResult);
-		for (var i:Number = 0; i < testResults.length; i++) {
-			var testCases:Array = testResults[i].getTestCaseResults();
-			result.push.apply(result, testCases);
+		for (var i:Number = testResults.length - 1; i >= 0; i--) {
+			var testResult:TestResult = testResults[i];
+			var testCaseResults:Array = testResult.getTestCaseResults();
+			result.push.apply(result, testCaseResults);
 		}
 		return result;
-	}
-
-	/**
-	 * Retuns the name of the corresponding test suite.
-	 *
-	 * @return the name of the corresponding test suite
-	 */
-	public function getName(Void):String {
-		return getTestSuite().getName();
-	}
-
-	public function getOperationTime(Void):Time {
-		var result:Number = 0;
-		for (var i:Number = testResults.length - 1; i >= 0; i--) {
-			result += testResults[i].getOperationTime();
-		}
-		return new Time(result);
-	}
-
-	public function hasErrors(Void):Boolean {
-		for (var i:Number = this.testResults.length - 1; i >= 0; i--) {
-			if (testResults[i].hasErrors()) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
