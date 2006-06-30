@@ -25,32 +25,33 @@ import org.apache.tools.ant.taskdefs.Execute;
 import org.apache.tools.ant.types.Commandline;
 
 /**
- * {@code Swfsli} allows to add/modify/remove "ScriptLimits" tag of the SWF file.
- * 
- * <p>The "ScriptLimits" tag is recognized by Flash Players 7 and above. 
- * The Tag contains 2 values:
- * <ul> 
- *   <li>Maximum Recursion Depth (0..65535) 
- *   <li>Script Timeout Seconds (0..65535)
- * </ul> 
+ * {@code Swfsli} allows to add/modify/remove the "ScriptLimits" tag of a SWF
+ * file.
+ *
+ * <p>The "ScriptLimits" tag is recognized by Flash Player 7 and above. The Tag
+ * contains 2 values:
+ * <ul>
+ *   <li>Maximum Recursion Depth (0..65535)</li>
+ *   <li>Script Timeout Seconds (0..65535)</li>
+ * </ul>
  *
  * <p>Example:
  * <pre>&lt;swfsli swf="${src.dir}/app.swf" recursion="10000" timeout="500"/&gt;</pre>
  *
  * <p>This task can take the following arguments:
  * <ul>
- *   <li>{@link #setSwf(File) swf} (set SWF file to maintain "ScriptLimits" tag)</li>
- *   <li>{@link #setRecursion(int) recursion} (set new recursion depth)</li>
- *   <li>{@link #setTimeout(int) timeout} (set new script timeout)</li>
+ *   <li>{@link #setSwf(File) swf} (SWF file to adapt the "ScriptLimits" tag of)</li>
+ *   <li>{@link #setRecursion(int) recursion} (new recursion depth)</li>
+ *   <li>{@link #setTimeout(int) timeout} (new script timeout)</li>
  *   <li>{@link #setDelete(boolean) delete} (remove "ScriptLimits" tag?)</li>
  *   <li>{@link #setBackup(boolean) backup} (backup original file?)</li>
- *   <li>{@link #setVerbose(boolean) verbose} (verbose mode?)</li>
+ *   <li>{@link #setVerbose(boolean) verbose} (enable verbose mode?)</li>
  * </ul>
  *
  * @author Igor Sadovskiy
  * @author Simon Wacker
  * @since 29.06.2006
- * @see <a href="http://buraks.com/swfsli/" title="SWFSLI">SWFSLI</a>
+ * @see <a href="http://buraks.com/swfsli/" title="SWF ScriptLimits Injector (SWFSLI)">SWF ScriptLimits Injector (SWFSLI)</a>
  * @see <a href="http://ant.apache.org" title="Apache Ant">Apache Ant</a>
  */
 public class Swfsli extends Task {
@@ -69,7 +70,7 @@ public class Swfsli extends Task {
     private boolean backup = false;
     private boolean delete = false;
     private boolean verbose = false;
-    
+
     public Swfsli() {
     }
 
@@ -110,80 +111,81 @@ public class Swfsli extends Task {
     }
 
     /**
-     * Sets destination SWF file to apply "ScriptLimits" tag maintenance to.
+     * Sets the destination SWF file whose "ScriptLimits" tag shall be
+     * added/modified/removed.
      */
     public void setSwf(File swf) {
     	this.swf = swf;
     }
 
     /**
-     * Returns destination SWF file. 
+     * Returns destination SWF file.
      */
     public File getSwf() {
     	return swf;
     }
-    
+
     /**
-     * Sets recursion depth value. Must be between 0 and 65535.
+     * Sets the maximum recursion depth. It must be between 0 and 65535.
      */
     public void setRecursion(int recussion) {
     	this.recursion = Integer.valueOf(recussion);
     }
-    
+
     /**
-     * Returns recursion depth value 
+     * Returns the maximum recursion depth.
      */
     public int getRecursion() {
     	return recursion.intValue();
     }
-    
+
     /**
-     * Sets script timeout value. Must be in seconds between 0 and 65535.
+     * Sets the script timeout in seconds. It must be between 0 and 65535 seconds.
      */
     public void setTimeout(int timeout) {
     	this.timeout = Integer.valueOf(timeout);
     }
-    
+
     /**
-     * Returns script timeout value.
+     * Returns the script timeout in seconds.
      */
     public int getTimeout() {
     	return timeout.intValue();
     }
-    
+
     /**
-     * Specifies if back up copy will be created. The file will be copied 
-     * with ".bak" extension appended. For example, <code>my.swf</code> will be 
-     * saved as <code>my.swf.bak</code>
+     * Specifies whether the original SWF file shall be backed-up. The file will be
+     * copied to a file with the same name but with the ".bak" extension appended.
+     * For example, <code>my.swf</code> will be backed-up as <code>my.swf.bak</code>.
      */
     public void setBackup(boolean backup) {
         this.backup = backup;
     }
 
     /**
-     * Returns whether backup mode is enabled or disabled.
+     * Returns whether the original SWF file will be backed-up.
      */
     public boolean isBackup() {
         return backup;
     }
 
     /**
-     * Specifies if the "ScriptLimits" tags should be removed from the SWF.
+     * Specifies whether the "ScriptLimits" tags shall be removed from the SWF.
      */
     public void setDelete(boolean delete) {
         this.delete = delete;
     }
 
     /**
-     * Returns whether delete mode is enabled or disabled.
+     * Returns whether the "ScriptLimits" tags will be removed from the SWF.
      */
     public boolean isDelete() {
         return delete;
     }
 
     /**
-     * Specifies if verbode mode is enabled or disabled. SWFSLI will display 
-     * more information about errors/warnings.
+     * Specifies whether verbode mode shall be enabled or disabled. If enabled SWFSLI
+     * will display more information about warnings and errors.
      */
     public void setVerbose(boolean verbode) {
         this.verbose = verbode;
@@ -199,8 +201,7 @@ public class Swfsli extends Task {
     /**
      * Executes this task.
      *
-     * @throws BuildException if some parameters are missed or specified
-     * incorrectly.
+     * @throws BuildException if parameters are missing or have illegal values
      */
     public void execute() throws BuildException {
         Commandline command = new Commandline();
