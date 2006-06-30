@@ -220,7 +220,36 @@ public class Mtasc extends Task {
     }
 
     /**
-     * Creates and returns a new source directory.
+     * Returns the source file.
+     *
+     * @return the source file
+     */
+    public File getSrc() {
+        return this.source;
+    }
+
+    /**
+     * Sets a new source file.
+     *
+     * @param source the new source file
+     */
+    public void setSrc(File source) {
+        this.source = source;
+    }
+
+    /**
+     * Adds a new source file.
+     *
+     * @param source the new source file
+     */
+    public void addSrc(File source) {
+        this.sourceList.add(source);
+    }
+
+    /**
+     * Creates and returns a new source directory. Source directories as well as their
+     * subdirectories are searched through for as-files to compile into the swf (to use
+     * as source files).
      *
      * @return a new source directory
      * @see #setSrcDir(Path)
@@ -233,7 +262,8 @@ public class Mtasc extends Task {
     }
 
     /**
-     * Sets the new source directory.
+     * Sets the new source directory. Source directories as well as their subdirectories
+     * are searched through for as-files to compile into the swf (to use as source files).
      *
      * @param sourceDirectory the new source directory
      * @see #createSrcDir()
@@ -256,34 +286,8 @@ public class Mtasc extends Task {
     }
 
     /**
-     * Returns the source.
-     *
-     * @return the source
-     */
-    public File getSrc() {
-        return this.source;
-    }
-
-    /**
-     * Sets a new source.
-     *
-     * @param source the new source
-     */
-    public void setSrc(File source) {
-        this.source = source;
-    }
-
-    /**
-     * Adds a new source.
-     *
-     * @param source the new source
-     */
-    public void addSrc(File source) {
-        this.sourceList.add(source);
-    }
-
-    /**
-     * Creates and returns a new source file set.
+     * Creates and returns a new source file set. Source file sets can be used to
+     * include multiple source files based on a pattern (with wildcards).
      *
      * @return a new source file set
      * @see #setSrcSet(FileSet)
@@ -292,6 +296,17 @@ public class Mtasc extends Task {
         FileSet sourceSet = new FileSet();
         this.sourceSets.add(sourceSet);
         return sourceSet;
+    }
+
+    /**
+     * Sets a new source file set. A source file set can be used to include multiple
+     * source files based on a pattern (with wildcards).
+     *
+     * @param sourceSet the new source file set
+     * @see #createSrcSet()
+     */
+    public void setSrcSet(FileSet sourceSet) {
+        this.sourceSets.add(sourceSet);
     }
 
     /**
@@ -304,17 +319,10 @@ public class Mtasc extends Task {
     }
 
     /**
-     * Sets a new source file set.
-     *
-     * @param sourceSet the new source file set
-     * @see #createSrcSet()
-     */
-    public void setSrcSet(FileSet sourceSet) {
-        this.sourceSets.add(sourceSet);
-    }
-
-    /**
-     * Creates and returns a new xml source path.
+     * Creates and returns a new xml source path. The src xml file must contain nodes
+     * with class- or type-attributes. The values of all class- or type-attribues are
+     * added as src-files. These attributes' values must look as follows:
+     * <code>org.as2lib.env.log.Logger</code>
      *
      * @return a new xml source path
      * @see #setSrcXml
@@ -327,10 +335,19 @@ public class Mtasc extends Task {
     }
 
     /**
-     * Sets a new src xml file. The src xml file must contain nodes with class-
-     * or type-attributes. The values of all class- or type-attribues are added
-     * as src-files. These attributes' values must look as follows:
-     * <code>org.as2lib.env.log.Logger</code>
+     * Sets a new src xml file.
+     *
+     * <p>The src xml file may either contain nodes with class- or type-attributes:
+     * <code>&lt;beans&gt;
+     *  &lt;bean class="org.aswing.JLabel"/&gt;
+     *&lt;/beans&gt;</code>
+     *
+     * <p>or specify namespaces as packages and node names as classes:
+     * <code>&lt;beans aswing="org.aswing"&gt;
+     *  &lt;aswing:JLabel .../&gt;
+     *&lt;/beans&gt;</code>
+     *
+     * <p>The classes extracted from the src xml file are added as source files.
      *
      * @param sourceXml the source xml to set
      * @see #createSrcXml()
@@ -399,7 +416,8 @@ public class Mtasc extends Task {
     }
 
     /**
-     * Creates and returns a new package set.
+     * Creates and returns a new package set. A package set can be used to include
+     * multiple packages based on a pattern (with wildcards).
      *
      * @return a new package set
      * @see #setPackSet(DirSet)
@@ -411,22 +429,23 @@ public class Mtasc extends Task {
     }
 
     /**
-     * Returns all package sets.
-     *
-     * @return all package file sets
-     */
-    public DirSet[] getPackSet() {
-        return (DirSet[]) this.packSets.toArray(new DirSet[]{});
-    }
-
-    /**
-     * Sets a new package set.
+     * Sets a new package set. A package set can be used to include multiple packages
+     * based on a pattern (with wildcards).
      *
      * @param packSet the new package set
      * @see #createPackSet()
      */
     public void setPackSet(DirSet packSet) {
         this.packSets.add(packSet);
+    }
+
+    /**
+     * Returns all package sets.
+     *
+     * @return all package file sets
+     */
+    public DirSet[] getPackSets() {
+        return (DirSet[]) this.packSets.toArray(new DirSet[]{});
     }
 
     /**
