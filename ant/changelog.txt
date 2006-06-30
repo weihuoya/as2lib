@@ -24,3 +24,6 @@ As2ant 2.1
 
 [+] org.as2lib.ant.UnitTest
     Added proper handling of exceptions and failed tests.
+
+[+] org.as2lib.ant.Swfsli
+    Added task for SWFSLI tool.
