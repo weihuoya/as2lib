@@ -19,6 +19,7 @@ import org.as2lib.app.exec.Processor;
 import org.as2lib.app.exec.StepByStepProcess;
 import org.as2lib.data.holder.Queue;
 import org.as2lib.data.holder.queue.LinearQueue;
+import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.test.unit.ExecutionInfo;
 import org.as2lib.test.unit.info.ExecutionError;
 import org.as2lib.test.unit.info.InstantiationError;
@@ -29,7 +30,6 @@ import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestMethod;
 import org.as2lib.test.unit.TestResult;
 import org.as2lib.test.unit.TestRunner;
-import org.as2lib.util.ClassUtil;
 import org.as2lib.util.StopWatch;
 import org.as2lib.util.StringUtil;
 
@@ -98,7 +98,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	public function TestCaseRunner(testCase:TestCase) {
 		testResult = new TestCaseResult(testCase);
 		currentMethodState = NOT_STARTED_STATE;
-		leftTestMethods = new LinearQueue(testResult.getMethodInfos());
+		leftTestMethods = new LinearQueue(testResult.getTestMethods());
 	}
 
 	public function getTestResult(Void):TestResult {
@@ -120,6 +120,13 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	 */
 	public function addInfo(info:ExecutionInfo):Void {
 		currentTestMethod.addInfo(info);
+	}
+
+	/**
+	 * Returns the progress in percent of this test run.
+	 */
+	public function getPercentage(Void):Number {
+		return (100 - (100 / testResult.getTestMethods().length * leftTestMethods.size()));
 	}
 
 	/**
@@ -153,13 +160,6 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	}
 
 	/**
-	 * Returns the progress in percent of this test run.
-	 */
-	public function getPercentage(Void):Number {
-		return (100 - (100 / testResult.getMethodInfos().length * leftTestMethods.size()));
-	}
-
-	/**
 	 * Executes the next state of the current test method.
 	 *
 	 * @return {@code true} if the execution of the test method is finished and
@@ -169,70 +169,27 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 		// Execution depending to the current state.
 		switch (currentMethodState) {
 			case NOT_STARTED_STATE:
-			    // create instance and set state for next loop.
+				// create instance and set state for next loop.
 				currentMethodState = TEST_CREATED_STATE;
-			    try {
-				    testCase = ClassUtil.createInstance(
-							testResult.getTestCase()["__constructor__"]);
-			    }
-			    catch (exception) {
-					fatal(new InstantiationError("IMPORTANT: Test case threw an " +
-							"exception on instantiation:\n" +
-							StringUtil.addSpaceIndent(exception.toString(), 2),
-							this, arguments));
-				}
+				createTestCase();
 				break;
 
 			case TEST_CREATED_STATE:
 				// set up the instance and set state for next loop.
 				currentMethodState = SET_UP_FINISHED_STATE;
-				testCase.getTestRunner();
-				// Prepare the execution of the method by setUp
-				if (!currentTestMethod.hasErrors()) {
-					try {
-						testCase.setUp();
-					}
-					catch (exception) {
-						fatal(new SetUpError("IMPORTANT: Error occurred during " +
-								"set up:\n" + StringUtil.addSpaceIndent(
-								exception.toString(), 2), this, arguments));
-					}
-				}
+				setUpTestCase();
 				break;
 
 			case SET_UP_FINISHED_STATE:
 				// execute the method and set the state for the next loop
 				currentMethodState = EXECUTION_FINISHED_STATE;
-				if (!currentTestMethod.hasErrors()) {
-					// Execute the method
-					currentStopWatch.start();
-					try {
-						currentTestMethod.getMethodInfo().invoke(testCase, null);
-					}
-					catch (exception) {
-						fatal(new ExecutionError("Test method threw an unexpected " +
-								"exception:\n" + StringUtil.addSpaceIndent(
-								exception.toString(), 2), this, arguments));
-					}
-				}
+				invokeTestMethod();
 				break;
 
 			case EXECUTION_FINISHED_STATE:
 				// tear down the instance and set the state for the next loop
 				currentMethodState = TEAR_DOWN_FINISHED_STATE;
-				if (currentStopWatch.hasStarted()) {
-					currentStopWatch.stop();
-				}
-				if (!currentTestMethod.hasErrors()) {
-					try {
-						testCase.tearDown();
-					}
-					catch (exception) {
-						fatal(new TearDownError("IMPORTANT: Error occurred during " +
-								"tear down:\n" + StringUtil.addSpaceIndent(
-								exception.toString(), 2), this, arguments));
-					}
-				}
+				tearDownTestCase();
 				break;
 
 			case TEAR_DOWN_FINISHED_STATE:
@@ -243,6 +200,60 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 		}
 		// next state execution
 		return true;
+	}
+
+	private function createTestCase(Void):Void {
+		try {
+			testCase = ClassInfo.forInstance(testResult.getTestCase()).newInstance();
+		}
+		catch (exception) {
+			fatal(new InstantiationError("IMPORTANT: Test case threw an exception " +
+					"on instantiation:\n" + StringUtil.addSpaceIndent(
+					exception.toString(), 2), this, arguments));
+		}
+	}
+
+	private function setUpTestCase(Void):Void {
+		testCase.getTestRunner();
+		// Prepare the execution of the method by setUp
+		if (!currentTestMethod.hasErrors()) {
+			try {
+				testCase.setUp();
+			}
+			catch (exception) {
+				fatal(new SetUpError("IMPORTANT: Error occurred during set up:\n" +
+						StringUtil.addSpaceIndent(exception.toString(), 2), this, arguments));
+			}
+		}
+	}
+
+	private function invokeTestMethod(Void):Void {
+		if (!currentTestMethod.hasErrors()) {
+			// Execute the method
+			currentStopWatch.start();
+			try {
+				currentTestMethod.getMethodInfo().invoke(testCase, null);
+			}
+			catch (exception) {
+				fatal(new ExecutionError("Test method threw an unexpected exception:\n" +
+						StringUtil.addSpaceIndent(exception.toString(), 2), this, arguments));
+			}
+		}
+	}
+
+	private function tearDownTestCase(Void):Void {
+		if (currentStopWatch.hasStarted()) {
+			currentStopWatch.stop();
+		}
+		if (!currentTestMethod.hasErrors()) {
+			try {
+				testCase.tearDown();
+			}
+			catch (exception) {
+				fatal(new TearDownError("IMPORTANT: Error occurred during tear down:\n" +
+						StringUtil.addSpaceIndent(exception.toString(), 2), this, arguments));
+			}
+		}
 	}
 
 	/**
