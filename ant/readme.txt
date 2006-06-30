@@ -76,7 +76,7 @@ ActionScript 2.0 Library (http://www.as2lib.org).
    class.
 
 
-6. Using As2ant
+7. Using As2ant
 
    (1) Create a 'build.xml' file (take a look at 'samples/swf/build.xml' for a complete
        example):
@@ -114,7 +114,7 @@ ActionScript 2.0 Library (http://www.as2lib.org).
          Select Run As -> Ant Build
 
 
-7. Additional Eclipse Setup
+8. Additional Eclipse Setup
 
    (1) Define tasks globally (frees you from defining tasks in every build.xml file):
 
