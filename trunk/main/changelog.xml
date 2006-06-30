@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="6">
+        		<day value="30">
+        			<entry type="change" package="org.as2lib.test.unit" class="TestRunner" method="getCurrentTestCase"><change-rename to="getCurrentTestCaseResult"/></entry>
+        		</day>
         		<day value="29">
         			<entry type="change" package="org.as2lib.test.unit" class="TestRunner" method="getCurrentTestCaseMethodInfo"><change-rename to="getCurrentTestMethod"/></entry>
         			<entry type="change" package="org.as2lib.test.unit" class="TestCaseMethodInfo"><change-rename to="TestMethod"/></entry>

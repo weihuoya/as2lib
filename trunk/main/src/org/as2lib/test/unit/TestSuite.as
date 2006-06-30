@@ -256,40 +256,14 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 		return false;
 	}
 
-	/**
-	 * Returns the test result of this test suite.
-	 *
-	 * <p>The returned test result may not be complete. This is the case if this test
-	 * suite has not been executed yet or is currently being executed.
-	 *
-	 * @return the test result of this test suite
-	 */
 	public function getTestResult(Void):TestResult {
 		return testResult;
 	}
 
-	/**
-	 * Returns the result of the currently executing test case.
-	 *
-	 * <p>It is necessary to get the test case result for the test case that is
-	 * currently being executed because there can be more than one test case
-	 * within a test result.
-	 *
-	 * @return the result of the currently executing test case
-	 */
-	public function getCurrentTestCase(Void):TestCaseResult {
-		return TestRunner(getCurrentProcess(true)).getCurrentTestCase();
+	public function getCurrentTestCaseResult(Void):TestCaseResult {
+		return TestRunner(getCurrentProcess(true)).getCurrentTestCaseResult();
 	}
 
-	/**
-	 * Returns the currently executing test method.
-	 *
-	 * <p>It is necessary to get the test method that is currently being executed
-	 * because there can be more than one method within a test case result.
-	 *
-	 * @return information about the currently executing test method
-	 * @see #getCurrentTestCase
-	 */
 	public function getCurrentTestMethod(Void):TestMethod {
 		return TestRunner(getCurrentProcess(true)).getCurrentTestMethod();
 	}
