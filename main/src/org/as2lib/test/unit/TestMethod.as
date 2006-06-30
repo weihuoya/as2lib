@@ -36,8 +36,8 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 	/** Stop watch used to measure the needed execution time. */
 	private var stopWatch:StopWatch;
 
-	/** Assertion information of the execution. */
-	private var infos:TypedArray;
+	/** Information about the execution of this method. */
+	private var executionInfos:TypedArray;
 
 	/** Has this method already been executed? */
 	private var executed:Boolean;
@@ -50,7 +50,7 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 	public function TestMethod(methodInfo:MethodInfo) {
 		this.methodInfo = methodInfo;
 		stopWatch = new StopWatch();
-		infos = new TypedArray(ExecutionInfo);
+		executionInfos = new TypedArray(ExecutionInfo);
 		executed = false;
 	}
 
@@ -64,23 +64,17 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 	}
 
 	/**
+	 * Returns the reflection information about this method.
+	 */
+	public function getMethodInfo(Void):MethodInfo {
+		return methodInfo;
+	}
+
+	/**
 	 * Returns the stop watch to measure the execution time.
 	 */
 	public function getStopWatch(Void):StopWatch {
 		return stopWatch;
-	}
-
-	/**
-	 * Returns {@code true} if at least one assertion failed, otherwise {@code false}.
-	 */
-	public function hasErrors(Void):Boolean {
-		for (var i:Number = 0; i < infos.length; i++) {
-			var info:ExecutionInfo = infos[i];
-			if (info.isFailed()) {
-				return true;
-			}
-		}
-		return false;
 	}
 
 	/**
@@ -91,25 +85,16 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 	}
 
 	/**
-	 * Returns the reflection information about this method.
+	 * Returns {@code true} if at least one assertion failed, otherwise {@code false}.
 	 */
-	public function getMethodInfo(Void):MethodInfo {
-		return methodInfo;
-	}
-
-	/**
-	 * Adds information about the execution of this method.
-	 */
-	public function addInfo(info:ExecutionInfo):Void {
-		infos.push(info);
-	}
-
-	/**
-	 * Returns all added information as {@link ExecutionInfo} instances about the
-	 * execution of this method.
-	 */
-	public function getInfos(Void):TypedArray {
-		return infos.concat();
+	public function hasErrors(Void):Boolean {
+		for (var i:Number = 0; i < executionInfos.length; i++) {
+			var info:ExecutionInfo = executionInfos[i];
+			if (info.isFailed()) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 	/**
@@ -118,8 +103,8 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 	 */
 	public function getErrors(Void):TypedArray {
 		var result:TypedArray = new TypedArray(ExecutionInfo);
-		for (var i:Number = 0; i < infos.length; i++) {
-			var info:ExecutionInfo = infos[i];
+		for (var i:Number = 0; i < executionInfos.length; i++) {
+			var info:ExecutionInfo = executionInfos[i];
 			if (info.isFailed()) {
 				result.push(info);
 			}
@@ -139,6 +124,21 @@ class org.as2lib.test.unit.TestMethod extends BasicClass {
 	 */
 	public function setExecuted(executed:Boolean):Void {
 		this.executed = executed;
+	}
+
+	/**
+	 * Adds information about the execution of this method.
+	 */
+	public function addExecutionInfo(executionInfo:ExecutionInfo):Void {
+		executionInfos.push(executionInfo);
+	}
+
+	/**
+	 * Returns all added information about the execution of this method as
+	 * {@link ExecutionInfo} instances.
+	 */
+	public function getExecutionInfos(Void):TypedArray {
+		return executionInfos.concat();
 	}
 
 	/**
