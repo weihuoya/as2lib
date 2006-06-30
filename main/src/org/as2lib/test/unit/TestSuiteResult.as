@@ -19,6 +19,7 @@ import org.as2lib.data.holder.array.TypedArray;
 import org.as2lib.data.type.Time;
 import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestResult;
+import org.as2lib.test.unit.TestRunner;
 import org.as2lib.test.unit.TestSuite;
 import org.as2lib.util.StringUtil;
 
@@ -46,9 +47,18 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 	public function TestSuiteResult(testSuite:TestSuite) {
 		this.testSuite = testSuite;
 		testResults = new TypedArray(TestResult);
-		var tests:Array = testSuite.getTests();
-		for (var i:Number = 0; i < tests.length; i++) {
-			addTestResult(tests[i]);
+		addTestResults(testSuite.getTestRunners());
+	}
+
+	/**
+	 * Adds the given test results.
+	 *
+	 * @see #addTestResult
+	 */
+	private function addTestResults(testRunners:Array):Void {
+		for (var i:Number = 0; i < testRunners.length; i++) {
+			var testRunner:TestRunner = testRunners[i];
+			addTestResult(testRunner.getTestResult());
 		}
 	}
 
@@ -113,7 +123,7 @@ class org.as2lib.test.unit.TestSuiteResult extends BasicClass implements TestRes
 		var result:Number = 0;
 		for (var i:Number = testResults.length - 1; i >= 0; i--) {
 			var testResult:TestResult = testResults[i];
-			result += testResult.getOperationTime();
+			result += testResult.getOperationTime().getMilliSeconds();
 		}
 		return new Time(result);
 	}
