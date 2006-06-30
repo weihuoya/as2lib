@@ -78,7 +78,7 @@ interface org.as2lib.test.unit.TestRunner extends Process {
 	 * @return the result of the currently executing test case
 	 * @see #getCurrentTestMethod
 	 */
-	public function getCurrentTestCase(Void):TestCaseResult;
+	public function getCurrentTestCaseResult(Void):TestCaseResult;
 
 	/**
 	 * Returns the currently executing test method.

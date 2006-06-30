@@ -86,8 +86,7 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		if (testRunner != null) {
 			var methodInfo:TestMethod = testRunner.getCurrentTestMethod();
 			if (methodInfo != null) {
-				socket.send(new XML("<update>Executing " + testRunner.getCurrentTestCase().getName() +
-						"." + methodInfo.getMethodInfo().getName() + "</update>"));
+				socket.send(new XML("<update>Executing " + methodInfo.getName() + "</update>"));
 			}
 		}
 	}

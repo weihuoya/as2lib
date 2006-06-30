@@ -105,7 +105,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 		return testResult;
 	}
 
-	public function getCurrentTestCase(Void):TestCaseResult {
+	public function getCurrentTestCaseResult(Void):TestCaseResult {
 		return testResult;
 	}
 
