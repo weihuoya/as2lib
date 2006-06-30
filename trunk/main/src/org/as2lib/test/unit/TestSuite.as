@@ -94,7 +94,7 @@ import org.as2lib.test.unit.TestSuiteResult;
  * </code>
  *
  * <p>To run a test suite create an instance of it, add a test listener which
- * writes-out the test result and invoke the {@link #start} method. The
+ * writes-out the test result and invoke the {@link #run} method. The
  * {@link LoggerTestListener} is used in the following example which directs the test
  * result to As2lib Logging; we must thus also configure As2lib Logging, for example
  * with a trace logger, luminic box logger, sos logger, ...
@@ -110,7 +110,7 @@ import org.as2lib.test.unit.TestSuiteResult;
  *
  *   var testSuite:TestSuite = new AllTests();
  *   testSuite.addListener(new LoggerTestListener());
- *   testSuite.start();
+ *   testSuite.run();
  * </code>
  *
  * @author Martin Heidegger
@@ -130,14 +130,14 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 		return true;
 	}
 
-	/** All tests managed by this test suite. */
-	private var tests:TypedArray;
-
 	/** Name of this test suite. */
 	private var name:String;
 
 	/** Result of this test suite's execution. */
 	private var testResult:TestSuiteResult;
+
+	/** All test runners managed by this test suite. */
+	private var testRunners:TypedArray;
 
 	/**
 	 * Constructs a new {@code TestSuite} instance.
@@ -145,9 +145,62 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 	 * @param name the name of this test suite
 	 */
 	public function TestSuite(name:String) {
-		tests = new TypedArray(TestRunner);
-		testResult = new TestSuiteResult(this);
 		this.name = name;
+		testResult = new TestSuiteResult(this);
+		testRunners = new TypedArray(TestRunner);
+	}
+
+	/**
+	 * Returns the name of this test suite.
+	 *
+	 * @return the name of this test suite
+	 */
+	public function getName(Void):String {
+		if (name == null) {
+			name = "";
+		}
+		return name;
+	}
+
+	/**
+	 * Returns all {@link TestRunner} instances of this test suite.
+	 *
+	 * @return all test runners of this test suite
+	 */
+	public function getTestRunners(Void):TypedArray {
+		return testRunners;
+	}
+
+	/**
+	 * Adds a test to this test suite.
+	 *
+	 * @param test the test to add
+	 * @throws IllegalArgumentException if the passed-in test has this test suite
+	 * as child.
+	 */
+	public function addTest(test:Test):Void {
+		addProcess(test.getTestRunner());
+	}
+
+	/**
+	 * Adds a process to this test suite.
+	 *
+	 * <p>This test suite does only allow {@link TestRunner} instances as subprocesses.
+	 *
+	 * @param process the process to add to this test suite
+	 * @throws IllegalArgumentException if the passed-in process has this test suite
+	 * as child or is not an instance of type {@code TestRunner}
+	 */
+	public function addProcess(process:Process):Void {
+		var testRunner:TestRunner = TestRunner(process);
+		if (testRunner == null) {
+			throw new IllegalArgumentException("Only test runners are allowed " +
+					"as subprocesses.", this, arguments);
+		}
+		checkRecursion(testRunner.getTestResult());
+		testResult.addTestResult(testRunner.getTestResult());
+		testRunners.push(testRunner);
+		super.addProcess(testRunner);
 	}
 
 	/**
@@ -175,78 +228,6 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 	}
 
 	/**
-	 * Adds a process to this test suite.
-	 *
-	 * <p>This test suite does only allow {@link TestRunner} instances as subprocesses.
-	 *
-	 * @param process the process to add to this test suite
-	 * @throws IllegalArgumentException if the passed-in process has this test suite
-	 * as child or is not an instance of type {@code TestRunner}
-	 */
-	public function addProcess(process:Process):Void {
-		var testRunner:TestRunner = TestRunner(process);
-		if (testRunner == null) {
-			throw new IllegalArgumentException("Only test runners are allowed " +
-					"as subprocesses.", this, arguments);
-		}
-		checkRecursion(testRunner.getTestResult());
-		testResult.addTestResult(testRunner.getTestResult());
-		tests.push(testRunner);
-		super.addProcess(testRunner);
-	}
-
-	/**
-	 * Adds a test to this test suite.
-	 *
-	 * @param test the test to add
-	 * @throws IllegalArgumentException if the passed-in test has this test suite
-	 * as child.
-	 */
-	public function addTest(test:Test):Void {
-		addProcess(test.getTestRunner());
-	}
-
-	/**
-	 * Returns the name of this test suite.
-	 *
-	 * @return the name of this test suite
-	 */
-	public function getName(Void):String {
-		if (name == null) {
-			name = "";
-		}
-		return name;
-	}
-
-	/**
-	 * Runs this test suite.
-	 *
-	 * @return the test runner that runs this test suite
-	 */
-	public function run(Void):TestRunner {
-		start();
-		return this;
-	}
-
-	/**
-	 * Returns the test runner that executes this test suite.
-	 *
-	 * @return the test runner that executes this test suite
-	 */
-	public function getTestRunner(Void):TestRunner {
-		return this;
-	}
-
-	/**
-	 * Returns all {@link Test} instances of this test suite.
-	 *
-	 * @return all tests of this test suite
-	 */
-	public function getTests(Void):TypedArray {
-		return tests;
-	}
-
-	/**
 	 * Handles the error of a process.
 	 *
 	 * @param process the process that raised the error
@@ -254,6 +235,15 @@ class org.as2lib.test.unit.TestSuite extends BatchProcess implements Test, TestR
 	 */
 	public function onProcessError(process:Process, error):Boolean {
 		return false;
+	}
+
+	public function run(Void):TestRunner {
+		start();
+		return this;
+	}
+
+	public function getTestRunner(Void):TestRunner {
+		return this;
 	}
 
 	public function getTestResult(Void):TestResult {
