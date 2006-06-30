@@ -3,6 +3,9 @@ As2ant 2.1
 ----------
 
 
+[+] org.as2lib.ant.Swfsli
+    Added task for the SWF ScriptLimits Injector (http://buraks.com/swfsli).
+
 [!] org.as2lib.ant.Mtasc
     Enabled usage of "no" for "trace" argument.
 
@@ -24,6 +27,3 @@ As2ant 2.1
 
 [+] org.as2lib.ant.UnitTest
     Added proper handling of exceptions and failed tests.
-
-[+] org.as2lib.ant.Swfsli
-    Added task for SWFSLI tool.
