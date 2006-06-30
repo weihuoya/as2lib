@@ -71,7 +71,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	/** The test case to execute the current test method on. */
 	private var testCase:TestCase;
 
-	/** The {@code test*} methods to execute. */
+	/** The {@code test*} methods that still have to be executed. */
 	private var leftTestMethods:Queue;
 
 	/**
