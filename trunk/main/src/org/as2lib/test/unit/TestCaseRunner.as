@@ -116,10 +116,10 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	/**
 	 * Adds test execution information for the currently executing method.
 	 *
-	 * @param info the execution information to add
+	 * @param executionInfo the execution information to add
 	 */
-	public function addInfo(info:ExecutionInfo):Void {
-		currentTestMethod.addInfo(info);
+	public function addExecutionInfo(executionInfo:ExecutionInfo):Void {
+		currentTestMethod.addExecutionInfo(executionInfo);
 	}
 
 	/**
@@ -265,7 +265,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 	 * @see #STATE_TEAR_DOWN_FINISHED
 	 */
 	private function fatal(error:ExecutionInfo):Void {
-		addInfo(error);
+		addExecutionInfo(error);
 		currentMethodState = TEAR_DOWN_FINISHED_STATE;
 	}
 

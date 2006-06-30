@@ -400,8 +400,8 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @param executionInfo the execution info to add
 	 * @return {@code false} if the execution info is an error else {@code true}
 	 */
-	private function addInfo(executionInfo:ExecutionInfo):Boolean {
-		testRunner.addInfo(executionInfo);
+	private function addExecutionInfo(executionInfo:ExecutionInfo):Boolean {
+		testRunner.addExecutionInfo(executionInfo);
 		return !executionInfo.isFailed();
 	}
 
@@ -412,7 +412,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 */
 	private function fail(message:String):Void {
 		message = (typeof message == "string") ? message : "<no message>";
-		addInfo(new FailureInfo(message));
+		addExecutionInfo(new FailureInfo(message));
 	}
 
 	/**
@@ -455,7 +455,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertTrueWithoutMessage
 	 */
 	private function assertTrueWithMessage(message:String, val:Boolean):Boolean {
-		return addInfo(new AssertTrueInfo(message, val));
+		return addExecutionInfo(new AssertTrueInfo(message, val));
 	}
 
 	/**
@@ -498,7 +498,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertFalseWithoutMessage
 	 */
 	private function assertFalseWithMessage(message:String, val:Boolean):Boolean {
-		return addInfo(new AssertFalseInfo(message, val));
+		return addExecutionInfo(new AssertFalseInfo(message, val));
 	}
 
 	/**
@@ -554,7 +554,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertEqualsWithoutMessage
 	 */
 	private function assertEqualsWithMessage(message:String, val, compareTo):Boolean {
-		return addInfo(new AssertEqualsInfo(message, val, compareTo));
+		return addExecutionInfo(new AssertEqualsInfo(message, val, compareTo));
 	}
 
 	/**
@@ -658,7 +658,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 */
 	private function assertAlmostEqualsWithMessageWithMaxDiff(message:String,
 			val:Number, compareTo:Number, maxDiff:Number):Boolean {
-		return addInfo(new AssertAlmostEqualsInfo(message, val, compareTo, maxDiff));
+		return addExecutionInfo(new AssertAlmostEqualsInfo(message, val, compareTo, maxDiff));
 	}
 
 	/**
@@ -715,7 +715,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertNotEqualsWithoutMessage
 	 */
 	private function assertNotEqualsWithMessage(message:String, val, compareTo):Boolean {
-		return addInfo(new AssertNotEqualsInfo(message, val, compareTo));
+		return addExecutionInfo(new AssertNotEqualsInfo(message, val, compareTo));
 	}
 
 	/**
@@ -770,7 +770,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertSameWithoutMessage
 	 */
 	private function assertSameWithMessage(message:String, val, compareTo):Boolean {
-		return addInfo(new AssertSameInfo(message, val, compareTo));
+		return addExecutionInfo(new AssertSameInfo(message, val, compareTo));
 	}
 
 	/**
@@ -825,7 +825,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertNotSameWithoutMessage
 	 */
 	private function assertNotSameWithMessage(message:String, val, compareTo):Boolean {
-		return addInfo(new AssertNotSameInfo(message, val, compareTo));
+		return addExecutionInfo(new AssertNotSameInfo(message, val, compareTo));
 	}
 
 	/**
@@ -872,7 +872,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertNullWithoutMessage
 	 */
 	private function assertNullWithMessage(message:String, val):Boolean {
-		return addInfo(new AssertNullInfo(message, val));
+		return addExecutionInfo(new AssertNullInfo(message, val));
 	}
 
 	/**
@@ -919,7 +919,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertNotNullWithoutMessage
 	 */
 	private function assertNotNullWithMessage(message:String, val):Boolean {
-		return addInfo(new AssertNotNullInfo(message, val));
+		return addExecutionInfo(new AssertNotNullInfo(message, val));
 	}
 
 	/**
@@ -966,7 +966,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertUndefinedWithoutMessage
 	 */
 	private function assertUndefinedWithMessage(message:String, val):Boolean {
-		return addInfo(new AssertUndefinedInfo(message, val));
+		return addExecutionInfo(new AssertUndefinedInfo(message, val));
 	}
 
 	/**
@@ -1013,7 +1013,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertNotUndefinedWithoutMessage
 	 */
 	private function assertNotUndefinedWithMessage(message:String, val):Boolean {
-		return addInfo(new AssertNotUndefinedInfo(message, val));
+		return addExecutionInfo(new AssertNotUndefinedInfo(message, val));
 	}
 
 	/**
@@ -1056,7 +1056,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertInfinityWithoutMessage
 	 */
 	private function assertInfinityWithMessage(message:String, val):Boolean {
-		return addInfo(new AssertInfinityInfo(message, val));
+		return addExecutionInfo(new AssertInfinityInfo(message, val));
 	}
 
 	/**
@@ -1099,7 +1099,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertNotInfinityWithoutMessage
 	 */
 	private function assertNotInfinityWithMessage(message:String, val):Boolean {
-		return addInfo(new AssertNotInfinityInfo(message, val));
+		return addExecutionInfo(new AssertNotInfinityInfo(message, val));
 	}
 
 	/**
@@ -1148,7 +1148,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertEmptyWithoutMessage
 	 */
 	private function assertEmptyWithMessage(message:String, val):Boolean {
-		return addInfo(new AssertEmptyInfo(message, val));
+		return addExecutionInfo(new AssertEmptyInfo(message, val));
 	}
 
 	/**
@@ -1197,7 +1197,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @see #assertNotEmptyWithoutMessage
 	 */
 	private function assertNotEmptyWithMessage(message:String, val):Boolean {
-		return addInfo(new AssertNotEmptyInfo(message, val));
+		return addExecutionInfo(new AssertNotEmptyInfo(message, val));
 	}
 
 	/**
@@ -1412,7 +1412,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 */
 	private function assertThrowsWithCallAndMessageAndType(message:String, type,
 			executable:Executable, args:Array):Boolean {
-		return addInfo(new AssertThrowsInfo(message, type, executable, args));
+		return addExecutionInfo(new AssertThrowsInfo(message, type, executable, args));
 	}
 
 	/**
@@ -1728,7 +1728,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 */
 	private function assertNotThrowsWithCallAndMessageAndType(message:String,
 			type, executable:Executable, args:Array):Boolean {
-		return addInfo(new AssertNotThrowsInfo(message, type, executable, args));
+		return addExecutionInfo(new AssertNotThrowsInfo(message, type, executable, args));
 	}
 
 	/**
@@ -1868,7 +1868,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 */
 	private function assertTypeOfWithMessage(message:String, val,
 			type:String):Boolean {
-		return addInfo(new AssertTypeOfInfo(message, val, type));
+		return addExecutionInfo(new AssertTypeOfInfo(message, val, type));
 	}
 
 	/**
@@ -1912,7 +1912,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 */
 	private function assertInstanceOfWithMessage(message:String, val,
 			type:Function):Boolean {
-		return addInfo(new AssertInstanceOfInfo(message, val, type));
+		return addExecutionInfo(new AssertInstanceOfInfo(message, val, type));
 	}
 
 }
