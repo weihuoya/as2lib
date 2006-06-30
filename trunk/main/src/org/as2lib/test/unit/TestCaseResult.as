@@ -37,8 +37,8 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	/** The corresponding test case */
 	private var testCase:TestCase;
 
-	/** All {@link TestCaseMethodInfo} instances of the corresponding test case. */
-	private var testCaseMethods:TypedArray;
+	/** All {@link TestMethod} instances of the corresponding test case. */
+	private var testMethods:TypedArray;
 
 	/** Has the test runner finished execution? */
 	private var finished:Boolean;
@@ -58,28 +58,26 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 	}
 
 	/**
-	 * Returns all {@link TestCaseMethodInfo} instances of the corresponding test
-	 * case.
+	 * Returns all {@link TestMethod} instances of the corresponding test case.
 	 *
 	 * <p>Only methods with the prefix "test" are regarded as test methods.
 	 *
-	 * @return all {@link TestCaseMethodInfo} instances of the corresponding test
-	 * case
+	 * @return all {@link TestMethod} instances of the corresponding test case
 	 */
-	public function getMethodInfos(Void):TypedArray {
-		if (testCaseMethods == null) {
-			testCaseMethods = fetchTestCaseMethods();
+	public function getTestMethods(Void):TypedArray {
+		if (testMethods == null) {
+			testMethods = fetchTestMethods();
 		}
-		return testCaseMethods;
+		return testMethods;
 	}
 
 	/**
 	 * Fetches all methods with the prefix "test" of the corresponding test case.
 	 *
 	 * @return all {@code test*} methods of the corresponding test case wrapped by
-	 * {@link TestCaseMethodInfo} instances
+	 * {@link TestMethod} instances
 	 */
-	private function fetchTestCaseMethods(Void):TypedArray {
+	private function fetchTestMethods(Void):TypedArray {
 		var result:TypedArray = new TypedArray(TestMethod);
 		var methods:Array = ClassInfo.forInstance(testCase).getMethods();
 		if (methods != null) {
@@ -111,6 +109,68 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		return ClassInfo.forInstance(getTestCase()).getFullName();
 	}
 
+	public function hasStarted(Void):Boolean {
+		if (started) {
+			return true;
+		}
+		var testMethods:Array = getTestMethods();
+		for (var i:Number = 0; i < testMethods.length; i++) {
+			var methodInfo:TestMethod = testMethods[i];
+			if (methodInfo.isExecuted()) {
+				return (started = true);
+			}
+		}
+		return false;
+	}
+
+	public function hasFinished(Void):Boolean {
+		if (finished) {
+			return true;
+		}
+		var testMethods:Array = getTestMethods();
+		for (var i:Number = 0; i < testMethods.length; i++) {
+			var methodInfo:TestMethod = testMethods[i];
+			if (!methodInfo.isExecuted()) {
+				return false;
+			}
+		}
+		return (finished = true);
+	}
+
+	public function getPercentage(Void):Number {
+		var testMethods:Array = getTestMethods();
+		var totalCount:Number = testMethods.length;
+		var executedCount:Number = 0;
+		for (var i:Number = 0; i < testMethods.length; i++) {
+			var testMethod:TestMethod = testMethods[i];
+			if (testMethod.isExecuted()) {
+				executedCount++;
+			}
+		}
+		return (100 / totalCount * executedCount);
+	}
+
+	public function getOperationTime(Void):Time {
+		var result:Number = 0;
+		var testMethods:Array = getTestMethods();
+		for (var i:Number = 0; i < testMethods.length; i++) {
+			var methodInfo:TestMethod = testMethods[i];
+			result += methodInfo.getStopWatch().getTimeInMilliSeconds();
+		}
+		return new Time(result);
+	}
+
+	public function hasErrors(Void):Boolean {
+		var testMethods:Array = getTestMethods();
+		for (var i:Number = 0; i < testMethods.length; i++) {
+			var methodInfo:TestMethod = testMethods[i];
+			if (methodInfo.hasErrors()) {
+				return true;
+			}
+		}
+		return false;
+	}
+
 	/**
 	 * Returns an array containing only this test case result.
 	 *
@@ -133,68 +193,6 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		return result;
 	}
 
-	public function getPercentage(Void):Number {
-		var finished:Number = 0;
-		var a:Array = getMethodInfos();
-		var total:Number = a.length;
-		var i:Number = a.length;
-		while (--i-(-1)) {
-			if (a[i].hasFinished()) {
-				finished++;
-			}
-		}
-		return (100 / total * finished);
-	}
-
-	public function hasFinished(Void):Boolean {
-		if (finished) {
-			return true;
-		}
-		var methodInfos:Array = getMethodInfos();
-		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var methodInfo:TestMethod = methodInfos[i];
-			if (!methodInfo.isExecuted()) {
-				return false;
-			}
-		}
-		return (finished = true);
-	}
-
-	public function hasStarted(Void):Boolean {
-		if (started) {
-			return true;
-		}
-		var methodInfos:Array = getMethodInfos();
-		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var methodInfo:TestMethod = methodInfos[i];
-			if (methodInfo.isExecuted()) {
-				return (started = true);
-			}
-		}
-		return false;
-	}
-
-	public function getOperationTime(Void):Time {
-		var result:Number = 0;
-		var methodInfos:Array = getMethodInfos();
-		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var methodInfo:TestMethod = methodInfos[i];
-			result += methodInfo.getStopWatch().getTimeInMilliSeconds();
-		}
-		return new Time(result);
-	}
-
-	public function hasErrors(Void):Boolean {
-		var methodInfos:Array = getMethodInfos();
-		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var methodInfo:TestMethod = methodInfos[i];
-			if (methodInfo.hasErrors()) {
-				return true;
-			}
-		}
-		return false;
-	}
-
 	/**
 	 * Returns the string representation of this test case result. It is properly
 	 * formatted and may be used to show the test result in text based consoles.
@@ -206,16 +204,16 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		var methodResult:String = "";
 		var ms:Number = 0;
 		var errors:Number = 0;
-		var methodInfos:Array = getMethodInfos();
-		for (var i:Number = 0; i < methodInfos.length; i++) {
-			var method:TestMethod = methodInfos[i];
+		var testMethods:Array = getTestMethods();
+		for (var i:Number = 0; i < testMethods.length; i++) {
+			var method:TestMethod = testMethods[i];
 			ms += method.getStopWatch().getTimeInMilliSeconds();
 			if(method.hasErrors()) {
 				errors += method.getErrors().length;
 				methodResult += "\n" + StringUtil.addSpaceIndent(method.toString(), 2);
 			}
 		}
-		result = getName() + " ran " + methodInfos.length + " methods in [" + ms + "ms]: ";
+		result = getName() + " ran " + testMethods.length + " methods in [" + ms + "ms]: ";
 		result += (errors>0) ? errors + ((errors > 1) ? " errors" : " error") +
 				" occurred" + methodResult : "no error occurred";
 		return result;
