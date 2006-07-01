@@ -2,8 +2,9 @@
 As2ant 2.1
 ----------
 
+
 [+] samples/swfsli
-    Added samples showing usage of swfsli task
+    Added sample showing usage of swfsli task.
 
 [+] org.as2lib.ant.Swfsli
     Added task for the SWF ScriptLimits Injector (http://buraks.com/swfsli).
