@@ -226,7 +226,27 @@ public class Swfsli extends Task {
             log(command.toString());
             int r = exe.execute();
             if (r != 0) {
-                throw new BuildException("Execution error!", getLocation());
+            	if (r == 1) {
+            		throw new BuildException("Error usage. Use: swfsli inputFilename /rMaxRecursionDepth /tScriptTimeoutSeconds /b /d /v", getLocation());
+            	} else if (r == 2) {
+            		throw new BuildException("MaxRecursionDepth or ScriptTimeoutSeconds must be specified.", getLocation());
+            	} else if (r == 3) {
+            		throw new BuildException("MaxRecursionDepth value invalid.", getLocation());
+            	} else if (r == 4) {
+            		throw new BuildException("ScriptTimeoutSeconds value invalid.", getLocation());
+            	} else if (r == 5) {
+            		throw new BuildException("File not found.", getLocation());
+            	} else if (r == 6) {
+            		throw new BuildException("Could not backup file.", getLocation());
+            	} else if (r == 11) {
+            		throw new BuildException("Error loading file.", getLocation());
+            	} else if (r == 12) {
+            		throw new BuildException("Error modifying file.", getLocation());
+            	} else if (r == 13) {
+            		throw new BuildException("Error saving file.", getLocation());
+            	} else {
+            		throw new BuildException("Unexpected error!", getLocation());
+            	}
             }
         }
         catch (IOException e) {
