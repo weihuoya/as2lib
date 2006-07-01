@@ -1,4 +1,4 @@
-<project name="Swfmill Ant Task - Samples" default="sample" basedir=".">
+<project name="Swfsli Ant Task - Sample" default="sample" basedir=".">
 
   <taskdef name="swfsli" classname="org.as2lib.ant.Swfsli" classpath="../../as2ant.jar"/>
   <taskdef name="mtasc" classname="org.as2lib.ant.Mtasc" classpath="../../as2ant.jar"/>
@@ -11,6 +11,5 @@
     <mtasc src="src/Main.as" header="400:300:20" swf="${swf.file.2}" main="true"/>
     <swfsli swf="${swf.file.2}" timeout="5000"/>
   </target>
-
 
 </project>
