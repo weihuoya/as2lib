@@ -6,7 +6,7 @@
   <property name="swf.file.1" location="sample1.swf"/>
   <property name="swf.file.2" location="sample2.swf"/>
 
-  <target name="sample" description="compiles two sample files: with default and enlarged limits">
+  <target name="sample" description="compiles two sample files: with default and increased limits">
     <mtasc src="src/Main.as" header="400:300:20" swf="${swf.file.1}" main="true"/>
     <mtasc src="src/Main.as" header="400:300:20" swf="${swf.file.2}" main="true"/>
     <swfsli swf="${swf.file.2}" timeout="5000"/>
