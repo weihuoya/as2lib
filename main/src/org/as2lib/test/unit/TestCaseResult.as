@@ -208,7 +208,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 		for (var i:Number = 0; i < testMethods.length; i++) {
 			var method:TestMethod = testMethods[i];
 			ms += method.getStopWatch().getTimeInMilliSeconds();
-			if(method.hasErrors()) {
+			if (method.hasErrors()) {
 				errors += method.getErrors().length;
 				methodResult += "\n" + StringUtil.addSpaceIndent(method.toString(), 2);
 			}
