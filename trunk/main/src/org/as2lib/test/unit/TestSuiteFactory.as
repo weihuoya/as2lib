@@ -196,7 +196,7 @@ class org.as2lib.test.unit.TestSuiteFactory extends BasicClass {
 					!child.blockCollecting() &&
 					!ClassUtil.isSubClassOf(child, TestCaseHelper) &&
 					!ClassUtil.isSubClassOf(child, TestSuite)) {
-				testSuite.addTest(Test(ClassUtil.createCleanInstance(child)));
+				testSuite.addTest(ClassUtil.createCleanInstance(child));
 			}
 		}
 		var subPackages:Array = package.getMemberPackages();
