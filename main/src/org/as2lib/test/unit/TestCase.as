@@ -352,6 +352,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 */
 	public function run(Void):TestRunner {
 		var testRunner:TestRunner = getTestRunner();
+		// TODO Shall there really be a default test listener?
 		testRunner.addListener(LoggerTestListener.getInstance());
 		testRunner.start();
 		return testRunner;
@@ -398,7 +399,8 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * Adds a test execution info for the currently running test.
 	 *
 	 * @param executionInfo the execution info to add
-	 * @return {@code false} if the execution info is an error else {@code true}
+	 * @return {@code false} if the execution info is an error or failure else
+	 * {@code true}
 	 */
 	private function addExecutionInfo(executionInfo:ExecutionInfo):Boolean {
 		testRunner.addExecutionInfo(executionInfo);
@@ -411,7 +413,7 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 * @param message the message describing way the test failed
 	 */
 	private function fail(message:String):Void {
-		message = (typeof message == "string") ? message : "<no message>";
+		message = (typeof(message) == "string") ? message : "<no message>";
 		addExecutionInfo(new FailureInfo(message));
 	}
 
