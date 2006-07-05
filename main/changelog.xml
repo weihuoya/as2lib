@@ -5,6 +5,13 @@
         xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
+        	<month value="7">
+        		<day value="5">
+        			<entry type="add" package="org.as2lib.io.file" class="Loader">Added support for properties-files.</entry>
+        			<entry type="change" package="org.as2lib.io.file" class="Loader" method="setFileFactory"><change-rename to="setTextFileFactory"/></entry>
+        			<entry type="bugfix" package="org.as2lib.io.file" class="Loader" method="load">Fixed bug with callbacks.</entry>
+        		</day>
+        	</month>
         	<month value="6">
         		<day value="30">
         			<entry type="change" package="org.as2lib.test.unit" class="TestRunner" method="getCurrentTestCase"><change-rename to="getCurrentTestCaseResult"/></entry>
