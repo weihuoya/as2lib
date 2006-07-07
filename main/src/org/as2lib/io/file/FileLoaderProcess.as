@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,163 +15,163 @@
  */
 
 import org.as2lib.app.exec.AbstractProcess;
-import org.as2lib.io.file.FileLoader;
-import org.as2lib.io.file.LoadStartListener;
-import org.as2lib.io.file.LoadCompleteListener;
-import org.as2lib.io.file.LoadProgressListener;
-import org.as2lib.io.file.LoadErrorListener;
-import org.as2lib.data.holder.Map;
 import org.as2lib.app.exec.Executable;
+import org.as2lib.data.holder.Map;
+import org.as2lib.io.file.FileLoader;
+import org.as2lib.io.file.LoadCompleteListener;
+import org.as2lib.io.file.LoadErrorListener;
+import org.as2lib.io.file.LoadProgressListener;
+import org.as2lib.io.file.LoadStartListener;
 
 /**
- * {@code FileLoaderProcess} is a mediator to handle loading of files as
- * a {@code Process}.
- * 
- * <p>If you need to handle a {@link FileLoader} with a {@link Process} context
- * you can use {@code FileLoaderProcess} as mediator between both APIs.
- * 
- * <p>In contrast to {@code FileLoader} you have to call it like:
+ * {@code FileLoaderProcess} wraps a file loader to make the integration of file
+ * loaders with As2lib Process possible. The file loader process mediates between
+ * As2lib File and As2lib Process.
+ *
+ * <p>A wrapped file loader can be used as follows:
+ *
  * <code>
  *   import org.as2lib.io.file.TextFileLoader;
  *   import org.as2lib.io.file.FileLoaderProcess;
- * 
+ *
  *   var fileLoader:TextFileLoader = new TextFileLoader();
- *   var loader:FileLoaderProcess = new FileLoaderProcess(fileLoader);
- *   loader.setUri("test.txt");
- *   loader.start();
+ *   var fileLoaderProcess:FileLoaderProcess = new FileLoaderProcess(fileLoader);
+ *   fileLoaderProcess.setUri("test.txt");
+ *   fileLoaderProcess.start();
  * </code>
- * 
+ *
+ * <p>If used as above, As2lib Process does not add much value. But you may also
+ * use a batch that manages the loading process of multiple files or integrate file
+ * loading with an application context.
+ *
  * @author Martin Heidegger
+ * @author Simon Wacker
  * @version 1.0
+ * @see Process
+ * @see Batch
  */
-class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess implements LoadStartListener,
+class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess implements
 		LoadCompleteListener, LoadProgressListener, LoadErrorListener {
-	
-	/** Resource loader to be mediated. */
-	private var resourceLoader:FileLoader;
-	
-	/** URI to load. */
+
+	/** The file loader the actually loads the file. */
+	private var fileLoader:FileLoader;
+
+	/** The URI of the file to load. */
 	private var uri:String;
-	
-	/** Parameter submit method for the request. */
+
+	/** The parameter submit method for the request. */
 	private var method:String;
-	
-	/** Parameter to be used for the request. */
-	private var parameter:Map;
-	
-	/** {@code Executable} to be called on finish of the process. */
-	private var callBack:Executable;
-	
+
+	/** The parameters to use for the request. */
+	private var parameters:Map;
+
+	/** The callback to invoke when the file was loaded. */
+	private var callback:Executable;
+
 	/** Are errors ignored? */
 	private var ignoreErrors:Boolean;
-			
+
 	/**
-	 * Constructs a new {@code FileLoaderProcess}.
-	 * 
-	 * @param resourceLoader {@code FileLoader} to be mediated
+	 * Constructs a new {@code FileLoaderProcess} instance.
+	 *
+	 * <p>If errors are ignored, this process will just finish when an error occurs
+	 * without distributing it to registered error listeners.
+	 *
+	 * @param fileLoader the file loader to delegate to
+	 * @param ignoreErrors shall errors be ignored?
 	 */
-	public function FileLoaderProcess(resourceLoader:FileLoader, ignoreErrors:Boolean) {
-		this.resourceLoader = resourceLoader;
+	public function FileLoaderProcess(fileLoader:FileLoader, ignoreErrors:Boolean) {
+		this.fileLoader = fileLoader;
 		this.ignoreErrors = ignoreErrors ? true : false;
-		resourceLoader.addListener(this);
+		fileLoader.addListener(this);
 	}
-	
+
 	/**
-	 * Prepares the instance for loading events.
-	 * 
-	 * <p>All passed-in parameters will be used to {@code .load} the given
-	 * file.
-	 * 
-	 * @param uri location of the file to load
-	 * @param parameters (optional) parameters for loading the file
-	 * @param method (optional) POST/GET as method for submitting the parameters,
-	 *        default method used if {@code method} was not passed-in is POST.
-	 * @param callBack (optional) {@link Executable} to be executed after the
-	 *        the resource was loaded.
+	 * Sets the data to use for loading the file.
+	 *
+	 * @param uri the location of the file to load
+	 * @param parameters (optional) parameters to use for loading the file
+	 * @param method (optional) method to use for submitting the parameters; must be
+	 * either {@code "POST"} or {@code "GET"}; default is {@code "POST"}
+	 * @param callback (optional) the callback to execute when the file is loaded
+	 * completely; the callback is passed this file loader as argument
 	 */
-	public function setUri(uri:String, method:String, parameter:Map, callBack:Executable):Void {
+	public function setUri(uri:String, method:String, parameters:Map, callback:Executable):Void {
 		this.uri = uri;
 		this.method = method;
-		this.parameter = parameter;
-		this.callBack = callBack;
+		this.parameters = parameters;
+		this.callback = callback;
 		if (getName() == null) {
 			setName(uri);
 		}
 	}
-	
+
 	/**
-	 * Returns the {@code FileLoader} that was mediated.
-	 * 
-	 * @return {@code FileLoader} that was mediated.
+	 * Returns the wrapped file loader.
+	 *
+	 * @return the wrapped file loader
 	 */
 	public function getFileLoader(Void):FileLoader {
-		return resourceLoader;
+		return fileLoader;
 	}
-	
+
 	/**
-	 * Implementation of {@code AbstractProcess#run} to handle loading
-	 * of the process.
+	 * Starts loading the file.
+	 *
+	 * <p>Note: Arguments supplied with this method have higher priority than the ones
+	 * set via the {@link #setUri} method.
+	 *
+	 * @param uri the location of the file to load
+	 * @param parameters (optional) parameters to use for loading the file
+	 * @param method (optional) method to use for submitting the parameters; must be
+	 * either {@code "POST"} or {@code "GET"}; default is {@code "POST"}
+	 * @param callback (optional) the callback to execute when the file is loaded
+	 * completely; the callback is passed this file loader as argument
 	 */
 	public function run() {
 		var uri:String = (arguments[0] instanceof String) ? arguments[0] : this.uri;
 		var method:String = (arguments[1] instanceof String) ? arguments[1] : this.method;
-		var parameter:Map = (arguments[2] instanceof Map) ? arguments[2] : this.parameter;
-		var callBack:Executable = (arguments[3] instanceof Executable) ? arguments[3] : this.callBack;
-		resourceLoader.load(uri, method, parameter, callBack);
+		var parameter:Map = (arguments[2] instanceof Map) ? arguments[2] : this.parameters;
+		var callBack:Executable = (arguments[3] instanceof Executable) ? arguments[3] : this.callback;
+		fileLoader.load(uri, method, parameter, callBack);
 		working = !hasFinished();
 	}
-	
-	/**
-	 * Forwards {@code getPercentage} to the mediated {@code FileLoader.getPercentage}.
-	 * 
-	 * @return percentage of the resource
-	 */
+
 	public function getPercentage(Void):Number {
-		return resourceLoader.getPercentage();
+		return fileLoader.getPercentage();
 	}
-	
+
 	/**
-	 * Handles the inner file loader's start event.
-	 * 
-	 * @param fileLoader the file loader that distributes the event
-	 */
-	public function onLoadStart(fileLoader:FileLoader):Void {
-		// Start event has already been distributed by the AbstractProcess.prepare method.
-		//sendStartEvent();
-	}
-	
-	/**
-	 * Handles the inner file loader's complete event.
-	 * 
-	 * @param fileLoader the file loader that distributes the event
+	 * Finishes this process.
 	 */
 	public function onLoadComplete(fileLoader:FileLoader):Void {
 		finish();
 	}
-	
+
 	/**
-	 * Handles the inner file loader's progress event.
-	 * 
-	 * @param fileLoader the file loader that distributes the event
+	 * Distributes an update event.
 	 */
 	public function onLoadProgress(fileLoader:FileLoader):Void {
 		distributeUpdateEvent();
 	}
-	
+
 	/**
-	 * Handles the inner file loader's error event.
-	 * 
-	 * @param fileLoader the file loader that distributes the event
+	 * Interrupts this process if errors are <i>not</i> ignored (distributes error
+	 * event, adds the error and finishes this process), or finishes this process
+	 * silently otherwise.
+	 *
+	 * @return {@code true} to consume the event
 	 */
 	public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean {
 		if (!ignoreErrors) {
-			// TODO: Refactor error. Is error argument always the file name?
+			// TODO Refactor error. Is error argument always the file name?
 			interrupt(errorCode + ": " + error.toString());
 		}
 		else {
 			finish();
 		}
+		// TODO Why is true returned?
 		return true;
 	}
-	
+
 }

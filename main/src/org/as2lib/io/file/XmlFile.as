@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,36 +18,39 @@ import org.as2lib.data.type.Byte;
 import org.as2lib.io.file.SimpleTextFile;
 
 /**
- * {@code XmlFile} is implementation of {@code TextFile} for a xml resource.
- * 
+ * {@code XmlFile} represents an XML file.
+ *
  * @author Martin Heidegger
+ * @author Simon Wacker
  * @version 1.0
  */
 class org.as2lib.io.file.XmlFile extends SimpleTextFile {
-	
-	/** Container Xml file. */
+
+	/** The data structure representation of this xml file. */
 	private var xml:XML;
-	
+
 	/**
-	 * Constructs a new {@code XmlFile}.
-	 * 
-	 * @param source content of the {@code XmlFile} to create
-	 * @param size size in {@link Byte} of the loaded resource
-	 * @param uri location of the loaded resource
+	 * Constructs a new {@code XmlFile} instance.
+	 *
+	 * @param content the content of this XML file
+	 * @param size the size in bytes of this XML file
+	 * @param location the location of this XML file
 	 */
-	public function XmlFile(source:String, size:Byte, uri:String) {
-		super(source, size, uri);
+	public function XmlFile(content:String, size:Byte, location:String) {
+		super(content, size, location);
 		xml = new XML();
 		xml.ignoreWhite = true;
-		xml.parseXML(source);
+		// TODO Throw exception if parsing fails.
+		xml.parseXML(getContent());
 	}
-	
+
 	/**
-	 * Returns the XML content in form of a proper accessable {@code XML} instance.
-	 * 
-	 * @return {@code XML} instance to access the XML content
+	 * Returns the object-oriented representation of this XML file's content.
+	 *
+	 * @return the object-oriented representation of this XML file's content
 	 */
 	public function getXml(Void):XML {
 		return xml;
 	}
+
 }
