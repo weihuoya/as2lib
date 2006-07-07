@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="7">
+        		<day value="7">
+        			<entry type="bugfix" package="org.as2lib.io.file" class="TextFileLoader/SwfFileLoader" method="load">Fixed bug with parameters-submit-method. Passed-in method was always used even if it was 'null' (instead of default method).</entry>
+        		</day>
         		<day value="5">
         			<entry type="add" package="org.as2lib.io.file" class="Loader">Added support for properties-files.</entry>
         			<entry type="change" package="org.as2lib.io.file" class="Loader" method="setFileFactory"><change-rename to="setTextFileFactory"/></entry>
