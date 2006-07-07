@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -15,7 +15,6 @@
  */
 
 import org.as2lib.app.exec.Executable;
-import org.as2lib.data.holder.Iterator;
 import org.as2lib.data.holder.Map;
 import org.as2lib.data.type.Byte;
 import org.as2lib.data.type.Time;
@@ -28,19 +27,31 @@ import org.as2lib.io.file.FileNotLoadedException;
 import org.as2lib.io.file.SwfFile;
 
 /**
- * {@code SwfFileLoader} is a implementation of {@link FileLoader} to load
- * files with {@code loadMovie} (usually {@code .swf} files}.
- * 
- * <p>Any content to be loaded with {@code MovieClip#loadMovie} can be load with
- * {@code SwfLoader} to a concrete {@code MovieClip} instance that has to be
- * passed-in with the constructor.
- * 
- * <p>{@code SwfLoader} represents the time consuming part of accessing external
- * {@code .swf}' ({@code SwfFile} is the handleable part} and therefore
- * contains a event system to add listeners to listen to the concrete events.
- * It is possible to add listeners using {@code addListener}.
- * 
- * <p>Example listener:
+ * {@code SwfFileLoader} loads SWF, JPEG, GIF or PNG files with {@code loadMovie}.
+ * Support for unanimated GIF files, PNG files, and progressive JPEG files is added
+ * in Flash Player 8. If you load an animated GIF, only the first frame is displayed.
+ *
+ * <p>The SWF or image files are loaded to a target movieclip which gets replaced by
+ * the loaded file.
+ *
+ * <p>A swf file loader loads files asynchronously. It is therefore necessary to
+ * register listeners at a swf file loader to be notified when loading starts,
+ * progresses, completes or when an error occurred:
+ *
+ * <ul>
+ *   <li>{@link LoadStartListener}</li>
+ *   <li>{@link LoadProgressListener}</li>
+ *   <li>{@link LoadErrorListener}</li>
+ *   <li>{@link LoadCompleteListener}</li>
+ * </ul>
+ *
+ * <p>The listener interfaces can be implemented by listener classes whose instances
+ * can be added through the {@link #addListener} method to a swf file loader. The
+ * listener is notified when an event corresponding to an implemented listener interface
+ * occurs.
+ *
+ * <p>Listener example:
+ *
  * <code>
  *   import org.as2lib.io.file.AbstractFileLoader;
  *   import org.as2lib.io.file.LoadProgressListener;
@@ -49,129 +60,120 @@ import org.as2lib.io.file.SwfFile;
  *   import org.as2lib.io.file.LoadErrorListener;
  *   import org.as2lib.io.file.FileLoader;
  *   import org.as2lib.io.file.SwfFile;
- *   
- *   class MySwfListener implements 
- *        LoadProgressListener, LoadStartListener,
- *        LoadCompleteListener, LoadErrorListener {
- *        
- *     public function onLoadComplete(fileLoader:FileLoader):Void {
- *       var swf:SwfFile = SwfFile(fileLoader.getFile());
- *       if (swf != null) {
- *         // Proper swf available
- *       } else {
- *         // Wrong event handled
+ *
+ *   class MySwfListener implements LoadProgressListener, LoadStartListener,
+ *           LoadCompleteListener, LoadErrorListener {
+ *
+ *       public function onLoadStart(fileLoader:FileLoader):Void {
+ *           trace("Started loading '" + fileLoader.getFile().getLocation() + "'.");
  *       }
- *     }
- *     
- *     public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean {
- *       if (errorCode == AbstractFileLoader.FILE_NOT_FOUND) {
- *         var notExistantUrl = error;
- *         // Use that url
+ *
+ *       public function onLoadProgress(fileLoader:FileLoader):Void {
+ *           trace("Loading progress: " + fileLoader.getPercentage());
  *       }
- *       return false;
- *     }
- *     
- *     public function onLoadStart(fileLoader:FileLoader):Void {
- *       // show that this file just gets loaded
- *     }
- *     
- *     public function onLoadProgress(fileLoader:FileLoader):Void {
- *       // update the percentage display with fileLoader.getPercentage();
- *     }
+ *
+ *       public function onLoadComplete(fileLoader:FileLoader):Void {
+ *           trace("Completed loading '" + fileLoader.getFile().getLocation() + "'.");
+ *           var swfFile:SwfFile = SwfFile(fileLoader.getFile());
+ *           if (swfFile != null) {
+ *               // Correct file type.
+ *           }
+ *           else {
+ *               // Illegal file type.
+ *           }
+ *       }
+ *
+ *       public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean {
+ *           if (errorCode == AbstractFileLoader.FILE_NOT_FOUND) {
+ *               trace("File '" + fileLoader.getFile().getLocation() + "' does not exist.");
+ *           }
+ *           // Handle further error codes.
+ *           return false;
+ *       }
+ *
  *   }
  * </code>
- * 
- * <p>Example of the usage:
+ *
+ * <p>Usage example:
+ *
  * <code>
  *   import org.as2lib.io.file.SwfFileLoader;
- *   
+ *
  *   var container:MovieClip = this.createEmptyMovieClip("container", 1);
  *   var swfLoader:SwfFileLoader = new SwfFileLoader(container);
  *   swfLoader.addListener(new MySwfListener());
  *   swfLoader.load("test.swf");
  * </code>
- * 
+ *
  * @author Martin Heidegger
- * @version 1.1
+ * @author Simon Wacker
+ * @version 2.0
  */
-class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
-	implements FileLoader, FrameImpulseListener {
-	
-	/** Time until the method breaks with "File not found". */
+class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader implements
+		FileLoader, FrameImpulseListener {
+
+	/** Time until the loading process fails with "file not found" error. */
 	public static var TIMEOUT:Time = new Time(3000);
-	
+
 	/** Movie clip to load the file into. */
 	private var movieClip:MovieClip;
-	
+
 	/** The loaded swf file. */
 	private var swfFile:SwfFile;
-	
-    /** Holding former file size for progress event */
-    private var formerLoaded:Number;
-	
+
+    /** The previous loaded bytes. Updated on every frame impulse. */
+    private var previousLoadedBytes:Number;
+
 	/**
 	 * Constructs a new {@code SwfFileLoader} instance.
-	 * 
+	 *
 	 * @param movieClip the movie clip to load the file into
 	 */
 	public function SwfFileLoader(movieClip:MovieClip) {
 		this.movieClip = movieClip;
 	}
-	
+
 	/**
 	 * Sets the movie clip to load the file into.
-	 * 
+	 *
 	 * @param movieClip the movie clip to load the file into
 	 */
 	public function setMovieClip(movieClip:MovieClip):Void {
 		this.movieClip = movieClip;
 	}
-	
-	/**
-	 * Loads a certain {@code .swf} by a http request.
-	 * 
-	 * <p>It sends http request by using the passed-in {@code uri}, {@code method}
-	 * and {@code parameters} with {@code .loadMovie}. 
-	 * 
-	 * <p>If you only need to listen if the {@code SwfFile} finished loading
-	 * you can apply a {@code callBack} that gets called if the {@code File} is loaded.
-	 * 
-	 * @param uri location of the file to load
-	 * @param parameters (optional) parameters for loading the file
-	 * @param method (optional) POST/GET as method for submitting the parameters,
-	 *        default method used if {@code method} was not passed-in is POST.
-	 * @param callBack (optional) {@link Executable} to be executed after the
-	 *        the file was loaded.
-	 */
-	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
-		super.load(uri, method, parameters, callBack);
+
+	public function load(uri:String, method:String, parameters:Map, callback:Executable):Void {
+		super.load(uri, method, parameters, callback);
 		swfFile = null;
 		endTime = null;
-		if(parameters) {
-			var keys:Iterator = parameters.keyIterator();
-			while (keys.hasNext()) {
-				var key = keys.next();
+		if (parameters != null) {
+			var keys:Array = parameters.getKeys();
+			for (var i:Number = 0; i < keys.length; i++) {
+				var key = keys[i];
 				movieClip[key.toString()] = parameters.get(key);
 			}
 		}
-		movieClip.loadMovie(uri, method);
-		sendStartEvent();
+		movieClip.loadMovie(uri, this.method);
+		distributeStartEvent();
 		FrameImpulse.getInstance().addFrameImpulseListener(this);
 	}
-	
+
 	/**
 	 * Returns the loaded file.
-	 * 
-	 * @return file that has been loaded
+	 *
+	 * <p>The returned file can be safely casted to {@link SwfFile}.
+	 *
+	 * @return the loaded file
 	 * @throws FileNotLoadedException if the file has not been loaded yet
+	 * @see #getSwfFile
 	 */
 	public function getFile(Void):File {
 		return getSwfFile();
 	}
-	
+
 	/**
 	 * Returns the loaded swf file.
-	 * 
+	 *
 	 * @return the loaded swf file
 	 * @throws FileNotLoadedException if the swf file has not been loaded yet
 	 */
@@ -181,14 +183,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 		}
 		return swfFile;
 	}
-	
-	/**
-	 * Returns the total amount of bytes that has been loaded.
-	 * 
-	 * <p>Returns {@code null} if its not possible to get the loaded bytes.
-	 * 
-	 * @return amount of bytes that has been loaded
-	 */
+
 	public function getBytesLoaded(Void):Byte {
 		var result:Number = movieClip.getBytesLoaded();
 		if (result >= 0) {
@@ -196,14 +191,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 		}
 		return null;
 	}
-	
-	/**
-	 * Returns the total amount of bytes that will approximately be loaded.
-	 * 
-	 * <p>Returns {@code null} if its not possible to get the total amount of bytes.
-	 * 
-	 * @return amount of bytes to load
-	 */
+
 	public function getBytesTotal(Void):Byte {
 		var total:Number = movieClip.getBytesTotal();
 		if (total >= 0) {
@@ -211,86 +199,87 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Handles a {@code frame} execution.
-	 * 
-	 * <p>Helper that checks every frame if the {@code .swf} finished loading.
-	 * 
-	 * @param impulse {@code FrameImpulse} that sent the event
+	 * Handles the next frame impulse by checking whether the SWF finished loading
+	 * or whether loading timed-out.
 	 */
 	public function onFrameImpulse(impulse:FrameImpulse):Void {
-		if (checkFinished()) {
-			successLoading();
-			return;
+		if (hasFinished()) {
+			onLoadSuccess();
 		}
-		if (checkTimeout()) {
-			failLoading();
+		else if (hasTimedOut()) {
+			onLoadFailure();
 		}
 	}
-	
+
 	/**
-	 * Checks if the {@code .swf} finished loading.
-	 * 
-	 * @return {@code true} if the {@code .swf} finished loading
+	 * Has the SWF file finished loading?
+	 *
+	 * @return {@code true} if the SWF file finished loading else {@code false}
 	 */
-    private function checkFinished():Boolean {
-            movieClip = eval("" + movieClip._target);
-            var total:Number = movieClip.getBytesTotal();
-            var loaded:Number = movieClip.getBytesLoaded();
-            if (total > 10 && total - loaded < 10) {
-                    formerLoaded = loaded;
-                    return true;
-            }
-            if (loaded != formerLoaded) {
-                if (loaded > 0) {
-                    sendProgressEvent();
-                }
-                formerLoaded = loaded;
-            }
-            return false;
-    }	
+    private function hasFinished(Void):Boolean {
+		movieClip = eval(movieClip._target);
+		var totalBytes:Number = movieClip.getBytesTotal();
+		var loadedBytes:Number = movieClip.getBytesLoaded();
+		if (totalBytes > 10 && totalBytes - loadedBytes < 10) {
+			previousLoadedBytes = loadedBytes;
+			return true;
+		}
+		if (loadedBytes != previousLoadedBytes) {
+			if (loadedBytes > 0) {
+				distributeProgressEvent();
+			}
+			previousLoadedBytes = loadedBytes;
+		}
+		return false;
+	}
+
 	/**
-	 * Checks if the {@code TIMEOUT} has been exceeded by the durating.
-	 * 
-	 * @return {@code true} if the duration exceeded the {@code TIMEOUT} value
+	 * Has the loading process timed-out?
+	 *
+	 * @return {@code true} if the duration exceeded the {@link TIMEOUT} and no bytes
+	 * have been loaded yet, else {@code false}
 	 */
-	private function checkTimeout():Boolean {
+	private function hasTimedOut():Boolean {
 		if (movieClip.getBytesTotal() > 10) {
 			return false;
 		}
-		return (getDuration().valueOf() > TIMEOUT);
+		return (getDuration().inMilliSeconds() > TIMEOUT);
 	}
-	
+
 	/**
-	 * Handles if the loading of file was successful.
+	 * Tears this loader down, creates the swf file and distributes the complete event.
+	 *
+	 * @see #tearDown
 	 */
-	private function successLoading(Void):Void {
-		finished = true;
-		started = false;
+	private function onLoadSuccess(Void):Void {
+		tearDown();
 		swfFile = new SwfFile(movieClip, uri, getBytesTotal());
-		endTime = getTimer();
-		sendCompleteEvent();
-		tearDown();
+		distributeCompleteEvent();
 	}
-	
+
 	/**
-	 * Handles if the loading of the file failed.
+	 * Tears this loader down and distributes a "file not found" error event.
+	 *
+	 * @see #tearDown
+	 * @see #FILE_NOT_FOUND_ERROR
 	 */
-	private function failLoading(Void):Void {
-		finished = true;
-		started = false;
-		endTime = getTimer();
-		sendErrorEvent(FILE_NOT_FOUND_ERROR, uri);
+	private function onLoadFailure(Void):Void {
 		tearDown();
+		distributeErrorEvent(FILE_NOT_FOUND_ERROR, uri);
 	}
-	
+
 	/**
-	 * Removes instance from listening to {@code FrameImpulse}.
-	 * 
+	 * Sets {@code finished} to {@code true}, {@code started} to {@code false},
+	 * initializes the end time and removes this loader as frame impulse listener.
+	 *
 	 * @see #onFrameImpulse
 	 */
 	private function tearDown(Void):Void {
+		finished = true;
+		started = false;
+		endTime = getTimer();
 		FrameImpulse.getInstance().removeListener(this);
 	}
 
