@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,35 +14,45 @@
  * limitations under the License.
  */
 
-import org.as2lib.io.file.TextFileFactory;
-import org.as2lib.io.file.TextFile;
-import org.as2lib.io.file.File;
-import org.as2lib.data.type.Byte;
-import org.as2lib.data.holder.Iterator;
-import org.as2lib.data.holder.Map;
-import org.as2lib.env.except.IllegalArgumentException;
-import org.as2lib.io.file.FileLoader;
-import org.as2lib.io.file.AbstractFileLoader;
-import org.as2lib.io.file.SimpleTextFileFactory;
-import org.as2lib.io.file.FileNotLoadedException;
 import org.as2lib.app.exec.Executable;
+import org.as2lib.data.holder.Map;
+import org.as2lib.data.type.Byte;
+import org.as2lib.io.file.AbstractFileLoader;
+import org.as2lib.io.file.File;
+import org.as2lib.io.file.FileLoader;
+import org.as2lib.io.file.FileNotLoadedException;
+import org.as2lib.io.file.SimpleTextFileFactory;
+import org.as2lib.io.file.TextFile;
+import org.as2lib.io.file.TextFileFactory;
 
 /**
- * {@code TextFileLoader} is a implementation of {@link FileLoader} for text resources.
- * 
- * <p>Any ASCII/Unicode readable resource is ment as "Text resource". {@code TextFileLoader}
- * is a implementation for those resources and generates a {@code TextFile}
- * implementation with the loaded content.
- * 
- * <p>{@link TextFileFactory} allows to generate different {@code TextFile}
- * implementations for the loaded content.
- * 
- * <p>{@code TextFileLoader} represents the time consuming part of accessing files
- * ({@code TextFile} is the handleable part} and therefore contains a event system
- * to add listeners to listen to the concrete events. It is possible to add
- * listeners using {@code addListener}.
- * 
- * <p>Example listener:
+ * {@code TextFileLoader} loads any kind of text files. This may be simple text
+ * files, xml files, properties files etc. Text files are human readable files
+ * in ASCII or Unicode.
+ *
+ * <p>A text file loader can be configured with a {@link TextFileFactory} of your
+ * choice. If you load for example an XML file you can configure it with a
+ * {@link XmlFileFactory} to get an {@link XmlFile} instance from the {@link #getFile}
+ * method (or you may use the {@link XmlFileLoader}).
+ *
+ * <p>A text file loader loads files asynchronously. It is therefore necessary to
+ * register listeners at a text file loader to be notified when loading starts,
+ * progresses, completes or when an error occurred:
+ *
+ * <ul>
+ *   <li>{@link LoadStartListener}</li>
+ *   <li>{@link LoadProgressListener}</li>
+ *   <li>{@link LoadErrorListener}</li>
+ *   <li>{@link LoadCompleteListener}</li>
+ * </ul>
+ *
+ * <p>The listener interfaces can be implemented by listener classes whose instances
+ * can be added through the {@link #addListener} method to a text file loader. The
+ * listener is notified when an event corresponding to an implemented listener interface
+ * occurs.
+ *
+ * <p>Listener example:
+ *
  * <code>
  *   import org.as2lib.io.file.AbstractFileLoader;
  *   import org.as2lib.io.file.LoadProgressListener;
@@ -51,230 +61,206 @@ import org.as2lib.app.exec.Executable;
  *   import org.as2lib.io.file.LoadErrorListener;
  *   import org.as2lib.io.file.FileLoader;
  *   import org.as2lib.io.file.TextFile;
- *   
- *   class MyFileListener implements 
- *        LoadProgressListener, LoadStartListener,
- *        LoadCompleteListener, LoadErrorListener {
- *        
- *     public function onLoadComplete(fileLoader:FileLoader):Void {
- *       var file:TextFile = TextFile(fileLoader.getFile());
- *       if (file != null) {
- *         // Proper file available
- *       } else {
- *         // Wrong event handled
+ *
+ *   class MyFileListener implements LoadProgressListener, LoadStartListener,
+ *           LoadCompleteListener, LoadErrorListener {
+ *
+ *       public function onLoadStart(fileLoader:FileLoader) {
+ *           trace("Started loading '" + fileLoader.getFile().getLocation() + "'.");
  *       }
- *     }
- *     
- *     public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Void {
- *       if (errorCode == AbstractFileLoader.FILE_NOT_FOUND) {
- *         var notExistantUrl = error;
- *         // Use that url
+ *
+ *       public function onLoadProgress(fileLoader:FileLoader) {
+ *           trace("Loading progress: " + fileLoader.getPercentage());
  *       }
- *     }
- *     
- *     public function onLoadStart(fileLoader:FileLoader) {
- *       // show that this file just gets loaded
- *     }
- *     
- *     public function onLoadProgress(fileLoader:FileLoader) {
- *       // update the percentage display with resourceLoader.getPercentage();
- *     }
+ *
+ *       public function onLoadComplete(fileLoader:FileLoader):Void {
+ *           trace("Completed loading '" + fileLoader.getFile().getLocation() + "'.");
+ *           var textFile:TextFile = TextFile(fileLoader.getFile());
+ *           if (textFile != null) {
+ *               // Correct file type.
+ *           }
+ *           else {
+ *               // Illegal file type.
+ *           }
+ *       }
+ *
+ *       public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Void {
+ *           if (errorCode == AbstractFileLoader.FILE_NOT_FOUND) {
+ *               trace("File '" + fileLoader.getFile().getLocation() + "' does not exist.");
+ *           }
+ *           // Handle further error codes.
+ *           return false;
+ *       }
+ *
  *   }
  * </code>
- * 
- * <p>Example of the usage:
+ *
+ * <p>Usage example:
+ *
  * <code>
  *   import org.as2lib.io.file.TextFileLoader;
- *   
+ *
  *   var fileLoader:TextFileLoader = new TextFileLoader();
  *   fileLoader.addListener(new MyFileListener());
  *   fileLoader.load("test.txt");
  * </code>
- * 
+ *
  * @author Martin Heidegger
- * @version 1.1
+ * @author Simon Wacker
+ * @version 2.0
  */
-class org.as2lib.io.file.TextFileLoader extends AbstractFileLoader implements FileLoader {
-	
-	/** {@code LoadVars} instance for loading the content. */
-	private var helper:LoadVars;
-	
-	/** Result of the loaded {@code uri}. */
+class org.as2lib.io.file.TextFileLoader extends AbstractFileLoader implements
+		FileLoader {
+
+	/** Load vars for loading the text file. */
+	private var loadVars:LoadVars;
+
+	/** The loaded text file. */
 	private var textFile:TextFile;
-	
-	/** Factory to create the concrete {@code TextFile} instances. */
+
+	/** The factory to create {@code TextFile} instances. */
 	private var textFileFactory:TextFileFactory;
-	
+
 	/**
-	 * Constructs a new {@code TextFileLoader}.
-	 * 
-	 * @param textFileFactory (optional) {@code TextFileFactory to create the
-	 *        {@code TextFile} implementations, {@link SimpleTextFileFactory}
-	 *        gets used if no custom {@code TextFileFactory} gets passed-in
+	 * Constructs a new {@code TextFileLoader} instance.
+	 *
+	 * @param textFileFactory (optional) the text file factory to create text file
+	 * instances; {@link SimpleTextFileFactory} is used if no custom text file factory
+	 * is supplied
 	 */
 	public function TextFileLoader(textFileFactory:TextFileFactory) {
-		if (!textFileFactory) {
+		if (textFileFactory == null) {
 			textFileFactory = new SimpleTextFileFactory();
 		}
 		this.textFileFactory = textFileFactory;
 	}
-	
-	/**
-	 * Loads a certain text file by a http request.
-	 * 
-	 * <p>It sends http request by using the passed-in {@code uri}, {@code method}
-	 * and {@code parameters}. The responding file will be passed to the set
-	 * {@code TextFileFactory}.
-	 * 
-	 * <p>If you only need to listen if the {@code TextFile} finished loading you can
-	 * apply a {@code callBack} that gets called if the {@code TextFile} is loaded.
-	 * 
-	 * @param uri location of the resource to load
-	 * @param parameters (optional) parameters for loading the resource
-	 * @param method (optional) POST/GET as method for submitting the parameters,
-	 *        default method used if {@code method} was not passed-in is POST.
-	 * @param callBack (optional) {@link Executable} to be executed after the
-	 *        the resource was loaded.
-	 */
-	public function load(uri:String, method:String, parameters:Map, callBack:Executable):Void {
-		super.load(uri, method, parameters, callBack);
-		initHelper();
-		if (uri == null) {
-			throw new IllegalArgumentException("Url has to be set for starting the process.", this, arguments);
-		} else {
-			if (parameters) {
-				if (method == "POST") {
-					var keys:Iterator = parameters.keyIterator();
-					while (keys.hasNext()) {
-						var key = keys.next();
-						helper[key.toString()] = parameters.get(key);
-					}
-					helper["sendAndLoad"](uri, this, method);
-				} else {
-					var result:String = uri;
-					if (uri.indexOf("?") == -1) {
-						result += "?";
-					}
-					var keys:Iterator = parameters.keyIterator();
-					while (keys.hasNext()) {
-						var key = keys.next();
-						uri += _global.encode(key.toString()) + "=" + _global.encode(parameters.get(key).toString());
-					}
-					helper.load(uri);
+
+	public function load(uri:String, method:String, parameters:Map, callback:Executable):Void {
+		super.load(uri, method, parameters, callback);
+		initLoadVars();
+		if (parameters != null && parameters.size() > 0) {
+			if (this.method == "POST") {
+				var keys:Array = parameters.getKeys();
+				for (var i:Number = 0; i < keys.length; i++) {
+					var key = keys[i];
+					loadVars[key.toString()] = parameters.get(key);
 				}
-			} else {
-				helper.load(uri);
+				loadVars["sendAndLoad"](uri, this, this.method);
 			}
-			sendStartEvent();
+			else {
+				var result:String = uri;
+				if (uri.indexOf("?") == -1) {
+					result += "?";
+				}
+				var keys:Array = parameters.getKeys();
+				for (var i:Number = 0; i < keys.length; i++) {
+					var key = keys[i];
+					uri += _global.encode(key.toString()) + "=" +
+							_global.encode(parameters.get(key).toString());
+				}
+				loadVars.load(uri);
+			}
 		}
+		else {
+			loadVars.load(uri);
+		}
+		distributeStartEvent();
 	}
-	
+
 	/**
-	 * Returns the loaded {@code File}.
-	 * 
-	 * @return {@code File} that has been loaded
-	 * @throws FileNotLoadedException if the resource has not been loaded yet
+	 * Returns the loaded file.
+	 *
+	 * <p>The returned file can be safely casted to {@link TextFile}.
+	 *
+	 * @return the loaded file
+	 * @throws org.as2lib.io.file.FileNotLoadedException if the file has not been
+	 * loaded yet
+	 * @see #getTextFile
 	 */
 	public function getFile(Void):File {
 		return getTextFile();
 	}
-	
+
 	/**
-	 * Returns the loaded {@code TextFile}.
-	 * 
-	 * @return {@code TextFile} that has been loaded
+	 * Returns the loaded text file.
+	 *
+	 * @return the loaded text file
 	 * @throws FileNotLoadedException if the resource has not been loaded yet
 	 */
 	public function getTextFile(Void):TextFile {
 		if (textFile == null) {
-			throw new FileNotLoadedException("No File has been loaded.", this, arguments);
+			throw new FileNotLoadedException("Text file has not been loaded yet.",
+					this, arguments);
 		}
 		return textFile;
 	}
-	
+
 	/**
-	 * Prepares the helper property {@link helper} for the loading process.
+	 * Initializes the load vars helper.
 	 */
-	private function initHelper(Void):Void {
+	private function initLoadVars(Void):Void {
 		var owner:TextFileLoader = this;
-		helper = new LoadVars();
+		loadVars = new LoadVars();
 		// Watching _bytesLoaded allows realtime events
-		helper.watch(
-			"_bytesLoaded",
+		loadVars.watch("_bytesLoaded",
 			function(prop, oldValue, newValue) {
 				// Prevent useless events.
-				if(newValue != oldValue && newValue > 0) {
-					owner["handleUpdateEvent"]();
+				if (newValue != oldValue && newValue > 0) {
+					owner["onUpdate"]();
 				}
 				return newValue;
 			}
 		);
-		
 		// Using LoadVars Template to get the onData Event.
-		helper.onData = function(data) {
-			owner["handleDataEvent"](data);
+		loadVars.onData = function(data) {
+			owner["onData"](data);
 		};
 	}
-	
-	/**
-	 * Returns the total amount of bytes that has been loaded.
-	 * 
-	 * <p>Returns {@code null} if its not possible to get the loaded bytes.
-	 * 
-	 * @return amount of bytes that has been loaded
-	 */
+
 	public function getBytesLoaded(Void):Byte {
-		var result:Number = helper.getBytesLoaded();
+		var result:Number = loadVars.getBytesLoaded();
 		if (result >= 0) {
 			return new Byte(result);
 		}
 		return null;
 	}
-	
-	/**
-	 * Returns the total amount of bytes that will approximately be loaded.
-	 * 
-	 * <p>Returns {@code null} if its not possible to get the total amount of bytes.
-	 * 
-	 * @return amount of bytes to load
-	 */
+
 	public function getBytesTotal(Void):Byte {
-		var total:Number = helper.getBytesTotal();
+		var total:Number = loadVars.getBytesTotal();
 		if (total >= 0) {
 			return new Byte(total);
 		}
 		return null;
 	}
-	
+
 	/**
-	 * Handles a update event from the helper.
-	 * 
-	 * @see #initHelper
+	 * Distributes a progress event.
 	 */
-	private function handleUpdateEvent(Void):Void {
-		sendProgressEvent();
+	private function onUpdate(Void):Void {
+		distributeProgressEvent();
 	}
-	
+
 	/**
-	 * Handles a data event from the helper.
-	 * 
-	 * @see #initHelper
+	 * Finishes loading by setting {@code finished} to {@code true}, {@code started}
+	 * to {@code false}, storing the end time, resetting the load vars helper,
+	 * distributing an error event if {@code data} is {@code null} or {@code undefined},
+	 * and creating a text file and distributing a complete event otherwise.
+	 *
+	 * @param data the loaded data
 	 */
-	private function handleDataEvent(data:String):Void {
+	private function onData(data:String):Void {
 		finished = true;
 		started = false;
 		endTime = getTimer();
-		helper.onLoad = function() {};
-		helper.unwatch("_bytesLoaded");
-		// Check if the file was not available.
-		if(typeof data == "undefined") {
-			// Dispatching the event for the missing uri.
-			sendErrorEvent(FILE_NOT_FOUND_ERROR, uri);
-		} else {
-			// Correct replacing of special line breaks that don't match the "\n" (Windows & Mac Line Breaks).
+		loadVars.onLoad = null;
+		loadVars.unwatch("_bytesLoaded");
+		if (typeof(data) == "undefined") {
+			distributeErrorEvent(FILE_NOT_FOUND_ERROR, uri);
+		}
+		else {
 			textFile = textFileFactory.createTextFile(data, getBytesTotal(), uri);
-			// Dispatching the event for the loaded file.
-			sendCompleteEvent();
+			distributeCompleteEvent();
 		}
 	}
+
 }

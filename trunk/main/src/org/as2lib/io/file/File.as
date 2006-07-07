@@ -18,33 +18,34 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.data.type.Byte;
 
 /**
- * {@code File} represents any file.
+ * {@code File} represents a loaded file with a location and a size.
  *
- * <p>Any {@code File} has to have a location and a size.
- *
- * <p>{@link FileLoader} contains the functionality to load a certain
- * file.
+ * <p>{@link FileLoader} instances are responsible for loading files.
  *
  * @author Martin Heidegger
+ * @author Simon Wacker
  * @version 1.0
  */
 interface org.as2lib.io.file.File extends BasicInterface {
 
 	/**
-	 * Returns the location of the {@code File} corresponding to the content.
+	 * Returns the location of this file that was used to load this file's content.
 	 *
-	 * <p>Note: Might be the URI of the resource or null if its not requestable
-	 * or the internal location corresponding to the instance path (if its without
-	 * any connection to a real file).
+	 * <p>Note: Might be the URI of this file or {@code null} if it is not requestable
+	 * or the internal location that is the instance path (if this file is not
+	 * connected to a real file in a file system). Refer to the documentation of the
+	 * implementing class for detailed information on which kind of location is
+	 * returned.
 	 *
-	 * @return location of the resource related to the content
+	 * @return the location of this file
 	 */
 	public function getLocation(Void):String;
 
 	/**
-	 * Returns the size of the {@code File} in bytes.
+	 * Returns the size of this file in bytes.
 	 *
-	 * @return size of the {@code File} in bytes
+	 * @return the size of this file in bytes
 	 */
 	public function getSize(Void):Byte;
+
 }
