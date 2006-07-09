@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,37 +18,37 @@ import org.as2lib.data.holder.Properties;
 import org.as2lib.env.event.EventSupport;
 import org.as2lib.lang.Locale;
 import org.as2lib.lang.LocaleListener;
-import org.as2lib.lang.UnitedKingdomLocale;
+import org.as2lib.lang.UnitedStatesLocale;
 
 /**
  * {@code LocaleManager} manages multiple locales.
- * 
+ *
  * <p>It provides an access method {@link #getInstance} that returns always the
  * same shared instance.
- * 
+ *
  * <p>A locale manager allows you to add supported locales and to specify a default
  * locale that will be used if the locale for the operating system (the target locale)
  * the player is running on does not exist (is not supported). You may also add
  * a {@link LocaleListener} that notifies you of target locale changes, to update
  * for example the texts in your application.
- * 
+ *
  * <p>The locale manager is itself a locale, that delegates all locale specific method
  * invocations to the target locale. That means that you can store a locale manager
  * instance as locale. You then always get messages etc. for the current target locale
  * without having to look whether is has changed.
- * 
+ *
  * @author Martin Heidegger
  * @author Simon Wacker
  */
 class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
-	
+
 	/** The locale manager singleton. */
 	private static var instance:LocaleManager;
-	
+
 	/**
 	 * Returns the singleton instance of this locale manager. This means that the
 	 * returned instance is always the same.
-	 * 
+	 *
 	 * @return the locale manager singleton
 	 */
 	public static function getInstance(Void):LocaleManager {
@@ -57,25 +57,25 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		}
 		return instance;
 	}
-	
+
 	/** All added locales. */
 	private var locales:Array;
-	
+
 	/** The language code of the default locale. */
 	private var defaultLanguageCode:String;
-	
+
 	/** The country code of the default locale. */
 	private var defaultCountryCode:String;
-	
+
 	/** The language code of the target locale. */
 	private var targetLanguageCode:String;
-	
+
 	/** The country code of the target locale. */
 	private var targetCountryCode:String;
-	
+
 	/**
 	 * Constructs a new {@code LocaleManager} instance.
-	 * 
+	 *
 	 * @param defaultLanguageCode the language code of the default locale
 	 * @param defaultCountryCode the country code of the default locale
 	 */
@@ -84,37 +84,37 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		setDefaultLocale(defaultLanguageCode, defaultCountryCode);
 		setTargetLocale(System.capabilities.language);
 	}
-	
+
 	public function getCode(Void):String {
 		return getTargetLocale().getCode();
 	}
-	
+
 	public function getLanguage(Void):String {
 		return getTargetLocale().getLanguage();
 	}
-	
+
 	public function getLanguageCode(Void):String {
 		return getTargetLocale().getLanguageCode();
 	}
-	
+
 	public function getCountry(Void):String {
 		return getTargetLocale().getCountry();
 	}
-	
+
 	public function getCountryCode(Void):String {
 		return getTargetLocale().getCountryCode();
 	}
-	
+
 	public function getSymbols(Void):Properties {
 		return getTargetLocale().getSymbols();
 	}
-	
+
 	/**
 	 * Looks a localized message for the given key or default key up by invoking
 	 * the {@code getMessage} method on the target locale. If the target locale has
 	 * no message for the given key or default key, the default locale is asked
 	 * for the message.
-	 * 
+	 *
 	 * @param key the key to get a message for
 	 * @param defaultKey the default key to use if there is no message for the given
 	 * key
@@ -133,21 +133,21 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns the target locale of this locale manager.
-	 * 
+	 *
 	 * <p>If no target language and country have been set, the target language will
 	 * be the language of the operating system the player is running on and the country
 	 * will not be specified.
-	 * 
+	 *
 	 * <p>If there is no locale for the target language (and country), the default
 	 * locale will be returned.
-	 * 
+	 *
 	 * <p>This method does never return {@code null}, even if no default locale was
 	 * specified, because the locale set for the english language or a {@link UnitedKingdomLocale}
 	 * instance will be returned then.
-	 * 
+	 *
 	 * @return the target locale
 	 * @see #getDefaultLocale
 	 */
@@ -161,13 +161,13 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Sets the target locale.
-	 * 
+	 *
 	 * <p>If the given target language and country codes differ from the currently set
 	 * codes a {@code onLocaleChange} will be triggered on all registered listeners.
-	 * 
+	 *
 	 * @param targetLanguageCode the language code of the new target locale
 	 * @param targetCountryCode the country code of the new target locale
 	 * @see #addListener
@@ -180,17 +180,17 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 			distributor.onLocaleChange(this);
 		}
 	}
-	
+
 	/**
 	 * Returns the default locale of this locale manager.
-	 * 
+	 *
 	 * <p>If there is no locale added for the default language and country codes,
 	 * the locale for the english language will be used. If this does not exist
 	 * either, a new {@link UnitedKingdomLocale} instance will be created and added
 	 * as locale.
-	 * 
+	 *
 	 * <p>This method does never return {@code null}.
-	 * 
+	 *
 	 * @return the default locale
 	 */
 	public function getDefaultLocale(Void):Locale {
@@ -204,17 +204,17 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 				// his dates and numbers with english date and number symbols.
 				if (locales["en"] == null) {
 					// English locale does not exist => add it.
-					addLocale(new UnitedKingdomLocale());
+					addLocale(new UnitedStatesLocale());
 				}
 				result = locales["en"];
 			}
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Sets the default locale.
-	 * 
+	 *
 	 * @param defaultLanguageCode the language code of the new default locale
 	 * @param defaultCountryCode the country code of the new default locale
 	 */
@@ -222,12 +222,12 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		this.defaultLanguageCode = defaultLanguageCode;
 		this.defaultCountryCode = defaultCountryCode;
 	}
-	
+
 	/**
 	 * Returns the locale for the given language and country codes. If there is no
 	 * locale for the combination of the two, the locale for the language code
 	 * will be returned.
-	 * 
+	 *
 	 * @param languageCode the language code to return the locale for
 	 * @param countryCode the country code to return the locale for
 	 * @return the locale for the given language and country codes combined or only
@@ -240,24 +240,24 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 		}
 		return result;
 	}
-	
+
 	/**
 	 * Returns all added locales.
-	 * 
+	 *
 	 * @return all added locales
 	 */
 	public function getLocales(Void):Array {
 		return locales.concat();
 	}
-	
+
 	/**
 	 * Adds the given locale to this locale manager.
-	 * 
+	 *
 	 * <p>The locale currently registered for the given language and country codes
 	 * combined will be overwritten, but the locale for just the language code will
 	 * be left unchanged. This means that regarding just the language code, the first
 	 * locale added has higher priority.
-	 * 
+	 *
 	 * @param locale the new locale to add
 	 */
 	public function addLocale(locale:Locale):Void {
@@ -270,10 +270,10 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 			locales[languageCode + countryCode] = locale;
 		}
 	}
-	
+
 	/**
 	 * Adds all {@code Locale} instances contained in the given locales array.
-	 * 
+	 *
 	 * @param locales the {@code Locale} instances to add
 	 */
 	public function addLocales(locales:Array):Void {
@@ -281,12 +281,12 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 			addLocale(Locale(locales[i]));
 		}
 	}
-	
+
 	/**
 	 * Removes the locale registered for the given language and country codes. If
 	 * there is another locale for the same language code, this other locale will be
 	 * made the "owner" of the language.
-	 * 
+	 *
 	 * @param languageCode the language code of the locale to remove
 	 * @param countryCode the country code of the locale to remove
 	 */
@@ -311,5 +311,5 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 			delete locales[languageCode + countryCode];
 		}
 	}
-	
+
 }
