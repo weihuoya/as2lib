@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -25,49 +25,49 @@ import org.as2lib.lang.NumberFormat;
  * @author Simon Wacker
  */
 class org.as2lib.lang.MessageFormat extends BasicClass {
-	
+
 	private var pattern:String;
 	private var tokens:Array;
 	private var locale:Locale;
 	private var dateFormat:DateFormat;
 	private var numberFormat:NumberFormat;
-	
+
 	public function MessageFormat(pattern:String, locale:Locale) {
 		applyPattern(pattern);
 		setLocale(locale);
 	}
-	
+
 	public function applyPattern(pattern:String):Void {
 		if (pattern != null) {
 			this.pattern = pattern;
 			tokens = getTokens(pattern);
 		}
 	}
-	
+
 	public function getLocale(Void):Locale {
 		return locale;
 	}
-	
+
 	public function setLocale(locale:Locale):Void {
 		this.locale = locale;
 	}
-	
+
 	public function getNumberFormat(Void):NumberFormat {
 		return numberFormat;
 	}
-	
+
 	public function setNumberFormat(numberFormat:NumberFormat):Void {
 		this.numberFormat = numberFormat;
 	}
-	
+
 	public function getDateFormat(Void):DateFormat {
 		return dateFormat;
 	}
-	
+
 	public function setDateFormat(dateFormat:DateFormat):Void {
 		this.dateFormat = dateFormat;
 	}
-	
+
 	public function format(args:Array, pattern:String, locale:Locale):String {
 		if (pattern == null) pattern = this.pattern;
 		if (locale == null) locale = this.locale;
@@ -133,7 +133,7 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 		}
 		return result;
 	}
-	
+
 	private function getTokens(string):Array {
 		var result:Array = new Array();
 		var tokenStart:Number = 0;
@@ -141,8 +141,15 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 		for (var i:Number = 0; i < string.length; i++) {
 			var c:String = string.charAt(i);
 			if (c == "'") {
-				if (string.charAt(i + 1) != "'") {
-					escape = true;
+				if (string.charAt(i + 1) == "'") {
+					result.push(string.substring(tokenStart, i + 1));
+					tokenStart = i + 2;
+					i++;
+				}
+				else {
+					escape = !escape;
+					result.push(string.substring(tokenStart, i));
+					tokenStart = i + 1;
 					if (i == string.length - 1) {
 						result.push(string.substring(tokenStart));
 					}
@@ -160,12 +167,11 @@ class org.as2lib.lang.MessageFormat extends BasicClass {
 					}
 					else if (i == string.length - 1) {
 						result.push(string.substring(tokenStart));
-					} 
+					}
 				}
-				escape = false;
 			}
 		}
 		return result;
 	}
-	
+
 }
