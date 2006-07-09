@@ -145,7 +145,7 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 	 * locale will be returned.
 	 *
 	 * <p>This method does never return {@code null}, even if no default locale was
-	 * specified, because the locale set for the english language or a {@link UnitedKingdomLocale}
+	 * specified, because the locale set for the english language or a {@link UnitedStatesLocale}
 	 * instance will be returned then.
 	 *
 	 * @return the target locale
@@ -186,7 +186,7 @@ class org.as2lib.lang.LocaleManager extends EventSupport implements Locale {
 	 *
 	 * <p>If there is no locale added for the default language and country codes,
 	 * the locale for the english language will be used. If this does not exist
-	 * either, a new {@link UnitedKingdomLocale} instance will be created and added
+	 * either, a new {@link UnitedStatesLocale} instance will be created and added
 	 * as locale.
 	 *
 	 * <p>This method does never return {@code null}.
