@@ -129,15 +129,16 @@ class org.as2lib.io.file.Loader extends EventSupport implements LoadStartListene
 	 * Loads the SWF file with the given URI into the movieclip.
 	 *
 	 * @param uri the location of the file to load
-	 * @param parameters (optional) parameters to use for loading the file
+	 * @param movieClip the movie clip to load the SWF into
 	 * @param method (optional) method to use for submitting the parameters; must be
 	 * either {@code "POST"} or {@code "GET"}; default is {@code "POST"}
+	 * @param parameters (optional) parameters to use for loading the file
 	 * @param callback (optional) the callback to execute when the file is loaded
 	 * completely; the callback is passed the returned file loader as argument
 	 * @return that swf file loader that loads the file
 	 */
-	public function loadSwf(uri:String, movieClip:MovieClip, parameters:Map,
-			method:String, callback:Executable):SwfFileLoader {
+	public function loadSwf(uri:String, movieClip:MovieClip, method:String,
+			parameters:Map, callback:Executable):SwfFileLoader {
 		var fileLoader:SwfFileLoader = new SwfFileLoader(movieClip);
 		fileLoader.addListener(this);
 		fileLoader.load(uri, method, parameters, callback);
@@ -148,9 +149,9 @@ class org.as2lib.io.file.Loader extends EventSupport implements LoadStartListene
 	 * Loads the text file with the given URI.
 	 *
 	 * @param uri the location of the file to load
-	 * @param parameters (optional) parameters to use for loading the file
 	 * @param method (optional) method to use for submitting the parameters; must be
 	 * either {@code "POST"} or {@code "GET"}; default is {@code "POST"}
+	 * @param parameters (optional) parameters to use for loading the file
 	 * @param callback (optional) the callback to execute when the file is loaded
 	 * completely; the callback is passed the returned file loader as argument
 	 * @return the text file loader that loads the file
