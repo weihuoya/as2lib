@@ -7,6 +7,8 @@
         <year value="2006">
         	<month value="7">
         		<day value="9">
+        			<entry type="change" package="org.as2lib.io.file" class="XmlFile">Use XmlParser instance to parse XML-formatted content. Parse lazily (only when requested).</entry>
+        			<entry type="add" package="org.as2lib.io.file" class="XmlParser">Parses XML-formatted strings and handles parse errors by throwing XmlParseExceptions.</entry>
         			<entry type="bugfix" package="org.as2lib.lang" class="MessageFormat" method="format">Fixed bugs with single quotes. They weren't handled properly.</entry>
         		</day>
         		<day value="7">

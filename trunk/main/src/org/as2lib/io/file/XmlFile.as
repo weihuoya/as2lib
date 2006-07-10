@@ -16,6 +16,7 @@
 
 import org.as2lib.data.type.Byte;
 import org.as2lib.io.file.SimpleTextFile;
+import org.as2lib.io.file.XmlParser;
 
 /**
  * {@code XmlFile} represents an XML file.
@@ -29,6 +30,9 @@ class org.as2lib.io.file.XmlFile extends SimpleTextFile {
 	/** The data structure representation of this xml file. */
 	private var xml:XML;
 
+	/** Parses the XML-formatted content of this file. */
+	private var xmlParser:XmlParser;
+
 	/**
 	 * Constructs a new {@code XmlFile} instance.
 	 *
@@ -38,18 +42,37 @@ class org.as2lib.io.file.XmlFile extends SimpleTextFile {
 	 */
 	public function XmlFile(content:String, size:Byte, location:String) {
 		super(content, size, location);
-		xml = new XML();
-		xml.ignoreWhite = true;
-		// TODO Throw exception if parsing fails.
-		xml.parseXML(getContent());
 	}
 
 	/**
-	 * Returns the object-oriented representation of this XML file's content.
+	 * Returns the xml parser used to parse this file's XML-formatted string content.
+	 * If no xml parser was set manually a {@link XmlParser} instance will be returned.
+	 */
+	public function getXmlParser(Void):XmlParser {
+		if (xmlParser == null) {
+			xmlParser = new XmlParser();
+		}
+		return xmlParser;
+	}
+
+	/**
+	 * Sets the xml parser to use for parsing this file's XML-formatted string content.
+	 */
+	public function setXmlParser(xmlParser:XmlParser):Void {
+		this.xmlParser = xmlParser;
+	}
+
+	/**
+	 * Returns the object-oriented representation of this XML file's content. It is
+	 * generated with the set xml parser.
 	 *
 	 * @return the object-oriented representation of this XML file's content
+	 * @see #setXmlParser
 	 */
 	public function getXml(Void):XML {
+		if (xml == null) {
+			xml = getXmlParser().parse(getContent());
+		}
 		return xml;
 	}
 
