@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="7">
+        		<day value="10">
+        			<entry type="bugfix" package="org.as2lib.io.file" class="Loader" method="loadSwf">Changed parameter list to match the overload handlers in the load-method.</entry>
+        		</day>
         		<day value="9">
         			<entry type="change" package="org.as2lib.io.file" class="XmlFile">Use XmlParser instance to parse XML-formatted content. Parse lazily (only when requested).</entry>
         			<entry type="add" package="org.as2lib.io.file" class="XmlParser">Parses XML-formatted strings and handles parse errors by throwing XmlParseExceptions.</entry>
