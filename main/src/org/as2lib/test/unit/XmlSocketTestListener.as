@@ -123,17 +123,17 @@ class org.as2lib.test.unit.XmlSocketTestListener extends BasicClass implements
 		for (var i:Number = 0; i < testCaseResults.length; i++) {
 			var testCaseResult:TestCaseResult = testCaseResults[i];
 			if (testCaseResult.hasErrors()) {
-				socket.send(new XML("<error>" + testCaseResult.toString() + "</error>"));
+				socket.send(new XML("<error><![CDATA[" + testCaseResult.toString() + "]]></error>"));
 			}
 			else {
-				socket.send(new XML("<message>" + testCaseResult.toString() + "</message>"));
+				socket.send(new XML("<message><![CDATA[" + testCaseResult.toString() + "]]></message>"));
 			}
 		}
 		socket.send(new XML("<finish hasErrors='" + testResult.hasErrors() + "'/>"));
 	}
 
 	public function onProcessError(process:Process, error):Boolean {
-		socket.send(new XML("<error>Error was raised during test execution:\n" + error + "</error>"));
+		socket.send(new XML("<error><![CDATA[Error was raised during test execution:\n" + error + "]]></error>"));
 		return false;
 	}
 
