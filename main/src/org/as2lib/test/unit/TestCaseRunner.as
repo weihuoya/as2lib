@@ -21,10 +21,10 @@ import org.as2lib.data.holder.Queue;
 import org.as2lib.data.holder.queue.LinearQueue;
 import org.as2lib.env.reflect.ClassInfo;
 import org.as2lib.test.unit.ExecutionInfo;
-import org.as2lib.test.unit.info.ExecutionError;
 import org.as2lib.test.unit.info.InstantiationError;
 import org.as2lib.test.unit.info.SetUpError;
 import org.as2lib.test.unit.info.TearDownError;
+import org.as2lib.test.unit.info.TestMethodError;
 import org.as2lib.test.unit.TestCase;
 import org.as2lib.test.unit.TestCaseResult;
 import org.as2lib.test.unit.TestMethod;
@@ -235,7 +235,7 @@ class org.as2lib.test.unit.TestCaseRunner extends AbstractProcess implements
 				currentTestMethod.getMethodInfo().invoke(testCase, null);
 			}
 			catch (exception) {
-				fatal(new ExecutionError("Test method threw an unexpected exception:\n" +
+				fatal(new TestMethodError("Test method threw an unexpected exception:\n" +
 						StringUtil.addSpaceIndent(exception.toString(), 2), this, arguments));
 			}
 		}
