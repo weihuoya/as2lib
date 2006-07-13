@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
-<project name="As2ant - Swf, Swfmill, Mtasc and As2api Ant Tasks" basedir="." default="dist">
+<project name="As2ant - SWF Ant Tasks" basedir="." default="dist">
 
   <property name="src.dir" value="src"/>
   <property name="bin.dir" value="bin"/>
