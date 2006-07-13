@@ -6,6 +6,15 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="7">
+        		<day value="13">
+        			<entry type="change" package="org.as2lib.test.unit.info" class="ExecutionError"><change-rename to="TestMethodError"/></entry>
+        			<entry type="remove" package="org.as2lib.test.unit.info" class="PauseError"/>
+        			<entry type="change" package="org.as2lib.test.unit.info" class="FailureInfo">Moved to "org.as2lib.test.unit.Failure".</entry>
+        			<entry type="add" package="org.as2lib.test.unit" class="Error">Test errors.</entry>
+        			<entry type="add" package="org.as2lib.test.unit" class="Assertion">Extracted some methods from "AbstractExecutionInfo" to "Assertion".</entry>
+        			<entry type="change" package="org.as2lib.test.unit" class="AbstractAssertInfo"><change-rename to="AbstractExecutionInfo"/></entry>
+        			<entry type="change" package="org.as2lib.test.unit.info" class="Assert*Info"><change-rename to="*Assertion"/></entry>
+        		</day>
         		<day value="10">
         			<entry type="bugfix" package="org.as2lib.io.file" class="Loader" method="loadSwf">Changed parameter list to match the overload handlers in the load-method.</entry>
         		</day>
