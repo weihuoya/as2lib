@@ -1,12 +1,12 @@
 ﻿/**
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,30 +14,25 @@
  * limitations under the License.
  */
 
-import org.as2lib.test.unit.AbstractAssertInfo;
+import org.as2lib.test.unit.Error;
 
 /**
- * Failure to be appended if the pause was executed out of a testcase method.
- * 
- * @author Martin Heidegger.
+ * {@code SetUpError} represents an exception thrown by the {@code pause} method
+ * of a test case.
+ *
+ * @author Martin Heidegger
+ * @author Simon Wacker
+ * @TODO Delete this class. It is not used.
  */
-class org.as2lib.test.unit.info.PauseError extends AbstractAssertInfo {
-	
+class org.as2lib.test.unit.info.PauseError extends Error {
+
 	/**
-	 * Constructs a new PauseError.
-	 * 
-	 * @param message Message to the error.
+	 * Constructs a new {@code PauseError} instance.
+	 *
+	 * @param message the message describing this error
 	 */
 	public function PauseError(message:String) {
 		super(message);
 	}
-	
-	/**
-	 * Implementation of @see AbstractAssertInfo#getFailureMessage
-	 * 
-	 * @return Message on failure
-	 */
-	private function getFailureMessage(Void):String {
-		return message;
-	}
+
 }

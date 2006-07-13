@@ -1,12 +1,12 @@
 ﻿/**
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -14,30 +14,25 @@
  * limitations under the License.
  */
 
-import org.as2lib.test.unit.AbstractAssertInfo;
+import org.as2lib.test.unit.Error;
 
 /**
- * Failure to be appended if the execution of a testcase-method fails.
- * 
- * @author Martin Heidegger.
+ * {@code ExecutionError} represents an exception thrown by a {@code test*} method
+ * of a test case.
+ *
+ * @author Martin Heidegger
+ * @author Simon Wacker
+ * @TODO Rename to TestMethodError.
  */
-class org.as2lib.test.unit.info.ExecutionError extends AbstractAssertInfo {
-	
+class org.as2lib.test.unit.info.ExecutionError extends Error {
+
 	/**
-	 * Constructs a new ExecutionError.
-	 * 
-	 * @param message Message to the error.
+	 * Constructs a new {@code ExecutionError} instance.
+	 *
+	 * @param message the message describing this error
 	 */
 	public function ExecutionError(message:String) {
 		super(message);
 	}
-	
-	/**
-	 * Implementation of @see AbstractAssertInfo#getFailureMessage
-	 * 
-	 * @return Message on failure
-	 */
-	private function getFailureMessage(Void):String {
-		return message;
-	}
+
 }
