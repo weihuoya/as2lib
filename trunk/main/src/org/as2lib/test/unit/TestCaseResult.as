@@ -213,7 +213,7 @@ class org.as2lib.test.unit.TestCaseResult extends BasicClass implements TestResu
 				methodResult += "\n" + StringUtil.addSpaceIndent(method.toString(), 2);
 			}
 		}
-		result = getName() + " ran " + testMethods.length + " methods in [" + ms + "ms]: ";
+		result = getName() + " ran " + testMethods.length + " method(s) in [" + ms + "ms]: ";
 		result += (errors > 0) ? errors + ((errors > 1) ? " errors" : " error") +
 				" occurred" + methodResult : "no error occurred";
 		return result;
