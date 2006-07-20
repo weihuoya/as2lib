@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-import asunit.framework.TestCase;
+import org.as2lib.test.unit.TestCase;
 
 /**
  * @author Simon Wacker
