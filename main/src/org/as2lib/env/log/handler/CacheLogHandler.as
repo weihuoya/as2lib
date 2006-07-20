@@ -27,17 +27,31 @@ import org.as2lib.util.Stringifier;
  */
 class org.as2lib.env.log.handler.CacheLogHandler extends AbstractLogHandler implements LogHandler {
 
+	/** Maximum size of this cache. */
+	private var cacheSize:Number;
+
 	/** Cached {@code LogMessage} instances. */
 	private var messages:Array;
 
 	/**
 	 * Constructs a new {@code CacheLogHandler} instance.
 	 *
+	 * @param cacheSize the maximum size of this cache (maximum amount of messages to
+	 * cache); default is infinite (used when {@code cacheSize} is {@code null} or
+	 * {@code undefined}, or less than or equal to {@code 0})
 	 * @param messageStringifier the message stringifier to stringify messages with
 	 */
-	public function CacheLogHandler(messageStringifier:Stringifier) {
+	public function CacheLogHandler(cacheSize:Number, messageStringifier:Stringifier) {
 		super(messageStringifier);
+		this.cacheSize = cacheSize != null && cacheSize > 0 ? cacheSize : Infinity;
 		messages = new Array();
+	}
+
+	/**
+	 * Returns the maximum size of this cache (maximum amount of cached messages).
+	 */
+	public function getCacheSize(Void):Number {
+		return cacheSize;
 	}
 
 	/**
@@ -75,10 +89,14 @@ class org.as2lib.env.log.handler.CacheLogHandler extends AbstractLogHandler impl
 	}
 
 	/**
-	 * Adds the given message to the local cache.
+	 * Adds the given message to the local cache (removes the oldest message if the
+	 * local cache is full).
 	 */
 	public function write(message:LogMessage):Void {
 		messages.push(message);
+		if (messages.length > cacheSize) {
+			messages.shift();
+		}
 	}
 
 }
