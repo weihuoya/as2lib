@@ -18,8 +18,8 @@ import org.as2lib.test.unit.Assertion;
 import org.as2lib.util.StringUtil;
 
 /**
- * {@code InfinityAssertion} asserts that a given value is infinity. Represents
- * a {@code assertInfinity} call in a test case.
+ * {@code InfinityAssertion} asserts that a given value is infinite. Represents
+ * an {@code assertInfinity} call in a test case.
  *
  * @author Martin Heidegger
  * @author Simon Wacker
@@ -32,7 +32,7 @@ class org.as2lib.test.unit.info.InfinityAssertion extends Assertion {
 	 * Constructs a new {@code InfinityAssertion} instance.
 	 *
 	 * @param message the message describing this assertion
-	 * @param value the value that should be infinity
+	 * @param value the value that should be infinite
 	 */
 	public function InfinityAssertion(message:String, value:Number) {
 		super(message, "assertInfinity");

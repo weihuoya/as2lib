@@ -17,7 +17,7 @@
 import org.as2lib.test.unit.Assertion;
 
 /**
- * {@code NotInfinityAssertion} asserts that a given value is not infinity.
+ * {@code NotInfinityAssertion} asserts that a given value is not infinite.
  * Represents an {@code assertNotInfinity} call in a test case.
  *
  * @author Martin Heidegger
@@ -31,7 +31,7 @@ class org.as2lib.test.unit.info.NotInfinityAssertion extends Assertion {
 	 * Constructs a new {@code NotInfinityAssertion} assertion.
 	 *
 	 * @param message the message describing this assertion
-	 * @param value the value that should not be infinity
+	 * @param value the value that should not be infinite
 	 */
 	public function NotInfinityAssertion(message:String, value:Number) {
 		super(message, "assertNotInfinity");
