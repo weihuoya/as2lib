@@ -1,32 +1,7 @@
 ----------
-As2ant 2.1
+As2ant 2.5
 ----------
 
 
-[+] samples/swfsli
-    Added sample showing usage of swfsli task.
-
-[+] org.as2lib.ant.Swfsli
-    Added task for the SWF ScriptLimits Injector (http://buraks.com/swfsli).
-
-[!] org.as2lib.ant.Mtasc
-    Enabled usage of "no" for "trace" argument.
-
-[!] org.as2lib.ant.Swfmill
-    Removed watchdog for execution of swfmill. Watchdog aborted execution if it
-    took too long which caused troubles with big symbols (clips, fonts, includes).
-
-[+] samples/swfmill, samples/swf
-    Added samples showing usage of swfmill xml in-line.
-
-[+] samples/asunit
-    Added sample showing how to use AsUnit with the unit test task.
-
-[!] org.as2lib.test.unit.XmlSocketTestListener
-    Improved output: highlight only errors.
-
-[!] org.as2lib.test.unit.XmlSocketResultPrinter
-    Fixed bug with wrong value in attribute "hasErrors" of element "finish".
-
-[+] org.as2lib.ant.UnitTest
-    Added proper handling of exceptions and failed tests.
+[!] samples/as2lib unit test
+    Fixed wrong import: imported 'TestCase' class of AsUnit not As2lib.
