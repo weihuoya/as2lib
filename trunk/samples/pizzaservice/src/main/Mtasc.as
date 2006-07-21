@@ -31,8 +31,6 @@ import org.as2lib.env.log.parser.LogConfigurationProcess;
 import org.as2lib.env.log.parser.XmlLogConfigurationParser;
 import org.as2lib.util.StringUtil;
 
-import com.interactiveAlchemy.utils.Debug;
-
 /**
  * @author Simon Wacker
  */
@@ -55,7 +53,7 @@ class main.Mtasc extends BasicClass implements BatchStartListener, NextProcessLi
 	}
 
 	public function init(Void):Void {
-		Debug.write("Initializing.");
+		trace("Initializing.");
 		var batch:SimpleBatch = new SimpleBatch();
 		batch.addListener(this);
 		var logConfigurationProcess:LogConfigurationProcess =
