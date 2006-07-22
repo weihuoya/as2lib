@@ -22,6 +22,27 @@ import org.as2lib.test.perform.Profile;
  * {@link MethodProfiler method profilers} or {@link PropertyProfiler property
  * profilers}.
  *
+ * <p>Profilers can be used as follows:
+ *
+ * <code>
+ *   import org.as2lib.test.perform.Profiler;
+ *   import org.as2lib.test.perform.PackageProfiler;
+ *   import org.as2lib.test.perform.ProfileLayouter;
+ *   import org.as2lib.test.perform.layout.MethodInvocationTreeLayouter;
+ *
+ *   var profiler:Profiler = new PackageProfiler(_global.org.as2lib.context);
+ *   profiler.start();
+ *
+ *   // Create an application context and use it.
+ *
+ *   profiler.stop();
+ *
+ *   // Do some operations that shall not be profiled.
+ *
+ *   var layouter:ProfileLayouter = new MethodInvocationTreeLayouter();
+ *   trace(layouter.layOut(profiler.getProfile()));
+ * </code>
+ *
  * @author Simon Wacker
  */
 interface org.as2lib.test.perform.Profiler extends BasicInterface {
