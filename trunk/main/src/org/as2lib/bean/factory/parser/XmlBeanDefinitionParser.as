@@ -107,6 +107,7 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var FACTORY_BEAN_ATTRIBUTE:String = "factory-bean";
 	public static var INSTANTIATE_WITH_PROPERTY_ATTRIBUTE:String = "instantiate-with-property";
 	public static var STATIC_ATTRIBUTE:String = "static";
+	public static var STYLE_ATTRIBUTE:String = "style";
 
 	public static var CONSTRUCTOR_ARG_ELEMENT:String = "constructor-arg";
 	public static var CONSTRUCTOR_ARGS_ELEMENT:String = "constructor-args";
@@ -117,12 +118,11 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var REF_ATTRIBUTE:String = "ref";
 	public static var VALUE_ATTRIBUTE:String = "value";
 	public static var LOOKUP_METHOD_ELEMENT:String = "lookup-method";
+	public static var REPLACED_METHOD_ELEMENT:String = "replaced-method";
+	public static var REPLACER_ATTRIBUTE:String = "replacer";
 
 	public static var PACKAGE_TYPE_VALUE:String = "Package";
 	public static var CLASS_TYPE_VALUE:String = "Class";
-
-	public static var REPLACED_METHOD_ELEMENT:String = "replaced-method";
-	public static var REPLACER_ATTRIBUTE:String = "replacer";
 
 	public static var REF_ELEMENT:String = "ref";
 	public static var IDREF_ELEMENT:String = "idref";
@@ -139,14 +139,12 @@ class org.as2lib.bean.factory.parser.XmlBeanDefinitionParser extends BasicClass 
 	public static var KEY_ELEMENT:String = "key";
 	public static var KEY_ATTRIBUTE:String = "key";
 	public static var KEY_REF_ATTRIBUTE:String = "key-ref";
-	public static var VALUE_TYPE_ATTRIBUTE:String = "value-type";
 	public static var VALUE_REF_ATTRIBUTE:String = "value-ref";
 	public static var KEY_TYPE_ATTRIBUTE:String = "key-type";
+	public static var VALUE_TYPE_ATTRIBUTE:String = "value-type";
 	public static var PROPS_ELEMENT:String = "props";
 	public static var PROP_ELEMENT:String = "prop";
 	public static var MERGE_ATTRIBUTE:String = "merge";
-
-	public static var STYLE_ATTRIBUTE:String = "style";
 
 	/**
 	 * Separator for generated bean names. If a class name or parent name is not
