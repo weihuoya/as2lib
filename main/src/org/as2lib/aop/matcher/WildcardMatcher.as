@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,22 +21,35 @@ import org.as2lib.util.StringUtil;
 /**
  * {@code WildcardMatcher} matches a join point with a pattern that may contain
  * wildcards.
- * 
- * TODO: Add a list of supported wildcards and how they can be used.
- * 
+ *
+ * <ul>
+ *   <li>'*' indicates any number of characters excluding periods.</li>
+ *   <li>'..' indicates any number of charecters including periods.</li>
+ * </ul>
+ *
+ * <p>Example where join point matches pattern:
+ *
+ * <code>
+ *   import org.as2lib.aop.Matcher;
+ *   import org.as2lib.aop.matcher.WildcardMatcher;
+ *
+ *   var matcher:Matcher = new WildcardMatcher();
+ *   var isMatch:Boolean = matcher.match("org.as2lib.sample.filebrowser.view.ErrorView.draw", "org.as2lib.sample.filebrowser..*.draw*");
+ * </code>
+ *
  * @author Simon Wacker
  */
 class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Matcher {
-	
+
 	/**
 	 * Constructs a new {@code WildcardMatcher} instance.
 	 */
 	public function WildcardMatcher(Void) {
 	}
-	
+
 	/**
 	 * Checks if the passed {@code joinPoint} represented by a string matches the
-	 * given {@code pattern}. 
+	 * given {@code pattern}.
 	 *
 	 * <p>Supported wildcards are '*' and '..'.
 	 *
@@ -81,7 +94,7 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 		}
 		return wildcardMatch(joinPoint, pattern);
 	}
-	
+
 	private function wildcardMatch(jp:String, p:String):Boolean {
 		var a:Array = jp.split(".");
 		var b:Array = p.split(".");
@@ -126,7 +139,7 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 		if (a.length != b.length) return false;
 		return true;
 	}
-	
+
 	private static function matchString(s:String, p:String):Boolean {
 		if (p == "*") return true;
 		if (p.indexOf("*") > -1) {
@@ -152,5 +165,5 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 			return (s == p);
 		}
 	}
-	
+
 }
