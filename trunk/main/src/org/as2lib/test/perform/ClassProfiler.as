@@ -27,7 +27,6 @@ import org.as2lib.test.perform.PropertyProfiler;
  * its methods and its properties.
  *
  * @author Simon Wacker
- * @TODO Implement support for {@code profile*} methods. Similar to {@code test*} methods in As2lib Unit Test.
  */
 class org.as2lib.test.perform.ClassProfiler extends CompoundProfiler {
 
