@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,28 +24,28 @@ import org.as2lib.util.TrimUtil;
 /**
  * {@code ActionStepBeanDefinitionParser} is a user interface bean definition parser
  * for ActionStep.
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.parser.ActionStepBeanDefinitionParser extends UiBeanDefinitionParser {
-	
+
 	public static var DEFAULT_PROPERTY:String = "subview";
-	
+
 	public static var X_ATTRIBUTE:String = "x";
-	
+
 	public static var Y_ATTRIBUTE:String = "y";
-	
+
 	public static var WIDTH_ATTRIBUTE:String = "width";
-	
+
 	public static var HEIGHT_ATTRIBUTE:String = "height";
-	
+
 	public static var FRAME_PROPERTY_NAME:String = "withFrame";
-	
+
 	public static var RECTANGLE_CLASS_NAME:String = "org.actionstep.NSRect";
-	
+
 	/**
 	 * Constructs a new {@code XmlBeanDefinitionParser} instance.
-	 * 
+	 *
 	 * @param registry the registry to use if none is passed-to in the {@code parse}
 	 * method
 	 */
@@ -54,11 +54,11 @@ class org.as2lib.bean.factory.parser.ActionStepBeanDefinitionParser extends UiBe
 		setDefaultProperty(DEFAULT_PROPERTY);
 		var rectangleClass:Function = NSRect;
 	}
-	
+
 	private function convertAttributeToPropertyElement(attribute:String, element:XMLNode):Void {
 		if (attribute == X_ATTRIBUTE || attribute == Y_ATTRIBUTE ||
 				attribute == WIDTH_ATTRIBUTE || attribute == HEIGHT_ATTRIBUTE) {
-			// TODO: Why is this case still occurring although attributes x, y, width and height get deleted?
+			// Why is this case still occurring although attributes x, y, width and height get deleted?
 			if (element.attributes[attribute] != null) {
 				var property:XMLNode = createPropertyElement(FRAME_PROPERTY_NAME);
 				property.attributes[INDEX_ATTRIBUTE] = 0;
@@ -79,7 +79,7 @@ class org.as2lib.bean.factory.parser.ActionStepBeanDefinitionParser extends UiBe
 			super.convertAttributeToPropertyElement(attribute, element);
 		}
 	}
-	
+
 	private function createRectangleElement(x:String, y:String, width:String, height:String):XMLNode {
 		var result:XMLNode = new XMLNode(1, BEAN_ELEMENT);
 		result.attributes[CLASS_ATTRIBUTE] = RECTANGLE_CLASS_NAME;
@@ -89,7 +89,7 @@ class org.as2lib.bean.factory.parser.ActionStepBeanDefinitionParser extends UiBe
 		appendConstructorArgumentElement(result, height);
 		return result;
 	}
-	
+
 	private function appendConstructorArgumentElement(element:XMLNode, attribute:String):Void {
 		if (attribute == null) {
 			attribute = "0";
@@ -97,11 +97,11 @@ class org.as2lib.bean.factory.parser.ActionStepBeanDefinitionParser extends UiBe
 		var argument:XMLNode = createConstructorArgumentElement(attribute);
 		element.appendChild(argument);
 	}
-	
+
 	private function createConstructorArgumentElement(value:String):XMLNode {
 		var result:XMLNode = new XMLNode(1, CONSTRUCTOR_ARG_ELEMENT);
 		result.appendChild(new XMLNode(3, value));
 		return result;
 	}
-	
+
 }
