@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -36,57 +36,57 @@ import TextField.StyleSheet;
 /**
  * {@code CascadingStyleSheetParser} parses cascading style sheets and formats bean
  * definitions with the read styles.
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClass implements
 		StyleSheetParser {
-	
+
 	/** The delimiter to delimit multiple values. */
 	public static var VALUE_DELIMITER:String = ",";
-	
+
 	/** Separates the namespace from the class name. */
 	public static var NAMESPACE_SEPARATOR:String = "|";
-	
+
 	/** Separates the property name from the property value. */
 	public static var NAME_VALUE_SEPARATOR:String = "=";
-	
+
 	public static var NAMESPACE_SELECTOR:String = "@namespace";
-	
+
 	public static var CLASS_SELECTOR_PREFIX:String = ".";
 	public static var ID_SELECTOR_PREFIX:String = "#";
-	
+
 	public static var STATIC_VARIABLE_RETRIEVAL_PREFIX:String = "v[";
 	public static var STATIC_VARIABLE_RETRIEVAL_SUFFIX:String = "]";
-	
+
 	/**
 	 * Separator for generated bean names. If a class name is not unique, "#1", "#2"
 	 * etc. will be appended, until the name becomes unique.
 	 */
 	public static var GENERATED_BEAN_NAME_SEPARATOR:String = "#";
-	
+
 	private var factory:ConfigurableListableBeanFactory;
-	
+
 	private var defaultFactory:ConfigurableListableBeanFactory;
-	
+
 	private var styles:Array;
-	
+
 	private var namespaces;
-	
+
 	/**
 	 * Constructs a new {@code CascadingStyleSheetParser} instance.
-	 * 
+	 *
 	 * @param defaultFactory the default factory to use if none is passed-to the
 	 * {@code parse} method
 	 */
 	public function CascadingStyleSheetParser(defaultFactory:ConfigurableListableBeanFactory) {
 		this.defaultFactory = defaultFactory;
 	}
-	
+
 	/**
 	 * Parses the given cascading style sheet and formats the bean definitions
 	 * registered at the given or the default factory with the parsed styles.
-	 * 
+	 *
 	 * @param cascadingStyleSheet the cascading style sheet to parse
 	 * @param factory the factory containing the bean definitions to format
 	 * @throws IllegalArgumentException if neither {@code factory} has been specified
@@ -112,7 +112,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			applyStyleSheet(beanDefinition, beanName, new Array());
 		}
 	}
-	
+
 	private function parseStyleSheet(styleSheet:String):Void {
 		var sheet:StyleSheet = new StyleSheet();
 		var preparedStyleSheet:String = prepareStyleSheet(styleSheet);
@@ -135,7 +135,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			}
 		}
 	}
-	
+
 	private function prepareStyleSheet(styleSheet:String):String {
 		var result:String = "";
 		var openIndex:Number = styleSheet.indexOf("{");
@@ -154,7 +154,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return result;
 	}
-	
+
 	private function computeSpecificity(selectors:Array):Number {
 		var result:Number = 0;
 		for (var i:Number = 0; i < selectors.length; i++) {
@@ -172,7 +172,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return result;
 	}
-	
+
 	private function addStyle(selector:String, style:Object, specificity:Number):Void {
 		if (styles[selector] == null) {
 			styles[selector] = new Array();
@@ -190,7 +190,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			styles.push(style);
 		}
 	}
-	
+
 	private function applyStyleSheet(beanDefinition:BeanDefinition, beanName:String, parentBeanDefinitions:Array):Void {
 		if (beanName != null) {
 			applyIdStyles(beanDefinition, beanName, parentBeanDefinitions);
@@ -212,7 +212,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 				var rn:String = reference.getBeanName();
 				var rb:BeanDefinition;
 				if (reference.isToParent()) {
-					var parent:ConfigurableListableBeanFactory = 
+					var parent:ConfigurableListableBeanFactory =
 							ConfigurableListableBeanFactory(factory.getParentBeanFactory());
 					if (parent != null) {
 						rb = parent.getBeanDefinition(rn, true);
@@ -222,7 +222,6 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 					}
 				}
 				else {
-					// TODO Store parent bean definitions also by name to improve performance.
 					var backReference:Boolean = false;
 					for (var j:Number = 0; j < parentBeanDefinitions.length; j++) {
 						if (parentBeanDefinitions[j] == rn) {
@@ -241,7 +240,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			}
 		}
 	}
-	
+
 	private function addParentBeanDefinition(parentBeanDefinitions:Array, beanName:String, beanDefinition:BeanDefinition):Array {
 		var result:Array = parentBeanDefinitions.concat();
 		if (beanName == null) {
@@ -252,7 +251,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return result;
 	}
-	
+
 	private function applyTypeStyles(beanDefinition:BeanDefinition, parentBeanDefinitions:Array):Void {
 		var styleName:String = getTypeStyleName(beanDefinition);
 		applyStyles(beanDefinition, resolveStyles(styleName, parentBeanDefinitions));
@@ -263,12 +262,12 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			var pbd:BeanDefinition = beanFactory.getBeanDefinition(cbd.getParentName());
 			while (pbd != null) {
 				var parentName:String = childBeanDefinition.getParentName();
-				var className:String = 
+				var className:String =
 			}
 		}
 		*/
 	}
-	
+
 	private function getTypeStyleName(beanDefinition:BeanDefinition):String {
 		var source:XMLNode = beanDefinition.getSource();
 		if (source != null) {
@@ -282,12 +281,12 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return null;
 	}
-	
+
 	private function applyClassStyles(beanDefinition:BeanDefinition, parentBeanDefinitions:Array):Void {
 		var styleName:String = getClassStyleName(beanDefinition);
 		applyStyles(beanDefinition, resolveStyles(styleName, parentBeanDefinitions));
 	}
-	
+
 	private function getClassStyleName(beanDefinition:BeanDefinition):String {
 		var styleName:String = beanDefinition.getStyleName();
 		if (styleName != null) {
@@ -295,7 +294,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return null;
 	}
-	
+
 	private function applyIdStyles(beanDefinition:BeanDefinition, beanName:String, parentBeanDefinitions:Array):Void {
 		applyStyles(beanDefinition, resolveStyles(ID_SELECTOR_PREFIX + beanName, parentBeanDefinitions));
 		var aliases:Array = factory.getAliases(beanName);
@@ -303,7 +302,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			applyStyles(beanDefinition, resolveStyles(ID_SELECTOR_PREFIX + aliases[i], parentBeanDefinitions));
 		}
 	}
-	
+
 	private function resolveStyles(styleName:String, parentBeanDefinitions:Array):Array {
 		var result:Array = new Array();
 		var styles:Array = styles[styleName];
@@ -316,7 +315,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return result;
 	}
-	
+
 	private function matchesBeanDefinitions(selectors:Array, parentBeanDefinitions:Array):Boolean {
 		if (selectors.length == 0) {
 			return true;
@@ -357,7 +356,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return true;
 	}
-	
+
 	private function matchesBeanDefinition(styleName:String, beanDefinition:BeanDefinition, beanName:String):Boolean {
 		var firstChar:String = styleName.charAt(0);
 		if (firstChar == ID_SELECTOR_PREFIX) {
@@ -394,13 +393,13 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return true;
 	}
-	
+
 	private function applyStyles(beanDefinition, styles:Array):Void {
 		for (var i:Number = 0; i < styles.length; i++) {
 			applyStyle(beanDefinition, styles[i]);
 		}
 	}
-	
+
 	private function applyStyle(beanDefinition:BeanDefinition, style:Object):Void {
 		if (style != null) {
 			var pv:PropertyValues = beanDefinition.getPropertyValues();
@@ -412,7 +411,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			}
 		}
 	}
-	
+
 	private function parsePropertyValue(value:String) {
 		var variablePrefix:Number = value.indexOf(STATIC_VARIABLE_RETRIEVAL_PREFIX);
 		if (variablePrefix == 0) {
@@ -430,7 +429,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return BeanUtil.convertValue(value);
 	}
-	
+
 	private function parseStaticVariableValue(value:String, prefixIndex:Number, suffixIndex:Number) {
 		var name:String = TrimUtil.trim(value.substring(prefixIndex + 2, suffixIndex));
 		var result = eval("_global." + name);
@@ -440,7 +439,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return result;
 	}
-	
+
 	private function parseBeanDefinitionValue(value:String, prefixIndex:Number, suffixIndex:Number):BeanDefinitionHolder {
 		var className:String = parseClassName(value.substring(0, prefixIndex));
 		var clazz:Function = findClass(className);
@@ -481,7 +480,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		beanDefinition.setBeanClassName(className);
 		return new BeanDefinitionHolder(beanDefinition, generateBeanName(beanDefinition));
 	}
-	
+
 	private function parseClassName(className:String):String {
 		var result:String = TrimUtil.trim(className);
 		var separatorIndex:Number = result.indexOf(NAMESPACE_SEPARATOR);
@@ -497,7 +496,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return result;
 	}
-	
+
 	private function findClass(className:String):Function {
 		try {
 			return BeanUtil.findClass(className);
@@ -507,7 +506,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 					"found.", this, arguments)).initCause(exception);
 		}
 	}
-	
+
 	private function parseUnknownValue(value:String, separatorIndex:Number,
 			argumentValues:ConstructorArgumentValues, propertyValues:PropertyValues):Void {
 		if (separatorIndex == -1) {
@@ -517,23 +516,23 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 			parseProperty(value, separatorIndex, propertyValues);
 		}
 	}
-	
+
 	private function parseConstructorArg(value:String, argumentValues:ConstructorArgumentValues):Void {
 		var trimmedValue:String = TrimUtil.trim(value);
 		var av:ConstructorArgumentValue = new ConstructorArgumentValue(parsePropertyValue(trimmedValue));
 		argumentValues.addArgumentValueByValue(av);
 	}
-	
+
 	private function parseProperty(property:String, separatorIndex:Number, propertyValues:PropertyValues):Void {
 		var name:String = TrimUtil.trim(property.substring(0, separatorIndex));
 		var value:String = TrimUtil.trim(property.substring(separatorIndex + 1));
 		propertyValues.addPropertyValueByPropertyValue(new PropertyValue(name, parsePropertyValue(value)));
 	}
-	
+
 	/**
 	 * Generates a bean name for the given bean definition, unique within the bean
 	 * factory.
-	 * 
+	 *
 	 * @param beanDefinition the bean definition to generate a bean name for
 	 * @return the bean name to use
 	 */
@@ -547,5 +546,5 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 		}
 		return id;
 	}
-	
+
 }
