@@ -371,7 +371,6 @@ class org.as2lib.test.unit.TestCase extends LogSupport implements Test {
 	 */
 	public function run(Void):TestRunner {
 		var testRunner:TestRunner = getTestRunner();
-		// TODO Shall there really be a default test listener?
 		testRunner.addListener(LoggerTestListener.getInstance());
 		testRunner.start();
 		return testRunner;
