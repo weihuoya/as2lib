@@ -51,29 +51,17 @@ class org.as2lib.test.perform.MethodProfiler extends AbstractProfiler implements
 	private var n:String;
 
 	/**
-	 * @overload #MethodProfilerByVoid
 	 * @overload #MethodProfilerByMethod
 	 * @overload #MethodProfilerByObjectAndMethod
 	 * @overload #MethodProfilerByObjectAndName
 	 */
 	public function MethodProfiler() {
 		var o:Overload = new Overload(this);
-		o.addHandler([], MethodProfilerByVoid);
 		o.addHandler([MethodInfo], MethodProfilerByMethod);
 		o.addHandler([MethodInfo, Object, String], MethodProfilerByMethod);
 		o.addHandler([Object, Function], MethodProfilerByObjectAndMethod);
 		o.addHandler([Object, String], MethodProfilerByObjectAndName);
 		o.forward(arguments);
-	}
-
-	/**
-	 * Constructs a new {@code MethodProfiler} instance for the default method
-	 * {@code profile}. This method must be implemented by a subclass.
-	 *
-	 * @TODO Invoke profile method automatically when method profiler gets started.
-	 */
-	private function MethodProfilerByVoid(Void):Void {
-		MethodProfilerByObjectAndName(this, "profile");
 	}
 
 	/**
