@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -38,21 +38,21 @@ import org.as2lib.util.ArrayUtil;
 /**
  * {@code SimpleWeaver} is a simple implementation of the {@code Weaver} interface that
  * supports most needed functionalities.
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
-	
+
 	/** Arrays of {@link Advice} instances that are mapped to affected {@link ClassInfo} instances. */
 	private var advices:Map;
-	
+
 	/**
 	 * Constructs a new {@code SimpleWeaver} instance.
 	 */
 	public function SimpleWeaver(Void) {
 		advices = new HashMap();
 	}
-	
+
 	/**
 	 * Weaves the added aspects and advices into the affected types.
 	 */
@@ -68,7 +68,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	private function weaveByPackageAndAdvices(package:PackageInfo, advices:Array):Void {
 		if (package) {
 			if (advices) {
@@ -84,7 +84,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	private function weaveByTypeAndAdvices(type:ClassInfo, advices:Array):Void {
 		if (type) {
 			var constructor:ConstructorInfo = type.getConstructor();
@@ -124,14 +124,13 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	private function weaveSuperClassConstructor(superClassConstructorJoinPoint:ConstructorJoinPoint, prototype, advices:Array):Void {
 		if (prototype && advices) {
 			for (var i:Number = 0; i < advices.length; i++) {
 				var advice:Advice = Advice(advices[i]);
 				if (advice) {
 					if (advice.captures(superClassConstructorJoinPoint)) {
-						// TODO refactor
 						// not ' = snapshot()' because this makes a snapshot of the constructor in the package and not in the prototype
 						var c:ConstructorInfo = new ConstructorInfo(ClassInfo(superClassConstructorJoinPoint.getInfo().getDeclaringType()), prototype.__constructor__);
 						prototype.__constructor__ = advice.getProxy(new ConstructorJoinPoint(c, null));
@@ -140,7 +139,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	private function weaveByJoinPointAndAdvices(joinPoint:JoinPoint, advices:Array):Void {
 		if (joinPoint) {
 			if (advices) {
@@ -155,7 +154,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	private function weaveByJoinPointAndAdvice(joinPoint:JoinPoint, advice:Advice):Void {
 		var proxy:Function = advice.getProxy(joinPoint);
 		var info:TypeMemberInfo = joinPoint.getInfo();
@@ -169,11 +168,11 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds the given instances of type {@link Aspect} for the affected
 	 * packages and types of the individual aspect.
-	 * 
+	 *
 	 * @param aspects the aspects to add
 	 */
 	public function addAspects(aspects:Array):Void {
@@ -197,7 +196,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	/**
 	 * @overload #addAspectForAllTypes
 	 * @overload #addAspectForAllTypesInPackage
@@ -212,12 +211,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		o.addHandler([Aspect, Function], addAspectForOneAffectedType);
 		o.forward(arguments);
 	}
-	
+
 	/**
 	 * Adds the given {@code aspect} for all types. This means that all types are
 	 * searched through starting from the default or root package and checked whether
 	 * their join points match any of the advices of the {@code aspect}.
-	 * 
+	 *
 	 * @param aspect the aspect whose advices shall be woven-into captured join points
 	 */
 	public function addAspectForAllTypes(aspect:Aspect):Void {
@@ -225,12 +224,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			addAspectForAllTypesInPackage(aspect, PackageInfo.getRootPackage());
 		}
 	}
-	
+
 	/**
 	 * Adds the given {@code aspect} for the types that are directly members of the
 	 * given {@code affectedPackage} or any sub-package. All these types are regarded
 	 * as affected types that are searched through for matching join points.
-	 * 
+	 *
 	 * @param aspect the aspect whose advices shall be woven-into captured join points
 	 * @param affectedPackage the package to search for matching join points
 	 * @throws IllegalArgumentException if {@code affectedPackage} is {@code null} or
@@ -252,12 +251,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds the given {@code aspect} for the types that are contained in
 	 * {@code affectedTypes}. The {@code affectedTypes} array is supposed to hold
 	 * elements of type {@code Function}.
-	 * 
+	 *
 	 * @param aspect the aspect whose advices shall be woven-into captured join points
 	 * @param affectedType a list of affected types
 	 */
@@ -273,12 +272,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds the given {@code aspect} for the given {@code affectedType}. Only the given
 	 * {@code affectedType} is searched through when searching for join points that may
 	 * match the advices of the given {@code aspect}.
-	 * 
+	 *
 	 * @param aspect the aspect whose advices shall be woven-into captured join points
 	 * @param affectedType the affected type to search for join points
 	 */
@@ -297,7 +296,7 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	/**
 	 * @overload #addAdviceForAllTypes
 	 * @overload #addAdviceForAllTypesInPackage
@@ -312,12 +311,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 		o.addHandler([Advice, Function], addAdviceForOneAffectedType);
 		o.forward(arguments);
 	}
-	
+
 	/**
 	 * Adds the given {@code advice} for all types. This means that all types are
 	 * searched through starting from the default or root package and checked whether
 	 * their join points match any of the advices of the {@code advice}.
-	 * 
+	 *
 	 * @param advice the advice to weave-into matching join points
 	 */
 	public function addAdviceForAllTypes(advice:Advice):Void {
@@ -325,12 +324,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			addAdviceForAllTypesInPackage(advice, PackageInfo.getRootPackage());
 		}
 	}
-	
+
 	/**
 	 * Adds the given {@code advice} for the types that are directly members of the
 	 * given {@code affectedPackage} or any sub-package. All these types are regarded
 	 * as affected types that are searched through for matching join points.
-	 * 
+	 *
 	 * @param advice the advice to weave-into captured join points
 	 * @param affectedPackage the package to search for matching join points
 	 */
@@ -350,12 +349,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds the given {@code advice} for the types that are contained in
 	 * {@code affectedTypes}. The {@code affectedTypes} array is supposed to hold
 	 * elements of type {@code Function}.
-	 * 
+	 *
 	 * @param advice the advice to weave-into captured join points
 	 * @param affectedType a list of affected types
 	 */
@@ -371,12 +370,12 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 	/**
 	 * Adds the given {@code advice} for the given {@code affectedType}. Only the given
 	 * {@code affectedType} is searched through when searching for join points that may
 	 * match the given {@code advice}.
-	 * 
+	 *
 	 * @param advice the advice to weave-into captured join points
 	 * @param affectedType the affected type to search for join points
 	 */
@@ -390,7 +389,6 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 				advices.put(typeInfo, new Array());
 			}
 			var affectedAdvices:Array = advices.get(typeInfo);
-			// TODO is this really always wanted? add a flag if not?
 			if (!ArrayUtil.contains(affectedAdvices, advice)) {
 				affectedAdvices.push(advice);
 			}
@@ -399,5 +397,5 @@ class org.as2lib.aop.weaver.SimpleWeaver extends BasicClass implements Weaver {
 			}
 		}
 	}
-	
+
 }
