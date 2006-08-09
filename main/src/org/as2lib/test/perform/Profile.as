@@ -36,7 +36,6 @@ interface org.as2lib.test.perform.Profile extends BasicInterface {
 	 * Returns the total invocation time in milliseconds.
 	 *
 	 * @return the total invocation time in milliseconds
-	 * @TODO Is 'getDuration' a better name for this method?
 	 */
 	public function getTime(Void):Number;
 
@@ -46,7 +45,6 @@ interface org.as2lib.test.perform.Profile extends BasicInterface {
 	 *
 	 * @param totalTime the total time to calculate the percentage with
 	 * @return the invocation time as percentage
-	 * @TODO Is 'getDurationPercentage' or 'getDurationInPercent' a better name for this method?
 	 */
 	public function getTimePercentage(totalTime:Number):Number;
 
@@ -57,7 +55,6 @@ interface org.as2lib.test.perform.Profile extends BasicInterface {
 	 *
 	 * @return the time needed per method invocation
 	 * @see #getTime
-	 * @TODO Is 'getAverageDuration' a better name for this method?
 	 */
 	public function getAverageTime(Void):Number;
 
