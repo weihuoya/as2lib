@@ -45,10 +45,9 @@ class org.as2lib.test.perform.layout.PackageLayouter extends BasicClass implemen
 	/**
 	 * Lays-out the given profile with packages as root elements of the tree and returns
 	 * the new laid-out profile.
-	 *
-	 * @TODO Support multiple package layers, not just the one of the declaring type! (Organize packages in root- and sub-packages?)
 	 */
 	public function layOut(profile:Profile):Profile {
+		// Support multiple package layers, not just the one of the declaring type! (Organize packages in root- and sub-packages?)
 		if (profile == null) {
 			throw new IllegalArgumentException("Argument 'profile' [" + profile +
 					"] must not be 'null' nor 'undefined'.", this, arguments);
