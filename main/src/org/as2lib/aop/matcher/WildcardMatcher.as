@@ -72,7 +72,7 @@ class org.as2lib.aop.matcher.WildcardMatcher extends BasicClass implements Match
 	 * {@code false}
 	 */
 	public function match(joinPoint:String, pattern:String):Boolean {
-		// TODO: Reimplement algorithm, make it more performant.
+		// Reimplement algorithm, make it more performant.
 		if (!joinPoint) return false;
 		if (!pattern) return true;
 		if (pattern == "* ..*.*") return true;
