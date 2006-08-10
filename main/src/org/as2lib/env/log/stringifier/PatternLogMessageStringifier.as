@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -24,18 +24,18 @@ import org.as2lib.util.StringUtil;
 /**
  * {@code PatternLogMessageStringifier} stringifies {@link LogMessage} instances
  * based on a string conversion pattern.
- * 
+ *
  * <p>A conversion pattern is composed of literal text and format control expressions
  * called conversion specifiers.
- * 
+ *
  * <p>You are free to insert any literal text within the conversion pattern.
- * 
+ *
  * <p>Each conversion specifier starts with a percent sign {@code "%"} and is followed
  * by optional format modifiers and a conversion character. The conversion character
  * specifies the type of data, e.g. message, level, date, logger name. The format
  * modifiers control such things as field width, padding, left and right justification.
  * The following is a simple example.
- * 
+ *
  * <p>Let the conversion pattern be {@code "%-5l [%n{1}]: %m"} and assume that the logger
  * is configured with this stringifier. Then the statements
  * <code>
@@ -43,19 +43,19 @@ import org.as2lib.util.StringUtil;
  *   logger.info("A informative message.");
  *   logger.warning("A warning!");
  * </code>
- * 
+ *
  * <p>would yield the output
  * <code>
  *   INFO  [MyTest]: A informative message.
  *   WARNI [MyTest]: A warning!
  * </code>
- * 
+ *
  * <p>Note that there is no explicit separator between text and conversion specifiers.
  * The pattern parser knows when it has reached the end of a conversion specifier when
  * it reads a conversion character. In the example above the conversion specifier
  * {@code %-5l} means the level of the logging event should be left justified to a width
  * of five characters. The recognized conversion characters are
- * 
+ *
  * <table>
  *   <tr>
  *     <td>Conversion Character</td>
@@ -136,14 +136,14 @@ import org.as2lib.util.StringUtil;
  *     </td>
  *   </tr>
  * </table>
- * 
+ *
  * <p>By default the relevant information is output as is. However, with the aid of format
  * modifiers it is possible to change the minimum field width, the maximum field width and
  * justification.
- * 
+ *
  * <p>The optional format modifier is placed between the percent sign and the conversion
  * character.
- * 
+ *
  * <p>The first optional format modifier is the left justification flag which is just the
  * minus (-) character. Then comes the optional minimum field width modifier. This is a
  * decimal constant that represents the minimum number of characters to output. If the data
@@ -152,13 +152,13 @@ import org.as2lib.util.StringUtil;
  * specify right padding with the left justification flag. The padding character is space.
  * If the data item is larger than the minimum field width, the field is expanded to accommodate
  * the data. The value is never truncated.
- * 
+ *
  * <p>This behavior can be changed using the maximum field width modifier which is designated
  * by a period followed by a decimal constant. If the data item is longer than the maximum field,
  * then the extra characters are removed from the end of the data item.
  * For example, it the maximum field width is eight and the data item is ten characters long,
  * then the last two characters of the data item are dropped.
- * 
+ *
  * <p>Below are various format modifier examples for the level conversion specifier.
  * <table>
  *   <tr>
@@ -227,53 +227,53 @@ import org.as2lib.util.StringUtil;
  *     </td>
  *   </tr>
  * </table>
- * 
+ *
  * <p>The above text is largely inspired by James P. Cakalic and Ceki Gülcü from the apache
  * log4j project.
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicClass implements Stringifier {
-	
+
 	/** The default pattern if none has been specified. */
 	public static var DEFAULT_PATTERN:String = "%d{HH:nn:ss.SSS} %l %*n - %m";
-	
+
 	/** Default pattern to stringify log messages for MTASC with. */
 	public static var MTASC_PATTERN:String = "%d{HH:nn:ss.SSS} %c.%o():%L - %m";
-	
+
 	/** The escape character coming before a converter character. */
 	private static var ESCAPE_CHARACTER:String = "%";
-	
+
 	/** Indicates that stringifier is in literal state. */
 	private static var LITERAL_STATE:Number = 0;
-	
+
 	/** Indicates that stringifier is in converter state. */
 	private static var CONVERTER_STATE:Number = 1;
-	
+
 	/** Indicates that stringifier is in minus state. */
 	private static var MINUS_STATE:Number = 2;
-	
+
 	/** Indicates that stringifier is in dot state. */
 	private static var DOT_STATE:Number = 3;
-	
+
 	/** Indicates that stringifier is in minimum state. */
 	private static var MINIMUM_STATE:Number = 4;
-	
+
 	/** Indicates that stringifier is in maximum state. */
 	private static var MAXIMUM_STATE:Number = 5;
-	
+
 	/** The pattern to stringify log messages. */
 	private var pattern:String;
-	
+
 	/** The pattern as converter function. */
 	private var converter:Function;
-	
+
 	/**
 	 * Constructs a new {@code PatternLogMessageStringifier} instance.
 	 *
 	 * <p>If {@code pattern} is {@code null} or {@code undefined}, the {@link #DEFAULT_PATTERN}
 	 * will be used.
-	 * 
+	 *
 	 * @param pattern the pattern to stringify log messages
 	 */
 	public function PatternLogMessageStringifier(pattern:String) {
@@ -281,32 +281,32 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 		this.pattern = pattern;
 		converter = parse(pattern);
 	}
-	
+
 	/**
 	 * Returns the pattern used to stringify log messages.
-	 * 
+	 *
 	 * @return the log message stringification pattern
 	 */
 	public function getPattern(Void):String {
 		return pattern;
 	}
-	
+
 	/**
 	 * Returns the string representation of the passed-in {@link LogMessage} instance.
-	 * 
+	 *
 	 * <p>The resulting string is totally determined by the pattern given on
 	 * instantiation.
-	 * 
+	 *
 	 * @param target the {@code LogMessage} instance to stringify
 	 * @return the string representation of the passed-in {@code target}
 	 */
 	public function execute(target):String {
 		return converter(target);
 	}
-	
+
 	/**
 	 * Parses the given {@code pattern}.
-	 * 
+	 *
 	 * @param pattern the pattern to parse
 	 * @return the converter function representing the pattern
 	 */
@@ -414,10 +414,10 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 		};
 		return r;
 	}
-	
+
 	/**
 	 * Creates a literal converter function for the given literal.
-	 * 
+	 *
 	 * @param l the literal to create a converter function for
 	 * @return the literal converter function
 	 */
@@ -434,10 +434,10 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 		// We work around this by returning null at the end, also this will never be made.
 		return null;
 	}
-	
+
 	/**
 	 * Creates a converter.
-	 * 
+	 *
 	 * @param t the type of the converter to create
 	 * @param l a boolean that determines whether to align left {@code true} or right
 	 * {@code false}
@@ -448,7 +448,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 	 * @return the converter function for the given data
 	 */
 	private function createConverter(t:String, l:Boolean, i:Number, a:Number, s:Boolean, d:String):Function {
-		// TODO: Refactor code and add support for proper handling of undefined values that shall not be shown at beginning of pattern (Remove literal text after conversion specifier in that case?).
+		// Refactor code and add support for proper handling of undefined values that shall not be shown at beginning of pattern (Remove literal text after conversion specifier in that case?).
 		// Applies align left/right, minimum and maximum rules to string.
 		var z:Function = function(w:String, x:Boolean, y:Number, b:Number):String {
 			if (w == null) w = "unknown";
@@ -588,5 +588,5 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 		}
 		return null;
 	}
-	
+
 }
