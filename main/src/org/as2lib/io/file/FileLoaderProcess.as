@@ -160,17 +160,19 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess implements
 	 * event, adds the error and finishes this process), or finishes this process
 	 * silently otherwise.
 	 *
-	 * @return {@code true} to consume the event
+	 * @return {@code true} to consume the event when errors are ignored, otherwise
+	 * {@code false}
 	 */
 	public function onLoadError(fileLoader:FileLoader, errorCode:String, error):Boolean {
 		if (!ignoreErrors) {
-			// TODO Refactor error. Is error argument always the file name?
-			interrupt(errorCode + ": " + error.toString());
+			var message:String = errorCode;
+			if (error != null) {
+				message += ": " + error.toString();
+			}
+			interrupt(message);
+			return false;
 		}
-		else {
-			finish();
-		}
-		// TODO Why is true returned?
+		finish();
 		return true;
 	}
 
