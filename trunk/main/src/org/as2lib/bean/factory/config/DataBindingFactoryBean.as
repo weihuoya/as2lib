@@ -240,7 +240,7 @@ class org.as2lib.bean.factory.config.DataBindingFactoryBean extends BasicClass i
 		var args:String = TrimUtil.trim(expression.substring(prefixIndex + 1, suffixIndex));
 		var argMethods:Array;
 		if (args != "") {
-			// TODO Problem with split: myBean.myMethod(bean.method(1, 2), "string");
+			// Problem with split: myBean.myMethod(bean.method(1, 2), "string");
 			var argTokens:Array = args.split(ARGUMENT_LIST_SEPARATOR);
 			argMethods = new Array();
 			for (var i:Number = 0; i < argTokens.length; i++) {
