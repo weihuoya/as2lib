@@ -222,6 +222,7 @@ class org.as2lib.bean.factory.parser.CascadingStyleSheetParser extends BasicClas
 					}
 				}
 				else {
+					// This loop is expensive! Store parent bean definitions also by name to improve performance.
 					var backReference:Boolean = false;
 					for (var j:Number = 0; j < parentBeanDefinitions.length; j++) {
 						if (parentBeanDefinitions[j] == rn) {
