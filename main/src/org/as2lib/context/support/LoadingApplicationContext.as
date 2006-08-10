@@ -57,7 +57,6 @@ class org.as2lib.context.support.LoadingApplicationContext extends
 	public function LoadingApplicationContext(beanDefinitionUri:String,
 			beanDefitionParser:BeanDefinitionParser, parent:ApplicationContext) {
 		super(parent);
-		// TODO: Add support for specifying multiple URIs for the same application context!
 		this.beanDefinitionUri = beanDefinitionUri;
 		this.beanDefinitionParser = beanDefitionParser;
 		setBatch(new SimpleBatch());
@@ -77,7 +76,7 @@ class org.as2lib.context.support.LoadingApplicationContext extends
 		var fileLoader:FileLoader = new TextFileLoader();
 		var fileLoaderProcess:FileLoaderProcess = new FileLoaderProcess(fileLoader);
 		fileLoaderProcess.setUri(beanDefinitionUri);
-		// TODO: Find a solution for the following ugly workaround.
+		// Find a proper solution for the following ugly workaround.
 		fileLoaderProcess.onLoadComplete = function(fl:FileLoader):Void {
 			try {
 				this.applicationContext["onLoadComplete"](fl);
