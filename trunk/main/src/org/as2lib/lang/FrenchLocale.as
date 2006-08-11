@@ -1,12 +1,12 @@
 ﻿/*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,29 +21,29 @@ import org.as2lib.lang.ConcreteLocale;
 /**
  * {@code FrenchLocale} represents any French speaking country with the
  * language code "fr".
- * 
+ *
  * @author Christophe Herreman
  */
 class org.as2lib.lang.FrenchLocale extends ConcreteLocale {
-	
+
 	/**
 	 * Constructs a new {@code FrenchLocale} instance.
-	 * 
+	 *
 	 * @param countryCode the country code of this locale if it shall represent
 	 * a specific French speaking country
 	 */
 	public function FrenchLocale(countryCode:String) {
 		super("fr", countryCode, null);
 	}
-	
+
 	private function createSymbols(Void):Properties {
 		var result:Properties = new SimpleProperties();
-		
+
 		result.setProp("SHORT", "dd.mm.yy hh:nn");
 		result.setProp("MEDIUM", "MM dd, yyyy, hh:nn");
 		result.setProp("LONG", "MMMM dd, yyyy, hh:nn");
 		result.setProp("FULL", "DDDD, MMMM dd, yyyy, hh:nn:ss");
-		
+
 		result.setProp("long.day.1", "dimanche");
 		result.setProp("long.day.2", "lundi");
 		result.setProp("long.day.3", "mardi");
@@ -58,7 +58,7 @@ class org.as2lib.lang.FrenchLocale extends ConcreteLocale {
 		result.setProp("short.day.5", "je");
 		result.setProp("short.day.6", "ve");
 		result.setProp("short.day.7", "sa");
-		
+
 		result.setProp("long.month.1", "janvier");
 		result.setProp("long.month.2", "février");
 		result.setProp("long.month.3", "mars");
@@ -83,9 +83,7 @@ class org.as2lib.lang.FrenchLocale extends ConcreteLocale {
 		result.setProp("short.month.10", "oct");
 		result.setProp("short.month.11", "nov");
 		result.setProp("short.month.12", "déc");
-		
-		// TODO: Check translation for year/years (année vs. an), depends
-		// on the context
+
 		result.setProp("long.millisecond", "milliseconde");
 		result.setProp("long.milliseconds", "millisecondes");
 		result.setProp("long.second", "seconde");
@@ -98,9 +96,10 @@ class org.as2lib.lang.FrenchLocale extends ConcreteLocale {
 		result.setProp("long.days", "jours");
 		result.setProp("long.month", "mois");
 		result.setProp("long.months", "mois");
-		result.setProp("long.year", "année");
-		result.setProp("long.years", "années");
-		
+		// Correct translation for year/years (année vs. an), depends on the context.
+		result.setProp("long.year", "an");
+		result.setProp("long.years", "ans");
+
 		// TODO: Are these abbreviations correct?
 		result.setProp("short.milliseconds", "ms.");
 		result.setProp("short.second", "s.");
@@ -109,19 +108,16 @@ class org.as2lib.lang.FrenchLocale extends ConcreteLocale {
 		result.setProp("short.day", "j");
 		result.setProp("short.month", "m");
 		result.setProp("short.year", "a");
-		
-		// TODO: Number format patterns are incorrect.
-		result.setProp("NUMBER", "0,##");
+
+		result.setProp("NUMBER", "0.##");
 		result.setProp("INTEGER", "0");
-		result.setProp("CURRENCY", "€ 0,##");
-		result.setProp("PERCENT", "0 %");
-		
+		result.setProp("CURRENCY", "0.00 ¤");
+		result.setProp("PERCENT", "0%");
+
 		result.setProp("round", "round");
 		result.setProp("comma", ",");
 		result.setProp("currency", "€");
-		
-		// TODO: Should countries get "le", "la", "les", "l'"?
-		// This probably depends on the context the word is used in.
+
 		result.setProp("en", "anglais");
 		result.setProp("GB", "Royaume-Uni");
 		result.setProp("US", "Etats-Unis");
@@ -134,8 +130,8 @@ class org.as2lib.lang.FrenchLocale extends ConcreteLocale {
 		result.setProp("ES", "Espagne");
 		result.setProp("fr", "français");
 		result.setProp("FR", "France");
-		
+
 		return result;
 	}
-	
+
 }
