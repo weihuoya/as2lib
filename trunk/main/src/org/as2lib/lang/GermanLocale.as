@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -21,23 +21,23 @@ import org.as2lib.lang.ConcreteLocale;
 /**
  * {@code GermanLocale} represents Germany with the language code "de" and country
  * code "DE".
- * 
+ *
  * @author Simon Wacker
  */
 class org.as2lib.lang.GermanLocale extends ConcreteLocale {
-	
+
 	public function GermanLocale(Void) {
 		super("de", "DE", null);
 	}
-	
+
 	private function createSymbols(Void):Properties {
 		var result:Properties = new SimpleProperties();
-		
+
 		result.setProp("SHORT", "dd.mm.yy hh:nn");
 		result.setProp("MEDIUM", "MM dd, yyyy, hh:nn");
 		result.setProp("LONG", "MMMM dd, yyyy, hh:nn");
 		result.setProp("FULL", "DDDD, MMMM dd, yyyy, hh:nn:ss");
-		
+
 		result.setProp("long.day.1", "Sonntag");
 		result.setProp("long.day.2", "Montag");
 		result.setProp("long.day.3", "Dienstag");
@@ -52,7 +52,7 @@ class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 		result.setProp("short.day.5", "Do");
 		result.setProp("short.day.6", "Fr");
 		result.setProp("short.day.7", "Sa");
-		
+
 		result.setProp("long.month.1", "Januar");
 		result.setProp("long.month.2", "Februar");
 		result.setProp("long.month.3", "März");
@@ -77,7 +77,7 @@ class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 		result.setProp("short.month.10", "Okt");
 		result.setProp("short.month.11", "Nov");
 		result.setProp("short.month.12", "Dez");
-		
+
 		result.setProp("long.millisecond", "Millisekunde");
 		result.setProp("long.milliseconds", "Millisekunden");
 		result.setProp("long.second", "Sekunde");
@@ -92,24 +92,24 @@ class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 		result.setProp("long.months", "Monate");
 		result.setProp("long.year", "Jahr");
 		result.setProp("long.years", "Jahre");
-		
+
 		result.setProp("short.milliseconds", "ms");
 		result.setProp("short.second", "s");
 		result.setProp("short.minute", "min");
 		result.setProp("short.hour", "h");
 		result.setProp("short.day", "d");
 		result.setProp("short.month", "M");
-		result.setProp("short.year", "J");
-		
+		result.setProp("short.year", "a");
+
 		result.setProp("NUMBER", "0.##");
 		result.setProp("INTEGER", "0");
 		result.setProp("CURRENCY", "0.00 ¤");
 		result.setProp("PERCENT", "0%");
-		
+
 		result.setProp("round", "round");
 		result.setProp("comma", ",");
 		result.setProp("currency", "€");
-		
+
 		result.setProp("en", "Englisch");
 		result.setProp("GB", "Vereinigtes Königreich");
 		result.setProp("US", "Vereinigte Staaten");
@@ -122,8 +122,8 @@ class org.as2lib.lang.GermanLocale extends ConcreteLocale {
 		result.setProp("ES", "Spanien");
 		result.setProp("fr", "Französisch");
 		result.setProp("FR", "Frankreich");
-		
+
 		return result;
 	}
-	
+
 }
