@@ -27,18 +27,36 @@ import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.io.conn.webservice.WebServiceMethodInvocationErrorInfo;
 
 /**
+ * {@code WebServiceProxy} handles client requests to a certain SOAP-based web
+ * service and its responses.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.webservice.WebServiceProxy extends AbstractClientServiceProxy
 		implements ClientServiceProxy {
 
 	private var service:WebService;
+
 	private var wsdlUri:String;
+
 	private var proxyUri:String;
+
 	private var endpointProxyUri:String;
+
 	private var serviceName:String;
+
 	private var portName:String;
 
+	/**
+	 * Constructs a new {@code WebServiceProxy} instance.
+	 *
+	 * @param wsdlUri the location of the WSDL document of the web service
+	 * @param logger the logger to send debugging messages to
+	 * @param proxyUri
+	 * @param endpointProxyUri the location of the web service
+	 * @param serviceName the name of the service within the WSDL document to use
+	 * @param portName the port within the WSDL document to use
+	 */
 	public function WebServiceProxy(wsdlUri:String, logger:Log, proxyUri:String,
 			endpointProxyUri:String, serviceName:String, portName:String) {
 		this.wsdlUri = wsdlUri;
@@ -49,6 +67,9 @@ class org.as2lib.io.conn.webservice.WebServiceProxy extends AbstractClientServic
 		service = new WebService(wsdlUri, logger, proxyUri, endpointProxyUri, serviceName, portName);
 	}
 
+	/**
+	 * Returns the location of the WSDL document of the web service.
+	 */
 	public function getWsdlUri(Void):String {
 		return wsdlUri;
 	}
@@ -57,14 +78,23 @@ class org.as2lib.io.conn.webservice.WebServiceProxy extends AbstractClientServic
 		return proxyUri;
 	}
 
+	/**
+	 * Returns the location of the web service.
+	 */
 	public function getEndpointProxyUri(Void):String {
 		return endpointProxyUri;
 	}
 
+	/**
+	 * Returns the name of the service within the WSDL document.
+	 */
 	public function getServiceName(Void):String {
 		return serviceName;
 	}
 
+	/**
+	 * Returns the port within the WSDL document.
+	 */
 	public function getPortName(Void):String {
 		return portName;
 	}

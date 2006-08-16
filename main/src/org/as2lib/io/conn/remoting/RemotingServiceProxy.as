@@ -32,15 +32,35 @@ import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.io.conn.remoting.RemotingMethodInvocationErrorInfo;
 
 /**
+ * {@code RemotingServiceProxy} handles client requests to a certain service
+ * and its responses through Flash Remoting.
+ *
  * @author Simon Wacker
  */
 class org.as2lib.io.conn.remoting.RemotingServiceProxy extends AbstractClientServiceProxy
 		implements ClientServiceProxy {
 
 	private var service:Service;
+
 	private var gatewayUri:String;
+
 	private var serviceName:String;
 
+	/**
+	 * Constructs a new {@code RemotingServiceProxy} instance.
+	 *
+	 * @param gatewayUri the gateway that should be created or used from the current
+	 * pool. If this parameter is blank {@code ""} and the {@code connection} argument
+	 * is {@code null} the URI for the service will default to that specified using
+	 * the {@code gatewayUrl} value of the flashvars parameter specified in the HTML
+	 * page.
+	 * @param serviceName the name of the service to invoke methods on
+	 * @param logger the logger to send debugging messages to
+	 * @param connection the connection this service should be associated with, if this
+	 * value is {@code null} and the {@code gatewayUri} argument is empty the gateway
+	 * will be established using the {@code gatewayUrl} value of the flashvars parameter
+	 * specified in the HTML page
+	 */
 	public function RemotingServiceProxy(gatewayUri:String, serviceName:String,
 			logger:Log, connection:Connection) {
 		this.gatewayUri = gatewayUri;
@@ -48,10 +68,17 @@ class org.as2lib.io.conn.remoting.RemotingServiceProxy extends AbstractClientSer
 		service = new Service(gatewayUri, logger, serviceName, connection);
 	}
 
+	/**
+	 * Returns the gateway that should be created or used from the current
+	 * pool.
+	 */
 	public function getGatewayUri(Void):String {
 		return gatewayUri;
 	}
 
+	/**
+	 * Returns the name of the service to invoke methods on.
+	 */
 	public function getServiceName(Void):String {
 		return serviceName;
 	}
