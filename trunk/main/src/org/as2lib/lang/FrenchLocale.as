@@ -100,11 +100,10 @@ class org.as2lib.lang.FrenchLocale extends ConcreteLocale {
 		result.setProp("long.year", "an");
 		result.setProp("long.years", "ans");
 
-		// TODO: Are these abbreviations correct?
-		result.setProp("short.milliseconds", "ms.");
-		result.setProp("short.second", "s.");
-		result.setProp("short.minute", "mn");
-		result.setProp("short.hour", "H");
+		result.setProp("short.milliseconds", "ms");
+		result.setProp("short.second", "s");
+		result.setProp("short.minute", "min");
+		result.setProp("short.hour", "h");
 		result.setProp("short.day", "j");
 		result.setProp("short.month", "m");
 		result.setProp("short.year", "a");
