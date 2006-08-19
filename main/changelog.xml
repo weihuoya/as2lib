@@ -5,7 +5,16 @@
         xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
+        	<month value="8">
+        		<day value="19">
+        			<entry type="add" package="org.as2lib.lang" class="SpainLocale">Locale class for Spain (implemented by Diego S. Guebel).</entry>
+        			<entry type="add" package="org.as2lib.lang" class="SpanishLocale">Locale class for Spanish (implemented by Diego S. Guebel).</entry>
+        		</day>
+        	</month>
         	<month value="7">
+        		<day value="21">
+        			<entry type="change" package="org.as2lib.test.speed">Refactored profiler API. It can now be found in 'org.as2lib.test.perform'.</entry>
+        		</day>
         		<day value="14">
         			<entry type="add" package="org.as2lib.env.log.handler" class="CacheLogHandler">Added support for specifying a cache size.</entry>
         		</day>
