@@ -99,7 +99,6 @@ class org.as2lib.lang.DutchLocale extends ConcreteLocale {
 		result.setProp("long.year", "jaar");
 		result.setProp("long.years", "jaren");
 
-		// TODO: Are these abbreviations correct?
 		result.setProp("short.milliseconds", "ms");
 		result.setProp("short.second", "sec");
 		result.setProp("short.minute", "min");
