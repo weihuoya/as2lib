@@ -40,8 +40,8 @@ import org.as2lib.env.overload.Overload;
  * <code>
  *   import org.as2lib.app.exec.Timeout;
  *   import org.as2lib.app.exec.Call;
- *
- *   Timeout.timeout(new Call(myObj, myMethod), 20, ["1", "2"]);
+ * 
+ *   Timeout.setTimeout(new Call(myObj, myMethod), 20, ["1", "2"]); 
  * </code>
  *
  * Example for a controlable usage:
@@ -56,7 +56,7 @@ import org.as2lib.env.overload.Overload;
  * </code>
  *
  * @author Martin Heidegger
- * @version 1.0
+ * @version 1.1
  * @see Executable#execute
  */
 class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExecutable {
@@ -206,9 +206,9 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	/**
 	 * Internal method to finish the execution.
 	 */
-	private function finalExecution(impulse:FrameImpulse):Void {
+	private function finalExecution(Void):Void {
 		executed = 1;
-		impulse.disconnectExecutable(timeCall);
+		FrameImpulse.getInstance().disconnectExecutable(timeCall);
 		var oldTarget = target.concat();
 		target = new Array();
 		// Applying the execution to multiple targets (foreach)
