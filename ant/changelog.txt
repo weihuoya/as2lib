@@ -3,5 +3,8 @@ As2ant 2.5
 ----------
 
 
+[!] org.as2lib.ant.UnitTest
+    Fixed bug with Mac OSX on which Flash Player cannot be executed.
+
 [!] samples/as2lib unit test
     Fixed wrong import: imported 'TestCase' class of AsUnit not As2lib.
