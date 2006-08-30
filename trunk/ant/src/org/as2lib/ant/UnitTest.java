@@ -188,6 +188,7 @@ public class UnitTest extends Task {
 				while (!receiver.isFinished()) {
 					Thread.sleep(4);
 				}
+				killMacFlashPlayer();
 			}
 			if (receiver.hasException()) {
 				throw receiver.getException();
@@ -201,6 +202,19 @@ public class UnitTest extends Task {
 		}
 		receiver.stopServer();
 	}
+
+	private void killMacFlashPlayer() throws BuildException {
+		Commandline command = new Commandline();
+		command.setExecutable("killall");
+		command.createArgument().setValue("SAFlashPlayer");
+		try {
+			Execute.launch(getProject(), command.getCommandline(), null,
+					getProject().getBaseDir(), true);
+		}
+		catch (IOException e) {
+			throw new BuildException("Error killing flash player.", e, getLocation());
+		}
+    }
 
 	private static class Receiver extends Thread {
 
