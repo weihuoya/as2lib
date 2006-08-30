@@ -35,7 +35,7 @@
   <target name="javadoc" description="generate javadocs">
     <mkdir dir="${javadocs.dir}"/>
     <javadoc sourcepath="${src.dir}" destdir="${javadocs.dir}" packagenames="org.as2lib.ant.*"
-        windowtitle="As2ant - Swf, Swfmill, Mtasc and As2api Ant Tasks -- As2lib - Open Source ActionScript 2.0 Library"
+        windowtitle="As2ant - Swf, Swfmill, Mtasc, As2api, Swfsli and Unit Test Ant Tasks -- As2lib - Open Source ActionScript 2.0 Library"
         source="1.3" package="access" author="true" version="true" use="true" defaultexcludes="true"/>
   </target>
 
