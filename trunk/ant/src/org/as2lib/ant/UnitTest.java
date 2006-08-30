@@ -82,10 +82,11 @@ import org.xml.sax.SAXException;
  *   <li>{@link #setPort(int) port} (port of the xml socket to listen to)</li>
  * </ul>
  *
- * <p>You must supply 'swf' and 'flashplayer'.
+ * <p>You must supply 'swf'. Windows users must also supply 'flashplayer'.
  *
  * @author Simon Wacker
  * @author Christophe Herreman
+ * @author Chris Allen
  */
 public class UnitTest extends Task {
 
@@ -163,19 +164,31 @@ public class UnitTest extends Task {
 		if (swf == null) {
 			throw new BuildException("A unit test swf must be supplied.", getLocation());
 		}
-		if (flashPlayer == null) {
+		boolean isAMac = System.getProperty("os.name").equals("Mac OS X");
+		if (flashPlayer == null && !isAMac) {
 			throw new BuildException("A flash player must be supplied.", getLocation());
 		}
 		Commandline command = new Commandline();
-		command.setExecutable(flashPlayer.getPath());
+		if (isAMac) {
+			command.setExecutable("open");
+		}
+		else {
+			command.setExecutable(flashPlayer.getPath());
+		}
 		command.createArgument().setFile(swf);
 		Receiver receiver = new Receiver(this);
 		receiver.startServer(port);
 		try {
 			log(command.toString());
-			Process process = Execute.launch(getProject(), command.getCommandline(), null, getProject().getBaseDir(), true);
+			Process process = Execute.launch(getProject(), command.getCommandline(), null,
+					getProject().getBaseDir(), true);
 			receiver.setProcess(process);
 			process.waitFor();
+			if (isAMac) {
+				while (!receiver.isFinished()) {
+					Thread.sleep(4);
+				}
+			}
 			if (receiver.hasException()) {
 				throw receiver.getException();
 			}
@@ -195,14 +208,20 @@ public class UnitTest extends Task {
 		private ServerSocket server;
 		private BufferedReader in;
 		private Process process;
+		private boolean finished;
 		private BuildException exception;
 
 		public Receiver(Task task) {
 			this.task = task;
+			finished = false;
 		}
 
 		public void setProcess(Process process) {
 			this.process = process;
+		}
+
+		public boolean isFinished() {
+			return finished;
 		}
 
 		public BuildException getException() {
@@ -229,7 +248,8 @@ public class UnitTest extends Task {
 						}
 						DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
 						DocumentBuilder builder = factory.newDocumentBuilder();
-						Document document = builder.parse(new ByteArrayInputStream(stringBuffer.toString().getBytes()));
+						Document document = builder.parse(new ByteArrayInputStream(
+								stringBuffer.toString().getBytes()));
 						Element element = document.getDocumentElement();
 						String message = "";
 						if (element.hasChildNodes()) {
@@ -248,7 +268,8 @@ public class UnitTest extends Task {
 						else if (nodeName.equals(RESUME_ELEMENT)) {
 							task.log(message + "\n-");
 						}
-						else if (nodeName.equals(ERROR_ELEMENT) || nodeName.equals(FAILURE_ELEMENT)) {
+						else if (nodeName.equals(ERROR_ELEMENT) ||
+								nodeName.equals(FAILURE_ELEMENT)) {
 							task.log(message, Project.MSG_ERR);
 						}
 						else if (nodeName.equals(FINISH_ELEMENT)) {
@@ -262,11 +283,13 @@ public class UnitTest extends Task {
 							if (element.hasAttribute(HAS_ERRORS_ATTRIBUTE) &&
 									element.getAttribute(HAS_ERRORS_ATTRIBUTE).equals(TRUE_VALUE)) {
 								level = Project.MSG_ERR;
-								exception = new BuildException("Test(s) failed.", task.getLocation());
+								exception = new BuildException("Test(s) failed.",
+										task.getLocation());
 							}
 							if (!message.equals("")) {
 								task.log(message, level);
 							}
+							finished = true;
 							process.destroy();
 							return;
 						}
