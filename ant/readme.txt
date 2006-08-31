@@ -3,7 +3,7 @@ As2ant - SWF Ant Tasks - Version 2.2
 ------------------------------------
 
 
-These tasks are programmed by Simon Wacker (http://www.simonwacker.com) and distributed
+These tasks are maintained by Simon Wacker (http://www.simonwacker.com) and distributed
 under the Mozilla Public License Version 1.1. They are part of the As2lib Open Source
 ActionScript 2.0 Library (http://www.as2lib.org).
 
