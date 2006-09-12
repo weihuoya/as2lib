@@ -28,8 +28,8 @@ import org.as2lib.sample.pizza.event.OrderPlacedEvent;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.sample.pizza.view.View extends BasicClass implements
-		ApplicationListener, MessageSourceAware {
+class org.as2lib.sample.pizza.view.View extends BasicClass implements ApplicationListener,
+		MessageSourceAware {
 
 	private var messageSource:MessageSource = null;
 	private var controller:Controller = null;
@@ -70,13 +70,13 @@ class org.as2lib.sample.pizza.view.View extends BasicClass implements
 	}
 
 	private function setStatusMessage(message:String):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 	private function setShowProgressBar(showProgressBar:Boolean):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 }
