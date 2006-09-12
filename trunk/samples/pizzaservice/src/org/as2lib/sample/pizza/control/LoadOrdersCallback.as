@@ -1,12 +1,12 @@
 /*
  * Copyright the original author or authors.
- * 
+ *
  * Licensed under the MOZILLA PUBLIC LICENSE, Version 1.1 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * 
+ *
  *      http://www.mozilla.org/MPL/MPL-1.1.html
- * 
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -29,18 +29,18 @@ import org.as2lib.sample.pizza.model.OrderItem;
  * @author Simon Wacker
  */
 class org.as2lib.sample.pizza.control.LoadOrdersCallback extends ContextMethodInvocationCallback {
-	
-	private static var logger:Logger = LogManager.getLogger("org.as2lib.sample.pizza.control.LoadOrdersCallback");
-	
+
+	private static var logger:Logger = LogManager.getLogger(eval("th" + "is"));
+
 	private var controller:Controller;
-	
+
 	public function LoadOrdersCallback(Void) {
 	}
-	
+
 	public function setController(controller:Controller):Void {
 		this.controller = controller;
 	}
-	
+
 	public function onReturn(returnInfo:MethodInvocationReturnInfo):Void {
 		if (logger.isInfoEnabled()) {
 			logger.info("Loaded orders successfully.");
@@ -49,12 +49,11 @@ class org.as2lib.sample.pizza.control.LoadOrdersCallback extends ContextMethodIn
 		controller.setOrders(orders);
 		super.onReturn(returnInfo);
 	}
-	
+
 	private function parseOrders(orders:RecordSet):Array {
 		var result:Array = new Array();
 		var temp:Array = new Array();
-		var length:Number = orders.getLength() - 1;
-		for (var i:Number = length; i >= 0; i--) {
+		for (var i:Number = orders.getLength() - 1; i >= 0; i--) {
 			var item = orders.getItemAt(i);
 			var order:Order = temp[item.orderid];
 			if (order == null) {
@@ -66,5 +65,5 @@ class org.as2lib.sample.pizza.control.LoadOrdersCallback extends ContextMethodIn
 		}
 		return result;
 	}
-	
+
 }
