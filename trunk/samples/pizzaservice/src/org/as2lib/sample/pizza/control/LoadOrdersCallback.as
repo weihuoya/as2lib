@@ -21,7 +21,6 @@ import org.as2lib.env.log.LogManager;
 import org.as2lib.io.conn.core.event.ContextMethodInvocationCallback;
 import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
 import org.as2lib.sample.pizza.control.Controller;
-import org.as2lib.sample.pizza.event.OrdersLoadedEvent;
 import org.as2lib.sample.pizza.model.Order;
 import org.as2lib.sample.pizza.model.OrderItem;
 
