@@ -1,23 +1,23 @@
 <?xml version="1.0"?>
 
 <beans>
-	
+
 	<bean id="eventDistributorControl" class="org.as2lib.env.event.distributor.SimpleEventDistributorControl">
 		<constructor-arg type="Class">org.as2lib.context.ApplicationListener</constructor-arg>
 	</bean>
-	
+
 	<bean id="controller" class="org.as2lib.sample.pizza.control.Controller" init-method="init">
 		<property name="pizzaService"><ref local="pizzaService"/></property>
 		<property name="loadOrdersCallback"><ref local="loadOrdersCallback"/></property>
 		<property name="placeOrderCallback"><ref local="placeOrderCallback"/></property>
 		<property name="cancelOrderCallback"><ref local="cancelOrderCallback"/></property>
 	</bean>
-	
+
 	<bean id="messageSource" class="org.as2lib.context.support.ResourceBundleMessageSource" depends-on="localeManager">
 		<property name="name">messages.properties</property>
 		<property name="baseName">messages</property>
 	</bean>
-	
+
 	<bean id="localeManager" class="org.as2lib.lang.LocaleManager" factory-method="getInstance">
 		<property name="defaultLocale">en</property>
 		<!--<property name="targetLocale">en</property>-->
@@ -28,32 +28,32 @@
 			</array>
 		</property>
 	</bean>
-	
+
 	<bean id="pizzaService" class="org.as2lib.io.conn.remoting.RemotingServiceProxyFactoryBean">
 		<property name="gatewayUri">http://www.amfphp.org/examples/pizzaservice/gateway.php</property>
 		<property name="serviceName">pizzaService</property>
 		<property name="serviceInterface" type="Class">org.as2lib.sample.pizza.dao.PizzaService</property>
 	</bean>
-	
+
 	<bean id="loadOrdersCallback" class="org.as2lib.sample.pizza.control.LoadOrdersCallback">
 		<property name="controller"><ref local="controller"/></property>
 		<property name="errorCode">error.loadOrders</property>
 		<property name="successCode">success.loadOrders</property>
 		<property name="successEventClass" type="Class">org.as2lib.sample.pizza.event.OrdersLoadedEvent</property>
 	</bean>
-	
+
 	<bean id="placeOrderCallback" class="org.as2lib.io.conn.core.event.ContextMethodInvocationCallback">
 		<property name="errorCode">error.placeOrder</property>
 		<property name="successCode">success.placeOrder</property>
 		<property name="successEventClass" type="Class">org.as2lib.sample.pizza.event.OrderPlacedEvent</property>
 	</bean>
-	
+
 	<bean id="cancelOrderCallback" class="org.as2lib.sample.pizza.control.CancelOrderCallback">
 		<property name="errorCode">error.cancelOrder</property>
 		<property name="successCode">success.cancelOrder</property>
 		<property name="successEventClass" type="Class">org.as2lib.sample.pizza.event.OrderCanceledEvent</property>
 	</bean>
-	
+
 	<!--<bean id="weaver" class="org.as2lib.aop.weaver.SimpleWeaver">
 		<property name="aspects">
 			<array>
@@ -62,11 +62,11 @@
 			</array>
 		</property>
 	</bean>
-	
+
 	<bean id="throwableStackTraceFillingAspect" class="org.as2lib.env.except.ThrowableStackTraceFillingAspect">
 		<property name="affectedPackage" type="Package">org.as2lib.sample.pizza</property>
 	</bean>
-	
+
 	<bean id="traceLoggingAspect" class="org.as2lib.env.log.aspect.TraceLoggingAspect">
 		<constructor-arg>execution(org.as2lib.sample.pizza..*.new())</constructor-arg>
 		<constructor-arg>execution(org.as2lib.env.log.logger.DebugItLogger.debug())</constructor-arg>
@@ -77,5 +77,5 @@
 			</array>
 		</property>
 	</bean>-->
-	
+
 </beans>
