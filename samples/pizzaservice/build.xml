@@ -36,8 +36,8 @@
         <include name="**/*.swf"/>
       </fileset>
     </copy>
-    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${pizza.swf}" header="445:360:31"
-        version="8" trace="org.as2lib.env.log.logger.DebugItLogger.trace">
+    <swf src="${as2lib.dir}/org/as2lib/app/conf/MtascApplication.as" dest="${pizza.swf}"
+        header="445:360:31" version="8" trace="org.as2lib.env.log.logger.DebugItLogger.trace">
       <classpath>
         <pathelement path="${enflash.dir}"/>
         <pathelement path="${actionstep.dir}"/>
@@ -67,6 +67,7 @@
       <classpath path="${enflash.dir}"/>
       <classpath path="${actionstep.dir}"/>
       <classpath path="${aswing.dir}"/>
+      <classpath path="${remoting.dir}"/>
       <classpath path="${debugit.dir}"/>
       <classpath path="${as2lib.dir}"/>
       <classpath path="${src.dir}"/>
