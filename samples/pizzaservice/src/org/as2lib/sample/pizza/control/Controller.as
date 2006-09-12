@@ -14,8 +14,6 @@
  * limitations under the License.
  */
 
-import org.as2lib.context.ApplicationListener;
-import org.as2lib.context.MessageSource;
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.except.IllegalArgumentException;
 import org.as2lib.env.log.Logger;
@@ -30,7 +28,7 @@ import org.as2lib.sample.pizza.model.OrderItem;
  */
 class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 
-	private static var logger:Logger = LogManager.getLogger("org.as2lib.sample.pizza.control.Controller");
+	private static var logger:Logger = LogManager.getLogger(eval("th" + "is"));
 
 	private var pizzaService:PizzaService;
 	private var loadOrdersCallback:MethodInvocationCallback;
@@ -48,13 +46,16 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 			throw new IllegalArgumentException("Pizza service is required.", this, arguments);
 		}
 		if (loadOrdersCallback == null) {
-			throw new IllegalArgumentException("Load orders callback is required.", this, arguments);
+			throw new IllegalArgumentException("Load orders callback is required.", this,
+					arguments);
 		}
 		if (placeOrderCallback == null) {
-			throw new IllegalArgumentException("Place order callback is required.", this, arguments);
+			throw new IllegalArgumentException("Place order callback is required.", this,
+					arguments);
 		}
 		if (cancelOrderCallback == null) {
-			throw new IllegalArgumentException("Cancel order callback is required.", this, arguments);
+			throw new IllegalArgumentException("Cancel order callback is required.", this,
+					arguments);
 		}
 	}
 
@@ -76,7 +77,8 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 
 	public function placeOrder(customerName:String):Void {
 		if (logger.isInfoEnabled()) {
-			logger.info("Placing order [" + currentOrder + "] for customer '" + customerName + "'.");
+			logger.info("Placing order [" + currentOrder + "] for customer '" + customerName +
+					"'.");
 		}
 		pizzaService.order(customerName, currentOrder.getItems(), placeOrderCallback);
 	}
@@ -96,7 +98,8 @@ class org.as2lib.sample.pizza.control.Controller extends BasicClass {
 		pizzaService.getOrderList(loadOrdersCallback);
 	}
 
-	public function addOrderItem(quantity:Number, size:String, crust:String, toppings:Array):String {
+	public function addOrderItem(quantity:Number, size:String, crust:String,
+			toppings:Array):String {
 		var details:String = OrderItem.generateDetails(quantity, size, crust, toppings);
 		if (logger.isInfoEnabled()) {
 			logger.info("Adding order item '" + details + "'.");
