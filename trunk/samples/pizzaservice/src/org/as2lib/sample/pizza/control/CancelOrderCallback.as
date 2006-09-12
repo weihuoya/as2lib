@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.LogManager;
 import org.as2lib.io.conn.core.event.ContextMethodInvocationCallback;
 import org.as2lib.io.conn.core.event.MethodInvocationErrorInfo;
 import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
@@ -22,6 +24,8 @@ import org.as2lib.io.conn.core.event.MethodInvocationReturnInfo;
  * @author Simon Wacker
  */
 class org.as2lib.sample.pizza.control.CancelOrderCallback extends ContextMethodInvocationCallback {
+
+	private static var logger:Logger = LogManager.getLogger(eval("th" + "is"));
 
 	public function CancelOrderCallback(Void) {
 	}
@@ -34,6 +38,9 @@ class org.as2lib.sample.pizza.control.CancelOrderCallback extends ContextMethodI
 			onError(errorInfo);
 		}
 		else {
+			if (logger.isInfoEnabled()) {
+				logger.info("Canceled order successfully.");
+			}
 			super.onReturn(returnInfo);
 		}
 	}
