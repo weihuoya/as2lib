@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 
+import org.as2lib.env.except.AbstractOperationException;
 import org.as2lib.sample.pizza.view.ViewOrdersForm;
 
 import com.asual.enflash.ui.ListBox;
@@ -67,18 +68,26 @@ class org.as2lib.sample.pizza.view.enflash.EnFlashViewOrdersForm extends ViewOrd
 	}
 
 	public function getOrderList(Void):ListBox {
+		throw new AbstractOperationException("Implementation must be provided by sub-class or " +
+				"IoC container.", this, arguments);
 		return null;
 	}
 
 	public function getPizzaList(Void):ListBox {
+		throw new AbstractOperationException("Implementation must be provided by sub-class or " +
+				"IoC container.", this, arguments);
 		return null;
 	}
 
 	public function getCancelOrderButton(Void):Button {
+		throw new AbstractOperationException("Implementation must be provided by sub-class or " +
+				"IoC container.", this, arguments);
 		return null;
 	}
 
 	public function getProgressBar(Void):ProgressBar {
+		throw new AbstractOperationException("Implementation must be provided by sub-class or " +
+				"IoC container.", this, arguments);
 		return null;
 	}
 
