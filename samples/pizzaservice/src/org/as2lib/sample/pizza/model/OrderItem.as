@@ -21,7 +21,8 @@ import org.as2lib.core.BasicClass;
  */
 class org.as2lib.sample.pizza.model.OrderItem extends BasicClass {
 
-	public static function generateDetails(quantity:Number, size:String, crust:String, toppings:Array):String {
+	public static function generateDetails(quantity:Number, size:String, crust:String,
+			toppings:Array):String {
 		var result:String = quantity.toString();
 		result += " " + size;
 		result += " " + crust;
@@ -45,6 +46,10 @@ class org.as2lib.sample.pizza.model.OrderItem extends BasicClass {
 
 	public function getDetails(Void):String {
 		return details;
+	}
+
+	public function toString():String {
+		return "OrderItem(" + details + ")";
 	}
 
 }
