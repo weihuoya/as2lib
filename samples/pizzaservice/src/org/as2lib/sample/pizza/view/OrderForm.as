@@ -47,7 +47,8 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 	}
 
 	public function addOrderItem(Void):Void {
-		var orderItem:String = controller.addOrderItem(getQuantity(), getSize(), getCrust(), getToppings());
+		var orderItem:String = controller.addOrderItem(getQuantity(), getSize(), getCrust(),
+				getToppings());
 		addToOrderTicket(orderItem);
 		setEnableRemoveButton(true);
 		if (getName().length > 0) {
@@ -97,85 +98,85 @@ class org.as2lib.sample.pizza.view.OrderForm extends BasicClass implements
 	}
 
 	private function getName(Void):String {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 		return null;
 	}
 
 	private function getQuantity(Void):Number {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 		return null;
 	}
 
 	private function getSize(Void):String {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 		return null;
 	}
 
 	private function getCrust(Void):String {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 		return null;
 	}
 
 	private function getToppings(Void):Array {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 		return null;
 	}
 
 	private function setShowProgressBar(showProgressBar:Boolean):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 	private function setEnablePlaceOrderButton(enablePlaceOrderButton:Boolean):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 	private function setEnableAddButton(enableAddButton:Boolean):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 	private function setEnableRemoveButton(enableRemoveButton:Boolean):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 	private function getOrderItemCount(Void):Number {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 		return null;
 	}
 
 	private function getSelectedOrderItemIndices(Void):Array {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 		return null;
 	}
 
 	private function addToOrderTicket(orderItem:String):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 	private function removeFromOrderTicket(orderItemIndices:Array):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 	private function selectOrderItem(orderItemIndex:Number):Void {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 	}
 
 	private function isToppingSelected(Void):Boolean {
-		throw new AbstractOperationException("This method is abstract and must be " +
-				"implemented by subclasses.", this, arguments);
+		throw new AbstractOperationException("This method is abstract and must be implemented by " +
+				"subclasses.", this, arguments);
 		return null;
 	}
 
