@@ -24,8 +24,7 @@ import org.as2lib.sample.pizza.view.ViewOrdersForm;
 /**
  * @author Simon Wacker
  */
-class org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm extends
-		ViewOrdersForm {
+class org.as2lib.sample.pizza.view.actionstep.ActionStepViewOrdersForm extends ViewOrdersForm {
 
 	private var orderList:ASList = null;
 	private var pizzaList:ASList = null;
