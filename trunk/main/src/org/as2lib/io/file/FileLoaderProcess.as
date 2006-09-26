@@ -95,8 +95,9 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess implements
 	 * either {@code "POST"} or {@code "GET"}; default is {@code "POST"}
 	 * @param callback (optional) the callback to execute when the file is loaded
 	 * completely; the callback is passed this file loader as argument
+	 * @return the current process
 	 */
-	public function setUri(uri:String, method:String, parameters:Map, callback:Executable):Void {
+	public function setUri(uri:String, method:String, parameters:Map, callback:Executable):FileLoaderProcess {
 		this.uri = uri;
 		this.method = method;
 		this.parameters = parameters;
@@ -104,6 +105,7 @@ class org.as2lib.io.file.FileLoaderProcess extends AbstractProcess implements
 		if (getName() == null) {
 			setName(uri);
 		}
+		return this;
 	}
 
 	/**

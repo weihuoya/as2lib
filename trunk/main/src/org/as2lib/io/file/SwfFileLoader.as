@@ -219,7 +219,8 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader implements
 	 * @return {@code true} if the SWF file finished loading else {@code false}
 	 */
     private function hasFinished(Void):Boolean {
-		movieClip = eval(movieClip._target);
+    	var mc = eval(movieClip._target);
+		movieClip = mc; // Workaround for a flash compiler bug
 		var totalBytes:Number = movieClip.getBytesTotal();
 		var loadedBytes:Number = movieClip.getBytesLoaded();
 		if (totalBytes > 10 && totalBytes - loadedBytes < 10) {
