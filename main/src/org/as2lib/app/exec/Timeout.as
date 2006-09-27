@@ -20,6 +20,9 @@ import org.as2lib.app.exec.Executable;
 import org.as2lib.app.exec.ForEachExecutable;
 import org.as2lib.env.event.impulse.FrameImpulse;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.Logger;
+import org.as2lib.util.ClassUtil;
 
 /**
  * {@code Timeout} works as delayed execution of a executable.
@@ -89,8 +92,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	 * @param args Arguments to be passed at execution
 	 */
 	public static function setTimeout(exe:Executable, frames:Number, args:Array) {
-		var t:Function = eval("th"+"is");
-		var o = new t(exe, frames).execute(args);
+		ClassUtil.createInstance(org.as2lib.app.exec.Timeout, [exe, frames]).execute(args);
 	}
 
 	/**
