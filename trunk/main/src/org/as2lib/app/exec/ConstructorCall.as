@@ -41,13 +41,13 @@ class org.as2lib.app.exec.ConstructorCall extends Call {
 	}
 
 	/**
-	 * Instantiates the class given on construction with the given arguments.
+	 * Instantiates the class given on construction with the given arguments {@code args}.
 	 *
-	 * @param * the arguments to pass to the class's constructor
+	 * @param args the arguments to pass to the class's constructor
 	 * @return the created instance
 	 */
-	public function execute() {
-		return ClassUtil.createInstance(clazz, arguments);
+	public function executeArguments(args) {
+		return ClassUtil.createInstance(clazz, args);
 	}
 
 }

@@ -33,4 +33,12 @@ interface org.as2lib.app.exec.Executable extends BasicInterface {
 	 */
 	public function execute();
 
+
+	/**
+	 * Executes the encapsulated task using the given arguments {@code args}.
+	 *
+	 * @param args the arguments to use for executing the task
+	 * @return the result of the execution
+	 */
+	public function executeArguments(args:Array);
 }

@@ -92,7 +92,7 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	 * @param args Arguments to be passed at execution
 	 */
 	public static function setTimeout(exe:Executable, frames:Number, args:Array) {
-		ClassUtil.createInstance(org.as2lib.app.exec.Timeout, [exe, frames]).execute(args);
+		ClassUtil.createInstance(org.as2lib.app.exec.Timeout, [exe, frames]).executeArguments(args);
 	}
 
 	/**
@@ -139,9 +139,21 @@ class org.as2lib.app.exec.Timeout extends AbstractProcess implements ForEachExec
 	 * @see Executable#execute
 	 */
 	public function execute() {
+		return executeArguments(arguments);
+	}
+
+	/**
+	 * Starts the delay until the execution of the connected Executable.
+	 *
+	 * @see #setExecutable
+	 * @see #setExecutableByObjectAndFunction
+	 * @see Executable#executeArguments
+	 * @param args arguments to be passed to the execution
+	 */	
+	public function executeArguments(args:Array) {
 		executed = 1;
 		if (!target) target = new Array();
-		target.push(arguments);
+		target.push(args);
 		working = true;
 		FrameImpulse.getInstance().connectExecutable(timeCall);
 		return null;
