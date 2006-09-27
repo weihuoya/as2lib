@@ -68,7 +68,18 @@ class org.as2lib.app.exec.Call extends BasicClass implements ForEachExecutable {
 	 * @return the result of the method execution
 	 */
 	public function execute() {
-		return method.apply(object, arguments);
+		return executeArguments(arguments);
+	}
+	
+	/**
+	 * Executes the method on the object passing the given argument list {@code args} and returns the
+	 * result of the execution.
+	 *
+	 * @param args argument list that should be passed
+	 * @return the result of the method execution
+	 */
+	public function executeArguments(args:Array) {
+		return method.apply(object, args);
 	}
 
 	/**
