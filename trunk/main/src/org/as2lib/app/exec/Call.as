@@ -49,7 +49,7 @@ class org.as2lib.app.exec.Call extends BasicClass implements ForEachExecutable {
 	 * {@code null} or {@code undefined}
 	 */
 	public function Call(object, method:Function) {
-		if (object == null) {
+		if (object === null || object === undefined) {
 			throw new IllegalArgumentException("Required parameter 'object' is " +
 					"'null' or 'undefined'.", this, arguments);
 		}
