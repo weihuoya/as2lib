@@ -495,7 +495,11 @@ public class Swfmill extends Task {
     }
 
     private void checkParameters() throws BuildException {
-        if (this.source != null && this.xml != null) {
+    	if (this.source == null && this.xml == null) {
+            throw new BuildException("'src', 'source' or 'in' attribute or inline " +
+            		"xml must be specified.", getLocation());
+        }
+    	if (this.source != null && this.xml != null) {
         	throw new BuildException("Specify either 'src' ('source', 'in') or " +
         			"inline xml, not both.", getLocation());
         }
