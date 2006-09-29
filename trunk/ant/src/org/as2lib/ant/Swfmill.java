@@ -84,6 +84,9 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  *   <li>{@link #setSwfmill(String) swfmill} (path to or name of the swfmill executable)</li>
  *   <li>{@link #setHelp(boolean) help} (show help message)</li>
  * </ul>
+ * 
+ * <p>You must either provide "src", "source", "in" or declare the swfmill xml directly
+ * in the build file.
  *
  * @author Simon Wacker
  * @since 11.06.2005
