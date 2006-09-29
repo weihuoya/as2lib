@@ -1,13 +1,7 @@
 ----------
-As2ant 2.2
+As2ant 2.3
 ----------
 
 
-[+] org.as2lib.ant.UnitTest
-    Close the Flash Player on Mac OSX after all test data was received.
-
-[!] org.as2lib.ant.UnitTest
-    Fixed bug with Mac OSX on which the Flash Player cannot be executed.
-
-[!] samples/as2lib unit test
-    Fixed wrong import: imported 'TestCase' class of AsUnit not As2lib.
+[+] org.as2lib.ant.Swfmill
+    Added support for the 'library' command.
