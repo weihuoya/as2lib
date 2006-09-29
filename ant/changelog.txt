@@ -3,5 +3,8 @@ As2ant 2.3
 ----------
 
 
+[+] samples/swfmill
+    Added sample for 'library' command.
+
 [+] org.as2lib.ant.Swfmill
-    Added support for the 'library' command.
+    Added support for 'library' command.
