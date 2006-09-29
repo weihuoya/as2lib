@@ -13,6 +13,7 @@
     <echo message="xml2swf"/>
     <echo message="swf2xml"/>
     <echo message="inline"/>
+    <echo message="library"/>
     <echo message="------------------------------------------------------"/>
     <echo message=""/>
   </target>
@@ -38,6 +39,10 @@
         </movie>
       ]]>
     </swfmill>
+  </target>
+  
+  <target name="library" description="assets to library swf">
+    <swfmill src="assets" dest="library.swf"/>
   </target>
 
 </project>
