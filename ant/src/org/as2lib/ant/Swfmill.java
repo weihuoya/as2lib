@@ -97,6 +97,7 @@ public class Swfmill extends Task {
     public static final String XML2SWF = "xml2swf";
     public static final String SIMPLE = "simple";
     public static final String XSLT = "xslt";
+    public static final String LIBRARY = "library";
     public static final String HELP = "-h";
     public static final String QUIET = "-q";
     public static final String VERBOSE = "-v";
@@ -494,10 +495,6 @@ public class Swfmill extends Task {
     }
 
     private void checkParameters() throws BuildException {
-        if (this.source == null && this.xml == null) {
-            throw new BuildException("'src', 'source' or 'in' attribute or inline " +
-            		"xml must be specified.", getLocation());
-        }
         if (this.source != null && this.xml != null) {
         	throw new BuildException("Specify either 'src' ('source', 'in') or " +
         			"inline xml, not both.", getLocation());
@@ -604,7 +601,7 @@ public class Swfmill extends Task {
     /**
      * {@code Command} allows only for an enumerated set of string values to be set.
      * These are {@link Swfmill#SWF2XML}, {@link Swfmill#XML2SWF},
-     * {@link Swfmill#SIMPLE} and {@link Swfmill#XSLT}.
+     * {@link Swfmill#SIMPLE}, {@link Swfmill#XSLT} and {@link Swfmill#LIBRARY}.
      *
      * @author Simon Wacker
      */
@@ -627,13 +624,13 @@ public class Swfmill extends Task {
 
         /**
          * Returns the collection of allowed string values. The allowed string values
-         * are {@link Swfmill#SWF2XML}, {@link Swfmill#XML2SWF}, {@link Swfmill#SIMPLE}
-         * and {@link Swfmill#XSLT}.
+         * are {@link Swfmill#SWF2XML}, {@link Swfmill#XML2SWF}, {@link Swfmill#SIMPLE},
+         * {@link Swfmill#XSLT} and {@link Swfmill#LIBRARY}.
          *
          * @return the allowed string values
          */
         public String[] getValues() {
-            return new String[]{SWF2XML, XML2SWF, SIMPLE, XSLT};
+            return new String[]{SWF2XML, XML2SWF, SIMPLE, XSLT, LIBRARY};
         }
 
     }
