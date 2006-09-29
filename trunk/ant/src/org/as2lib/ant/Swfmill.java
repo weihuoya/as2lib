@@ -42,11 +42,12 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  * <p><code>&lt;swfmill src="src.xml" dest="dest.swf"/&gt;</code>
  * <p><code>&lt;swfmill src="src.swf" dest="dest.xml"/&gt;</code>
  *
- * <p>You can also use the 'xslt' command.
+ * <p>You may also use the 'xslt' command.
  * <p><code>&lt;swfmill src="src.xml" dest="dest.swf" xsl="my.xsl"/&gt;</code>
  *
- * <p>You can also explicitly specify which command to use: 'swf2xml', 'xml2swf',
- * 'simple' or 'xslt'. This must be done when you want to use the 'simple' command.
+ * <p>It can be explicitly specified which command to use: 'swf2xml', 'xml2swf',
+ * 'simple', 'xslt' or 'library'. This must be done when you want to use the
+ * 'simple' command.
  * <p><code>&lt;swfmill src="src.xml" dest="dest.swf" cmd="simple"/&gt;</code>
  *
  * <p>While it is possible to use a separate source xml file you may also declare it
@@ -58,6 +59,10 @@ import org.apache.tools.ant.types.EnumeratedAttribute;
  *    &lt;/movie&gt;
  *  ]]&gt;
  *&lt;/swfmill&gt;</code></pre>
+ *
+ * <p>The 'library' command can be used to create a library swf. If the source is
+ * a directory specifying 'library' as command is mandatory, otherwise it is required.
+ * <p><code>&lt;swfmill src="assets/my.jpg" dest="library.swf" cmd="library"/&gt;</code></p>
  *
  * <p>If the swfmill executable is not included as environment variable in your operating
  * system you must either include it or set it yourself for every swfmill-tag using the
@@ -539,6 +544,9 @@ public class Swfmill extends Task {
 
     private String evaluateCommand() {
         if (this.command != null) return this.command;
+        if (isDirectory(source)) {
+        	return LIBRARY;
+        }
         if (this.xsl != null) {
             return XSLT;
         }
@@ -549,6 +557,13 @@ public class Swfmill extends Task {
             return SWF2XML;
         }
         return SIMPLE;
+    }
+    
+    private boolean isDirectory(File file) {
+    	if (file != null) {
+    		return file.isDirectory();
+    	}
+    	return false;
     }
 
     private boolean isXmlFile(File file) {
