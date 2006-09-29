@@ -1,5 +1,5 @@
 ------------------------------------
-As2ant - SWF Ant Tasks - Version 2.2
+As2ant - SWF Ant Tasks - Version 2.3
 ------------------------------------
 
 
