@@ -612,7 +612,7 @@ public class Swfmill extends Task {
             exe.setCommandline(command.getCommandline());
             log(command.toString());
             int r = exe.execute();
-            if (r != 0) {
+            if (r < 0) {
             	throw new BuildException("Processing error!", getLocation());
             }
         } catch (IOException e) {
