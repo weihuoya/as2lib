@@ -292,7 +292,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			_global.trace(new SimpleLogMessage(message, debugLevel, name));
+			log(message, debugLevel);
 		}
 	}
 	
@@ -309,7 +309,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			_global.trace(new SimpleLogMessage(message, infoLevel, name));
+			log(message, infoLevel);
 		}
 	}
 	
@@ -326,7 +326,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			_global.trace(new SimpleLogMessage(message, warningLevel, name));
+			log(message, warningLevel);
 		}
 	}
 	
@@ -343,7 +343,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			_global.trace(new SimpleLogMessage(message, errorLevel, name));
+			log(message, errorLevel);
 		}
 	}
 	
@@ -360,7 +360,7 @@ class org.as2lib.env.log.logger.TraceLogger extends AbstractLogger implements Lo
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			_global.trace(new SimpleLogMessage(message, fatalLevel, name));
+			log(message, fatalLevel);
 		}
 	}
 	
