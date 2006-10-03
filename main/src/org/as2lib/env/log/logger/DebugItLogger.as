@@ -18,9 +18,9 @@ import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.logger.AbstractLogger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.message.SimpleLogMessage;
+import org.as2lib.env.log.message.MtascLogMessage;
 
 import com.interactiveAlchemy.utils.Debug;
-import org.as2lib.env.log.message.MtascLogMessage;
 
 /**
  * {@code DebugItLogger} logs messages using {@code com.interactiveAlchemy.utils.Debug.write}
@@ -253,7 +253,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function debug(message):Void {
 		if (isDebugEnabled()) {
-			Debug.write((new SimpleLogMessage(message, debugLevel, name)).toString());
+			log(message, debugLevel);
 		}
 	}
 	
@@ -268,7 +268,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function info(message):Void {
 		if (isInfoEnabled()) {
-			Debug.write((new SimpleLogMessage(message, infoLevel, name)).toString());
+			log(message, infoLevel);
 		}
 	}
 	
@@ -283,7 +283,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function warning(message):Void {
 		if (isWarningEnabled()) {
-			Debug.write((new SimpleLogMessage(message, warningLevel, name)).toString());
+			log(message, warningLevel);
 		}
 	}
 	
@@ -298,7 +298,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function error(message):Void {
 		if (isErrorEnabled()) {
-			Debug.write((new SimpleLogMessage(message, errorLevel, name)).toString());
+			log(message, errorLevel);
 		}
 	}
 	
@@ -313,7 +313,7 @@ class org.as2lib.env.log.logger.DebugItLogger extends AbstractLogger implements 
 	 */
 	public function fatal(message):Void {
 		if (isFatalEnabled()) {
-			Debug.write((new SimpleLogMessage(message, fatalLevel, name)).toString());
+			log(message, fatalLevel);
 		}
 	}
 	
