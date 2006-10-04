@@ -239,7 +239,7 @@ class org.as2lib.env.log.stringifier.PatternLogMessageStringifier extends BasicC
 	public static var DEFAULT_PATTERN:String = "%d{HH:nn:ss.SSS} %l %*n - %m";
 
 	/** Default pattern to stringify log messages for MTASC with. */
-	public static var MTASC_PATTERN:String = "%d{HH:nn:ss.SSS} %c.%o():%L - %m";
+	public static var MTASC_PATTERN:String = "%d{HH:nn:ss.SSS} %l %c.%o():%L - %m";
 
 	/** The escape character coming before a converter character. */
 	private static var ESCAPE_CHARACTER:String = "%";
