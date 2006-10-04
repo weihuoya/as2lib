@@ -69,7 +69,7 @@ class org.as2lib.env.log.handler.TraceHandler extends AbstractLogHandler impleme
 	 * @param message the message to log
 	 */
 	public function write(message:LogMessage):Void {
-		trace(convertMessage(message));
+		_global.trace(convertMessage(message));
 	}
 	
 }
