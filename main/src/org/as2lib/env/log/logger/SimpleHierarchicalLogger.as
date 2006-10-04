@@ -24,6 +24,7 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.message.SimpleLogMessage;
+import org.as2lib.env.log.MtascLogger;
 
 /**
  * {@code SimpleHierarchicalLogger} is a simple implementation of the
@@ -81,7 +82,7 @@ import org.as2lib.env.log.message.SimpleLogMessage;
  * @author Simon Wacker
  * @see org.as2lib.env.log.repository.LoggerHierarchy
  */
-class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger implements ConfigurableLogger, ConfigurableHierarchicalLogger {
+class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger implements ConfigurableLogger, ConfigurableHierarchicalLogger, MtascLogger {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Object = AbstractLogger;
@@ -364,6 +365,21 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 		return (getLevel().toNumber() >= fatalLevelAsNumber);
 	}
 	
+	/** Logs the passed-in instance of the {@code LogMessage}.
+	 * 
+	 * Uses information stored inside {@code message} to determine if it 
+	 * has enough level to be logged with the specific {@code MtascLogger} 
+	 * instance. 
+	 *
+	 * @param message the message to log
+	 */
+	public function logMessage(message:LogMessage):Void {
+		if (isEnabled(message.getLevel())) {
+			if (!addedParentHandlers) addParentHandlers();
+			distributor.write(message);
+		}
+	}
+	
 	/**
 	 * Logs the passed-in {@code message} at the given {@code level}.
 	 *
@@ -499,5 +515,5 @@ class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger 
 	public function fatal(message):Void {
 		log(message, fatalLevel, arguments[1], arguments.caller);
 	}
-	
+
 }

@@ -17,7 +17,9 @@
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.message.AbstractLogMessage;
 import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
+import org.as2lib.env.overload.Overload;
 import org.as2lib.util.Stringifier;
+import org.as2lib.env.log.LogLevel;
 
 /**
  * {@code MtascLogMessage} is a data holder that contains all information to
@@ -65,13 +67,38 @@ class org.as2lib.env.log.message.MtascLogMessage extends AbstractLogMessage impl
 	/**
 	 * Constructs a new {@code MtascLogMessage} instance.
 	 * 
-	 * @param message the message object to log
+	 * @overload #initWithLogLevel
+	 * @overload #initWithoutLogLevel
+	 */
+	public function MtascLogMessage(message) {
+		super(message);
+		var o:Overload = new Overload(this);
+		o.addHandler([LogLevel, String, String, Number], initWithLogLevel);
+		o.addHandler([String, String, Number], initWithoutLogLevel);
+		o.forward(arguments.slice(1));
+	}
+	
+	/**
+	 * Initializes {@code MtascLogMessage} instance with arguments including log level.
+	 * 
+	 * @param level the the level of the logging
 	 * @param location the fully qualified class name and the method name separated by "::"
 	 * @param fileName the name of the file defining the class
 	 * @param lineNumber the line number at which the message was logged
 	 */
-	public function MtascLogMessage(message, location:String, fileName:String, lineNumber:Number) {
-		super(message);
+	private function initWithLogLevel(level:LogLevel, location:String, fileName:String, lineNumber:Number):Void {
+		this.level = level;
+		initWithoutLogLevel(location, fileName, lineNumber);
+	}
+
+	/**
+	 * Initializes {@code MtascLogMessage} instance with arguments excluding log level.
+	 * 
+	 * @param location the fully qualified class name and the method name separated by "::"
+	 * @param fileName the name of the file defining the class
+	 * @param lineNumber the line number at which the message was logged
+	 */
+	private function initWithoutLogLevel(location:String, fileName:String, lineNumber:Number):Void {
 		setSourceClassAndMethodNames(location);
 		this.fileName = fileName;
 		this.lineNumber = lineNumber;

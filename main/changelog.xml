@@ -5,6 +5,14 @@
         xsi:schemaLocation="as2lib http://www.as2lib.org/changelog_0.91.xsd">
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
+        	<month value="10">
+        		<day value="3">
+        			<entry type="add" package="org.as2lib.env.log" class="MtascUtil" method="getDefaultLevel"></entry>
+        			<entry type="add" package="org.as2lib.env.log" class="MtascUtil" method="setDefaultLevel"></entry>
+        			<entry type="add" package="org.as2lib.env.log" class="MtascLogger"></entry>
+        			<entry type="add" package="org.as2lib.env.log.logger" class="SimpleHierarchicalLogger" method="logMessage"></entry>
+        		</day>
+        	</month>
         	<month value="8">
         		<day value="19">
         			<entry type="add" package="org.as2lib.lang" class="SpainLocale">Locale class for Spain (implemented by Diego S. Guebel).</entry>
