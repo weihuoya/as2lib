@@ -15,8 +15,11 @@
  */
 
 import org.as2lib.core.BasicClass;
-import org.as2lib.env.log.Logger;
+import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogManager;
+import org.as2lib.env.log.message.MtascLogMessage;
+import org.as2lib.env.log.MtascLogger;
 import org.as2lib.env.overload.Overload;
 
 /**
@@ -30,6 +33,7 @@ import org.as2lib.env.overload.Overload;
  * </pre>
  * 
  * @author Simon Wacker
+ * @author Igor Sadovskiy
  * @see <a href="http://www.mtasc.org/#trace">MTASC - Tracing facilities</a> */
 class org.as2lib.env.log.MtascUtil extends BasicClass {
 	
@@ -48,6 +52,26 @@ class org.as2lib.env.log.MtascUtil extends BasicClass {
 	/** Fatal level output. */
 	public static var FATAL:Number = 6;
 	
+	/** Default log level if another not specified on the #log method. */
+	private static var defaultLevel:Number = INFO; 
+	
+	
+	/**
+	 * Returns currently configured default log level.
+	 * @return log level
+	 */
+	public static function getDefaultLevel(Void):Number {
+		return defaultLevel;	
+	}
+	
+	/**
+	 * Configures new default log level.
+	 * @param level the new default log level 
+	 */
+	public static function setDefaultLevel(level:Number):Void {
+		defaultLevel = level;	
+	}
+	
 	/**
 	 * @overload #logByDefaultLevel
 	 * @overload #logByLevel	 */
@@ -59,15 +83,15 @@ class org.as2lib.env.log.MtascUtil extends BasicClass {
 	}
 	
 	/**
-	 * Logs the {@code message} at default level {@link #INFO}.
+	 * Logs the {@code message} at level returned by {@link #getDefaultLevel} method.
 	 * 
 	 * @param message the message to log
-	 * @param className the name of the class that logs the {@code message}
+	 * @param location the name of the class and method that logs the {@code message}
 	 * @param fileName the name of the file that declares the class
 	 * @param lineNumber the line number at which the logging call stands
 	 * @see #logByLevel	 */
-	public static function logByDefaultLevel(message:Object, className:String, fileName:String, lineNumber:Number):Void {
-		logByLevel(message, null, className, fileName, lineNumber);
+	public static function logByDefaultLevel(message:Object, location:String, fileName:String, lineNumber:Number):Void {
+		logByLevel(message, getDefaultLevel(), location, fileName, lineNumber);
 	}
 	
 	/**
@@ -77,32 +101,41 @@ class org.as2lib.env.log.MtascUtil extends BasicClass {
 	 * also the case if {@code level} is {@code null} or {@code undefined}.
 	 * 
 	 * <p>The {@code message} is logged using a logger returned by the
-	 * {@link LogManager#getLogger} method passing-in the given {@code className}. The
+	 * {@link LogManager#getLogger} method passing-in the given {@code sourceClassName}. The
 	 * extra information is passed to the specific log methods as further arguments.
 	 * 
 	 * @param message the message to log
-	 * @param className the name of the class that logs the {@code message}
+	 * @param location the name of the class and method that logs the {@code message}
 	 * @param fileName the name of the file that declares the class
 	 * @param lineNumber the line number at which the logging call stands	 */
-	public static function logByLevel(message:Object, level:Number, className:String, fileName:String, lineNumber:Number):Void {
-		var logger:Logger = LogManager.getLogger(className);
+	public static function logByLevel(message:Object, level:Number, location:String, fileName:String, lineNumber:Number):Void {
+		
+		var l:LogLevel; 
+		
 		switch (level) {
 			case DEBUG:
-				logger.debug(message, className, fileName, lineNumber);
+				l = AbstractLogLevel.DEBUG;
+				break;
+			case INFO:
+				l = AbstractLogLevel.INFO;
 				break;
 			case WARNING:
-				logger.warning(message, className, fileName, lineNumber);
+				l = AbstractLogLevel.WARNING;
 				break;
 			case ERROR:
-				logger.error(message, className, fileName, lineNumber);
+				l = AbstractLogLevel.ERROR;
 				break;
 			case FATAL:
-				logger.fatal(message, className, fileName, lineNumber);
+				l = AbstractLogLevel.FATAL;
 				break;
 			default:
-				logger.info(message, className, fileName, lineNumber);
+				l = AbstractLogLevel.INFO;
 				break;
 		}
+		
+		var m:MtascLogMessage = new MtascLogMessage(message, l, location, fileName, lineNumber);  
+		var logger:MtascLogger = MtascLogger(LogManager.getLogger(m.getSourceClassName()));
+		logger.logMessage(m);
 	}
 	
 	/**
