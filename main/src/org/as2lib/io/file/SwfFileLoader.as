@@ -220,7 +220,8 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader implements
 	 */
     private function hasFinished(Void):Boolean {
     	var mc = eval(movieClip._target);
-		movieClip = mc; // Workaround for a flash compiler bug
+    	// workaround for a bug of the flash compiler
+		movieClip = mc;
 		var totalBytes:Number = movieClip.getBytesTotal();
 		var loadedBytes:Number = movieClip.getBytesLoaded();
 		if (totalBytes > 10 && totalBytes - loadedBytes < 10) {
