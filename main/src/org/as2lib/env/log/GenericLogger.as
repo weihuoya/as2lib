@@ -18,17 +18,17 @@ import org.as2lib.core.BasicInterface;
 import org.as2lib.env.log.LogMessage;
 
 /**
- * {@code MtascLogger} serves to add support of the MTASC trace functionality
- * to the Logger classes. 
+ * {@code GenericLogger} provides functionality allowing direct output of the composed
+ * {@code LogMessage} to the logger. 
  * 
  * @author Igor Sadovskiy
  */
-interface org.as2lib.env.log.MtascLogger extends BasicInterface {
+interface org.as2lib.env.log.GenericLogger extends BasicInterface {
 	
 	/** Logs the passed-in instance of the {@code LogMessage}.
 	 * 
 	 * Uses information stored inside {@code message} to determine if it 
-	 * has enough level to be logged with the specific {@code MtascLogger} 
+	 * has enough level to be logged with the specific {@code Logger} 
 	 * instance. 
 	 *
 	 * @param message the message to log

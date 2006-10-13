@@ -16,11 +16,12 @@
 
 import org.as2lib.core.BasicClass;
 import org.as2lib.env.log.level.AbstractLogLevel;
+import org.as2lib.env.log.Logger;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogManager;
 import org.as2lib.env.log.message.MtascLogMessage;
-import org.as2lib.env.log.MtascLogger;
 import org.as2lib.env.overload.Overload;
+import org.as2lib.env.log.GenericLogger;
 
 /**
  * {@code MtascUtil} offers support for MTASCs extraordinary trace functionality that
@@ -134,8 +135,29 @@ class org.as2lib.env.log.MtascUtil extends BasicClass {
 		}
 		
 		var m:MtascLogMessage = new MtascLogMessage(message, l, location, fileName, lineNumber);  
-		var logger:MtascLogger = MtascLogger(LogManager.getLogger(m.getSourceClassName()));
-		logger.logMessage(m);
+		var logger:Logger = LogManager.getLogger(m.getSourceClassName());
+		
+		if (logger instanceof GenericLogger) {
+			GenericLogger(logger).logMessage(m);
+		} else {
+			switch (l) {
+				case AbstractLogLevel.DEBUG:
+					logger.debug(m.getMessage());
+					break;	
+				case AbstractLogLevel.INFO:
+					logger.info(m.getMessage());
+					break;	
+				case AbstractLogLevel.WARNING:
+					logger.warning(m.getMessage());
+					break;	
+				case AbstractLogLevel.ERROR:
+					logger.error(m.getMessage());
+					break;	
+				case AbstractLogLevel.FATAL:
+					logger.fatal(m.getMessage());
+					break;	
+			}
+		}
 	}
 	
 	/**

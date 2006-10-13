@@ -24,7 +24,7 @@ import org.as2lib.env.log.LogHandler;
 import org.as2lib.env.log.LogLevel;
 import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.message.SimpleLogMessage;
-import org.as2lib.env.log.MtascLogger;
+import org.as2lib.env.log.GenericLogger;
 
 /**
  * {@code SimpleHierarchicalLogger} is a simple implementation of the
@@ -82,7 +82,7 @@ import org.as2lib.env.log.MtascLogger;
  * @author Simon Wacker
  * @see org.as2lib.env.log.repository.LoggerHierarchy
  */
-class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger implements ConfigurableLogger, ConfigurableHierarchicalLogger, MtascLogger {
+class org.as2lib.env.log.logger.SimpleHierarchicalLogger extends AbstractLogger implements ConfigurableLogger, ConfigurableHierarchicalLogger, GenericLogger {
 	
 	/** Makes the static variables of the super-class accessible through this class. */
 	private static var __proto__:Object = AbstractLogger;

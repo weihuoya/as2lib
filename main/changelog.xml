@@ -6,6 +6,9 @@
     <release name="as2lib 0.9.4" day="14" month="11" year="2005">
         <year value="2006">
         	<month value="10">
+        		<day value="13">
+        			<entry type="change" package="org.as2lib.env.log" class="MtascLogger"><change-rename to="GenericLogger"></change-rename></entry>
+        		</day>
         		<day value="3">
         			<entry type="add" package="org.as2lib.env.log" class="MtascUtil" method="getDefaultLevel"></entry>
         			<entry type="add" package="org.as2lib.env.log" class="MtascUtil" method="setDefaultLevel"></entry>
