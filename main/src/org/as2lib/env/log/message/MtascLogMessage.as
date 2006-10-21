@@ -19,6 +19,7 @@ import org.as2lib.env.log.LogMessage;
 import org.as2lib.env.log.message.AbstractLogMessage;
 import org.as2lib.env.log.stringifier.PatternLogMessageStringifier;
 import org.as2lib.util.Stringifier;
+import org.as2lib.env.log.level.AbstractLogLevel;
 
 /**
  * {@code MtascLogMessage} is a data holder that contains all information to
@@ -67,7 +68,7 @@ class org.as2lib.env.log.message.MtascLogMessage extends AbstractLogMessage impl
 	 * Constructs a new {@code MtascLogMessage} instance.
 	 * 
 	 * @param message the message to log
-	 * @param level (optional) the level of the logging
+	 * @param level (optional) the level of the logging. Default is {@code AbstractLogLevel#INFO}.
 	 * @param location the fully qualified class name and the method name separated by "::"
 	 * @param fileName the name of the file defining the class
 	 * @param lineNumber the line number at which the message was logged
@@ -80,6 +81,7 @@ class org.as2lib.env.log.message.MtascLogMessage extends AbstractLogMessage impl
 			this.fileName = arguments[3];
 			this.lineNumber = arguments[4];
 		} else {
+			this.level = AbstractLogLevel.INFO;
 			setSourceClassAndMethodNames(arguments[1]);
 			this.fileName = arguments[2];
 			this.lineNumber = arguments[3];
