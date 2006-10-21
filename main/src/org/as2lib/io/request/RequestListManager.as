@@ -223,8 +223,8 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		if(!request) {
 			removeHandler(); 
 			request = iterator.next();
-			onRequestSetFocusChange(this);
 			handleRequest(request);
+			onRequestSetFocusChange(this);					
 		} else {
 			throw new RequestManagerBusyException("RequestManager is busy now, and can't handle next request.", this, arguments);
 		}
