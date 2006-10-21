@@ -229,7 +229,7 @@ class org.as2lib.io.file.SwfFileLoader extends AbstractFileLoader implements
 			return true;
 		}
 		if (loadedBytes != previousLoadedBytes) {
-			if (loadedBytes > 0) {
+			if (loadedBytes > 0 && totalBytes > 10) {
 				distributeProgressEvent();
 			}
 			previousLoadedBytes = loadedBytes;
