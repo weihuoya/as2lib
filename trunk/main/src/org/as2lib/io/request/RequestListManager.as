@@ -194,11 +194,7 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		var values:Array = handlers.getValues();
 		var i:Number;
 		
-		if(handler) { 
-			handler.removeListener(this);
-			delete handler; 
-		}
-	
+		removeHandler();
 		for(i=0;i<keys.length;i++) {
 			if (request instanceof keys[i]) {	handler = values[i];  break; }
 		}
@@ -209,12 +205,23 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 			throw new NoRequestHandlerFoundException("No appropriate handler found for request [" + request + "].", this, arguments);
 		}
 	}
-	
+
+    /**
+	 * Removes current handler.
+	 */		
+	public function removeHandler():Void {
+		if(handler) { 
+			handler.removeListener(this);
+			delete handler; 
+		}		
+	}
+			
     /**
 	 * Handles next {@code Request} in the list.
 	 */		
 	public function handleNext():Void {
 		if(!request) {
+			removeHandler(); 
 			request = iterator.next();
 			onRequestSetFocusChange(this);
 			handleRequest(request);
@@ -250,8 +257,10 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	 */
 	public function getBytesLoaded(Void):Byte {
 		var result:Number = Number(bytesLoadedBefore.valueOf());
-		if(request) result += Number(handler.getLoader().getBytesLoaded().valueOf());
-		
+		var loadedBytes  = handler.getLoader().getBytesLoaded();
+		if(request) {
+			result += (loadedBytes>=0 && loadedBytes) ? loadedBytes : 0;
+		}
 		return new Byte(result);
 	}	
 
