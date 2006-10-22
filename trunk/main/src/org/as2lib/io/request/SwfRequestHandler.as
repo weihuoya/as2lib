@@ -25,6 +25,7 @@ import org.as2lib.io.file.LoadCompleteListener;
 import org.as2lib.io.file.LoadErrorListener;
 import org.as2lib.io.file.LoadProgressListener;
 import org.as2lib.io.file.LoadStartListener;
+import org.as2lib.util.MovieClipUtil;
 
 /**
  * {@code SwfRequestHandler} is built to handle {@code SwfRequest}s, implements {@code RequestHandler}.
@@ -71,7 +72,13 @@ class org.as2lib.io.request.SwfRequestHandler extends EventSupport implements Re
 	 */	
 	public function handleRequest(request:Request):Void {
 		var url:URL = request.getUrl();
+		var container = request.getContainer();
+		
 		if(fileLoader) delete fileLoader;
+		if((typeof container) == "string"){
+			request.setContainer(MovieClipUtil.getMovieClip(container));
+			container = request.getContainer();
+		}
 		fileLoader = new SwfFileLoader(request.getContainer());
 		fileLoader.addListener(this);
 		fileLoader.load(url.toPath(), url.getMethod(), url.getDataMap());   		

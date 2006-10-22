@@ -38,6 +38,9 @@ class org.as2lib.io.request.SwfRequest extends BasicClass implements Request {
 	/** {@code MovieClip} to loaded {@code URL} into. */	
 	private var container:MovieClip;
 
+	/** Path to the {@code MovieClip} to loaded {@code URL} into. */	
+	private var containerTarget:String;
+	
 	/** {@code Byte} supposed size for this request. */	
 	private var supposedSize:Byte;	
 
@@ -48,9 +51,9 @@ class org.as2lib.io.request.SwfRequest extends BasicClass implements Request {
 	 * @param {@code MovieClip} to be loaded into
 	 * @param {@code Number} size as Number (optional)
 	 */		
-	public function SwfRequest(url:URL, container:MovieClip, size:Number) {
+	public function SwfRequest(url:URL, container, size:Number) {
 		this.url = url;
-		this.container = container;
+		setContainer(container);
 		supposedSize = new Byte(size);		
 	}
 
@@ -62,15 +65,45 @@ class org.as2lib.io.request.SwfRequest extends BasicClass implements Request {
 	public function getUrl(Void):URL {
 		return url;
 	}
+
+	/**
+	 * Sets the {@code URL} of the resource that will be requested to load. 
+	 * 
+	 * @param URL of the resource to load
+	 */
+	public function setUrl(url:URL):Void{
+		this.url = url;
+	}
 	
+		
 	/**
 	 * Returns the container for the resource that will be requested to load.
 	 * 
 	 * @return {@code MovieClip} container for request to load into.
 	 */
 	public function getContainer(Void) {
-		return container;
+		if(container) { 
+
+			return container;
+		}
+		else {
+			return containerTarget;
+		}
 	}
+	
+	/**
+	 * Sets the container for the resource that will be requested to load.
+	 * 
+	 * @param container, it's type depends on certain implementation of {@code Request} interface.
+	 */
+	public function setContainer(p):Void {
+		if((typeof p) == "string"){
+			this.containerTarget = p;
+		} else if((typeof p) == "movieclip"){
+			this.container = p;
+		}
+
+	}	
 	
 	/**
 	 * Returns the supposed size (if set) for the resource.
@@ -81,4 +114,21 @@ class org.as2lib.io.request.SwfRequest extends BasicClass implements Request {
 		return supposedSize;
 	}
 	
+	/**
+	 * Returns bytes loaded for the resource.
+	 * 
+	 * @return {@code Byte} size in bytes.
+	 */
+	public function getBytesLoaded(Void):Byte {
+		return new Byte(container.getBytesLoaded());
+	}
+	
+		/**
+	 * Returns bytes total for the resource.
+	 * 
+	 * @return {@code Byte} size in bytes.
+	 */
+	public function getBytesTotal(Void):Byte{
+		return new Byte(container.getBytesTotal());
+	}	
 }
