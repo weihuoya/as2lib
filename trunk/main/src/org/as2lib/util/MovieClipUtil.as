@@ -58,13 +58,13 @@ class org.as2lib.util.MovieClipUtil extends BasicClass {
 	 * @param pathString path to required movieclip.
 	 * @return {@code MovieClip} 
 	 */	
-	static public function getMovieClip(pathString:String):MovieClip {
-		var mc:MovieClip = _root;
+	static public function getMovieClip(pathString:String, parentMovie:MovieClip):MovieClip {
+		var mc:MovieClip;
 		var pathArray:Array = pathString.split(".");
 		var pathEntry:String;
 		
 		if(pathArray[0]=="_root") pathArray.shift(); // purge '_root'
-		mc = _root;
+		mc =  (parentMovie) ? parentMovie : _root;
 		while(pathArray.length>0) {
 			 pathEntry = String(pathArray.shift());
 			 if(mc[pathEntry] != undefined) mc = mc[pathEntry]; 
