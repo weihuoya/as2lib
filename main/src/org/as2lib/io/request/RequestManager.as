@@ -14,6 +14,7 @@
  * limitations under the License.
  */
 import org.as2lib.data.type.Byte;
+import org.as2lib.io.request.Request;
 
 /**
  * {@code RequestManager} is built to manage sets of {@code Request}s.
@@ -102,6 +103,13 @@ interface org.as2lib.io.request.RequestManager {
 	 * @return {@code Number}
 	 */			 
 	public function getItemsTotal(Void):Number;
+	
+	/**
+	 * Returns current request under processing
+	 * 
+	 * @return {@code Request}
+	 */			 
+	public function getCurrentRequest(Void):Request;	
 
 	/**
 	 * Returns the pecentage of the request list that has been loaded.
