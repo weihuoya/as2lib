@@ -40,6 +40,13 @@ interface org.as2lib.io.request.Request {
 	public function getUrl(Void):URL;
 
 	/**
+	 * Sets the {@code URL} of the resource that will be requested to load. 
+	 * 
+	 * @param URL of the resource to load
+	 */
+	public function setUrl(url:URL):Void;
+
+	/**
 	 * Returns the container for the resource that will be requested to load.
 	 * 
 	 * @return container, it's type depends on certain implementation of {@code Request} interface.
@@ -47,9 +54,23 @@ interface org.as2lib.io.request.Request {
 	public function getContainer(Void);
 
 	/**
-	 * Returns the supposed size (if set) for the resource.
+	 * Sets the container for the resource that will be requested to load.
+	 * 
+	 * @param container, it's type depends on certain implementation of {@code Request} interface.
+	 */
+	public function setContainer(p):Void;
+	
+	/**
+	 * Returns bytes loaded for the resource.
 	 * 
 	 * @return {@code Byte} size in bytes.
 	 */
-	public function getSupposedSize(Void):Byte;
+	public function getBytesLoaded(Void):Byte;
+	
+		/**
+	 * Returns bytes total for the resource.
+	 * 
+	 * @return {@code Byte} size in bytes.
+	 */
+	public function getBytesTotal(Void):Byte;
 }

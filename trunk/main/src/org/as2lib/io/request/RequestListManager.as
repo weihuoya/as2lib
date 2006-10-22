@@ -220,14 +220,13 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	 * Handles next {@code Request} in the list.
 	 */		
 	public function handleNext():Void {
-		if(!request) {
-			removeHandler(); 
-			request = iterator.next();
-			handleRequest(request);
-			onRequestSetFocusChange(this);					
-		} else {
-			throw new RequestManagerBusyException("RequestManager is busy now, and can't handle next request.", this, arguments);
-		}
+		if(request) {		
+			// remove current request just was loaded			
+			delete request;
+		}			
+		removeHandler(); 
+		request = iterator.next();
+		handleRequest(request);
 	}
 
     /**
@@ -345,9 +344,10 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		bytesLoadedBefore = new Byte(Number(bytesLoadedBefore.valueOf() + resourceLoader.getBytesTotal().valueOf()));
 		// increasing number of loaded items
 		itemsLoaded++;
-		// remove current request just was loaded 
-		delete request;
-		// if we have request to load...
+
+		onRequestSetFocusChange(this);
+		
+		// if we have anothrt request to load...		
 		if(iterator.hasNext()) {
 			// load it...
 			handleNext();
