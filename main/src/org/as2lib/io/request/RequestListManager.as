@@ -38,6 +38,7 @@ import org.as2lib.data.holder.List;
 import org.as2lib.data.holder.list.ArrayList;
 import org.as2lib.data.holder.list.ListIterator;
 import org.as2lib.data.holder.Iterator;
+import org.as2lib.env.event.distributor.SimpleConsumableCompositeEventDistributorControl;
 
 /**
  * {@code RequestListManager} is a central distributor for processing list of {@code Request}s.
@@ -83,6 +84,16 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		LoadErrorListener,
 		LoadProgressListener,
 		RequestSetFocusListener {
+	
+	/** Distributor control for event distribution. */		
+	private var distributorControl:SimpleConsumableCompositeEventDistributorControl;		
+
+	/** Distributors required for event distribution. */		
+	private var focusDistributor:RequestSetFocusListener;
+	private var startDistributor:RequestSetLoadStartListener;
+	private var progressDistributor:RequestSetLoadProgressListener;
+	private var completeDistributor:RequestSetLoadCompleteListener;
+	private var errorDistributor:RequestSetLoadErrorListener;
 			
 	/** Map contains handlers available to this instance of {@code RequestListManager}. */	
 	private var handlers:Map;
@@ -107,17 +118,25 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	
 	/** Number of requests already loaded. */
 	private var itemsLoaded:Number;
-
 	/**
 	 * Constructs a new {@code RequestListManager} instance.
 	 */			
 	public function RequestListManager() {
 		super();
-		acceptListenerType(LoadCompleteListener);
-		acceptListenerType(LoadProgressListener);
-		acceptListenerType(LoadErrorListener);
-		acceptListenerType(RequestSetFocusListener);
+
+		// initiate events
+		distributorControl = new SimpleConsumableCompositeEventDistributorControl();
 		
+		distributorControl.acceptListenerType(RequestSetLoadCompleteListener);
+		distributorControl.acceptListenerType(RequestSetLoadProgressListener);
+		distributorControl.acceptListenerType(RequestSetLoadErrorListener);
+		distributorControl.acceptListenerType(RequestSetFocusListener);
+
+		completeDistributor = distributorControl.getDistributor(RequestSetLoadCompleteListener);
+		progressDistributor = distributorControl.getDistributor(RequestSetLoadProgressListener);
+		startDistributor = distributorControl.getDistributor(RequestSetLoadErrorListener);
+		focusDistributor = distributorControl.getDistributor(RequestSetFocusListener);
+				
 		requests = new ArrayList();
 		handlers = new HashMap();
 	}
@@ -131,7 +150,26 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	public function setRequestHandler(type:Function, handler:RequestHandler):Void {
 		handlers.put(type, handler);
 	}	
+	
+	/**
+	 * Adds the passed-in {@code listener}.
+	 * 
+	 * @param listener the listener to add
+	 */
+	public function addListener(obj) {
+		distributorControl.addListener(obj);
+	}
 
+
+	/**
+	 * Removes the passed-in {@code listener}.
+	 * 
+	 * @param listener the listener to remove
+	 */
+	public function removeListener(obj) {
+		distributorControl.removeListener(obj);	
+	}
+	
     /**
 	 * Adds {@code Request} into list of requests to be proceeded.
 	 * 
@@ -179,7 +217,6 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		startTime = getTimer();
 		if(iterator == undefined) iterator = new ListIterator(requests);
 		// launch RequestSetLoadStart event
-		startDistributor =	distributorControl.getDistributor(RequestSetLoadStartListener);
 		startDistributor.onRequestSetLoadStart(this);
 		handleNext();
 	}
@@ -327,11 +364,9 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	 * @param requestManager {@code RequestManager} where change of focus has occured (this).
 	 */
 	public function onRequestSetFocusChange(requestManager:RequestManager):Void {
-		var focusDistributor:RequestSetFocusListener =
-			distributorControl.getDistributor(RequestSetFocusListener);
 		focusDistributor.onRequestSetFocusChange(this);
 	}
-							
+	
 	/**
 	 * (implementation detail) Handles the response of a finished {@code Request}.
 	 * 
@@ -356,9 +391,8 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 		} else {
 			finished = false;
 			// 	if no more requests, notify all listeners that we're finished			
-			var completeDistributor:RequestSetLoadCompleteListener =
-				distributorControl.getDistributor(RequestSetLoadCompleteListener);
 			completeDistributor.onRequestSetLoadComplete(this);
+			_root.log("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
 		}
 	}
 
@@ -371,8 +405,6 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	 * @param resourceLoader {@code FileLoader} that loaded the certain resource
 	 */
 	public function onLoadError(resourceLoader:FileLoader, errorCode:String, error):Boolean {
-		var errorDistributor:RequestSetLoadErrorListener =
-			distributorControl.getDistributor(RequestSetLoadErrorListener);
 		return errorDistributor.onRequestSetLoadError(this, errorCode, error);
 	}
 
@@ -384,9 +416,6 @@ class org.as2lib.io.request.RequestListManager extends AbstractTimeConsumer
 	 * @param resourceLoader {@code FileLoader} that loaded the certain resource
 	 */
 	public function onLoadProgress(resourceLoader:FileLoader):Void {
-			var progressDistributor:RequestSetLoadProgressListener =
-				distributorControl.getDistributor(RequestSetLoadProgressListener);
 			progressDistributor.onRequestSetLoadProgress(this);
-		
 	}	
 }
