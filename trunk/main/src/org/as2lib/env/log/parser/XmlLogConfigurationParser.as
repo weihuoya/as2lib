@@ -489,7 +489,8 @@ class org.as2lib.env.log.parser.XmlLogConfigurationParser extends AbstractLogCon
 		}
 		var childNodes:Array = registeredBeanDefinition.childNodes;
 		for (var i:Number = 0; i < childNodes.length; i++) {
-			beanDefinition.appendChild(childNodes[i]);
+			var childrenNode:XMLNode = childNodes[i];
+			beanDefinition.appendChild(childrenNode.cloneNode(true));
 		}
 	}
 	
